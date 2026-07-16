@@ -1,0 +1,450 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc,shapes.misc}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+
+% ---- Colores ----
+\definecolor{cpurple}{HTML}{534AB7}
+\definecolor{cpurpleL}{HTML}{EEEDFE}
+\definecolor{cteal}{HTML}{0F6E56}
+\definecolor{ctealL}{HTML}{E1F5EE}
+\definecolor{camber}{HTML}{854F0B}
+\definecolor{camberL}{HTML}{FAEEDA}
+\definecolor{cred}{HTML}{A32D2D}
+\definecolor{credL}{HTML}{FCEBEB}
+\definecolor{cblue}{HTML}{185FA5}
+\definecolor{cblueL}{HTML}{E6F1FB}
+\definecolor{cgray}{HTML}{5F5E5A}
+\definecolor{cgrayL}{HTML}{F1EFE8}
+
+% ---- Cajas ----
+\newtcolorbox{idea}{colback=cpurpleL,colframe=cpurple,title=\textbf{Idea clave (subrayar)},fonttitle=\bfseries,boxrule=0.6pt,left=6pt,right=6pt}
+\newtcolorbox{defin}[1]{colback=camberL,colframe=camber,title=\textbf{Definici\'on: #1},fonttitle=\bfseries,boxrule=0.6pt,left=6pt,right=6pt}
+\newtcolorbox{ejemplo}[1]{colback=ctealL,colframe=cteal,title=\textbf{Ejemplo desarrollado: #1},fonttitle=\bfseries,boxrule=0.6pt,left=6pt,right=6pt}
+\newtcolorbox{ojo}{colback=credL,colframe=cred,title=\textbf{Cuidado / t\'ipica pregunta de examen},fonttitle=\bfseries,boxrule=0.6pt,left=6pt,right=6pt}
+
+% ---- Estilos TikZ ----
+\tikzset{
+  caja/.style={draw=#1!70!black, fill=#1!12, rounded corners=2pt, minimum height=8mm, minimum width=24mm, align=center, font=\small},
+  cajita/.style={draw=#1!70!black, fill=#1!12, rounded corners=1.5pt, minimum height=6.5mm, align=center, font=\footnotesize},
+  flecha/.style={-{Stealth[length=2.5mm]}, thick},
+  etiqueta/.style={font=\footnotesize\itshape, text=black!60},
+  mem/.style={draw=black!60, minimum width=26mm, minimum height=7mm, font=\footnotesize, align=center}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Gu\'ia de estudio -- Paginaci\'on y segmentaci\'on}
+\fancyhead[R]{\small Sistemas Operativos 2}
+\fancyfoot[C]{\thepage}
+
+\title{\textbf{Gu\'ia de estudio ilustrada}\\[4pt]\Large Administraci\'on de memoria: paginaci\'on y segmentaci\'on\\[4pt]\normalsize Basada en el documento de la Unidad 1 -- Sistemas Operativos 2}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{idea}
+Todo el documento gira alrededor de \textbf{tres funciones} que el sistema operativo debe cumplir sobre la memoria:
+\begin{enumerate}[nosep]
+  \item \textbf{Relocalizaci\'on}: mover un programa de lugar en memoria sin que deje de funcionar.
+  \item \textbf{Protecci\'on}: que un proceso no pueda leer/escribir memoria de otro.
+  \item \textbf{Compartici\'on}: que dos procesos puedan usar el mismo bloque cuando convenga.
+\end{enumerate}
+Cada mecanismo del curso se eval\'ua contra estas tres funciones.
+\end{idea}
+
+\tableofcontents
+\newpage
+
+% =====================================================
+\section{Evoluci\'on de los mecanismos de memoria}
+
+El hardware de administraci\'on de memoria evolucion\'o en tres fases: \textbf{carga est\'atica} $\rightarrow$ \textbf{carga din\'amica} (registros de relocalizaci\'on/l\'imite) $\rightarrow$ \textbf{paginaci\'on}.
+
+\subsection{Carga est\'atica}
+
+En los primeros sistemas (monousuario) no hab\'ia hardware de protecci\'on. El programador deb\'ia conocer \emph{de antemano} la direcci\'on f\'isica donde se cargar\'ia el programa, y escrib\'ia \textbf{referencias absolutas} tanto para datos (lecturas) como para c\'odigo (saltos).
+
+\begin{ejemplo}{los .COM de DOS}
+Los ejecutables \texttt{.COM} estaban programados para iniciar en una posici\'on fija, que depend\'ia de cu\'anta memoria ocupaba esa versi\'on de DOS. Al cambiar de versi\'on, el SO ocupaba distinta cantidad de memoria, la posici\'on inicial disponible cambiaba y los programas de la versi\'on anterior \textbf{dejaban de funcionar}: sus saltos absolutos ca\'ian en memoria equivocada.
+\end{ejemplo}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0mm]
+% Columna 1: DOS v1
+\node[mem, fill=cgrayL, minimum height=10mm] (os1) {SO\\ \tiny 0--1999};
+\node[mem, fill=ctealL, minimum height=18mm, below=0mm of os1] (p1) {\texttt{prog.com}\\ \tiny inicia en 2000\\ \tiny \texttt{jump [2000]}};
+\node[above=1mm of os1, font=\small\bfseries] {DOS v1 \checkmark};
+\draw[flecha, cteal] (p1.east) .. controls +(0.9,0) and +(0.9,0) .. ($(p1.north east)+(0,-0.15)$);
+\node[etiqueta, below=1mm of p1, align=center] {el salto cae dentro\\de su propio c\'odigo};
+
+% Columna 2: DOS v2
+\node[mem, fill=cgrayL, minimum height=18mm, right=48mm of os1.north east, anchor=north west] (os2) {SO (creci\'o)\\ \tiny 0--2999};
+\node[mem, fill=credL, minimum height=15mm, below=0mm of os2] (p2) {\texttt{prog.com}\\ \tiny inicia en 3000\\ \tiny \texttt{jump [2000]}};
+\node[above=1mm of os2, font=\small\bfseries] {DOS v2 $\times$};
+\draw[flecha, cred] (p2.east) .. controls +(1.2,0) and +(1.2,0) .. ($(os2.south east)+(0,0.3)$);
+\node[etiqueta, below=1mm of p2, align=center] {el salto sigue apuntando a 2000,\\?`que ahora es memoria del SO!};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Carga din\'amica: registros de relocalizaci\'on/l\'imite}
+
+La soluci\'on: el programa usa \textbf{direcciones relativas} (su memoria ``empieza en 0'') y el \textbf{MMU} (Memory Management Unit) traduce en cada acceso usando dos registros:
+
+\begin{itemize}[nosep]
+  \item \textbf{Registro l\'imite}: cu\'anta memoria tiene asignada el proceso. Si la direcci\'on l\'ogica $\geq$ l\'imite $\Rightarrow$ \emph{addressing error} (protecci\'on).
+  \item \textbf{Registro relocalizador (base)}: d\'onde empieza realmente el proceso en memoria f\'isica. Se \emph{suma} a la direcci\'on l\'ogica (relocalizaci\'on).
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+\node[caja=cgray] (cpu) {CPU\\ \footnotesize dir.\ l\'ogica 346};
+\node[caja=camber, right=14mm of cpu] (lim) {?`$346 < 1000$?\\ \footnotesize registro l\'imite};
+\node[caja=cteal, right=12mm of lim] (rel) {$+\,14000$\\ \footnotesize relocalizador};
+\node[caja=cblue, right=12mm of rel] (mem) {Memoria\\ \footnotesize f\'isica 14346};
+\node[cajita=cred, below=8mm of lim] (err) {addressing error $\rightarrow$ trap al SO};
+\draw[flecha] (cpu) -- (lim);
+\draw[flecha] (lim) -- node[above, etiqueta]{s\'i} (rel);
+\draw[flecha] (rel) -- (mem);
+\draw[flecha] (lim) -- node[right, etiqueta]{no} (err);
+% Cuadro MMU
+\node[draw=cpurple, dashed, rounded corners=3pt, fit=(lim)(rel)(err), inner sep=3mm, label={[cpurple]above:\footnotesize\bfseries MMU}] {};
+\end{tikzpicture}
+\end{center}
+
+\begin{idea}
+El l\'imite y el relocalizador \textbf{forman parte del contexto del proceso}: en cada cambio de contexto el SO debe restaurarlos con los valores del proceso que entra a ejecutar, igual que sus dem\'as registros. Si el SO quiere mover el proceso, solo cambia el relocalizador; el programa ni se entera.
+\end{idea}
+
+\begin{ejemplo}{registros base en los primeros Intel}
+La relocalizaci\'on se hac\'ia con registros de segmento (\texttt{DS} datos, \texttt{CS} c\'odigo, \texttt{SS} pila). Las instrucciones
+\begin{center}\texttt{mov ax, [FF]} \qquad \texttt{jump [5]}\end{center}
+equivalen impl\'icitamente a
+\begin{center}\texttt{mov ax, DS:[FF]} \qquad \texttt{jump CS:[5]}\end{center}
+El programador solo piensa en direcciones relativas.
+\end{ejemplo}
+
+% =====================================================
+\section{Direcciones y tama\~no de palabra}
+
+\begin{itemize}[nosep]
+  \item \textbf{Tama\~no de palabra}: n\'umero de bits que se transfieren de memoria a un registro en una operaci\'on (el ancho del bus del sistema): 8, 16, 32, 64 bits.
+  \item Una \textbf{direcci\'on} puede referirse a un byte, a un grupo de bytes o a una palabra, seg\'un el dise\~no del sistema.
+\end{itemize}
+
+Esto importa porque en paginaci\'on la direcci\'on se \emph{parte en campos de bits}, y hay que saber cu\'antos bits tiene la direcci\'on completa.
+
+% =====================================================
+\section{Paginaci\'on}
+
+\begin{defin}{paginaci\'on}
+Dividir la memoria en partes \textbf{iguales y de tama\~no fijo}. Del lado l\'ogico se llaman \textbf{p\'aginas}; del lado f\'isico, \textbf{marcos de p\'agina} (frames). La p\'agina es la \emph{unidad m\'inima de asignaci\'on}: toda petici\'on de memoria se redondea hacia arriba a p\'aginas completas.
+\end{defin}
+
+\begin{defin}{fragmentaci\'on interna}
+Desperdicio de memoria \emph{dentro} de un bloque de tama\~no $N$ entregado a un proceso que pidi\'o $K < N$: se pierden $N-K$ dentro del bloque, y nadie m\'as puede usarlos.
+\end{defin}
+
+\begin{ejemplo}{fragmentaci\'on interna}
+P\'aginas de 10\,KB, el proceso pide 45\,KB $\Rightarrow$ el SO entrega $\lceil 45/10 \rceil = 5$ p\'aginas $=$ 50\,KB. En la \'ultima p\'agina quedan $50-45 = 5$\,KB desperdiciados.
+\end{ejemplo}
+
+\subsection{Los tres componentes del mecanismo}
+
+\begin{enumerate}[nosep]
+  \item \textbf{Direcci\'on l\'ogica dividida en dos partes}: n\'umero de p\'agina (bits altos) + desplazamiento u \emph{offset} (bits bajos).
+  \item \textbf{Tabla de p\'aginas} (una por proceso): para cada p\'agina l\'ogica indica en qu\'e marco f\'isico est\'a, adem\'as de PID propietario y permisos.
+  \item \textbf{Page Table Pointer}: registro del MMU que apunta a la tabla de p\'aginas del proceso \emph{en ejecuci\'on}; se restaura en cada cambio de contexto.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+% Dirección lógica
+\node[cajita=cpurple, minimum width=20mm] (pnum) {p\'ag.\ 2};
+\node[cajita=cteal, minimum width=20mm, right=0mm of pnum] (off) {offset 7};
+\node[above=1mm of pnum.north east, font=\small\bfseries, xshift=0mm] {direcci\'on l\'ogica};
+% Tabla de páginas
+\node[draw=black!60, rounded corners=2pt, below=13mm of pnum, minimum width=34mm, align=left, font=\footnotesize, inner sep=2.5pt] (tp)
+ {p\'ag 0 $\rightarrow$ marco 5\\ p\'ag 1 $\rightarrow$ marco 1\\ \colorbox{cpurpleL}{p\'ag 2 $\rightarrow$ marco 8}\\ p\'ag 3 $\rightarrow$ marco 3};
+\node[above=0.5mm of tp, font=\footnotesize\bfseries] {tabla de p\'aginas};
+% Dirección física
+\node[cajita=cpurple, minimum width=20mm, right=55mm of pnum] (fnum) {marco 8};
+\node[cajita=cteal, minimum width=20mm, right=0mm of fnum] (off2) {offset 7};
+\node[above=1mm of fnum.north east, font=\small\bfseries] {direcci\'on f\'isica};
+% Memoria
+\node[draw=black!60, rounded corners=2pt, below=10mm of fnum.south east, minimum width=30mm, align=left, font=\footnotesize, inner sep=2.5pt] (memf)
+ {marco 5: \dots\\ marco 1: \dots\\ \colorbox{cpurpleL}{marco 8 $\leftarrow$ aqu\'i}\\ marco 9: \dots};
+\node[above=0.5mm of memf, font=\footnotesize\bfseries] {memoria f\'isica};
+% Flechas
+\draw[flecha] (pnum.south) -- (tp.north -| pnum.south);
+\draw[flecha] (tp.east) -- ++(6mm,0) |- (fnum.west);
+\draw[flecha, dashed, cteal] (off.east) .. controls +(12mm,2mm) .. (off2.north);
+\draw[flecha] (off2.south) -- (memf.north -| off2.south);
+\node[etiqueta, below=1mm of tp, align=center] {el offset \textbf{no} se traduce:\\se copia tal cual};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Dos formas de calcular la direcci\'on f\'isica}
+
+\paragraph{1) Por suma.} La tabla guarda la \emph{direcci\'on f\'isica completa} del marco:
+\[ \mathit{dirF\acute{\imath}sica} = \mathit{frameDir} + \mathit{offset} \]
+Desventajas: entradas m\'as grandes en la tabla y una suma por cada acceso.
+
+\paragraph{2) Por yuxtaposici\'on.} La tabla guarda solo el \emph{n\'umero} de marco:
+\[ \mathit{dirF\acute{\imath}sica} = \mathit{dirBase} + \mathit{frameNumber}\cdot \mathit{pageSize} + \mathit{offset} \]
+Como $\mathit{pageSize}=2^{\mathit{bits}}$, la multiplicaci\'on se sustituye por un corrimiento de bits:
+\[ \mathit{frameNumber} \ll \mathit{bits} \]
+que es much\'isimo m\'as eficiente. Adem\'as, usualmente los marcos inician en la direcci\'on f\'isica 0 (el kernel vive en memoria alta), as\'i que $\mathit{dirBase}=0$.
+
+\begin{ejemplo}{yuxtaposici\'on con n\'umeros}
+P\'aginas de 4\,KB $\Rightarrow$ offset de 12 bits. Marco $= 8 = \mathtt{1000}_2$, offset $= 7 = \mathtt{000000000111}_2$.
+\[ \underbrace{\mathtt{1000}}_{\text{marco}}\,\underbrace{\mathtt{000000000111}}_{\text{offset (12 bits)}} = \mathtt{1000000000000111}_2 = 32775 \]
+Comprobaci\'on: $8 \times 4096 + 7 = 32768 + 7 = 32775$. \checkmark\; No hubo suma real: solo se \emph{concatenaron} los bits.
+\end{ejemplo}
+
+\begin{ojo}
+\textbf{Balance del tama\~no de p\'agina} (configurable al iniciar el SO):
+\begin{itemize}[nosep]
+  \item P\'aginas \textbf{grandes} $\rightarrow$ tabla peque\~na \checkmark, pero m\'as fragmentaci\'on interna $\times$.
+  \item P\'aginas \textbf{peque\~nas} $\rightarrow$ poco desperdicio \checkmark, pero tablas enormes y b\'usquedas m\'as costosas $\times$.
+\end{itemize}
+\end{ojo}
+
+\subsection{Ejemplo completo (Figura 3 del documento)}
+
+Sistema te\'orico: direcciones de \textbf{4 bits} (m\'aximo $2^4=16$ direcciones), palabra de 8 bits. Se usan \textbf{2 bits para n\'umero de p\'agina} y \textbf{2 bits para offset} $\Rightarrow$ 4 p\'aginas de 4 direcciones cada una. El proceso X guarda el string \emph{``este es un texto''} (16 caracteres, uno por direcci\'on).
+
+\begin{center}
+\small
+\begin{tabular}{cc|cc}
+\toprule
+\multicolumn{2}{c|}{\textbf{Direcci\'on l\'ogica}} & \textbf{P\'agina} & \textbf{Contenido} \\
+binario & decimal & & \\
+\midrule
+0000--0011 & 0--3   & 00 & \texttt{e s t e} \\
+0100--0111 & 4--7   & 01 & \texttt{\ e s\ } \\
+1000--1011 & 8--11  & 10 & \texttt{u n\ t} \\
+1100--1111 & 12--15 & 11 & \texttt{e x t o} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+La tabla de p\'aginas del proceso X guarda, por cada p\'agina: \textbf{PID propietario}, \textbf{permisos} (accesos) y \textbf{direcci\'on base} del marco:
+
+\begin{center}
+\small
+\begin{tabular}{cccc}
+\toprule
+\textbf{No.} & \textbf{PID} & \textbf{Acceso} & \textbf{Base (marco)} \\
+\midrule
+00 & X & RW & EF \\
+01 & X & RW & 00 \\
+10 & X & RW & B1 \\
+11 & X & RW & FF \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{idea}
+Para el proceso, las direcciones son un rango continuo (0000 a 1111); en memoria f\'isica las p\'aginas pueden estar \textbf{en cualquier orden y lugar}. Si el SO mueve una p\'agina f\'isica, solo actualiza \emph{una entrada} de la tabla: el proceso sigue viendo las mismas direcciones l\'ogicas. Eso es la \textbf{relocalizaci\'on} en paginaci\'on.
+\end{idea}
+
+\paragraph{Compartici\'on entre procesos.} Si un proceso Y necesita usar la p\'agina \texttt{10} del proceso X, X la comparte expl\'icitamente y en la tabla de Y se agrega una entrada apuntando al \emph{mismo marco} (\texttt{B1}). Dos observaciones del documento (t\'ipicas de examen):
+
+\begin{enumerate}[nosep]
+  \item La \textbf{direcci\'on l\'ogica no es la misma} en ambos procesos: cada tabla asigna la entrada seg\'un su propio estado. X la ve como su p\'agina \texttt{10}; Y puede verla como su p\'agina \texttt{01}.
+  \item La entrada en la tabla de Y indica que el \textbf{propietario es X} y que Y tiene \textbf{solo lectura} (R). Eso es la \textbf{protecci\'on} aplicada a la \textbf{compartici\'on}.
+\end{enumerate}
+
+\begin{center}
+\begin{tikzpicture}
+\node[draw=black!60, rounded corners=2pt, align=left, font=\footnotesize, inner sep=3pt] (tx)
+ {\textbf{Tabla proc.\ X}\\ 10 $\mid$ X $\mid$ RW $\mid$ \colorbox{cpurpleL}{B1}};
+\node[draw=black!60, rounded corners=2pt, align=left, font=\footnotesize, below=6mm of tx, inner sep=3pt] (ty)
+ {\textbf{Tabla proc.\ Y}\\ 01 $\mid$ X $\mid$ R\phantom{W} $\mid$ \colorbox{cpurpleL}{B1}};
+\node[caja=cpurple, right=28mm of $(tx.east)!0.5!(ty.east)$] (marco) {marco B1\\ \footnotesize ``u n \textvisiblespace\ t''};
+\draw[flecha] (tx.east) -- (marco.west |- tx.east) -- (marco.170);
+\draw[flecha] (ty.east) -- (marco.west |- ty.east) -- (marco.190);
+\node[etiqueta, below=2mm of marco]{misma p\'agina f\'isica, dos vistas};
+\end{tikzpicture}
+\end{center}
+
+% =====================================================
+\section{Enlace est\'atico y din\'amico}
+
+Caso real donde brilla la compartici\'on por paginaci\'on: las \textbf{librer\'ias}.
+
+\begin{itemize}[nosep]
+  \item \textbf{Enlace est\'atico}: el ejecutable contiene \emph{dentro de s\'i} todas las librer\'ias. Distribuci\'on simple (un solo archivo), pero si dos programas usan la librer\'ia A, \'esta queda cargada \textbf{dos veces} en memoria: desperdicio de memoria y de tiempo de carga.
+  \item \textbf{Enlace din\'amico}: el ejecutable contiene solo su c\'odigo propio; las librer\'ias viven en archivos aparte (\texttt{A.dll}, \texttt{B.dll}, \texttt{C.dll}) que se cargan \emph{una sola vez} y se comparten entre programas.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}
+% Estático
+\node[font=\small\bfseries] (t1) at (0,0) {Est\'atico};
+\node[cajita=cgray, below=2mm of t1, minimum width=26mm] (x1) {Prog.\ X + \colorbox{camberL}{Lib A} + Lib C};
+\node[cajita=cgray, below=2mm of x1, minimum width=26mm] (y1) {Prog.\ Y + \colorbox{camberL}{Lib A} + Lib B};
+\node[etiqueta, below=1.5mm of y1] {Lib A cargada 2 veces};
+% Dinámico
+\node[font=\small\bfseries] (t2) at (7.6,0) {Din\'amico};
+\node[cajita=cgray, below=2mm of t2, minimum width=18mm] (x2) {Prog.\ X};
+\node[cajita=cgray, below=2mm of x2, minimum width=18mm] (y2) {Prog.\ Y};
+\node[cajita=camber, right=10mm of x2] (la) {A.dll};
+\node[cajita=cteal, right=10mm of y2] (lb) {B.dll};
+\node[cajita=cblue, below=2mm of lb] (lc) {C.dll};
+\draw[flecha] (x2) -- (la);
+\draw[flecha] (x2.east) -- (lc.west);
+\draw[flecha] (y2) -- (la.south west);
+\draw[flecha] (y2) -- (lb);
+\node[etiqueta, below=1.5mm of y2, align=center] {Lib A cargada\\una sola vez};
+\end{tikzpicture}
+\end{center}
+
+\paragraph{Secuencia de carga (ejemplo del documento).} Al ejecutar X: pide la librer\'ia A $\rightarrow$ no est\'a en memoria $\rightarrow$ el SO la carga y le comparte su direcci\'on; luego lo mismo con C. Al ejecutar Y: pide A $\rightarrow$ \textbf{ya est\'a cargada} $\rightarrow$ el SO solo le comparte la direcci\'on; pide B $\rightarrow$ se carga.
+
+\paragraph{Costo del enlace din\'amico.} Mantenimiento m\'as complejo: las nuevas versiones de una librer\'ia deben mantener \textbf{compatibilidad hacia atr\'as} (en interfaz y funcionamiento) para no romper a los programas que la usan.
+
+\paragraph{C\'odigo t\'ipico (lo que el compilador genera por nosotros).}
+El programador escribe algo como:
+\begin{center}\footnotesize\ttfamily int a1(int a, X c); extern "a.dll"; \quad\dots\quad int z = a1(0, null);\end{center}
+y el compilador lo transforma en llamadas expl\'icitas al SO:
+\begin{center}\footnotesize\ttfamily
+handle = loadLibrary("a.dll"); \; a1 = getProc(handle,"a1"); \; z = a1(0,null); \; unloadLibrary(handle);
+\end{center}
+
+\begin{defin}{conteo de referencias}
+\texttt{unloadLibrary} \textbf{no} elimina la librer\'ia de memoria: el SO lleva un \emph{contador de procesos} que la usan. X carga A $\Rightarrow$ contador $=1$; Y la pide $\Rightarrow$ contador $=2$; X la descarga $\Rightarrow$ contador $=1$ (sigue en memoria); Y la descarga $\Rightarrow$ contador $=0$ $\Rightarrow$ ahora s\'i puede eliminarse sin afectar a nadie.
+\end{defin}
+
+En las tablas de p\'aginas (Figura 7 del documento), las p\'aginas de librer\'ias aparecen con \textbf{propietario = sistema (sys)} y permisos \textbf{RX} (leer y ejecutar, nunca escribir) para cada proceso que las comparte; las p\'aginas propias de cada proceso siguen siendo RW.
+
+% =====================================================
+\section{Segmentaci\'on}
+
+La paginaci\'on cumple las tres funciones, pero sufre \textbf{fragmentaci\'on interna} y adem\'as el programador piensa la memoria como \emph{bloques sem\'anticos} (c\'odigo, datos, pila\dots), no como p\'aginas uniformes.
+
+\begin{defin}{segmentaci\'on}
+Mismo principio que la paginaci\'on, pero con bloques \textbf{sem\'anticamente relacionados y de tama\~no variable}: cada segmento mide exactamente lo que el proceso pidi\'o. Eso \textbf{elimina la fragmentaci\'on interna}.
+\end{defin}
+
+Componentes (an\'alogos a la paginaci\'on): direcci\'on l\'ogica $=$ (n\'umero de segmento, offset); \textbf{tabla de segmentos} con direcci\'on base \emph{y tama\~no} de cada segmento; \textbf{Segment Table Pointer}.
+
+\paragraph{Traducci\'on:} (1) buscar el segmento en la tabla; (2) verificar que $\mathit{offset} < \mathit{tama\tilde{n}o}$ del segmento (aqu\'i vive la protecci\'on: el l\'imite ahora es \emph{por segmento}); (3) $\mathit{dirF\acute{\imath}sica} = \mathit{base} + \mathit{offset}$ (aqu\'i siempre hay suma: los segmentos son variables, no se puede yuxtaponer).
+
+\begin{defin}{fragmentaci\'on externa}
+Peque\~nos bloques \emph{libres} intercalados entre bloques ocupados: aunque la suma total libre sea $N$, el sistema no puede atender solicitudes de tama\~no $N$ (ni menores que $N$ pero mayores que el hueco m\'as grande), porque la memoria libre est\'a \textbf{dispersa}.
+\end{defin}
+
+\begin{ejemplo}{fragmentaci\'on externa (Figura 9)}
+Procesos 2, 3 y 4 ocupan 14, 18 y 18\,MB. Quedan libres tres huecos: 6, 6 y 4\,MB $=$ \textbf{16\,MB libres en total}. Llega una solicitud de \textbf{7\,MB} y\dots no se puede atender: ning\'un hueco individual alcanza.
+\end{ejemplo}
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={font=\footnotesize}]
+% Fragmentada
+\node[mem, fill=cgrayL] (a1) {SO};
+\node[mem, fill=cblueL, below=0 of a1] (a2) {Proc.\ 2 (14M)};
+\node[mem, fill=credL, below=0 of a2] (a3) {libre 6M};
+\node[mem, fill=cblueL, below=0 of a3] (a4) {Proc.\ 4 (8M)};
+\node[mem, fill=credL, below=0 of a4] (a5) {libre 6M};
+\node[mem, fill=cblueL, below=0 of a5, minimum height=10mm] (a6) {Proc.\ 3 (18M)};
+\node[mem, fill=credL, below=0 of a6] (a7) {libre 4M};
+\node[above=1mm of a1, font=\small\bfseries]{fragmentada};
+\node[etiqueta, below=1mm of a7, align=center]{16M libres pero\\?`7M? imposible};
+% Flecha
+\draw[flecha, cteal] (2.4,-2.2) -- node[above, etiqueta]{compactar} (4.4,-2.2);
+% Compactada
+\node[mem, fill=cgrayL] (b1) at (6.3,0) {SO};
+\node[mem, fill=cblueL, below=0 of b1] (b2) {Proc.\ 2 (14M)};
+\node[mem, fill=cblueL, below=0 of b2] (b3) {Proc.\ 4 (8M)};
+\node[mem, fill=cblueL, below=0 of b3, minimum height=10mm] (b4) {Proc.\ 3 (18M)};
+\node[mem, fill=ctealL, below=0 of b4, minimum height=12mm] (b5) {libre 16M};
+\node[above=1mm of b1, font=\small\bfseries]{compactada};
+\node[etiqueta, below=1mm of b5]{ahora s\'i: un solo hueco};
+\end{tikzpicture}
+\end{center}
+
+\begin{ojo}
+La \textbf{compactaci\'on} resuelve la fragmentaci\'on externa moviendo todos los bloques ocupados a un extremo\dots pero mientras se ejecuta, \textbf{los procesos de usuario y del sistema deben detenerse} hasta terminar de relocalizar todo. Impacto directo al rendimiento. (Comparar: paginaci\'on $\rightarrow$ fragmentaci\'on interna; segmentaci\'on $\rightarrow$ fragmentaci\'on externa.)
+\end{ojo}
+
+% =====================================================
+\section{Sistemas h\'ibridos (segmentaci\'on + paginaci\'on)}
+
+La segmentaci\'on, adem\'as de la fragmentaci\'on externa, complica el control por la \emph{variabilidad de tama\~nos}. Los sistemas h\'ibridos toman lo mejor de ambos: \textbf{primer nivel de segmentos, segundo nivel de paginaci\'on}. El programador pide segmentos; transparentemente cada segmento se divide en p\'aginas.
+
+La direcci\'on l\'ogica ahora tiene \textbf{tres partes}:
+\begin{center}
+\begin{tikzpicture}
+\node[cajita=cpurple, minimum width=22mm] (s) {Seg \#};
+\node[cajita=camber, minimum width=22mm, right=0 of s] (p) {Page \#};
+\node[cajita=cteal, minimum width=22mm, right=0 of p] (o) {Offset};
+\end{tikzpicture}
+\end{center}
+
+Traducci\'on: (1) el Seg \# se busca en la tabla de segmentos, que ya \textbf{no} contiene la direcci\'on del segmento sino la direcci\'on de \emph{la tabla de p\'aginas de ese segmento}; (2) el Page \# se busca en esa tabla de p\'aginas $\rightarrow$ direcci\'on base de la p\'agina; (3) se suma el offset $\rightarrow$ direcci\'on f\'isica.
+
+\begin{idea}
+Si hay fragmentaci\'on interna, queda limitada a \textbf{la \'ultima p\'agina de cada segmento}. Y no hay fragmentaci\'on externa porque f\'isicamente todo se asigna en p\'aginas iguales.
+\end{idea}
+
+% =====================================================
+\section{Paginaci\'on multinivel}
+
+El concepto de dos niveles se generaliza a una \textbf{jerarqu\'ia de tablas de p\'aginas}: la direcci\'on virtual se parte en varios \'indices (p.\ ej.\ \emph{Global Directory} $\rightarrow$ \emph{Middle Directory} $\rightarrow$ \emph{Page Table} $\rightarrow$ \emph{Offset}), y un registro (como \texttt{cr3} en x86) apunta a la tabla ra\'iz del proceso.
+
+\begin{center}
+\begin{tikzpicture}[node distance=6mm]
+\node[cajita=cgray, minimum width=16mm] (cr3) {cr3};
+\node[caja=cpurple, right=8mm of cr3] (gd) {Directorio\\global};
+\node[caja=cpurple, right=8mm of gd] (md) {Directorio\\medio};
+\node[caja=camber, right=8mm of md] (pt) {Tabla de\\p\'aginas};
+\node[caja=cteal, right=8mm of pt] (fr) {Marco +\\offset};
+\draw[flecha] (cr3) -- (gd);
+\draw[flecha] (gd) -- (md);
+\draw[flecha] (md) -- (pt);
+\draw[flecha] (pt) -- (fr);
+\node[etiqueta, below=2mm of md, align=center]{cada campo de la direcci\'on virtual indexa un nivel};
+\end{tikzpicture}
+\end{center}
+
+\begin{idea}
+La ventaja: las tablas de niveles inferiores se crean \textbf{din\'amicamente, solo cuando se necesitan}. Si un proceso usa apenas una fracci\'on de su espacio de direcciones (el caso normal), no se gasta memoria en tablas para las regiones que nunca toca.
+\end{idea}
+
+% =====================================================
+\section*{Resumen comparativo}
+
+\begin{center}
+\small
+\begin{tabular}{p{3.1cm}p{3.3cm}p{3.3cm}p{4.2cm}}
+\toprule
+ & \textbf{Reg.\ base/l\'imite} & \textbf{Paginaci\'on} & \textbf{Segmentaci\'on} \\
+\midrule
+Unidad de asignaci\'on & bloque continuo & p\'agina (fija) & segmento (variable) \\
+Relocalizaci\'on & cambiar registro base & actualizar tabla de p\'aginas & actualizar tabla de segmentos \\
+Protecci\'on & registro l\'imite & PID + permisos por p\'agina & tama\~no por segmento \\
+Compartici\'on & no pr\'actica & entradas al mismo marco & entradas al mismo segmento \\
+Problema principal & todo el proceso continuo & fragmentaci\'on \textbf{interna} & fragmentaci\'on \textbf{externa} \\
+Soluci\'on evolutiva & paginaci\'on & p\'aginas peque\~nas / multinivel & h\'ibrido seg.+pag.\ / compactaci\'on \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}
