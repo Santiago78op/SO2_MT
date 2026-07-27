@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  body { margin: 0; }
+  a { color: #b8641f; text-decoration: none; }
+  a:hover { color: #8f4c14; }
+</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<doc-page margin="0.8in">
+
+  <h1 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 10px; color: #16181d">Módulos del kernel Linux</h1>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.6; color: #5a6270; margin: 0 0 6px">Referencia de estudio · lenguaje C · Pop!_OS con kernel 6.x</p>
+  <p style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.6; color: #8a919d; margin: 0 0 28px; padding-bottom: 22px; border-bottom: 2px solid #16181d">Documento acompañante de la presentación «Módulos del kernel Linux»</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">1. Qué es un módulo y por qué existe</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo del kernel es un objeto ELF con extensión <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.ko</code> que el kernel enlaza dentro de su propio espacio de direcciones mientras el sistema está en ejecución. No es un proceso, no es una biblioteca compartida y no está aislado: desde el momento en que se carga, su código es kernel con todos los privilegios del kernel.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Linux es un kernel <em>monolítico modular</em>. Monolítico porque todos los subsistemas comparten un mismo espacio de direcciones privilegiado y se llaman entre sí con llamadas de función directas. Modular porque ese espacio se puede extender y reducir en caliente. Las tres razones prácticas para que exista este mecanismo:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">Se carga en memoria únicamente el código que esa máquina concreta necesita.</li>
+    <li style="margin-bottom: 7px">El ciclo de desarrollo se reduce a segundos: compilar, cargar, probar, descargar.</li>
+    <li style="margin-bottom: 7px">Un driver de terceros se puede instalar sin recompilar ni reemplazar el kernel de la distribución.</li>
+  </ul>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La contrapartida es la fragilidad: una desreferencia nula en espacio de usuario mata un proceso; en un módulo produce un <em>oops</em> —y con frecuencia un pánico que se lleva todo el sistema. Por eso el desarrollo se hace en una máquina virtual.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">2. Reglas del entorno del kernel</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 16px">Programar en C dentro del kernel es C, pero con otro contrato. Las diferencias que más rápido se notan:</p>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Aspecto</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Espacio de usuario</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Espacio del kernel</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Biblioteca estándar</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">glibc completa</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">solo la API interna del kernel</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Memoria dinámica</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">malloc / free</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">kmalloc / kzalloc / kfree</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Salida de texto</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">printf</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">printk / pr_info / dev_info</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Pila</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">megabytes, crece</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">8–16 KB fijos por hilo</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Coma flotante</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">disponible</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">se evita (coste de contexto FPU)</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">Fallo típico</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">segfault del proceso</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">oops o kernel panic</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">3. Preparar el entorno en Pop!_OS</h2>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo apt update
+sudo apt install build-essential linux-headers-$(uname -r) dkms \
+                 kmod mokutil libssl-dev
+uname -r                      # versión del kernel en ejecución
+ls /lib/modules/$(uname -r)/build   # debe existir: es el árbol de kbuild</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 18px">Listado 1 — Paquetes necesarios y verificación de los headers del kernel.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">4. Ciclo de vida y herramientas</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo pasa por cuatro estados: compilado en disco, cargado, en uso y descargado. Al cargarlo, el kernel resuelve sus símbolos externos, comprueba el <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">vermagic</code> —la huella de la versión y la configuración del kernel contra la que se compiló—, valida la firma si es obligatoria y ejecuta la función de inicialización. Al descargarlo ejecuta la función de salida, pero solo si el contador de referencias es cero.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 16px">La regla que evita la mayoría de los problemas: <strong style="font-weight: 600">la función de salida deshace lo que hizo la de entrada, en orden inverso</strong>. Todo recurso no liberado queda ocupado hasta el reinicio.</p>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d; width: 150px">Herramienta</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Qué hace</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">lsmod</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Lista los módulos residentes, su tamaño y sus usuarios. Formatea <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">/proc/modules</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">modinfo</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Inspecciona un <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">.ko</code> sin cargarlo: autor, licencia, descripción, parámetros, dependencias, vermagic y firma.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">insmod</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Carga un archivo por ruta exacta. No resuelve dependencias: si falta un símbolo, falla.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">modprobe</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Carga por nombre desde <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">/lib/modules/$(uname -r)</code>, arrastrando dependencias. Con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">-r</code> descarga en cascada; con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">-n -v</code> muestra qué haría.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">depmod</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Reconstruye <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">modules.dep</code> y los mapas de alias. Obligatorio tras instalar un módulo nuevo.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">rmmod</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Descarga un módulo concreto. Falla si su contador de referencias no es cero.</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Rutas relevantes del sistema</h3>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">/lib/modules/$(uname -r)/kernel/      módulos que trae la distribución
+/lib/modules/$(uname -r)/extra/       módulos externos instalados
+/lib/modules/$(uname -r)/build/       headers y kbuild (enlace simbólico)
+/lib/modules/$(uname -r)/modules.dep  grafo de dependencias
+/etc/modules-load.d/*.conf            módulos a cargar en el arranque
+/etc/modprobe.d/*.conf                opciones, alias y listas negras
+/proc/modules                         estado en vivo
+/sys/module/&lt;nombre&gt;/parameters/      parámetros expuestos</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 18px">Listado 2 — Dónde vive cada pieza del subsistema de módulos.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">5. El módulo mínimo</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">No hay <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">main()</code>. Hay dos puntos de entrada declarados con macros: uno se ejecuta al cargar y otro al descargar.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">/* hello.c */
+#include &lt;linux/module.h&gt;
+#include &lt;linux/init.h&gt;
+
+static int __init hello_init(void)
+{
+        pr_info("hello: cargado\n");
+        return 0;               /* 0 = éxito; negativo = errno */
+}
+
+static void __exit hello_exit(void)
+{
+        pr_info("hello: descargado\n");
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Tu nombre");
+MODULE_DESCRIPTION("Módulo de ejemplo");
+MODULE_VERSION("1.0");</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 3 — Módulo mínimo completo.</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">__init</code> marca la función como desechable: el kernel libera su memoria en cuanto termina la carga. <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">__exit</code> permite descartarla cuando el módulo se compila estáticamente.</li>
+    <li style="margin-bottom: 7px">Devolver un errno negativo desde init aborta la carga: el módulo no queda residente. Si ya reservaste recursos, libéralos antes de retornar.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_LICENSE</code> es obligatoria en la práctica: sin una licencia compatible con GPL el kernel se marca como <em>tainted</em> y te niega el acceso a los símbolos exportados con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">EXPORT_SYMBOL_GPL</code>.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">6. Compilar con kbuild</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">El Makefile del módulo no compila nada por sí mismo: delega en el sistema de construcción del árbol del kernel, indicándole con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">M=</code> dónde está el código externo.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid"># Makefile — las recetas van indentadas con TABULADOR
+obj-m += hello.o
+
+KDIR := /lib/modules/$(shell uname -r)/build
+PWD  := $(shell pwd)
+
+all:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(PWD) clean
+
+install:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules_install
+	depmod -a
+
+.PHONY: all clean install</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 4 — Makefile de un módulo fuera del árbol del kernel.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 10px">Para un módulo con varios archivos fuente, el nombre del módulo y el de los objetos se declaran por separado:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m         += midriver.o
+midriver-objs := core.o sysfs.o chardev.o
+ccflags-y     += -Wall -DDEBUG</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 18px">Listado 5 — Módulo compuesto por varios objetos.</p>
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Ciclo de prueba</h3>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">make                         # produce hello.ko
+modinfo hello.ko             # revisar metadatos y vermagic
+sudo insmod ./hello.ko       # cargar
+lsmod | grep hello           # confirmar
+sudo dmesg -tH | tail -5     # leer los mensajes
+sudo rmmod hello             # descargar
+make clean</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 6 — Ciclo completo de compilación y prueba.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Los dos errores de carga más frecuentes:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Invalid module format</code> — el vermagic no coincide con el kernel en ejecución. Suele pasar tras una actualización de kernel sin reiniciar, o al compilar contra los headers equivocados.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Operation not permitted</code> — Secure Boot está activo y el módulo no está firmado. Ver la sección 10.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">7. Parámetros y metadatos</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Los parámetros permiten configurar el módulo al cargarlo y, si sus permisos lo autorizan, modificarlo en caliente a través de sysfs.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">static int   veces  = 1;
+static char *saludo = "hola";
+static bool  ruidoso;
+static int   lista[4];
+static int   lista_n;
+
+module_param(veces, int, 0644);
+MODULE_PARM_DESC(veces, "Número de repeticiones");
+
+module_param(saludo, charp, 0644);
+MODULE_PARM_DESC(saludo, "Texto a imprimir");
+
+module_param(ruidoso, bool, 0644);
+MODULE_PARM_DESC(ruidoso, "Registro detallado");
+
+module_param_array(lista, int, &amp;lista_n, 0644);
+MODULE_PARM_DESC(lista, "Hasta 4 enteros separados por comas");
+
+/* uso: sudo insmod hello.ko veces=3 saludo="hey" lista=1,2,3 */
+/* en caliente:                                               */
+/*   cat /sys/module/hello/parameters/veces                   */
+/*   echo 5 | sudo tee /sys/module/hello/parameters/veces      */</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 7 — Declaración de parámetros. El tercer argumento son los permisos del archivo en sysfs; <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">0</code> lo oculta.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Macros de metadatos que conviene conocer:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_ALIAS</code> — nombre alternativo por el que modprobe puede encontrar el módulo.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_DEVICE_TABLE</code> — publica los identificadores de hardware soportados; es lo que permite que udev cargue el driver automáticamente al conectar el dispositivo.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_SOFTDEP("pre: otro")</code> — dependencia blanda: sugiere a modprobe cargar otro módulo antes o después.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_FIRMWARE</code> — declara el blob de firmware que el módulo solicitará.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">8. Character device completo</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">El character device es el driver más simple que expone una interfaz real al usuario: un nodo en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/dev</code> sobre el que funcionan <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">open</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">read</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">write</code> y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">close</code>. El ejemplo siguiente es funcional en kernel 6.4 o superior.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; line-height: 1.6; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e">/* midev.c — character device de eco, kernel 6.4+ */
+#include &lt;linux/module.h&gt;
+#include &lt;linux/init.h&gt;
+#include &lt;linux/fs.h&gt;
+#include &lt;linux/cdev.h&gt;
+#include &lt;linux/device.h&gt;
+#include &lt;linux/uaccess.h&gt;
+
+#define NOMBRE  "midev"
+#define TAM_BUF 256
+
+static dev_t             dev_num;
+static struct cdev       mi_cdev;
+static struct class     *mi_clase;
+static char              buf[TAM_BUF];
+static size_t            usado;
+
+static int mi_open(struct inode *inodo, struct file *f)
+{
+        pr_debug(NOMBRE ": open\n");
+        return 0;
+}
+
+static int mi_release(struct inode *inodo, struct file *f)
+{
+        pr_debug(NOMBRE ": release\n");
+        return 0;
+}
+
+static ssize_t mi_read(struct file *f, char __user *dst,
+                       size_t len, loff_t *off)
+{
+        return simple_read_from_buffer(dst, len, off, buf, usado);
+}
+
+static ssize_t mi_write(struct file *f, const char __user *src,
+                        size_t len, loff_t *off)
+{
+        if (len &gt;= TAM_BUF)
+                return -EINVAL;
+        if (copy_from_user(buf, src, len))
+                return -EFAULT;
+        buf[len] = '\0';
+        usado = len;
+        return len;
+}
+
+static const struct file_operations mi_fops = {
+        .owner   = THIS_MODULE,
+        .open    = mi_open,
+        .release = mi_release,
+        .read    = mi_read,
+        .write   = mi_write,
+};
+
+static int __init midev_init(void)
+{
+        int ret;
+
+        ret = alloc_chrdev_region(&amp;dev_num, 0, 1, NOMBRE);
+        if (ret)
+                return ret;
+
+        cdev_init(&amp;mi_cdev, &amp;mi_fops);
+        mi_cdev.owner = THIS_MODULE;
+        ret = cdev_add(&amp;mi_cdev, dev_num, 1);
+        if (ret)
+                goto err_region;
+
+        mi_clase = class_create(NOMBRE);
+        if (IS_ERR(mi_clase)) {
+                ret = PTR_ERR(mi_clase);
+                goto err_cdev;
+        }
+
+        if (IS_ERR(device_create(mi_clase, NULL, dev_num, NULL, NOMBRE))) {
+                ret = -ENODEV;
+                goto err_clase;
+        }
+
+        pr_info(NOMBRE ": listo en /dev/" NOMBRE " (major %d)\n",
+                MAJOR(dev_num));
+        return 0;
+
+err_clase:
+        class_destroy(mi_clase);
+err_cdev:
+        cdev_del(&amp;mi_cdev);
+err_region:
+        unregister_chrdev_region(dev_num, 1);
+        return ret;
+}
+
+static void __exit midev_exit(void)
+{
+        device_destroy(mi_clase, dev_num);
+        class_destroy(mi_clase);
+        cdev_del(&amp;mi_cdev);
+        unregister_chrdev_region(dev_num, 1);
+        pr_info(NOMBRE ": descargado\n");
+}
+
+module_init(midev_init);
+module_exit(midev_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("Character device de eco");</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 8 — Character device completo, con manejo de errores en cascada mediante etiquetas <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">goto</code>: el patrón idiomático del kernel.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 10px">Prueba:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo insmod ./midev.ko
+ls -l /dev/midev
+echo "prueba" | sudo tee /dev/midev
+sudo cat /dev/midev
+sudo rmmod midev</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 9 — Verificación del dispositivo.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Dos detalles importantes. Los punteros marcados <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">__user</code> nunca se desreferencian directamente: se copian con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">copy_to_user</code> / <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">copy_from_user</code>, que validan el acceso y pueden fallar. Y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.owner = THIS_MODULE</code> incrementa el contador de referencias mientras haya un descriptor abierto, lo que impide descargar el módulo con el dispositivo en uso.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">9. Interfaces por /proc y /sys</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">procfs sirve para depuración rápida y salidas de texto libre; sysfs es la interfaz correcta para atributos de dispositivo, con la regla de <em>un archivo, un valor</em>.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">/* procfs con seq_file */
+#include &lt;linux/proc_fs.h&gt;
+#include &lt;linux/seq_file.h&gt;
+
+static int mi_show(struct seq_file *m, void *v)
+{
+        seq_printf(m, "contador=%d\nusado=%zu\n", contador, usado);
+        return 0;
+}
+
+static int mi_proc_open(struct inode *i, struct file *f)
+{
+        return single_open(f, mi_show, NULL);
+}
+
+static const struct proc_ops mi_pops = {
+        .proc_open    = mi_proc_open,
+        .proc_read    = seq_read,
+        .proc_lseek   = seq_lseek,
+        .proc_release = single_release,
+};
+
+/* en init:  proc_create("midev", 0444, NULL, &amp;mi_pops);  */
+/* en exit:  remove_proc_entry("midev", NULL);            */</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 10 — Entrada en /proc usando la interfaz seq_file.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">/* atributo de sysfs de lectura y escritura */
+static ssize_t contador_show(struct device *d,
+                             struct device_attribute *a, char *b)
+{
+        return sysfs_emit(b, "%d\n", contador);
+}
+
+static ssize_t contador_store(struct device *d,
+                              struct device_attribute *a,
+                              const char *b, size_t n)
+{
+        int ret = kstrtoint(b, 10, &amp;contador);
+
+        return ret ? ret : n;
+}
+
+static DEVICE_ATTR_RW(contador);
+
+/* en init:  device_create_file(dev, &amp;dev_attr_contador);  */
+/* en exit:  device_remove_file(dev, &amp;dev_attr_contador);  */</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 18px">Listado 11 — Atributo de sysfs. <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">sysfs_emit</code> sustituye a <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">sprintf</code> y respeta el límite de página.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">10. Depuración</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Casi toda la depuración pasa por el búfer de mensajes del kernel. Los niveles, de mayor a menor urgencia: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_emerg</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_alert</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_crit</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_err</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_warn</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_notice</code>, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_info</code> y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_debug</code>.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo dmesg -wH                    # seguir el log en vivo
+sudo dmesg --level=err,warn       # filtrar por nivel
+journalctl -k -b 0                # log del kernel del arranque actual
+cat /proc/sys/kernel/tainted      # ¿el kernel está marcado?
+
+# activar los pr_debug de un módulo sin recompilar
+sudo mount -t debugfs none /sys/kernel/debug   # si no está montado
+echo 'module midev +p' | sudo tee \
+    /sys/kernel/debug/dynamic_debug/control</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 12 — Herramientas de observación y <em>dynamic debug</em>.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Ante un <em>oops</em>, lo útil es el <em>call trace</em>: la dirección donde falló y la pila de llamadas. <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">scripts/decode_stacktrace.sh</code> del árbol del kernel, o <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">addr2line</code> sobre el objeto con símbolos, convierten la dirección en archivo y línea. Para verificación estática y dinámica más profunda, el kernel ofrece <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">sparse</code> (<code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make C=1</code>), KASAN y lockdep, todos activables en un kernel de desarrollo.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">11. Firma de módulos y Secure Boot</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Con Secure Boot habilitado —el caso por defecto en muchos equipos con Pop!_OS— el kernel rechaza módulos sin una firma que pueda validar. La solución para desarrollo local es generar una clave propia, registrarla en el firmware como MOK (<em>Machine Owner Key</em>) y firmar cada módulo tras compilarlo.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">mokutil --sb-state                # ¿Secure Boot activo?
+
+# 1. generar el par de claves (una sola vez)
+openssl req -new -x509 -newkey rsa:2048 -nodes -days 3650 \
+  -outform DER -keyout MOK.priv -out MOK.der \
+  -subj "/CN=Modulos locales/"
+chmod 600 MOK.priv
+
+# 2. registrar la clave pública en el firmware
+sudo mokutil --import MOK.der     # pide una contraseña de un uso
+sudo reboot                       # confirmar en MokManager al arrancar
+mokutil --list-enrolled | grep -i "Modulos locales"
+
+# 3. firmar el módulo después de cada compilación
+sudo /usr/src/linux-headers-$(uname -r)/scripts/sign-file \
+  sha256 MOK.priv MOK.der midev.ko
+
+modinfo midev.ko | grep -E 'sig_id|signer|sig_key'</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 13 — Generación, registro y uso de una clave MOK.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La clave privada firma código que se ejecutará como kernel: guárdala con permisos <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">600</code>, fuera de cualquier repositorio y fuera de copias de seguridad compartidas. DKMS puede firmar automáticamente en cada reconstrucción configurando <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">mok_signing_key</code> y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">mok_certificate</code> en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/etc/dkms/framework.conf</code>.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">12. Empaquetado con DKMS</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo instalado a mano desaparece en la siguiente actualización de kernel. DKMS resuelve esto guardando el código fuente en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/usr/src</code> y recompilándolo automáticamente cada vez que se instala un kernel nuevo.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid"># dkms.conf, junto al código fuente
+PACKAGE_NAME="midev"
+PACKAGE_VERSION="1.0"
+BUILT_MODULE_NAME[0]="midev"
+DEST_MODULE_LOCATION[0]="/extra"
+AUTOINSTALL="yes"
+MAKE[0]="make -C ${kernel_source_dir} M=${dkms_tree}/${PACKAGE_NAME}/${PACKAGE_VERSION}/build modules"
+CLEAN="make clean"</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 14 — dkms.conf mínimo. Con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">AUTOINSTALL="yes"</code>, cada kernel nuevo dispara la reconstrucción.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo cp -r . /usr/src/midev-1.0
+sudo dkms add     -m midev -v 1.0
+sudo dkms build   -m midev -v 1.0
+sudo dkms install -m midev -v 1.0
+dkms status
+sudo modprobe midev
+
+# desinstalar
+sudo dkms remove -m midev -v 1.0 --all
+sudo rm -rf /usr/src/midev-1.0</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 15 — Ciclo de instalación y desinstalación con DKMS.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Para que el módulo se cargue en cada arranque, basta un archivo con su nombre en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/etc/modules-load.d/midev.conf</code>, y sus opciones por defecto en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/etc/modprobe.d/midev.conf</code> con la línea <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">options midev veces=3</code>.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">13. Seguridad y hardening</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La carga de módulos es la vía más directa a ejecución arbitraria en anillo 0, así que en sistemas de producción se restringe:</p>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d; width: 240px">Control</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Efecto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px">module.sig_enforce=1</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Rechaza todo módulo sin firma válida, incluso con Secure Boot desactivado.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px">kernel.modules_disabled=1</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Congela la carga y descarga de módulos hasta el próximo reinicio. Irreversible en caliente.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px">lockdown=integrity</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Bloquea las vías por las que root podría modificar el kernel en ejecución.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px">blacklist &lt;mod&gt;</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">En <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">/etc/modprobe.d/</code>: impide la carga automática. Para bloquearla del todo: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13px">install &lt;mod&gt; /bin/false</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px">CONFIG_MODULES=n</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; line-height: 1.5">Kernel sin soporte de módulos: la opción más estricta, requiere compilación propia.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Dentro del código, la higiene mínima:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">Validar longitudes y rangos de toda entrada de usuario antes de copiar.</li>
+    <li style="margin-bottom: 7px">No asumir que los datos que llegan de espacio de usuario terminan en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">'\0'</code>.</li>
+    <li style="margin-bottom: 7px">Comprobar privilegios con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">capable(CAP_SYS_ADMIN)</code> en las operaciones sensibles, no con el UID.</li>
+    <li style="margin-bottom: 7px">No filtrar direcciones del kernel en los mensajes de log: usar <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">%p</code>, que las ofusca.</li>
+    <li style="margin-bottom: 7px">Proteger el estado compartido con mutex o spinlock según el contexto; nunca dormir dentro de un spinlock.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">14. Lista de verificación</h2>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">Cada recurso reservado en init se libera en exit, en orden inverso.</li>
+    <li style="margin-bottom: 7px">Se revisa el valor de retorno de todo registro, con salida en cascada por etiquetas.</li>
+    <li style="margin-bottom: 7px">Ningún puntero <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">__user</code> se desreferencia directamente.</li>
+    <li style="margin-bottom: 7px">No hay buffers grandes en la pila; lo grande va a <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">kmalloc</code>.</li>
+    <li style="margin-bottom: 7px">No se duerme en contexto atómico ni con un spinlock tomado.</li>
+    <li style="margin-bottom: 7px">Se ejecutó <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">depmod -a</code> tras <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">modules_install</code>.</li>
+    <li style="margin-bottom: 7px">El módulo se compiló contra los headers del kernel en ejecución.</li>
+    <li style="margin-bottom: 7px">Las pruebas se hacen en una máquina virtual, no en el equipo de trabajo.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">15. Fuentes</h2>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">The Linux Kernel Module Programming Guide — <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5a6270">sysprog21.github.io/lkmpg</span></li>
+    <li style="margin-bottom: 7px">Documentación oficial del kernel — <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5a6270">docs.kernel.org</span></li>
+    <li style="margin-bottom: 7px">Linux Device Drivers, 3.ª edición (Corbet, Rubini, Kroah-Hartman) — <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5a6270">lwn.net/Kernel/LDD3</span></li>
+    <li style="margin-bottom: 7px">Guía de estilo del kernel — <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5a6270">Documentation/process/coding-style.rst</span></li>
+    <li style="margin-bottom: 7px">Firma de módulos — <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #5a6270">Documentation/admin-guide/module-signing.rst</span></li>
+  </ul>
+
+</doc-page>
+
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f1115;
+    --ink2: #171a20;
+    --line: #2b313b;
+    --paper: #f2efe7;
+    --paper-line: #d8d2c4;
+    --text: #f0ede6;
+    --text-dim: #98a1af;
+    --ink-text: #1a1d23;
+    --ink-dim: #5a6270;
+    --amber: #e8873a;
+    --teal: #5fb3ad;
+    --type-title: 64px;
+    --type-subtitle: 44px;
+    --type-body: 34px;
+    --type-small: 28px;
+    --type-code: 26px;
+    --pad-x: 100px;
+    --pad-top: 100px;
+    --pad-bottom: 80px;
+    --gap-title: 52px;
+    --gap-item: 28px;
+  }
+  body { margin: 0; background: #0b0c0f; }
+  a { color: var(--amber); text-decoration: none; }
+  a:hover { color: #f4a463; }
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <section data-label="Portada" data-screen-label="01" data-speaker-notes="Material de referencia personal sobre módulos del kernel Linux en C, orientado a Pop!_OS y kernel 6.x." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: space-between">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Referencia técnica · Kernel 6.x · Pop!_OS</div>
+    <div style="display: flex; flex-direction: column; gap: 36px; max-width: 1400px">
+      <h1 style="margin: 0; font-size: 104px; font-weight: 600; line-height: 1.02; letter-spacing: -0.03em">Módulos del kernel Linux</h1>
+      <p style="margin: 0; font-size: var(--type-subtitle); line-height: 1.35; color: var(--text-dim); text-wrap: pretty">Del concepto al driver: escribir, cargar, firmar y distribuir código que vive dentro del kernel.</p>
+    </div>
+    <div style="display: flex; gap: 64px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--ink-dim)">
+      <span>26 láminas</span>
+      <span>Lenguaje C</span>
+      <span>Ejemplos ejecutables</span>
+    </div>
+  </section>
+
+  <section data-label="Contenido" data-screen-label="02" data-speaker-notes="Cuatro bloques: gestión, escritura, drivers y depuración, distribución y seguridad." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Contenido</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 80px">
+      <div style="display: flex; gap: 28px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 24px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">I</span>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: var(--type-subtitle); font-weight: 500">Fundamentos y gestión</span>
+          <span style="font-size: var(--type-small); color: var(--text-dim)">Qué es un módulo, ciclo de vida, insmod / modprobe / depmod</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 28px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 24px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">II</span>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: var(--type-subtitle); font-weight: 500">Escribir un módulo</span>
+          <span style="font-size: var(--type-small); color: var(--text-dim)">hello.c, Makefile de kbuild, parámetros, metadatos</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 28px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 24px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">III</span>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: var(--type-subtitle); font-weight: 500">Drivers y depuración</span>
+          <span style="font-size: var(--type-small); color: var(--text-dim)">Character devices, /proc, /sys, dmesg, dynamic debug</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 28px; align-items: baseline; border-top: 1px solid var(--line); padding-top: 24px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">IV</span>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <span style="font-size: var(--type-subtitle); font-weight: 500">Distribución y seguridad</span>
+          <span style="font-size: var(--type-small); color: var(--text-dim)">Firma, Secure Boot, DKMS, hardening</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Qué es un módulo" data-screen-label="03" data-speaker-notes="Un .ko es código objeto enlazable en caliente contra el kernel en ejecución." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Concepto</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Qué es un módulo del kernel</h2>
+    </div>
+    <p style="margin: 0; font-size: var(--type-subtitle); line-height: 1.4; max-width: 1500px; text-wrap: pretty">Un archivo <code style="font-family: 'IBM Plex Mono', monospace; color: var(--teal)">.ko</code> es código objeto ELF que el kernel enlaza en su propio espacio de direcciones mientras está en ejecución — sin reiniciar y sin recompilar el kernel.</p>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 12px">
+      <div style="background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 36px; display: flex; flex-direction: column; gap: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">01</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Kernel pequeño</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Solo se carga en memoria lo que la máquina realmente usa.</span>
+      </div>
+      <div style="background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 36px; display: flex; flex-direction: column; gap: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">02</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Ciclo corto</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Compilar, cargar, probar y descargar en segundos.</span>
+      </div>
+      <div style="background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 36px; display: flex; flex-direction: column; gap: 16px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">03</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Hardware nuevo</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Un driver de tercero se instala sin tocar el kernel base.</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Monolítico vs. modular" data-screen-label="04" data-speaker-notes="Linux es monolítico pero modular: todo corre en un único espacio de direcciones privilegiado." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: #b8641f">Arquitectura</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Monolítico, pero modular</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px">
+      <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--ink-text); padding-top: 28px">
+        <h3 style="margin: 0; font-size: var(--type-subtitle); font-weight: 600">Monolítico</h3>
+        <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; color: #3a4048; text-wrap: pretty">Drivers, sistemas de archivos y red comparten un mismo espacio de direcciones privilegiado. Las llamadas entre subsistemas son llamadas de función directas: rápidas, sin coste de mensajería.</p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 24px; border-top: 3px solid var(--amber); padding-top: 28px">
+        <h3 style="margin: 0; font-size: var(--type-subtitle); font-weight: 600">Modular</h3>
+        <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; color: #3a4048; text-wrap: pretty">Ese mismo espacio se puede extender en caliente. Un módulo no es un proceso aislado: es parte del kernel desde el instante en que se carga.</p>
+      </div>
+    </div>
+    <div style="background: #fff; border: 1px solid var(--paper-line); border-left: 4px solid var(--amber); border-radius: 6px; padding: 32px 36px; font-size: var(--type-body); line-height: 1.5">Consecuencia práctica: un puntero nulo en tu módulo no mata un proceso — provoca un <em>kernel oops</em> o un pánico de todo el sistema.</div>
+  </section>
+
+  <section data-label="Usuario vs. kernel" data-screen-label="05" data-speaker-notes="Las reglas de C cambian: no hay libc, la pila es diminuta, no hay coma flotante." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Reglas del entorno</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Espacio de usuario vs. espacio del kernel</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: var(--type-small)">
+      <div style="padding: 24px 32px; background: var(--ink2); font-weight: 600; border-bottom: 1px solid var(--line)">Aspecto</div>
+      <div style="padding: 24px 32px; background: var(--ink2); font-weight: 600; border-bottom: 1px solid var(--line)">Usuario</div>
+      <div style="padding: 24px 32px; background: var(--ink2); font-weight: 600; border-bottom: 1px solid var(--line); color: var(--amber)">Kernel</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); color: var(--text-dim)">Biblioteca estándar</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">glibc completa</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">solo API del kernel</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); color: var(--text-dim)">Memoria dinámica</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">malloc / free</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">kmalloc / kfree</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); color: var(--text-dim)">Pila</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">MB, crece</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">8–16 KB fijos</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); color: var(--text-dim)">Coma flotante</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">sí</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace">evitar</div>
+
+      <div style="padding: 22px 32px; color: var(--text-dim)">Fallo típico</div>
+      <div style="padding: 22px 32px; font-family: 'IBM Plex Mono', monospace">segfault del proceso</div>
+      <div style="padding: 22px 32px; font-family: 'IBM Plex Mono', monospace; color: var(--amber)">oops / panic</div>
+    </div>
+  </section>
+
+  <section data-label="Parte I" data-screen-label="06" data-speaker-notes="Divisor: gestión de módulos desde la línea de comandos." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: center; gap: 32px">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 160px; font-weight: 600; line-height: 0.9; color: var(--amber)">I</div>
+    <h2 style="margin: 0; font-size: 84px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Gestión de módulos</h2>
+    <p style="margin: 0; font-size: var(--type-subtitle); color: var(--ink-dim); max-width: 1100px">Ciclo de vida, herramientas y rutas del sistema.</p>
+  </section>
+
+  <section data-label="Ciclo de vida" data-screen-label="07" data-speaker-notes="Cuatro estados. El contador de referencias es lo que impide descargar un módulo en uso." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Ciclo de vida</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">De archivo en disco a código activo</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; align-items: stretch">
+      <div style="border-top: 3px solid var(--line); padding-top: 28px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--text-dim)">.ko en disco</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Compilado</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">kbuild produce el objeto con su tabla de símbolos y su vermagic.</span>
+      </div>
+      <div style="border-top: 3px solid var(--amber); padding-top: 28px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">insmod / modprobe</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Cargado</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">El kernel resuelve símbolos, valida la firma y ejecuta <code style="font-family: 'IBM Plex Mono', monospace">module_init</code>.</span>
+      </div>
+      <div style="border-top: 3px solid var(--teal); padding-top: 28px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">refcount &gt; 0</span>
+        <span style="font-size: var(--type-body); font-weight: 500">En uso</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Mientras alguien lo referencie, el kernel rechaza descargarlo.</span>
+      </div>
+      <div style="border-top: 3px solid var(--line); padding-top: 28px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--text-dim)">rmmod</span>
+        <span style="font-size: var(--type-body); font-weight: 500">Descargado</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Se ejecuta <code style="font-family: 'IBM Plex Mono', monospace">module_exit</code>: liberar todo lo reservado.</span>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; color: var(--text-dim); max-width: 1400px; text-wrap: pretty">Regla de oro: <span style="color: var(--text)">exit deshace init en orden inverso</span>. Cualquier recurso que no liberes se queda ocupado hasta el próximo reinicio.</p>
+  </section>
+
+  <section data-label="Herramientas" data-screen-label="08" data-speaker-notes="insmod es primitivo; modprobe resuelve dependencias vía modules.dep." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Herramientas</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">El conjunto de kmod</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 340px 1fr; gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: var(--type-small)">
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">lsmod</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); line-height: 1.45">Lista los módulos cargados, su tamaño y quién los usa. Lee <code style="font-family: 'IBM Plex Mono', monospace">/proc/modules</code>.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">modinfo</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); line-height: 1.45">Inspecciona un <code style="font-family: 'IBM Plex Mono', monospace">.ko</code> sin cargarlo: autor, licencia, parámetros, vermagic, firma.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">insmod</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); line-height: 1.45">Carga un archivo por ruta exacta. No resuelve dependencias: falla si falta un símbolo.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">modprobe</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); line-height: 1.45">Carga por nombre desde <code style="font-family: 'IBM Plex Mono', monospace">/lib/modules/$(uname -r)</code> y arrastra sus dependencias. <code style="font-family: 'IBM Plex Mono', monospace">-r</code> descarga en cascada.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">depmod</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--line); line-height: 1.45">Reconstruye <code style="font-family: 'IBM Plex Mono', monospace">modules.dep</code> y los mapas de alias. Obligatorio tras instalar un módulo nuevo.</div>
+
+      <div style="padding: 22px 32px; font-family: 'IBM Plex Mono', monospace; color: var(--teal); background: var(--ink2)">rmmod</div>
+      <div style="padding: 22px 32px; line-height: 1.45">Descarga un único módulo. Falla si su contador de referencias no es cero.</div>
+    </div>
+  </section>
+
+  <section data-label="Rutas del sistema" data-screen-label="09" data-speaker-notes="Dónde vive todo en Pop!_OS: headers, módulos instalados, configuración de carga." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Sistema de archivos</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Dónde vive cada cosa</h2>
+    </div>
+    <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 36px 40px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.75; color: #d7dde7; white-space: pre; overflow: hidden">/lib/modules/$(uname -r)/kernel/     módulos del kernel de la distro
+/lib/modules/$(uname -r)/extra/      módulos externos instalados
+/lib/modules/$(uname -r)/build/      headers + kbuild (symlink)
+/lib/modules/$(uname -r)/modules.dep grafo de dependencias (depmod)
+/etc/modules-load.d/*.conf           módulos a cargar en el arranque
+/etc/modprobe.d/*.conf               opciones, alias y blacklist
+/proc/modules                        estado en vivo (lo que lee lsmod)
+/sys/module/&lt;nombre&gt;/parameters/     parámetros legibles y escribibles</pre>
+    <div style="display: flex; gap: 40px; align-items: flex-start">
+      <div style="flex: 1; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 30px 34px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">Pop!_OS · preparar el entorno</span>
+        <code style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); color: #d7dde7">sudo apt install build-essential linux-headers-$(uname -r) dkms</code>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Parte II" data-screen-label="10" data-speaker-notes="Divisor: escribir el módulo." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: center; gap: 32px">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 160px; font-weight: 600; line-height: 0.9; color: var(--amber)">II</div>
+    <h2 style="margin: 0; font-size: 84px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Escribir un módulo</h2>
+    <p style="margin: 0; font-size: var(--type-subtitle); color: var(--ink-dim); max-width: 1100px">Código mínimo, compilación con kbuild y parámetros.</p>
+  </section>
+
+  <section data-label="hello.c" data-screen-label="11" data-speaker-notes="Sin main(): dos puntos de entrada declarados con module_init y module_exit." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">hello.c</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Anatomía del módulo mínimo</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre; overflow: hidden">#include &lt;linux/module.h&gt;
+#include &lt;linux/init.h&gt;
+
+static int __init hello_init(void)
+{
+        pr_info("hello: cargado\n");
+        return 0;      /* 0 = éxito */
+}
+
+static void __exit hello_exit(void)
+{
+        pr_info("hello: descargado\n");
+}
+
+module_init(hello_init);
+module_exit(hello_exit);
+MODULE_LICENSE("GPL");</pre>
+      <div style="display: flex; flex-direction: column; gap: 30px">
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">__init</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Marca la función como desechable: su memoria se libera al terminar la carga.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">return &lt; 0</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Devolver un errno negativo aborta la carga; el módulo no queda residente.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">pr_info</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Envoltorio de <code style="font-family: 'IBM Plex Mono', monospace">printk(KERN_INFO …)</code>. No existe printf aquí.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">MODULE_LICENSE</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Sin una licencia GPL compatible el kernel marca <em>taint</em> y te niega símbolos GPL-only.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Makefile" data-screen-label="12" data-speaker-notes="El Makefile solo delega: el build real lo hace el árbol del kernel." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Makefile</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Compilar con kbuild</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.65; color: #d7dde7; white-space: pre; overflow: hidden">obj-m += hello.o
+
+KDIR := /lib/modules/$(shell uname -r)/build
+PWD  := $(shell pwd)
+
+all:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(PWD) clean
+
+install:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules_install
+	depmod -a</pre>
+      <div style="display: flex; flex-direction: column; gap: 30px">
+        <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; text-wrap: pretty"><code style="font-family: 'IBM Plex Mono', monospace; color: var(--teal)">obj-m</code> declara qué objetos se construyen como módulo. Para un módulo de varios archivos fuente se usa en cambio <code style="font-family: 'IBM Plex Mono', monospace; color: var(--teal)">mimodulo-objs</code>.</p>
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 26px 30px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre; overflow: hidden">obj-m          += mimodulo.o
+mimodulo-objs  := core.o sysfs.o</pre>
+        <p style="margin: 0; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim); text-wrap: pretty">Las tabulaciones de las recetas son obligatorias. <code style="font-family: 'IBM Plex Mono', monospace">M=</code> le dice al árbol del kernel dónde está tu código fuera de él.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Cargar y descargar" data-screen-label="13" data-speaker-notes="Flujo completo de prueba en Pop!_OS." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Flujo de trabajo</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Compilar, cargar, observar, descargar</h2>
+    </div>
+    <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 36px 40px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.8; color: #d7dde7; white-space: pre; overflow: hidden">$ make                          # produce hello.ko
+$ modinfo hello.ko              # licencia, vermagic, parámetros
+$ sudo insmod ./hello.ko        # cargar por ruta
+$ lsmod | grep hello            # confirmar que está residente
+$ sudo dmesg -tH | tail -5      # leer los pr_info
+$ sudo rmmod hello              # descargar
+$ sudo dmesg -tH | tail -2      # confirmar el exit</pre>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px">
+      <div style="border-top: 3px solid var(--amber); padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: var(--type-body); font-weight: 500">Invalid module format</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">El <code style="font-family: 'IBM Plex Mono', monospace">vermagic</code> del módulo no coincide con el kernel en ejecución. Recompila contra los headers correctos.</span>
+      </div>
+      <div style="border-top: 3px solid var(--amber); padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: var(--type-body); font-weight: 500">Operation not permitted</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Secure Boot activo y módulo sin firmar: hay que firmarlo o deshabilitar la validación.</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Parámetros" data-screen-label="14" data-speaker-notes="module_param expone variables al usuario en tiempo de carga y por /sys." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Parámetros</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Configurar el módulo desde fuera</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre; overflow: hidden">static int veces = 1;
+static char *saludo = "hola";
+static int lista[4];
+static int lista_n;
+
+module_param(veces, int, 0644);
+MODULE_PARM_DESC(veces, "Repeticiones");
+
+module_param(saludo, charp, 0644);
+MODULE_PARM_DESC(saludo, "Texto a imprimir");
+
+module_param_array(lista, int, &amp;lista_n, 0644);
+MODULE_PARM_DESC(lista, "Hasta 4 enteros");</pre>
+      <div style="display: flex; flex-direction: column; gap: 32px">
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">En tiempo de carga</span>
+          <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 24px 28px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre-wrap">sudo insmod hello.ko veces=3 \
+     saludo="hey" lista=1,2,3</pre>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">En caliente, vía sysfs</span>
+          <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 24px 28px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre-wrap">cat /sys/module/hello/parameters/veces
+echo 5 | sudo tee \
+  /sys/module/hello/parameters/veces</pre>
+        </div>
+        <p style="margin: 0; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim); text-wrap: pretty">El tercer argumento son los permisos del archivo en sysfs. <code style="font-family: 'IBM Plex Mono', monospace">0</code> significa que el parámetro no aparece ahí.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Metadatos" data-screen-label="15" data-speaker-notes="Las macros MODULE_* alimentan modinfo, el sistema de alias y udev." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: #b8641f">Metadatos</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Macros MODULE_* y licencias</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 420px 1fr; gap: 0; border: 1px solid var(--paper-line); border-radius: 10px; overflow: hidden; background: #fff; font-size: var(--type-small)">
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); font-family: 'IBM Plex Mono', monospace; background: #faf8f3">MODULE_LICENSE("GPL")</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); line-height: 1.45">Compatible con GPL: acceso completo a los símbolos exportados con <code style="font-family: 'IBM Plex Mono', monospace">EXPORT_SYMBOL_GPL</code>.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); font-family: 'IBM Plex Mono', monospace; background: #faf8f3">MODULE_LICENSE("Proprietary")</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); line-height: 1.45">El kernel queda marcado como <em>tainted</em>; los reportes de fallo pierden soporte upstream.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); font-family: 'IBM Plex Mono', monospace; background: #faf8f3">MODULE_ALIAS("…")</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); line-height: 1.45">Nombre alternativo para que modprobe encuentre el módulo por petición del sistema.</div>
+
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); font-family: 'IBM Plex Mono', monospace; background: #faf8f3">MODULE_DEVICE_TABLE(…)</div>
+      <div style="padding: 22px 32px; border-bottom: 1px solid var(--paper-line); line-height: 1.45">Publica los IDs de hardware soportados: es lo que permite la carga automática por udev.</div>
+
+      <div style="padding: 22px 32px; font-family: 'IBM Plex Mono', monospace; background: #faf8f3">MODULE_SOFTDEP("pre: x")</div>
+      <div style="padding: 22px 32px; line-height: 1.45">Dependencia blanda: sugiere a modprobe cargar otro módulo antes o después.</div>
+    </div>
+  </section>
+
+  <section data-label="Parte III" data-screen-label="16" data-speaker-notes="Divisor: drivers y depuración." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: center; gap: 32px">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 160px; font-weight: 600; line-height: 0.9; color: var(--amber)">III</div>
+    <h2 style="margin: 0; font-size: 84px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Drivers y depuración</h2>
+    <p style="margin: 0; font-size: var(--type-subtitle); color: var(--ink-dim); max-width: 1100px">Character devices, interfaces virtuales y lectura de fallos.</p>
+  </section>
+
+  <section data-label="Char device: registro" data-screen-label="17" data-speaker-notes="Cuatro pasos: reservar el número mayor, cdev, clase, nodo en /dev." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Character device · 1 de 2</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Registrar el dispositivo</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.55; color: #d7dde7; white-space: pre; overflow: hidden">static dev_t          dev_num;
+static struct cdev    mi_cdev;
+static struct class  *mi_clase;
+
+static int __init drv_init(void)
+{
+        alloc_chrdev_region(&amp;dev_num, 0, 1, "midev");
+
+        cdev_init(&amp;mi_cdev, &amp;mi_fops);
+        mi_cdev.owner = THIS_MODULE;
+        cdev_add(&amp;mi_cdev, dev_num, 1);
+
+        mi_clase = class_create("midev");   /* 6.4+ */
+        device_create(mi_clase, NULL, dev_num,
+                      NULL, "midev");
+        return 0;
+}</pre>
+      <div style="display: flex; flex-direction: column; gap: 28px">
+        <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; text-wrap: pretty">El resultado es <code style="font-family: 'IBM Plex Mono', monospace; color: var(--teal)">/dev/midev</code>, creado por udev a partir de la clase.</p>
+        <div style="background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 28px 32px; display: flex; flex-direction: column; gap: 14px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">Salida ordenada</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">En <code style="font-family: 'IBM Plex Mono', monospace">exit</code>: device_destroy → class_destroy → cdev_del → unregister_chrdev_region.</span>
+        </div>
+        <p style="margin: 0; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim); text-wrap: pretty">Desde el kernel 6.4 <code style="font-family: 'IBM Plex Mono', monospace">class_create()</code> recibe solo el nombre; el argumento <code style="font-family: 'IBM Plex Mono', monospace">THIS_MODULE</code> desapareció.</p>
+        <p style="margin: 0; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim); text-wrap: pretty">El listado omite el manejo de errores; la versión completa está en el documento de referencia.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Char device: fops" data-screen-label="18" data-speaker-notes="file_operations conecta las syscalls del usuario con funciones del módulo." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Character device · 2 de 2</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">La tabla file_operations</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.55; color: #d7dde7; white-space: pre; overflow: hidden">static char buf[256];
+
+static ssize_t mi_read(struct file *f, char __user *u,
+                       size_t len, loff_t *off)
+{
+        return simple_read_from_buffer(u, len, off,
+                                       buf, strlen(buf));
+}
+
+static ssize_t mi_write(struct file *f,
+                        const char __user *u,
+                        size_t len, loff_t *off)
+{
+        if (len &gt;= sizeof(buf))
+                return -EINVAL;
+        if (copy_from_user(buf, u, len))
+                return -EFAULT;
+        buf[len] = '\0';
+        return len;
+}</pre>
+      <div style="display: flex; flex-direction: column; gap: 28px">
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 26px 30px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.55; color: #d7dde7; white-space: pre; overflow: hidden">static const struct
+file_operations mi_fops = {
+        .owner = THIS_MODULE,
+        .read  = mi_read,
+        .write = mi_write,
+};</pre>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">__user</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Punteros que no puedes desreferenciar: siempre vía copy_to_user / copy_from_user.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">.owner</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Sube el refcount mientras haya un descriptor abierto: evita descargar el módulo en uso.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="/proc y /sys" data-screen-label="19" data-speaker-notes="procfs para depuración rápida; sysfs es la interfaz correcta para atributos de dispositivo." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Interfaces virtuales</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Exponer estado por /proc y /sys</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">procfs · proc_create("midev", 0444, NULL, &amp;mi_pops)</span>
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 30px 34px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.55; color: #d7dde7; white-space: pre; overflow: hidden">static int mi_show(struct seq_file *m, void *v)
+{
+        seq_printf(m, "contador=%d\n", contador);
+        return 0;
+}
+
+static int mi_open(struct inode *i, struct file *f)
+{
+        return single_open(f, mi_show, NULL);
+}
+
+static const struct proc_ops mi_pops = {
+        .proc_open    = mi_open,
+        .proc_read    = seq_read,
+        .proc_release = single_release,
+};</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">sysfs · un valor por archivo</span>
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 30px 34px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.55; color: #d7dde7; white-space: pre; overflow: hidden">static ssize_t contador_show(struct device *d,
+        struct device_attribute *a, char *b)
+{
+        return sysfs_emit(b, "%d\n", contador);
+}
+
+static ssize_t contador_store(struct device *d,
+        struct device_attribute *a,
+        const char *b, size_t n)
+{
+        int ret = kstrtoint(b, 10, &amp;contador);
+        return ret ? ret : n;
+}
+
+static DEVICE_ATTR_RW(contador);</pre>
+        <p style="margin: 0; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim); text-wrap: pretty">Se registra con <code style="font-family: 'IBM Plex Mono', monospace">device_create_file</code>. Regla de sysfs: un archivo, un valor.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Depuración" data-screen-label="20" data-speaker-notes="dmesg es el primer recurso; dynamic debug enciende pr_debug sin recompilar." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Depuración</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Leer lo que dice el kernel</h2>
+    </div>
+    <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.75; color: #d7dde7; white-space: pre; overflow: hidden">$ sudo dmesg -wH                      # seguir el log en vivo
+$ sudo dmesg --level=err,warn         # solo errores y avisos
+$ journalctl -k -b 0                  # log del kernel del arranque actual
+$ sudo cat /proc/kmsg                 # búfer crudo
+
+# encender los pr_debug de un módulo, sin recompilar
+$ sudo mount -t debugfs none /sys/kernel/debug   # si no está montado
+$ echo 'module hello +p' | sudo tee \
+    /sys/kernel/debug/dynamic_debug/control</pre>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px">
+      <div style="border-top: 3px solid var(--teal); padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: var(--type-body); font-weight: 500">Niveles</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">pr_emerg, pr_alert, pr_crit, pr_err, pr_warn, pr_notice, pr_info, pr_debug.</span>
+      </div>
+      <div style="border-top: 3px solid var(--teal); padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: var(--type-body); font-weight: 500">Oops</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Lee el <em>call trace</em> y resuelve la dirección con <code style="font-family: 'IBM Plex Mono', monospace">addr2line</code> o <code style="font-family: 'IBM Plex Mono', monospace">decode_stacktrace.sh</code>.</span>
+      </div>
+      <div style="border-top: 3px solid var(--teal); padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: var(--type-body); font-weight: 500">Aislar</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Prueba en una VM o con QEMU: un pánico de kernel se lleva la sesión entera.</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="Parte IV" data-screen-label="21" data-speaker-notes="Divisor: distribución y seguridad." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: center; gap: 32px">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size: 160px; font-weight: 600; line-height: 0.9; color: var(--amber)">IV</div>
+    <h2 style="margin: 0; font-size: 84px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Distribución y seguridad</h2>
+    <p style="margin: 0; font-size: var(--type-subtitle); color: var(--ink-dim); max-width: 1100px">Firma, Secure Boot, DKMS y superficie de ataque.</p>
+  </section>
+
+  <section data-label="Firma y Secure Boot" data-screen-label="22" data-speaker-notes="Con Secure Boot activo el kernel exige firma; se registra una clave MOK propia." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Firma</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Módulos firmados y Secure Boot</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 48px; align-items: start">
+      <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 32px 36px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.7; color: #d7dde7; white-space: pre; overflow: hidden"># 1. generar el par de claves (una vez)
+openssl req -new -x509 -newkey rsa:2048 -nodes -days 3650 \
+  -outform DER -keyout MOK.priv -out MOK.der \
+  -subj "/CN=Modulos locales/"
+
+# 2. registrar la clave en el firmware
+sudo mokutil --import MOK.der    # pide una contraseña
+sudo reboot                      # confirmar en MokManager
+
+# 3. firmar el módulo tras cada compilación
+sudo /usr/src/linux-headers-$(uname -r)/scripts/sign-file \
+  sha256 MOK.priv MOK.der hello.ko
+
+modinfo hello.ko | grep -E 'sig_id|signer'</pre>
+      <div style="display: flex; flex-direction: column; gap: 28px">
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">mokutil --sb-state</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Comprueba si Secure Boot está habilitado antes de perseguir otros errores.</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line); padding-top: 22px">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--teal)">DKMS + MOK</span>
+          <span style="font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">DKMS puede firmar automáticamente en cada reconstrucción vía <code style="font-family: 'IBM Plex Mono', monospace">/etc/dkms/framework.conf</code>.</span>
+        </div>
+        <div style="background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 26px 30px; font-size: var(--type-small); line-height: 1.5; color: var(--text-dim)">Guarda <code style="font-family: 'IBM Plex Mono', monospace">MOK.priv</code> con permisos 600 y fuera de cualquier repositorio: firma código que corre como kernel.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="DKMS" data-screen-label="23" data-speaker-notes="DKMS recompila el módulo automáticamente en cada actualización de kernel." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Distribución</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">DKMS: sobrevivir a las actualizaciones</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start">
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">dkms.conf</span>
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 30px 34px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre; overflow: hidden">PACKAGE_NAME="hello"
+PACKAGE_VERSION="1.0"
+BUILT_MODULE_NAME[0]="hello"
+DEST_MODULE_LOCATION[0]="/extra"
+AUTOINSTALL="yes"</pre>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: var(--amber)">Instalación</span>
+        <pre style="margin: 0; background: var(--ink2); border: 1px solid var(--line); border-radius: 10px; padding: 30px 34px; font-family: 'IBM Plex Mono', monospace; font-size: var(--type-code); line-height: 1.6; color: #d7dde7; white-space: pre; overflow: hidden">sudo cp -r . /usr/src/hello-1.0
+sudo dkms add    -m hello -v 1.0
+sudo dkms build  -m hello -v 1.0
+sudo dkms install -m hello -v 1.0
+dkms status
+sudo modprobe hello</pre>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; color: var(--text-dim); max-width: 1500px; text-wrap: pretty">Con <code style="font-family: 'IBM Plex Mono', monospace; color: var(--text)">AUTOINSTALL="yes"</code>, cada nuevo kernel que instale Pop!_OS dispara la recompilación del módulo. Sin DKMS, el módulo desaparece silenciosamente tras la siguiente actualización.</p>
+  </section>
+
+  <section data-label="Hardening" data-screen-label="24" data-speaker-notes="Un módulo cargable es la vía más directa a ejecución arbitraria en anillo 0." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--paper); color: var(--ink-text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: #b8641f">Seguridad</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Reducir la superficie de ataque</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px 60px">
+      <div style="background: #fff; border: 1px solid var(--paper-line); border-radius: 10px; padding: 32px 36px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: #b8641f">module.sig_enforce=1</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: #3a4048">Rechaza todo módulo sin firma válida, incluso sin Secure Boot.</span>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--paper-line); border-radius: 10px; padding: 32px 36px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: #b8641f">kernel.modules_disabled=1</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: #3a4048">Congela la carga de módulos hasta el próximo reinicio. Es irreversible en caliente.</span>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--paper-line); border-radius: 10px; padding: 32px 36px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: #b8641f">blacklist / install … /bin/false</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: #3a4048">En <code style="font-family: 'IBM Plex Mono', monospace">/etc/modprobe.d/</code>: impide la carga automática de módulos no deseados.</span>
+      </div>
+      <div style="background: #fff; border: 1px solid var(--paper-line); border-radius: 10px; padding: 32px 36px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); color: #b8641f">lockdown=integrity</span>
+        <span style="font-size: var(--type-small); line-height: 1.5; color: #3a4048">Bloquea las vías que permitirían a root modificar el kernel en ejecución.</span>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: var(--type-body); line-height: 1.5; color: var(--ink-dim); max-width: 1500px; text-wrap: pretty">En el código: validar toda entrada de usuario, comprobar límites antes de copiar, no confiar en <code style="font-family: 'IBM Plex Mono', monospace">strlen</code> sobre datos externos y usar <code style="font-family: 'IBM Plex Mono', monospace">capable()</code> para las operaciones privilegiadas.</p>
+  </section>
+
+  <section data-label="Errores comunes" data-screen-label="25" data-speaker-notes="Lista de verificación antes de dar por bueno un módulo." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; gap: var(--gap-title)">
+    <div style="display: flex; flex-direction: column; gap: 20px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Lista de verificación</div>
+      <h2 style="margin: 0; font-size: var(--type-title); font-weight: 600; letter-spacing: -0.02em">Errores que se repiten</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px 64px; font-size: var(--type-body); line-height: 1.45">
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">01</span><span>Recursos reservados en init que exit no libera.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">02</span><span>No revisar el valor de retorno de cada registro.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">03</span><span>Desreferenciar punteros <code style="font-family: 'IBM Plex Mono', monospace">__user</code> directamente.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">04</span><span>Buffers grandes en la pila: solo hay 8–16 KB.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">05</span><span>Dormir dentro de un spinlock o de un contexto atómico.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">06</span><span>Olvidar <code style="font-family: 'IBM Plex Mono', monospace">depmod -a</code> tras modules_install.</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">07</span><span>Compilar contra headers de otro kernel (vermagic).</span></div>
+      <div style="display: flex; gap: 22px; border-bottom: 1px solid var(--line); padding-bottom: 22px"><span style="font-family: 'IBM Plex Mono', monospace; color: var(--amber)">08</span><span>Probar en la máquina de trabajo en lugar de una VM.</span></div>
+    </div>
+  </section>
+
+  <section data-label="Cierre" data-screen-label="26" data-speaker-notes="Fuentes canónicas para seguir estudiando." style="padding: var(--pad-top) var(--pad-x) var(--pad-bottom); background: var(--ink); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; display: flex; flex-direction: column; justify-content: space-between">
+    <div style="display: flex; flex-direction: column; gap: 32px; max-width: 1400px">
+      <div style="font-family: 'IBM Plex Mono', monospace; font-size: var(--type-small); letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber)">Para seguir</div>
+      <h2 style="margin: 0; font-size: 84px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05">Fuentes de referencia</h2>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px 80px; font-size: var(--type-body); line-height: 1.45">
+      <div style="border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 8px">
+        <span>The Linux Kernel Module Programming Guide</span>
+        <span style="font-size: var(--type-small); color: var(--text-dim); font-family: 'IBM Plex Mono', monospace">sysprog21.github.io/lkmpg</span>
+      </div>
+      <div style="border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 8px">
+        <span>Documentación del kernel</span>
+        <span style="font-size: var(--type-small); color: var(--text-dim); font-family: 'IBM Plex Mono', monospace">docs.kernel.org</span>
+      </div>
+      <div style="border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 8px">
+        <span>Linux Device Drivers, 3ª edición</span>
+        <span style="font-size: var(--type-small); color: var(--text-dim); font-family: 'IBM Plex Mono', monospace">lwn.net/Kernel/LDD3</span>
+      </div>
+      <div style="border-top: 1px solid var(--line); padding-top: 22px; display: flex; flex-direction: column; gap: 8px">
+        <span>Guía de estilo del kernel</span>
+        <span style="font-size: var(--type-small); color: var(--text-dim); font-family: 'IBM Plex Mono', monospace">Documentation/process/coding-style.rst</span>
+      </div>
+    </div>
+  </section>
+
+</x-import>
+
+</x-dc>
+</body>
+</html>
