@@ -13,9 +13,10 @@ de `..\mi_primer_modulo\` y `..\curso_modulos\`.
 
 | Archivo | Qué es |
 |---|---|
-| `Módulos del Kernel Linux.dc.html` | **La presentación**: 26 diapositivas, 1920×1080 |
-| `Referencia - Módulos del Kernel Linux.dc.html` | **El manual**: 15 capítulos, documento imprimible |
-| `NOTAS-DEL-ORADOR.md` | Guion: qué decir en cada una de las 26 diapositivas |
+| `Módulos del Kernel Linux.dc.html` | **La presentación**: 30 diapositivas, 1920×1080 |
+| `Manual práctico - Tu primer módulo.dc.html` | **Manual del laboratorio**: 11 capítulos, el camino recorrido paso a paso |
+| `Referencia - Módulos del Kernel Linux.dc.html` | **Manual teórico**: 15 capítulos, de consulta |
+| `NOTAS-DEL-ORADOR.md` | Guion: qué decir en cada una de las 30 diapositivas |
 | `deck-stage.js` | Motor de la presentación (navegación, escalado, notas) |
 | `doc-page.js` | Motor del manual (paginado, impresión, PDF) |
 | `support.js` | Runtime común de los `.dc.html` |
@@ -37,7 +38,8 @@ python -m http.server 8000
 Y en el navegador:
 
 - Presentación → <http://localhost:8000/M%C3%B3dulos%20del%20Kernel%20Linux.dc.html>
-- Manual → <http://localhost:8000/Referencia%20-%20M%C3%B3dulos%20del%20Kernel%20Linux.dc.html>
+- Manual práctico → <http://localhost:8000/Manual%20pr%C3%A1ctico%20-%20Tu%20primer%20m%C3%B3dulo.dc.html>
+- Manual teórico → <http://localhost:8000/Referencia%20-%20M%C3%B3dulos%20del%20Kernel%20Linux.dc.html>
 
 O más simple: abrí <http://localhost:8000/> y hacé clic en el archivo de la lista.
 
@@ -76,17 +78,37 @@ propio CSS de impresión:
 
 ---
 
-## Contenido de la presentación (26 diapositivas)
+## Contenido de la presentación (30 diapositivas)
 
 | # | Bloque | Diapositivas |
 |---|---|---|
 | 01–05 | **Fundamentos** | Portada, contenido, qué es un módulo, monolítico vs. modular, usuario vs. kernel |
 | 06–09 | **Parte I — Gestión** | Ciclo de vida, herramientas (`insmod`/`modprobe`/`rmmod`), rutas del sistema |
-| 10–15 | **Parte II — Escribir** | `hello.c`, Makefile, cargar/descargar, parámetros, metadatos |
-| 16–20 | **Parte III — Drivers** | Char device (registro y `file_operations`), `/proc` y `/sys`, depuración |
-| 21–26 | **Parte IV — Producción** | Firma y Secure Boot, DKMS, hardening, errores comunes, cierre |
+| 10–19 | **Parte II — Escribir** | `hello.c`, Makefile, **un módulo con uno o varios archivos**, **varios módulos**, cargar/descargar, **laboratorio**, **inspección**, parámetros, metadatos |
+| 20–24 | **Parte III — Drivers** | Char device (registro y `file_operations`), `/proc` y `/sys`, depuración |
+| 25–30 | **Parte IV — Producción** | Firma y Secure Boot, DKMS, hardening, errores comunes, cierre |
 
-## Contenido del manual (15 capítulos)
+Las cuatro diapositivas en negrita (13, 14, 16 y 17) son las agregadas después del
+laboratorio: los tres casos de `obj-m`, el recorrido completo de `hola_santiago.ko`
+y las herramientas de inspección.
+
+## Contenido del manual práctico (11 capítulos)
+
+Documenta el laboratorio realmente hecho, con la salida real de cada comando:
+
+1. Paso 0 — Revisar el terreno (headers, `uname -r`, vermagic)
+2. Paso 1 — Anatomía del módulo mínimo
+3. Paso 2 — El Makefile (se lee dos veces, el TAB, `missing separator`)
+4. **Uno o varios archivos, uno o varios módulos** (`obj-m`, `-objs`, N módulos)
+5. Paso 3 — Compilar (`CC [M]`, `MODPOST`, `LD [M]`)
+6. Paso 4 — Cargar (el silencio como éxito, qué hace el kernel)
+7. Paso 5 — Inspeccionar (`lsmod`, `/proc/modules`, `/sys/module`, banderas `OE`)
+8. Paso 6 — Descargar (por nombre, no por archivo)
+9. Errores y su causa (tabla de 10 síntomas)
+10. El ciclo de trabajo completo y lista de verificación
+11. Fuentes
+
+## Contenido del manual teórico (15 capítulos)
 
 1. Qué es un módulo y por qué existe
 2. Reglas del entorno del kernel
@@ -112,12 +134,14 @@ Cada bloque teórico tiene su código para tocar:
 
 | Diapositivas | Manual | Código para practicar |
 |---|---|---|
-| 11–13 · `hello.c`, Makefile, cargar | cap. 5–6 | `..\mi_primer_modulo\hola_santiago.c` ← **empezá acá** |
-| 14–15 · Parámetros y metadatos | cap. 7 | `..\curso_modulos\lab2_params.c`, y `..\lkmpg\examples\hello-5.c` |
-| 19 · `/proc` y `/sys` | cap. 9 | `..\curso_modulos\lab3_procfs.c`, `..\lkmpg\examples\procfs1.c`, `hello-sysfs.c` |
-| 17–18 · Char device | cap. 8 | `..\lkmpg\examples\chardev.c`, `chardev2.c`, `ioctl.c` |
-| 20 · Depuración | cap. 10 | `..\lkmpg\examples\hello-debugfs.c` |
-| 25 · Errores comunes | cap. 14 | tabla de síntomas en `..\curso_modulos\GUIA.md` |
+| 11–12 · `hello.c` y Makefile | práctico 2–3 | `..\mi_primer_modulo\hola_santiago.c` ← **empezá acá** |
+| 13–14 · Uno o varios archivos / varios módulos | práctico 4 | `..\lkmpg\examples\start.c` + `stop.c` y el `Makefile` de esa carpeta |
+| 15–17 · Cargar, laboratorio, inspección | práctico 5–8 | `..\mi_primer_modulo\` completo |
+| 18–19 · Parámetros y metadatos | teórico 7 | `..\curso_modulos\lab2_params.c`, y `..\lkmpg\examples\hello-5.c` |
+| 21–22 · Char device | teórico 8 | `..\lkmpg\examples\chardev.c`, `chardev2.c`, `ioctl.c` |
+| 23 · `/proc` y `/sys` | teórico 9 | `..\curso_modulos\lab3_procfs.c`, `..\lkmpg\examples\procfs1.c`, `hello-sysfs.c` |
+| 24 · Depuración | teórico 10 | `..\lkmpg\examples\hello-debugfs.c` |
+| 29 · Errores comunes | práctico 9 | tabla de síntomas en `..\curso_modulos\GUIA.md` |
 
 ---
 

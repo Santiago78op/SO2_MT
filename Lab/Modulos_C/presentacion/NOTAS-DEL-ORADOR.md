@@ -51,59 +51,75 @@ Sin main(): dos puntos de entrada declarados con module_init y module_exit.
 
 El Makefile solo delega: el build real lo hace el árbol del kernel.
 
-## 13 - Cargar y descargar
+## 13 - Un módulo, varios archivos
+
+obj-m declara módulos resultantes, no archivos fuente. Cuando el módulo se parte en varias piezas hay que declararlas con -objs, porque Kbuild ya no puede deducir el nombre del fuente.
+
+## 14 - Varios módulos
+
+Un Makefile puede construir tantos módulos independientes como se quiera: una línea obj-m por módulo. Así está armado el Makefile de los ejemplos del LKMPG, con más de cuarenta.
+
+## 15 - Cargar y descargar
 
 Flujo completo de prueba en Pop!_OS.
 
-## 14 - Parámetros
+## 16 - Laboratorio
+
+El laboratorio completo, de la carpeta vacía al módulo cargado. Dos cosas que sorprenden al principio: insmod no imprime nada (el silencio es éxito) y el TAB del Makefile no es negociable.
+
+## 17 - Inspeccionar
+
+Dónde mirar cuando el módulo ya está cargado. El contador de referencias es lo que impide descargarlo, y las banderas OE explican por qué el kernel queda contaminado.
+
+## 18 - Parámetros
 
 module_param expone variables al usuario en tiempo de carga y por /sys.
 
-## 15 - Metadatos
+## 19 - Metadatos
 
 Las macros MODULE_* alimentan modinfo, el sistema de alias y udev.
 
-## 16 - Parte III
+## 20 - Parte III
 
 Divisor: drivers y depuración.
 
-## 17 - Char device: registro
+## 21 - Char device: registro
 
 Cuatro pasos: reservar el número mayor, cdev, clase, nodo en /dev.
 
-## 18 - Char device: fops
+## 22 - Char device: fops
 
 file_operations conecta las syscalls del usuario con funciones del módulo.
 
-## 19 - /proc y /sys
+## 23 - /proc y /sys
 
 procfs para depuración rápida; sysfs es la interfaz correcta para atributos de dispositivo.
 
-## 20 - Depuración
+## 24 - Depuración
 
 dmesg es el primer recurso; dynamic debug enciende pr_debug sin recompilar.
 
-## 21 - Parte IV
+## 25 - Parte IV
 
 Divisor: distribución y seguridad.
 
-## 22 - Firma y Secure Boot
+## 26 - Firma y Secure Boot
 
 Con Secure Boot activo el kernel exige firma; se registra una clave MOK propia.
 
-## 23 - DKMS
+## 27 - DKMS
 
 DKMS recompila el módulo automáticamente en cada actualización de kernel.
 
-## 24 - Hardening
+## 28 - Hardening
 
 Un módulo cargable es la vía más directa a ejecución arbitraria en anillo 0.
 
-## 25 - Errores comunes
+## 29 - Errores comunes
 
 Lista de verificación antes de dar por bueno un módulo.
 
-## 26 - Cierre
+## 30 - Cierre
 
 Fuentes canónicas para seguir estudiando.
 

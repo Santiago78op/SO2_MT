@@ -1,10 +1,14 @@
-# Makefile para compilar hola_santiago.c
-# OJO: las lineas de abajo van con TAB, no con espacios.
+# Makefile del laboratorio - dos modulos independientes.
+# OJO: las lineas de receta van con TAB, no con espacios.
 
 obj-m += hola_santiago.o
+obj-m += hola_params.o
+
+KDIR ?= /lib/modules/$(shell uname -r)/build
+PWD  := $(CURDIR)
 
 all:
-	make -C /lib/modules/$(shell uname -r)/build M=$(CURDIR) modules
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
 
 clean:
-	make -C /lib/modules/$(shell uname -r)/build M=$(CURDIR) clean
+	$(MAKE) -C $(KDIR) M=$(PWD) clean

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  body { margin: 0; }
+  a { color: #b8641f; text-decoration: none; }
+  a:hover { color: #8f4c14; }
+</style>
+<script src="./doc-page.js"></script>
+</helmet>
+<doc-page margin="0.8in">
+
+  <h1 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 10px; color: #16181d">Manual práctico: tu primer módulo</h1>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.6; color: #5a6270; margin: 0 0 6px">Bitácora del laboratorio <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">hola_santiago.ko</code> · de la carpeta vacía al módulo cargado</p>
+  <p style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.6; color: #8a919d; margin: 0 0 28px; padding-bottom: 22px; border-bottom: 2px solid #16181d">Pop!_OS · kernel 6.17.9-76061709-generic · complemento de «Referencia — Módulos del kernel Linux»</p>
+
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Este manual documenta, paso por paso, el laboratorio completo: los siete pasos que van de una carpeta vacía a un módulo cargado y descargado del kernel. A diferencia de la <em>Referencia</em>, que es teórica y de consulta, acá está el camino recorrido con los comandos exactos, la salida real que produce cada uno, y los errores que aparecieron de verdad.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La sección 4 es la más importante para crecer: explica cómo se declara un módulo cuando su código está en <strong>uno o en varios archivos</strong>, y cómo se construyen <strong>varios módulos</strong> desde un mismo Makefile.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">1. Paso 0 — Revisar el terreno</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo no se compila con un compilador cualquiera: se compila contra los <em>headers</em> de la versión exacta del kernel que está corriendo. Sin esos headers, nada de lo que sigue funciona, y el error que produce <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make</code> no lo explica con claridad. Conviene descubrirlo antes de escribir código.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">uname -r
+test -d /lib/modules/$(uname -r)/build &amp;&amp; echo "HEADERS: OK" || echo "HEADERS: FALTAN"
+gcc --version | head -1
+make --version | head -1</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 1 — Verificación del entorno de compilación.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Si los headers faltan, se instalan según la distribución:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid"># Pop!_OS / Ubuntu / Debian / Mint
+sudo apt update &amp;&amp; sudo apt install build-essential linux-headers-$(uname -r)
+
+# Fedora / RHEL
+sudo dnf install kernel-devel kernel-headers gcc make
+
+# Arch / Manjaro
+sudo pacman -S base-devel linux-headers</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 2 — Instalación de headers y herramientas de compilación.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">El valor que devuelve <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">uname -r</code> es la referencia de todo el proceso. Queda grabado dentro del módulo compilado como <em>vermagic</em>, y al cargarlo el kernel compara esa cadena contra la suya. Si difieren, rechaza el módulo.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">2. Paso 1 — Anatomía del módulo mínimo</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo no es un programa: no tiene <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">main()</code>. Tiene dos funciones que el kernel invoca, una al cargarlo y otra al descargarlo. Entre esos dos momentos el módulo no ejecuta nada: queda residente, esperando que algo lo despierte.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">/*
+ * hola_santiago.c - Mi primer modulo del kernel Linux.
+ */
+
+#include &lt;linux/module.h&gt;
+#include &lt;linux/init.h&gt;
+#include &lt;linux/printk.h&gt;
+
+/* Se ejecuta cuando CARGO el modulo */
+static int __init hola_init(void)
+{
+    pr_info("Hola, Santiago Barrera - Carnet 201905884\n");
+    return 0;
+}
+
+/* Se ejecuta cuando DESCARGO el modulo */
+static void __exit hola_exit(void)
+{
+    pr_info("Adios, Santiago Barrera - Carnet 201905884\n");
+}
+
+module_init(hola_init);
+module_exit(hola_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Santiago Barrera - 201905884");
+MODULE_DESCRIPTION("Mi primer modulo: saluda al cargar y al descargar");
+MODULE_VERSION("1.0");</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 3 — <code style="font-family: 'IBM Plex Mono', monospace">hola_santiago.c</code> completo.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Qué significa cada elemento</h3>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Elemento</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Para qué sirve</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">&lt;linux/…&gt;</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Headers del kernel. La biblioteca estándar de C no existe en este entorno: no hay <code style="font-family: 'IBM Plex Mono', monospace">stdio.h</code> ni <code style="font-family: 'IBM Plex Mono', monospace">stdlib.h</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">static</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Impide que el símbolo se exporte a la tabla global del kernel, donde competiría con los de miles de módulos. Regla: todo <code style="font-family: 'IBM Plex Mono', monospace">static</code> salvo lo que se exporte a propósito con <code style="font-family: 'IBM Plex Mono', monospace">EXPORT_SYMBOL()</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">__init</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Coloca la función en una sección especial que el kernel <strong>libera de memoria</strong> después de ejecutarla. Solo válido para código que nunca se vuelve a llamar.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">__exit</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Si el módulo se compila dentro del kernel (no cargable), esta función es inalcanzable y el enlazador la descarta.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">pr_info()</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">El equivalente de <code style="font-family: 'IBM Plex Mono', monospace">printf</code>. No escribe en ninguna terminal: escribe en el búfer circular del kernel, que se lee con <code style="font-family: 'IBM Plex Mono', monospace">dmesg</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">return 0</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Contrato con <code style="font-family: 'IBM Plex Mono', monospace">insmod</code>: cero significa aceptado. Un negativo (<code style="font-family: 'IBM Plex Mono', monospace">-ENOMEM</code>, <code style="font-family: 'IBM Plex Mono', monospace">-EINVAL</code>) aborta la carga. Nunca se devuelven positivos ni códigos propios.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">module_init / module_exit</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">El registro. Los nombres de las funciones son libres; estas dos macros son las que le dicen al kernel cuál es cuál. <strong>Sin ellas el módulo compila, carga y no hace nada.</strong></td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">MODULE_LICENSE</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Obligatorio, y con efecto técnico: sin una licencia compatible con GPL el kernel se marca como contaminado y el módulo pierde acceso a los símbolos exportados con <code style="font-family: 'IBM Plex Mono', monospace">EXPORT_SYMBOL_GPL()</code>.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Regla que se olvida con frecuencia: <strong>si la función de inicialización falla, debe dejar el sistema exactamente como lo encontró</strong>. Cuando <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">init</code> devuelve un error, el kernel <em>no llama nunca</em> a la función de salida. Si se registraron tres recursos y el cuarto falla, hay que liberar los tres antes de retornar.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">3. Paso 2 — El Makefile</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">El código de un módulo <strong>no se compila con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">gcc</code> a mano</strong>. Tiene que compilarse con el mismo compilador, las mismas banderas y los mismos headers con los que se construyó el kernel en ejecución. Quien lo hace es el sistema de construcción del propio kernel, <em>Kbuild</em>. El Makefile del módulo no compila: delega.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m += hola_santiago.o
+
+KDIR ?= /lib/modules/$(shell uname -r)/build
+PWD  := $(CURDIR)
+
+all:
+	$(MAKE) -C $(KDIR) M=$(PWD) modules
+
+clean:
+	$(MAKE) -C $(KDIR) M=$(PWD) clean</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 4 — Makefile completo. Las dos líneas de receta están indentadas con TABULADOR.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">El Makefile se lee dos veces</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Esta es la parte que confunde, y entenderla ahorra horas:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><strong>Primera lectura</strong> — al ejecutar <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make</code>: se interpreta como un Makefile normal y se ejecuta la receta <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">all</code>, que se traslada con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">-C</code> al árbol del kernel.</li>
+    <li style="margin-bottom: 7px"><strong>Segunda lectura</strong> — el árbol del kernel vuelve con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">M=&lt;carpeta&gt;</code> y Kbuild lee <em>el mismo archivo</em>, pero esta vez solo le interesan las líneas <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">obj-m</code>.</li>
+  </ul>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Fragmento</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Significado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">obj-m</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e"><strong>Palabra reservada de Kbuild</strong>, no se puede renombrar. La <em>m</em> significa «como módulo cargable». Con <code style="font-family: 'IBM Plex Mono', monospace">obj-y</code> el código iría compilado dentro del kernel.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">?=</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Asigna solo si la variable no viene definida desde afuera. Permite <code style="font-family: 'IBM Plex Mono', monospace">make KDIR=/otra/ruta</code> para compilar contra otro kernel sin editar el archivo.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">:=</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Asignación inmediata: se evalúa una sola vez. Con <code style="font-family: 'IBM Plex Mono', monospace">=</code> se reevaluaría cada vez que se usa la variable.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">$(MAKE)</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">El mismo <code style="font-family: 'IBM Plex Mono', monospace">make</code> que está ejecutando. Más robusto que escribir <code style="font-family: 'IBM Plex Mono', monospace">make</code>: propaga opciones como <code style="font-family: 'IBM Plex Mono', monospace">-j8</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">M=$(PWD)</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Le indica al árbol del kernel dónde está el código externo. <code style="font-family: 'IBM Plex Mono', monospace">CURDIR</code> es la variable de make con el directorio actual.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">all / clean</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Convenciones, no obligaciones. <code style="font-family: 'IBM Plex Mono', monospace">all</code> es lo que corre <code style="font-family: 'IBM Plex Mono', monospace">make</code> sin argumentos. <code style="font-family: 'IBM Plex Mono', monospace">KDIR</code> y <code style="font-family: 'IBM Plex Mono', monospace">PWD</code> también son nombres libres.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">El TABULADOR y el error «missing separator»</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Las líneas de receta deben empezar con un TABULADOR real, y el TABULADOR debe ser <strong>el primer carácter de la línea</strong>. Un solo espacio antes de él rompe la compilación con un mensaje que no menciona la indentación:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">Makefile:7: *** missing separator.  Stop.</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 5 — El error más frecuente al escribir un Makefile a mano.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Para <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make</code>, cada línea debe ser una asignación de variable, un encabezado de receta, o un comando indentado con TABULADOR. Cuando no encaja en ninguna, informa que falta el separador. La verificación se hace con caracteres visibles:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">$ cat -A Makefile | nl -ba
+     1  obj-m += hola_santiago.o$
+     2  $
+     3  KDIR ?= /lib/modules/$(shell uname -r)/build$
+     4  PWD  := $(CURDIR)$
+     5  $
+     6  all:$
+     7  ^I$(MAKE) -C $(KDIR) M=$(PWD) modules$
+
+# $   = fin de linea
+# ^I  = TABULADOR  <- debe estar pegado al margen izquierdo
+#       si aparece "  ^I" con espacios delante, ahi esta el error</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 6 — <code style="font-family: 'IBM Plex Mono', monospace">cat -A</code> revela los caracteres invisibles; <code style="font-family: 'IBM Plex Mono', monospace">nl -ba</code> numera igual que <code style="font-family: 'IBM Plex Mono', monospace">make</code>.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Muchos editores convierten el TABULADOR en espacios sin avisar. En <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">nano</code> se desactiva así, una sola vez:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">echo 'unset tabstospaces' &gt;&gt; ~/.nanorc
+echo 'unset autoindent'   &gt;&gt; ~/.nanorc</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 7 — Configurar nano para que escriba TABULADORES reales.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Alternativa infalible: generar el archivo con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">printf</code>, donde el <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">\t</code> produce un TABULADOR verdadero y no depende del editor:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">printf 'obj-m += hola_santiago.o\n\nKDIR ?= /lib/modules/$(shell uname -r)/build\nPWD  := $(CURDIR)\n\nall:\n\t$(MAKE) -C $(KDIR) M=$(PWD) modules\n\nclean:\n\t$(MAKE) -C $(KDIR) M=$(PWD) clean\n' &gt; Makefile</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 8 — Generación del Makefile sin riesgo de indentación.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">4. Uno o varios archivos, uno o varios módulos</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Kbuild distingue tres situaciones, y confundirlas produce errores difíciles de leer. La clave está en entender que <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">obj-m</code> declara <strong>módulos resultantes</strong>, no archivos fuente.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">4.1 Un módulo desde un solo archivo</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">El caso simple, y el único que no necesita declaración adicional:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m += hola_santiago.o</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Kbuild lee <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">hola_santiago.o</code>, deduce que el fuente es <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">hola_santiago.c</code>, lo compila y produce <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">hola_santiago.ko</code>. Nombre del objeto, nombre del fuente y nombre del módulo coinciden.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">4.2 Un módulo desde varios archivos</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Cuando el módulo crece se parte en varios <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.c</code>, pero el resultado sigue siendo <strong>un solo</strong> <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.ko</code>. Kbuild ya no puede deducir nada: hay que declararle las piezas.</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m         += startstop.o
+startstop-objs := start.o stop.o</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 9 — Módulo compuesto, tomado de los ejemplos del LKMPG.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">El detalle que explica la necesidad de esa segunda línea: <strong>en esa carpeta no existe ningún <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">startstop.c</code></strong>. Solo hay <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">start.c</code> (que aporta la entrada) y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">stop.c</code> (que aporta la salida). Ninguno es un módulo completo por separado. Sin la línea <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">-objs</code>, Kbuild buscaría <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">startstop.c</code> y fallaría.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">La regla, con su restricción de nombres:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m                    += &lt;nombre-modulo&gt;.o
+&lt;nombre-modulo&gt;-objs     := pieza1.o pieza2.o pieza3.o
+
+# El prefijo debe coincidir EXACTO con el nombre puesto en obj-m.
+# startstop.o  ->  startstop-objs     correcto
+#              ->  start-stop-objs    ignorado silenciosamente
+#              ->  startstop_objs     ignorado silenciosamente</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 10 — Forma general y errores de nomenclatura.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Kbuild compila cada pieza por separado y las enlaza en un único <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.ko</code>. Es la misma idea que <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">gcc a.c b.c -o programa</code> en espacio de usuario, con la diferencia de que acá hay que declararlo explícitamente.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Consideraciones al partir un módulo en varios archivos:</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><strong>Un solo <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_init</code> y un solo <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_exit</code></strong> en todo el conjunto, no uno por archivo.</li>
+    <li style="margin-bottom: 7px">Las macros <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_*</code> van una sola vez. Si se repite <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_LICENSE</code> en dos archivos, el enlazado falla por símbolo duplicado.</li>
+    <li style="margin-bottom: 7px">Las funciones y variables que se comparten entre piezas <strong>no pueden ser <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">static</code></strong>, y se declaran en un header propio del módulo.</li>
+    <li style="margin-bottom: 7px">Ninguna pieza puede llamarse igual que el módulo. Un <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">startstop-objs := startstop.o start.o</code> entra en un conflicto circular.</li>
+    <li style="margin-bottom: 7px">La forma moderna, preferida hoy dentro del árbol del kernel, es <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">&lt;nombre&gt;-y := …</code>. Ambas funcionan; <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">-objs</code> es la clásica y la que usa el LKMPG.</li>
+  </ul>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">4.3 Varios módulos desde un mismo Makefile</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un Makefile puede construir tantos módulos independientes como se quiera: basta una línea <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">obj-m</code> por módulo. Cada una produce su propio <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">.ko</code>, que se carga y descarga por separado. Así está armado el Makefile de los ejemplos del LKMPG, con más de cuarenta módulos:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">obj-m += hello-1.o
+obj-m += hello-2.o
+obj-m += hello-5.o
+obj-m += startstop.o          # este es compuesto...
+startstop-objs := start.o stop.o
+obj-m += chardev.o
+obj-m += procfs1.o
+
+KDIR ?= /lib/modules/$(shell uname -r)/build
+
+all:
+	$(MAKE) -C $(KDIR) M=$(CURDIR) modules</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 11 — Varios módulos independientes, uno de ellos compuesto, en un solo Makefile.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un solo <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make</code> construye todos. Para trabajar sobre uno solo durante el desarrollo, se puede pedir su objeto por nombre: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make -C $KDIR M=$PWD hello-1.ko</code>. Y como <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">obj-m</code> usa <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">+=</code>, el orden de las líneas es irrelevante: se acumulan en una lista.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">4.4 Resumen de los tres casos</h3>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Situación</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Declaración</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">1 módulo, 1 archivo</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">obj-m += a.o</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">a.ko</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">1 módulo, N archivos</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">obj-m += a.o<br>a-objs := x.o y.o</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">a.ko (uno solo)</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">N módulos</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">obj-m += a.o<br>obj-m += b.o</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">a.ko y b.ko</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">5. Paso 3 — Compilar</h2>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">La salida de <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">make</code> muestra el Makefile funcionando:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">make -C /lib/modules/6.17.9-76061709-generic/build M=/home/santiago/mi_primer_modulo modules
+make[1]: Entering directory '/usr/src/linux-headers-6.17.9-76061709-generic'
+  CC [M]  hola_santiago.o
+  MODPOST Module.symvers
+  CC [M]  hola_santiago.mod.o
+  LD [M]  hola_santiago.ko
+make[1]: Leaving directory '/usr/src/linux-headers-6.17.9-76061709-generic'</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 12 — Salida de una compilación exitosa.</p>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Etapa</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Qué ocurre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Entering directory</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">La delegación: <code style="font-family: 'IBM Plex Mono', monospace">make</code> se traslada al árbol del kernel.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">CC [M]</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Compilación del fuente. La marca <code style="font-family: 'IBM Plex Mono', monospace">[M]</code> significa «como módulo», y viene de <code style="font-family: 'IBM Plex Mono', monospace">obj-m</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">MODPOST</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Etapa propia del kernel: verifica que todos los símbolos usados existan y genera el código de pegamento con los metadatos. <strong>Es la razón por la que no sirve <code style="font-family: 'IBM Plex Mono', monospace">gcc</code> a secas.</strong></td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">LD [M]</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Enlazado final. Produce el <code style="font-family: 'IBM Plex Mono', monospace">.ko</code>, que es el módulo.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Advertencias habituales que <strong>no son errores</strong>: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Skipping BTF generation … due to unavailability of vmlinux</code> (falta información para herramientas de trazado) y avisos de que el compilador difiere del que construyó el kernel. Si la última línea es <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">LD [M] … .ko</code>, la compilación salió bien.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Antes de cargarlo conviene revisar los metadatos, que ya están dentro del binario:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">$ modinfo hola_santiago.ko
+filename:       /home/santiago/mi_primer_modulo/hola_santiago.ko
+version:        1.0
+description:    Mi primer modulo: saluda al cargar y al descargar
+author:         Santiago Barrera - 201905884
+license:        GPL
+vermagic:       6.17.9-76061709-generic SMP preempt mod_unload modversions</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 13 — Los metadatos declarados en el fuente, ya grabados en el módulo.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">6. Paso 4 — Cargar</h2>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo insmod hola_santiago.ko     # no imprime nada: el silencio es exito
+sudo dmesg | tail -5             # el mensaje esta aca
+sudo dmesg -T | tail -5          # con fecha y hora legibles</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 14 — Carga del módulo y lectura del log del kernel.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La terminal no responde nada al cargar el módulo, y eso es el comportamiento correcto: en Unix el silencio indica éxito. El mensaje de <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">pr_info</code> está en el búfer del kernel, no en la terminal.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Secuencia interna de lo que hace el kernel en ese instante:</p>
+  <ol style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">insmod</code> lee el archivo y lo entrega por la llamada al sistema <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">finit_module</code>.</li>
+    <li style="margin-bottom: 7px">Compara el <em>vermagic</em> del módulo con el suyo.</li>
+    <li style="margin-bottom: 7px">Verifica que todos los símbolos externos existan, según lo preparado por MODPOST.</li>
+    <li style="margin-bottom: 7px">Reserva memoria, copia el código y ajusta las direcciones (reubicación).</li>
+    <li style="margin-bottom: 7px">Llama a la función registrada con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_init</code>.</li>
+    <li style="margin-bottom: 7px">Si devolvió cero, deja el módulo residente y <strong>libera la memoria de la función <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">__init</code></strong>, que ya no se volverá a usar.</li>
+  </ol>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Para desarrollo conviene dejar el log abierto en una segunda terminal, de modo que los mensajes aparezcan en el momento:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo dmesg -wH        # -w = seguir en vivo, -H = legible. Ctrl-C para salir</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 15 — Monitoreo continuo del log del kernel.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">7. Paso 5 — Inspeccionar el módulo cargado</h2>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">$ lsmod | grep hola_santiago
+hola_santiago          12288  0
+#      nombre          bytes  contador de referencias
+
+$ grep hola_santiago /proc/modules
+hola_santiago 12288 0 - Live 0xffffffffc0d5a000 (OE)</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 16 — <code style="font-family: 'IBM Plex Mono', monospace">lsmod</code> es un formateador de <code style="font-family: 'IBM Plex Mono', monospace">/proc/modules</code>, que es la fuente cruda.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La tercera columna es el <strong>contador de referencias</strong>: mientras no sea cero, el kernel se niega a descargar el módulo. En la fuente cruda aparece además el estado (<code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Live</code>), la dirección de memoria del kernel donde reside el código, y las banderas de contaminación.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Las banderas (OE) y el kernel contaminado</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Al cargar un módulo propio, el log muestra dos avisos que <strong>no son fallas</strong>:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">hola_santiago: loading out-of-tree module taints kernel.
+hola_santiago: module verification failed: signature and/or required key
+               missing - tainting kernel</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 17 — Avisos de contaminación al cargar un módulo externo sin firmar.</p>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><strong><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">O</code></strong> — <em>out-of-tree</em>: el módulo no forma parte del código oficial del kernel.</li>
+    <li style="margin-bottom: 7px"><strong><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">E</code></strong> — el módulo no está firmado criptográficamente.</li>
+  </ul>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un kernel «contaminado» declara que cargó código que no controla; los desarrolladores del kernel descartan reportes de fallas en ese estado. El estado global se lee en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/proc/sys/kernel/tainted</code> y <strong>no se limpia al descargar el módulo</strong>: persiste hasta reiniciar. Si <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_LICENSE</code> no fuera compatible con GPL, aparecería una tercera bandera y el módulo perdería acceso a la mayoría de las funciones del kernel.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">El directorio en sysfs</h3>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Al cargar el módulo, el kernel crea sin intervención un directorio con su estado:</p>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">ls  /sys/module/hola_santiago/
+cat /sys/module/hola_santiago/refcnt        # 0     contador de referencias
+cat /sys/module/hola_santiago/initstate     # live  estado
+cat /sys/module/hola_santiago/coresize      # bytes en memoria
+cat /sys/module/hola_santiago/version       # 1.0   viene de MODULE_VERSION
+cat /sys/module/hola_santiago/taint         # OE</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 18 — Estado del módulo expuesto en sysfs.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Un módulo sin parámetros declarados <strong>no tiene</strong> el subdirectorio <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">parameters/</code>. Aparece solo en cuanto se declara el primer <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_param</code> con permisos distintos de cero, y desde ahí se pueden leer —y según los permisos, modificar en caliente— los valores del módulo cargado.</p>
+
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Dos fuentes de información distintas</h3>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Herramienta</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Consulta</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Requiere</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">modinfo x.ko</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">el archivo en disco</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">que exista el archivo; el módulo puede estar descargado</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">lsmod · /proc/modules · /sys/module</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">el kernel en ejecución</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">que el módulo esté cargado</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">8. Paso 6 — Descargar</h2>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.65; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">sudo rmmod hola_santiago     # SIN la extension .ko
+sudo dmesg | tail -3         # aparece el mensaje de salida
+make clean                   # borra los archivos generados</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 19 — Descarga y limpieza.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">La asimetría entre los dos comandos no es capricho sintáctico: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">insmod</code> recibe la <strong>ruta de un archivo</strong>, porque el módulo todavía no existe para el kernel; <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">rmmod</code> recibe un <strong>nombre</strong>, porque el módulo ya vive dentro del kernel registrado con ese nombre. El archivo podría haberse borrado del disco y la descarga funcionaría igual.</p>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 8px">Lo que hace el kernel al descargar:</p>
+  <ol style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">Revisa el contador de referencias. Si no es cero, se niega.</li>
+    <li style="margin-bottom: 7px">Llama a la función registrada con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_exit</code>.</li>
+    <li style="margin-bottom: 7px">Libera la memoria del código y elimina la entrada de <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/proc/modules</code> y el directorio de <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">/sys/module/</code>.</li>
+  </ol>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px">Existe también <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">modprobe -r</code>, que además descarga dependencias que hayan quedado sin uso. Para desarrollo, <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">rmmod</code> es más directo y predecible.</p>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">9. Errores y su causa</h2>
+  <table style="width: 100%; border-collapse: collapse; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; margin: 0 0 18px">
+    <thead>
+      <tr>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Mensaje</th>
+        <th style="text-align: left; padding: 9px 12px; border-bottom: 2px solid #16181d; font-weight: 600; color: #16181d">Causa y solución</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">missing separator</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Espacios en lugar de TABULADOR en una receta, o espacios <em>antes</em> del TABULADOR. Verificar con <code style="font-family: 'IBM Plex Mono', monospace">cat -A</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">No rule to make target … modules</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Faltan los headers del kernel, o <code style="font-family: 'IBM Plex Mono', monospace">KDIR</code> apunta a una ruta inexistente.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">No such file or directory: x.c</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Un <code style="font-family: 'IBM Plex Mono', monospace">obj-m</code> nombra un objeto sin fuente. Si el módulo es compuesto, falta la línea <code style="font-family: 'IBM Plex Mono', monospace">-objs</code> (o su prefijo no coincide).</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Invalid module format</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">El <em>vermagic</em> no coincide con el kernel en ejecución. <code style="font-family: 'IBM Plex Mono', monospace">make clean &amp;&amp; make</code>; el detalle está en <code style="font-family: 'IBM Plex Mono', monospace">dmesg</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Key was rejected by service</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Secure Boot activo y módulo sin firmar. Comprobar con <code style="font-family: 'IBM Plex Mono', monospace">mokutil --sb-state</code>: hay que firmarlo o desactivar Secure Boot.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Operation not permitted</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Falta <code style="font-family: 'IBM Plex Mono', monospace">sudo</code>, o la carga de módulos está bloqueada (<code style="font-family: 'IBM Plex Mono', monospace">kernel.modules_disabled=1</code>).</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">File exists</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">El módulo ya está cargado de un intento anterior. Descargarlo primero.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Module x is in use</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Contador de referencias distinto de cero. Ver la columna <em>Used by</em> de <code style="font-family: 'IBM Plex Mono', monospace">lsmod</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; font-family: 'IBM Plex Mono', monospace; font-size: 13px">Unknown symbol in module</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Se usa un símbolo no exportado, o falta cargar antes otro módulo. El detalle exacto está en <code style="font-family: 'IBM Plex Mono', monospace">dmesg</code>.</td>
+      </tr>
+      <tr>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #5a6270">El módulo carga pero no imprime nada</td>
+        <td style="padding: 9px 12px; border-bottom: 1px solid #ded8ca; color: #24272e">Faltan <code style="font-family: 'IBM Plex Mono', monospace">module_init</code> / <code style="font-family: 'IBM Plex Mono', monospace">module_exit</code>, o el mensaje se busca en la terminal en vez de <code style="font-family: 'IBM Plex Mono', monospace">dmesg</code>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">10. El ciclo de trabajo completo</h2>
+  <pre style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 1.7; background: #f7f5ef; border: 1px solid #ded8ca; border-radius: 5px; padding: 16px 18px; margin: 0 0 10px; white-space: pre-wrap; color: #24272e; break-inside: avoid">make                              # compilar  -> hola_santiago.ko
+modinfo hola_santiago.ko          # revisar metadatos y vermagic
+sudo insmod hola_santiago.ko      # cargar
+lsmod | grep hola_santiago        # confirmar que esta residente
+sudo dmesg | tail                 # observar la salida
+sudo rmmod hola_santiago          # descargar  (sin .ko)
+sudo dmesg | tail                 # confirmar el mensaje de salida
+make clean                        # limpiar</pre>
+  <p style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; color: #5a6270; margin: 0 0 16px">Listado 20 — El bucle que se repite en todo el desarrollo de módulos.</p>
+  <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 16px; font-weight: 600; margin: 24px 0 10px; color: #16181d">Lista de verificación</h3>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px">Headers instalados y coincidentes con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">uname -r</code>.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_init</code> y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">module_exit</code> presentes, una sola vez cada uno.</li>
+    <li style="margin-bottom: 7px"><code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">MODULE_LICENSE("GPL")</code> declarado.</li>
+    <li style="margin-bottom: 7px">Todo símbolo interno marcado <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">static</code>.</li>
+    <li style="margin-bottom: 7px">La función de inicialización libera lo que registró si falla, y devuelve un error negativo.</li>
+    <li style="margin-bottom: 7px">Todo lo creado en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">init</code> se destruye en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">exit</code>, en orden inverso.</li>
+    <li style="margin-bottom: 7px">Recetas del Makefile indentadas con TABULADOR (verificado con <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">cat -A</code>).</li>
+    <li style="margin-bottom: 7px">Si el módulo es compuesto, la línea <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">-objs</code> con el prefijo exacto, y ninguna pieza con el nombre del módulo.</li>
+    <li style="margin-bottom: 7px">Las pruebas, en una máquina virtual o de laboratorio. Un módulo con errores no da un mensaje: congela el sistema.</li>
+  </ul>
+
+  <h2 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 21px; font-weight: 600; margin: 34px 0 12px; color: #16181d">11. Fuentes y material relacionado</h2>
+  <ul style="font-family: 'IBM Plex Sans', sans-serif; font-size: 15px; line-height: 1.65; color: #24272e; margin: 0 0 14px; padding-left: 22px">
+    <li style="margin-bottom: 7px"><em>The Linux Kernel Module Programming Guide</em> — <a href="https://sysprog21.github.io/lkmpg/">sysprog21.github.io/lkmpg</a>. Ejemplos en <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">lkmpg/examples/</code>; el módulo compuesto de la sección 4.2 es <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">start.c</code> + <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">stop.c</code>.</li>
+    <li style="margin-bottom: 7px">Documentación de Kbuild para módulos externos: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Documentation/kbuild/modules.rst</code> en el árbol del kernel.</li>
+    <li style="margin-bottom: 7px">Estilo de código: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">Documentation/process/coding-style.rst</code> y la herramienta <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">scripts/checkpatch.pl</code>.</li>
+    <li style="margin-bottom: 7px">«Referencia — Módulos del kernel Linux»: el documento teórico complementario, con character devices, DKMS, firma y hardening.</li>
+    <li style="margin-bottom: 7px">Código de práctica en este proyecto: <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">mi_primer_modulo/</code> y <code style="font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; background: #f2efe7; padding: 1px 5px; border-radius: 3px">curso_modulos/</code>.</li>
+  </ul>
+
+</doc-page>
+</x-dc>
+</body>
+</html>
