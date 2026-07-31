@@ -201,11 +201,24 @@
   <li class="pt">Parte VIII — Síntesis integradora<span class="pg">110</span></li>
   <li class="cap">46. Correlaciones entre las tres fuentes<span class="pg">111</span></li>
   <li class="cap">47. Glosario esencial<span class="pg">114</span></li>
+  <li class="pt">Parte IX — Catálogo de estilos arquitectónicos<span class="pg">116</span></li>
+  <li class="cap">48. Flujo de datos: tubería y filtro, y batch secuencial<span class="pg">118</span></li>
+  <li class="cap">49. Centrados en datos: repositorio y pizarra<span class="pg">119</span></li>
+  <li class="cap">50. Jerárquicos: capas y microkernel<span class="pg">120</span></li>
+  <li class="cap">51. Invocación implícita: publish-subscribe y broker<span class="pg">122</span></li>
+  <li class="cap">52. Cliente-servidor y peer-to-peer<span class="pg">123</span></li>
+  <li class="cap">53. Intérprete y máquina virtual<span class="pg">124</span></li>
+  <li class="cap">54. Comparación, composición y el caso KWIC<span class="pg">125</span></li>
+  <li class="pt">Parte X — Las 23 fichas del catálogo GoF<span class="pg">127</span></li>
+  <li class="cap">55. Cómo leer una ficha<span class="pg">128</span></li>
+  <li class="cap">56. Los 5 patrones creacionales<span class="pg">129</span></li>
+  <li class="cap">57. Los 7 patrones estructurales<span class="pg">132</span></li>
+  <li class="cap">58. Los 11 patrones de comportamiento<span class="pg">137</span></li>
 </ul>
 <p style="margin-top:14px;font-size:9pt;color:#5F5E5A;font-family:'Segoe UI',Arial,sans-serif">
 <b>Cómo leer esta guía.</b> La <b>Parte I</b> fija el vocabulario (arquitectura, diseño, arquitecto, architecting) y puede leerse como resumen ejecutivo de todo el documento.
 Las <b>Partes II</b> (historia y teoría), <b>III–VI</b> (la ingeniería practicable) y <b>VII</b> (el catálogo de patrones) desarrollan cada fuente en profundidad.
-La <b>Parte VIII</b> cierra mostrando cómo las tres se corresponden entre sí.
+La <b>Parte VIII</b> muestra cómo las tres fuentes se corresponden entre sí, y las <b>Partes IX y X</b> son los dos catálogos de referencia: los <b>estilos arquitectónicos</b> y las <b>23 fichas de patrones</b>, para consultar patrón por patrón.
 Las cajas <span style="color:#534AB7"><b>violeta</b></span> marcan ideas clave; las <span style="color:#854F0B"><b>ámbar</b></span>, definiciones exactas; las <span style="color:#0F6E56"><b>verdes</b></span>, ejemplos desarrollados; las <span style="color:#A32D2D"><b>rojas</b></span>, advertencias y trampas típicas de examen; las <span style="color:#5F5E5A"><b>grises</b></span>, citas textuales.
 </p>
 </div>
@@ -769,6 +782,9 @@ La AS es, a grandes rasgos, <b>una vista del sistema</b> que incluye los compone
 <div class="defin"><span class="t">Definición: Estilo arquitectónico</span>
 Un estilo es un <b>concepto descriptivo que define una forma de articulación u organización arquitectónica</b>. El conjunto de los estilos cataloga las formas básicas posibles de estructuras de software; las formas complejas se articulan mediante <b>composición</b> de los estilos fundamentales. Los estilos conjugan <b>componentes, conectores, configuraciones y restricciones</b>.</div>
 <p>Al estipular los <b>conectores como elemento de juicio de primera clase</b>, el concepto de estilo se sitúa en un orden de discurso que el modelado OO en general y UML en particular <b>no cubren satisfactoriamente</b>. A diferencia de los patrones de diseño (que son centenares), los estilos se ordenan en <b>seis o siete clases fundamentales y unos veinte ejemplares como máximo</b> — es notable el empeño por subsumir todas las aplicaciones existentes en tan pocas dimensiones. Estilos típicos: arquitecturas basadas en <b>flujo de datos</b>, <b>peer-to-peer</b>, de <b>invocación implícita</b>, <b>jerárquicas</b>, <b>centradas en datos</b>, de <b>intérprete / máquina virtual</b>. La mejor forma de describir un estilo es un ADL o un lenguaje formal de especificación. El estilo es, además, la <b>encarnación principal del principio de reusabilidad</b> en el plano arquitectónico, y su identificación se hace "a grandes rasgos": en un estilo, <b>menos es más</b>.</p>
+<div class="idea"><span class="t">Los estilos, uno por uno → Parte IX</span>
+El documento de Reynoso <b>enumera</b> los estilos pero no los describe: su inventario y descripción son el capítulo 2 de su serie, publicado aparte y no incluido en la carpeta de la materia. Por eso este catálogo se desarrolla en la <b>Parte IX</b> de esta guía (caps. 48–54), con una ficha por estilo — componentes, conectores, restricciones, cuándo usarlo, qué atributos favorece y cuáles sacrifica — más la tabla comparativa y el caso KWIC.</div>
+<p></p>
 
 <h2>7.2 Lenguajes de descripción arquitectónica (ADLs)</h2>
 <p>Los ADLs ocupan una parte importante del trabajo arquitectónico desde la fundación de la disciplina: propuestas de variado rigor, casi todas académicas, surgidas desde comienzos de los 90 en contemporaneidad con la unificación de UML. Permiten <b>modelar una arquitectura mucho antes de programar</b> las aplicaciones, analizar su adecuación, determinar puntos críticos y hasta simular su comportamiento. Difieren sustancialmente de UML, que en su versión 1.x se estima <b>inadecuado para expresar conectores</b> y limitado en su modelo semántico para las clases de descripción y análisis requeridas. Hay unos <b>veinte ADLs de primera magnitud</b> (Acme/Armani, ADML, Aesop, ArTek, C2 SADL, CHAM, Darwin, Jacal, LILEANNA, MetaH/AADL, Rapide, UniCon, Wright, xArch/xADL...) y quizás cuarenta o cincuenta más que no resistieron el paso del tiempo. Son bien conocidos en la universidad, pero <b>muy pocos arquitectos de industria los conocen y menos aún los usan</b>. A futuro, ningún ADL será viable si no se coordina con <b>UML 2.0</b> por un lado y con <b>XML</b> por el otro.</p>
@@ -2011,6 +2027,8 @@ Sistema de 797 archivos, 2 años de historia: 2.756 issues (1.079 bugs), 3.262 c
 <div class="cap">Figura 41.1 — El "espacio de patrones de diseño" (Tabla 1.1 del GoF): propósito × alcance.</div>
 </div>
 
+<div class="idea"><span class="t">Las fichas completas → Parte X</span>
+Esta tabla da la <b>intención declarada</b> de cada patrón, que es lo que se escanea para encontrar candidatos. La <b>ficha completa</b> de cada uno — problema, solución y participantes, aplicabilidad textual del GoF, consecuencias a favor y en contra, qué te deja variar y patrones relacionados — está en la <b>Parte X</b> (caps. 55–58).</div>
 <h2>41.1 Los 23 intents</h2>
 <table>
 <tr><th style="width:17%">Patrón</th><th>Intent (propósito declarado)</th></tr>
@@ -2320,3 +2338,614 @@ Tres épocas, una misma convicción: la de Parnas en 1972 ("la estructura es pri
 
 </body>
 </html>
+<!-- ================= PARTE IX ================= -->
+<div class="parte">
+  <div class="kicker">Parte IX</div>
+  <h1 class="pt">Catálogo de estilos arquitectónicos</h1>
+  <div class="sub">Los seis grandes estilos, uno por uno: componentes, conectores, restricciones, cuándo usarlos, qué atributos de calidad favorecen y cuáles sacrifican — con el patrón equivalente del SAIP y ejemplos reales.</div>
+  <div class="pindex"><div class="pcap"><span class="pn">48</span>Flujo de datos: tubería y filtro, y batch secuencial</div><div class="pcap"><span class="pn">49</span>Centrados en datos: repositorio y pizarra</div><div class="pcap"><span class="pn">50</span>Jerárquicos: capas y microkernel</div><div class="pcap"><span class="pn">51</span>Invocación implícita: publish-subscribe y broker</div><div class="pcap"><span class="pn">52</span>Cliente-servidor y peer-to-peer</div><div class="pcap"><span class="pn">53</span>Intérprete y máquina virtual</div><div class="pcap"><span class="pn">54</span>Comparación, composición y el caso KWIC</div></div>
+</div>
+
+<div class="ojo"><span class="t">Nota de alcance — de dónde sale este catálogo</span>
+El documento de Reynoso incluido en la carpeta de la materia cubre <b>los puntos 1.1 a 1.9</b> de su temario: <b>enumera</b> los estilos y define qué es un estilo, pero su <b>inventario y descripción</b> son el <b>capítulo 2 de su serie, publicado como documento aparte que no está en <code>AYD_2\</code></b> ("Hemos tratado el tema de las definiciones, los catálogos de estilos, las propiedades de cada uno […] en un documento separado"). Por eso esta parte se construye con tres fuentes, siempre identificadas: <b>(a)</b> lo que Reynoso sí dice — la definición de estilo, la lista de los seis, la tesis de la composición y el caso KWIC; <b>(b)</b> los <b>patrones del SAIP</b> que desarrollan varios de estos estilos con beneficios y tradeoffs (capas, cliente-servidor, publish-subscribe, plug-in, microservicios, SOA, map-reduce, spares); <b>(c)</b> la <b>literatura clásica</b> del campo (Shaw &amp; Garlan; la serie POSA de Buschmann) para los estilos que ninguno de los dos documentos desarrolla — tubería y filtro, repositorio y pizarra, peer-to-peer, intérprete y máquina virtual —, señalada como <span class="fuente">[clásico]</span>.</div>
+
+<h1><span class="num">48.</span>Flujo de datos: tubería y filtro, y batch secuencial</h1>
+
+<div class="diagrama">
+<svg width="680" height="200" viewBox="0 0 680 200">
+  <g font-size="8.6">
+    <text x="20" y="16" font-size="9.6" font-weight="bold" fill="#0F6E56">TUBERÍA Y FILTRO (pipes and filters)</text>
+    <rect x="20" y="28" width="70" height="34" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="55" y="49" text-anchor="middle">fuente</text>
+    <rect x="140" y="28" width="86" height="34" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/><text x="183" y="44" text-anchor="middle" font-weight="bold">Filtro 1</text><text x="183" y="56" text-anchor="middle" font-size="7.6">transforma</text>
+    <rect x="276" y="28" width="86" height="34" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/><text x="319" y="44" text-anchor="middle" font-weight="bold">Filtro 2</text><text x="319" y="56" text-anchor="middle" font-size="7.6">transforma</text>
+    <rect x="412" y="28" width="86" height="34" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.5"/><text x="455" y="44" text-anchor="middle" font-weight="bold">Filtro 3</text><text x="455" y="56" text-anchor="middle" font-size="7.6">transforma</text>
+    <rect x="548" y="28" width="70" height="34" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="583" y="49" text-anchor="middle">sumidero</text>
+    <text x="115" y="74" text-anchor="middle" font-size="7.4" font-style="italic">pipe</text>
+    <text x="251" y="74" text-anchor="middle" font-size="7.4" font-style="italic">pipe</text>
+    <text x="387" y="74" text-anchor="middle" font-size="7.4" font-style="italic">pipe</text>
+    <text x="523" y="74" text-anchor="middle" font-size="7.4" font-style="italic">pipe</text>
+    <text x="340" y="92" text-anchor="middle" font-size="8">Cada filtro <tspan font-weight="bold">no conoce a sus vecinos</tspan>, no comparte estado y consume/produce un <tspan font-weight="bold">stream</tspan>: se pueden reordenar y correr en paralelo.</text>
+
+    <text x="20" y="122" font-size="9.6" font-weight="bold" fill="#854F0B">BATCH SECUENCIAL (el caso degenerado)</text>
+    <rect x="20" y="134" width="96" height="32" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.5"/><text x="68" y="154" text-anchor="middle" font-weight="bold">Programa 1</text>
+    <rect x="176" y="134" width="96" height="32" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.5"/><text x="224" y="154" text-anchor="middle" font-weight="bold">Programa 2</text>
+    <rect x="332" y="134" width="96" height="32" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.5"/><text x="380" y="154" text-anchor="middle" font-weight="bold">Programa 3</text>
+    <text x="146" y="150" text-anchor="middle" font-size="7.6">archivo</text><text x="146" y="160" text-anchor="middle" font-size="7.6">completo</text>
+    <text x="302" y="150" text-anchor="middle" font-size="7.6">archivo</text><text x="302" y="160" text-anchor="middle" font-size="7.6">completo</text>
+    <text x="470" y="146" font-size="8">Sin concurrencia: cada etapa espera a que</text>
+    <text x="470" y="158" font-size="8">la anterior <tspan font-weight="bold">termine del todo</tspan>. Es el estilo</text>
+    <text x="470" y="170" font-size="8">de los procesos nocturnos de mainframe.</text>
+  </g>
+  <line x1="90" y1="45" x2="140" y2="45" stroke="#0F6E56" stroke-width="1.6"/><polygon points="140,45 132,41 132,49" fill="#0F6E56"/>
+  <line x1="226" y1="45" x2="276" y2="45" stroke="#0F6E56" stroke-width="1.6"/><polygon points="276,45 268,41 268,49" fill="#0F6E56"/>
+  <line x1="362" y1="45" x2="412" y2="45" stroke="#0F6E56" stroke-width="1.6"/><polygon points="412,45 404,41 404,49" fill="#0F6E56"/>
+  <line x1="498" y1="45" x2="548" y2="45" stroke="#0F6E56" stroke-width="1.6"/><polygon points="548,45 540,41 540,49" fill="#0F6E56"/>
+  <line x1="116" y1="150" x2="176" y2="150" stroke="#854F0B" stroke-width="1.6" stroke-dasharray="5 3"/><polygon points="176,150 168,146 168,154" fill="#854F0B"/>
+  <line x1="272" y1="150" x2="332" y2="150" stroke="#854F0B" stroke-width="1.6" stroke-dasharray="5 3"/><polygon points="332,150 324,146 324,154" fill="#854F0B"/>
+</svg>
+<div class="cap">Figura 48.1 — Tubería y filtro frente a batch secuencial: mismo esquema de transformación en cadena, pero con streams incrementales y concurrencia en el primero, y archivos completos sin solapamiento en el segundo.</div>
+</div>
+
+<table class="teal">
+<tr><th style="width:20%">Aspecto</th><th>Tubería y filtro <span class="fuente">[clásico]</span></th></tr>
+<tr><td><b>Componentes</b></td><td><b>Filtros</b>: transforman un flujo de datos de entrada en un flujo de salida, de forma incremental (empiezan a producir antes de terminar de consumir). Casos especiales: <i>fuente</i> (solo produce) y <i>sumidero</i> (solo consume).</td></tr>
+<tr><td><b>Conectores</b></td><td><b>Tuberías (pipes)</b>: flujos de datos unidireccionales, que preservan el orden y no transforman nada. El SAIP los menciona explícitamente como ejemplo de conector: "pipes que representan flujos de datos asíncronos que preservan el orden".</td></tr>
+<tr><td><b>Restricciones</b></td><td>Los filtros son <b>independientes</b>: no comparten estado ni conocen la identidad de sus vecinos; toda la comunicación pasa por las tuberías. La corrección del conjunto no debe depender del orden en que los filtros procesan (más allá del orden del flujo).</td></tr>
+<tr><td><b>Cuándo usarlo</b></td><td>Cuando el problema se expresa naturalmente como una <b>serie de transformaciones sucesivas</b> sobre datos que fluyen, y no hace falta interacción con el usuario en el medio ni estado compartido.</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Modificabilidad y reutilización</b> (los filtros se reordenan, se sustituyen y se recombinan sin tocarse entre sí); <b>performance por paralelismo</b> (los filtros corren concurrentemente sobre distintas porciones del flujo); <b>testabilidad</b> (cada filtro se prueba en aislamiento dándole un stream de entrada); comprensibilidad del conjunto como composición de funciones.</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Interactividad</b> (no sirve para sistemas guiados por eventos del usuario); <b>estado compartido</b> (si los filtros necesitan un contexto común, el estilo se rompe); <b>latencia por transformación</b> (cada filtro suele serializar/parsear en su frontera, y ese costo se paga en cada etapa); <b>manejo de errores</b> pobre y difícil de propagar hacia atrás.</td></tr>
+<tr><td><b>Ejemplos reales</b></td><td>Los <b>shells de UNIX</b> (<code>ps | grep java | wc -l</code>) son el ejemplo canónico; las <b>fases de un compilador</b> (léxico → sintáctico → semántico → generación); el procesamiento de imágenes y señales; y en el material del curso, el <b>pipeline de despliegue</b> del capítulo 18 (desarrollo → integración → staging → producción) es un batch secuencial con etapas y quality gates.</td></tr>
+<tr><td><b>Parientes en el SAIP</b></td><td><b>Map-reduce</b> (cap. 22) es un flujo de datos con dos etapas masivamente paralelas y un shuffle entre ellas; y las tácticas de performance <b>manage sampling rate</b> y <b>bound queue sizes</b> son las que se usan para controlar un pipeline saturado.</td></tr>
+</table>
+
+<h1><span class="num">49.</span>Centrados en datos: repositorio y pizarra</h1>
+
+<div class="diagrama">
+<svg width="680" height="215" viewBox="0 0 680 215">
+  <g font-size="8.6">
+    <text x="20" y="14" font-size="9.6" font-weight="bold" fill="#534AB7">REPOSITORIO (pasivo)</text>
+    <ellipse cx="160" cy="120" rx="76" ry="34" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.8"/>
+    <text x="160" y="116" text-anchor="middle" font-weight="bold" fill="#534AB7">REPOSITORIO</text>
+    <text x="160" y="130" text-anchor="middle" font-size="7.6">estructura de datos central</text>
+    <rect x="30" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="68" y="52" text-anchor="middle">Accesor A</text>
+    <rect x="122" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="160" y="52" text-anchor="middle">Accesor B</text>
+    <rect x="214" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="252" y="52" text-anchor="middle">Accesor C</text>
+    <line x1="68" y1="62" x2="120" y2="94" stroke="#534AB7" stroke-width="1.3"/>
+    <line x1="160" y1="62" x2="160" y2="86" stroke="#534AB7" stroke-width="1.3"/>
+    <line x1="252" y1="62" x2="200" y2="94" stroke="#534AB7" stroke-width="1.3"/>
+    <text x="160" y="172" text-anchor="middle" font-size="8">Los accesores <tspan font-weight="bold">consultan y actualizan</tspan>; el repositorio</text>
+    <text x="160" y="184" text-anchor="middle" font-size="8">no toma iniciativa. El <tspan font-weight="bold">esquema</tspan> es el contrato común.</text>
+    <text x="160" y="200" text-anchor="middle" font-size="8" font-style="italic">Los accesores no se conocen entre sí.</text>
+
+    <line x1="350" y1="10" x2="350" y2="205" stroke="#d8d5ee" stroke-width="1.4"/>
+
+    <text x="375" y="14" font-size="9.6" font-weight="bold" fill="#0F6E56">PIZARRA / BLACKBOARD (activo)</text>
+    <ellipse cx="510" cy="120" rx="76" ry="34" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.8"/>
+    <text x="510" y="116" text-anchor="middle" font-weight="bold" fill="#0F6E56">PIZARRA</text>
+    <text x="510" y="130" text-anchor="middle" font-size="7.6">+ control / notificación</text>
+    <rect x="380" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="418" y="52" text-anchor="middle">Agente 1</text>
+    <rect x="472" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="510" y="52" text-anchor="middle">Agente 2</text>
+    <rect x="564" y="34" width="76" height="28" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/><text x="602" y="52" text-anchor="middle">Agente 3</text>
+    <line x1="418" y1="62" x2="470" y2="94" stroke="#0F6E56" stroke-width="1.3"/><polygon points="418,62 414,70 422,70" fill="#0F6E56"/>
+    <line x1="510" y1="62" x2="510" y2="86" stroke="#0F6E56" stroke-width="1.3"/><polygon points="510,62 506,70 514,70" fill="#0F6E56"/>
+    <line x1="602" y1="62" x2="550" y2="94" stroke="#0F6E56" stroke-width="1.3"/><polygon points="602,62 598,70 606,70" fill="#0F6E56"/>
+    <text x="510" y="172" text-anchor="middle" font-size="8">La pizarra <tspan font-weight="bold">avisa</tspan> a los agentes cuando su estado cambia:</text>
+    <text x="510" y="184" text-anchor="middle" font-size="8">el control es dirigido por los <tspan font-weight="bold">datos</tspan>, no por un programa.</text>
+    <text x="510" y="200" text-anchor="middle" font-size="8" font-style="italic">Combina repositorio + invocación implícita.</text>
+  </g>
+</svg>
+<div class="cap">Figura 49.1 — Las dos variantes del estilo centrado en datos. La diferencia es <b>quién tiene la iniciativa</b>: en el repositorio, los accesores; en la pizarra, el propio almacén al notificar los cambios.</div>
+</div>
+
+<table>
+<tr><th style="width:20%">Aspecto</th><th>Centrados en datos <span class="fuente">[clásico]</span></th></tr>
+<tr><td><b>Componentes</b></td><td>Un <b>almacén central</b> (base de datos, repositorio, pizarra) más un conjunto de <b>accesores o agentes</b> independientes que operan sobre él.</td></tr>
+<tr><td><b>Conectores</b></td><td>Consultas y actualizaciones — típicamente <b>transacciones</b>. En la variante pizarra se suma la <b>notificación</b> del almacén hacia los agentes suscritos.</td></tr>
+<tr><td><b>Restricciones</b></td><td>Los accesores <b>solo interactúan a través del almacén</b>, nunca directamente entre sí. El <b>esquema</b> de datos es el contrato compartido por todos.</td></tr>
+<tr><td><b>Cuándo usarlo</b></td><td>Cuando el problema gira alrededor de <b>datos de larga vida</b> que muchos componentes deben leer y modificar, con requisitos de integridad y consistencia; o cuando el orden de las contribuciones no se puede predeterminar (pizarra).</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Integrabilidad y modificabilidad</b>: agregar un accesor nuevo no obliga a tocar los existentes (es el mecanismo de la táctica <i>usar un intermediario</i>); <b>integridad</b> centralizada (un solo lugar donde se validan y versionan los datos); <b>escalabilidad de lectura</b> con réplicas y caché.</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Performance y disponibilidad</b>: el almacén es <b>cuello de botella y punto único de falla</b> (de ahí que el SAIP le dedique tácticas de replicación de datos y de spares); <b>acoplamiento oculto</b>: el esquema une a todos los accesores — cambiarlo los impacta a todos, y ese acoplamiento no aparece en el código (es exactamente la <b>distancia semántica de datos</b> del capítulo 20); dificultad de distribución (coordinación y locks distribuidos, cap. 30).</td></tr>
+<tr><td><b>Ejemplos reales</b></td><td>Los sistemas de información de gestión con base de datos central; los IDE con un modelo compartido del proyecto; el <b>object store de Git</b>; y en IA clásica el sistema <b>HEARSAY-II</b> de reconocimiento del habla, el caso canónico de pizarra. En el propio SAIP, la figura del capítulo 13 muestra "un repositorio compartido al que acceden servidores y un componente administrativo".</td></tr>
+<tr><td><b>Parientes en el SAIP</b></td><td>La táctica de modificabilidad <b>repositorios compartidos</b> (binding en runtime); el <b>data model</b> como estructura de módulos (cap. 13); y los patrones de <b>coordinación de datos distribuida</b> — Paxos, Zookeeper, etcd — cuando el repositorio deja de ser una sola máquina (cap. 30).</td></tr>
+</table>
+
+<h1><span class="num">50.</span>Jerárquicos: capas y microkernel</h1>
+<p>Es el estilo que Reynoso llama "jerárquico" y el único de los seis que el SAIP desarrolla <b>como patrón</b> con todo detalle. Su origen es directamente el <b>THE de Dijkstra (1968)</b>: capas que se comunican solo con las adyacentes y se superponen "como capas de cebolla".</p>
+
+<div class="diagrama">
+<svg width="670" height="215" viewBox="0 0 670 215">
+  <g font-size="8.6">
+    <text x="20" y="14" font-size="9.6" font-weight="bold" fill="#534AB7">CAPAS (layers)</text>
+    <rect x="30" y="26" width="230" height="26" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.4"/><text x="145" y="43" text-anchor="middle" font-weight="bold">Presentación / UI</text>
+    <rect x="30" y="58" width="230" height="26" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.4"/><text x="145" y="75" text-anchor="middle" font-weight="bold">Lógica de negocio</text>
+    <rect x="30" y="90" width="230" height="26" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.4"/><text x="145" y="107" text-anchor="middle" font-weight="bold">Acceso a datos</text>
+    <rect x="30" y="122" width="230" height="26" rx="3" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1.4"/><text x="145" y="139" text-anchor="middle">Sistema operativo / red</text>
+    <line x1="272" y1="39" x2="272" y2="135" stroke="#534AB7" stroke-width="1.4"/>
+    <polygon points="272,135 268,127 276,127" fill="#534AB7"/>
+    <text x="284" y="72" font-size="8" fill="#534AB7">solo se</text>
+    <text x="284" y="83" font-size="8" fill="#534AB7">permite usar</text>
+    <text x="284" y="94" font-size="8" fill="#534AB7">hacia abajo</text>
+    <path d="M 40 122 C 12 100, 12 60, 40 39" fill="none" stroke="#A32D2D" stroke-width="1.4" stroke-dasharray="4 3"/>
+    <text x="20" y="166" font-size="8" fill="#A32D2D">✗ Nunca hacia arriba</text>
+    <text x="20" y="180" font-size="8" fill="#A32D2D">△ Saltear capas = <tspan font-weight="bold">layer bridging</tspan></text>
+    <text x="20" y="194" font-size="8">Cada capa es una <tspan font-weight="bold">"máquina virtual"</tspan> con</text>
+    <text x="20" y="206" font-size="8">interfaz gestionada → portabilidad.</text>
+
+    <line x1="352" y1="10" x2="352" y2="205" stroke="#d8d5ee" stroke-width="1.4"/>
+
+    <text x="375" y="14" font-size="9.6" font-weight="bold" fill="#854F0B">MICROKERNEL / PLUG-IN</text>
+    <circle cx="510" cy="92" r="42" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.8"/>
+    <text x="510" y="88" text-anchor="middle" font-weight="bold" fill="#854F0B">NÚCLEO</text>
+    <text x="510" y="100" text-anchor="middle" font-size="7.4">mecanismos mínimos</text>
+    <g font-size="7.8">
+      <rect x="392" y="26" width="66" height="24" rx="3" fill="#FDF7EC" stroke="#854F0B"/><text x="425" y="42" text-anchor="middle">Plug-in A</text>
+      <rect x="562" y="26" width="66" height="24" rx="3" fill="#FDF7EC" stroke="#854F0B"/><text x="595" y="42" text-anchor="middle">Plug-in B</text>
+      <rect x="392" y="134" width="66" height="24" rx="3" fill="#FDF7EC" stroke="#854F0B"/><text x="425" y="150" text-anchor="middle">Plug-in C</text>
+      <rect x="562" y="134" width="66" height="24" rx="3" fill="#FDF7EC" stroke="#854F0B"/><text x="595" y="150" text-anchor="middle">Plug-in D</text>
+    </g>
+    <line x1="458" y1="44" x2="482" y2="66" stroke="#854F0B" stroke-width="1.3"/>
+    <line x1="562" y1="44" x2="538" y2="66" stroke="#854F0B" stroke-width="1.3"/>
+    <line x1="458" y1="140" x2="482" y2="118" stroke="#854F0B" stroke-width="1.3"/>
+    <line x1="562" y1="140" x2="538" y2="118" stroke="#854F0B" stroke-width="1.3"/>
+    <text x="510" y="178" text-anchor="middle" font-size="8">El núcleo da los <tspan font-weight="bold">mecanismos</tspan>; los plug-ins,</text>
+    <text x="510" y="190" text-anchor="middle" font-size="8">la <tspan font-weight="bold">funcionalidad</tspan>, por interfaces fijas.</text>
+    <text x="510" y="204" text-anchor="middle" font-size="8" font-style="italic">Dos mercados: el del núcleo y el de los plug-ins.</text>
+  </g>
+</svg>
+<div class="cap">Figura 50.1 — Las dos formas del estilo jerárquico. En capas la jerarquía es de <b>abstracción</b> (cada nivel oculta el de abajo); en microkernel es de <b>extensión</b> (el centro es mínimo y la funcionalidad se enchufa).</div>
+</div>
+
+<table class="amber">
+<tr><th style="width:16%">Aspecto</th><th>Capas <span class="fuente">[SAIP cap. 21]</span></th><th>Microkernel / plug-in <span class="fuente">[SAIP cap. 21]</span></th></tr>
+<tr><td><b>Componentes</b></td><td><b>Capas</b>: agrupaciones cohesivas de módulos que ofrecen un conjunto de servicios por una interfaz pública.</td><td>Un <b>núcleo</b> con la funcionalidad central y <b>plug-ins</b> especializados que la extienden.</td></tr>
+<tr><td><b>Conectores / relación</b></td><td>La relación <b>"tiene permitido usar"</b>, con una restricción clave: debe ser <b>unidireccional</b> y estrictamente ordenada.</td><td>Un <b>conjunto fijo de interfaces</b>; el binding ocurre en el build o después (incluso en runtime).</td></tr>
+<tr><td><b>Restricciones</b></td><td>Partición completa del software; nada de usos hacia arriba; normalmente solo la capa inmediata inferior. Usar una capa no adyacente es <b>layer bridging</b>.</td><td>Los plug-ins solo se comunican con el núcleo por sus interfaces; las dependencias entre plug-ins se evitan.</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Modificabilidad</b> (cambiar una capa sin afectar las de arriba si la interfaz no cambia); <b>portabilidad</b> (la capa baja aísla el SO o la red); <b>testabilidad</b> (se testea de abajo hacia arriba con confianza); menos interfaces por equipo.</td><td><b>Extensibilidad controlada</b>; <b>evolución independiente</b> del núcleo y de las extensiones; habilita <b>dos mercados</b> (quien hace el producto y quien hace los plug-ins).</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Performance</b> (una llamada del tope puede atravesar muchas capas antes de ejecutarse); si la estratificación está mal diseñada <b>estorba</b> — no da las abstracciones que arriba necesitan; y mucho <i>bridging</i> destruye las metas de portabilidad que justificaban el estilo.</td><td><b>Seguridad y privacidad</b>: como los plug-ins pueden venir de terceros, es más fácil introducir vulnerabilidades.</td></tr>
+<tr><td><b>Ejemplos</b></td><td>El modelo <b>OSI</b>, <b>UNIX System V</b> (la figura del cap. 13), las arquitecturas de 3 capas, los sistemas con capa de portabilidad.</td><td>Los <b>micro-kernels de SO</b> (el núcleo da espacios de direcciones, hilos e IPC; los plug-ins, drivers y gestión de tareas), <b>VS Code</b>, los navegadores, <b>R</b>.</td></tr>
+</table>
+<div class="idea"><span class="t">Idea clave — capa ≠ tier</span>
+Una <b>capa</b> es una partición del código: vive en la estructura de <b>módulos</b> (visión estática). Un <b>tier</b> es una partición del despliegue: vive en la estructura de <b>asignación</b>. Se pueden tener tres capas en un solo tier (un ejecutable monolítico bien estratificado) o una capa repartida en varios tiers. Confundirlos es el error clásico al leer un diagrama de "arquitectura en capas". Ver capítulo 13 y la pregunta de discusión del SAIP: "el patrón cliente-servidor es el microkernel con binding en runtime — discuta".</div>
+
+<h1><span class="num">51.</span>Invocación implícita: publish-subscribe y broker</h1>
+<p>Reynoso lo lista como uno de los seis estilos típicos; el SAIP lo desarrolla como el patrón <b>publish-subscribe</b>. Su rasgo definitorio: <b>el componente que emite no invoca a nadie directamente</b> — anuncia un evento y la infraestructura decide a quién le llega. De ahí el nombre: la invocación de los suscriptores es <i>implícita</i>.</p>
+
+<div class="diagrama">
+<svg width="670" height="185" viewBox="0 0 670 185">
+  <g font-size="8.6">
+    <rect x="245" y="76" width="180" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="1.8"/>
+    <text x="335" y="90" text-anchor="middle" font-weight="bold" fill="#534AB7">EVENT BUS</text>
+    <text x="335" y="103" text-anchor="middle" font-size="7.6">gestiona suscripciones y despacho</text>
+    <rect x="30" y="20" width="96" height="28" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/><text x="78" y="38" text-anchor="middle">Publicador 1</text>
+    <rect x="30" y="60" width="96" height="28" rx="4" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1.4"/><text x="78" y="78" text-anchor="middle">Publicador 2</text>
+    <rect x="545" y="14" width="96" height="26" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/><text x="593" y="31" text-anchor="middle">Suscriptor A</text>
+    <rect x="545" y="50" width="96" height="26" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/><text x="593" y="67" text-anchor="middle">Suscriptor B</text>
+    <rect x="545" y="86" width="96" height="26" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/><text x="593" y="103" text-anchor="middle">Suscriptor C</text>
+    <rect x="545" y="122" width="96" height="26" rx="4" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.4"/><text x="593" y="139" text-anchor="middle">Suscriptor D</text>
+    <text x="180" y="34" font-size="7.6" font-style="italic">publica evento</text>
+    <text x="470" y="120" font-size="7.6" font-style="italic">notifica a los suscritos</text>
+    <text x="335" y="140" text-anchor="middle" font-size="8">El publicador <tspan font-weight="bold">no conoce a los suscriptores</tspan>; los suscriptores solo conocen <tspan font-weight="bold">tipos de mensaje</tspan>.</text>
+    <text x="335" y="154" text-anchor="middle" font-size="8">Agregar un suscriptor = registrarse en un evento. <tspan font-style="italic">Cero cambios en el publicador.</tspan></text>
+    <text x="335" y="172" text-anchor="middle" font-size="8" fill="#A32D2D">Costo: nadie sabe cuánto tarda en llegar el mensaje ni en qué orden se invocan los suscriptores.</text>
+  </g>
+  <line x1="126" y1="34" x2="245" y2="84" stroke="#0F6E56" stroke-width="1.5"/><polygon points="245,84 236,83 240,76" fill="#0F6E56"/>
+  <line x1="126" y1="74" x2="245" y2="95" stroke="#0F6E56" stroke-width="1.5"/><polygon points="245,95 236,95 238,88" fill="#0F6E56"/>
+  <line x1="425" y1="84" x2="545" y2="27" stroke="#854F0B" stroke-width="1.3"/><polygon points="545,27 536,29 540,35" fill="#854F0B"/>
+  <line x1="425" y1="89" x2="545" y2="63" stroke="#854F0B" stroke-width="1.3"/><polygon points="545,63 536,63 539,70" fill="#854F0B"/>
+  <line x1="425" y1="98" x2="545" y2="99" stroke="#854F0B" stroke-width="1.3"/><polygon points="545,99 537,95 537,103" fill="#854F0B"/>
+  <line x1="425" y1="104" x2="545" y2="135" stroke="#854F0B" stroke-width="1.3"/><polygon points="545,135 537,133 540,127" fill="#854F0B"/>
+</svg>
+<div class="cap">Figura 51.1 — Publish-subscribe: tres tipos de elementos (publicador, suscriptor y bus de eventos) y desacoplamiento total entre los extremos.</div>
+</div>
+
+<table class="blue">
+<tr><th style="width:20%">Aspecto</th><th>Invocación implícita <span class="fuente">[SAIP cap. 21 + clásico]</span></th></tr>
+<tr><td><b>Componentes</b></td><td><b>Publicadores</b> (emiten mensajes), <b>suscriptores</b> (se registran y reciben) y el <b>bus de eventos</b>, que es parte de la infraestructura de runtime y gestiona suscripciones y despacho.</td></tr>
+<tr><td><b>Conectores</b></td><td><b>Mensajes asíncronos</b> sobre eventos o <i>topics</i>. El SAIP los nombra como conector típico: "multicast de eventos que soporta interacciones publish-subscribe", y aclara que los conectores <b>no son binarios</b>: uno de pub-sub puede tener un número arbitrario de publicadores y suscriptores.</td></tr>
+<tr><td><b>Restricciones</b></td><td>El publicador <b>no invoca directamente</b> a ningún componente y no conoce la identidad de los suscriptores; estos solo conocen tipos de mensaje.</td></tr>
+<tr><td><b>Variante: broker</b></td><td>Cuando además hay que <b>localizar</b> al destinatario y reenviarle la petición esperando respuesta, el intermediario se llama <b>broker</b> (POSA). El SAIP lo menciona al hablar de reducir indirección: "algunos brokers permiten comunicación directa entre cliente y servidor después de establecer la relación por el broker, eliminando la indirección en las peticiones siguientes".</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Modificabilidad e integrabilidad</b> máximas: agregar o cambiar suscriptores no toca al publicador; se puede cambiar la conducta del sistema cambiando qué se publica (encender o apagar features suprimiendo mensajes); <b>testabilidad por logging</b>: los eventos se registran fácil y habilitan <i>record/playback</i> para reproducir errores difíciles.</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Performance</b> (latencia del despacho, difícil razonar sobre ella); <b>determinismo</b> (el orden de invocación puede variar entre implementaciones); <b>testabilidad estructural</b> (un cambio mínimo en el bus tiene impacto amplio); <b>seguridad</b>: como publicador y suscriptor no se conocen, el <b>cifrado de extremo a extremo es limitado</b> — exigiría que todos compartan la misma clave; y no se sabe cuánto tarda un mensaje en llegar.</td></tr>
+<tr><td><b>Ejemplos</b></td><td>Los sistemas de eventos de las GUI; las colas y <i>topics</i> de mensajería (Kafka, RabbitMQ); los sistemas reactivos; y en el material, la implementación <b>distribuida de MVC</b> (cap. 26), que usa pub-sub donde la versión en un solo proceso usa Observer.</td></tr>
+<tr><td><b>Parientes de diseño</b></td><td>En el nivel de clases y objetos, este estilo <b>es</b> el patrón <b>Observer</b> del GoF (cap. 62) — misma idea, otra escala: allá son objetos en un proceso; acá, componentes distribuidos.</td></tr>
+</table>
+
+<h1><span class="num">52.</span>Cliente-servidor y peer-to-peer</h1>
+<p>Los dos estilos que definen <b>quién tiene la iniciativa</b> en un sistema distribuido: asimétrico (unos piden, otros responden) o simétrico (todos hacen ambas cosas). Reynoso lista <i>peer-to-peer</i> entre los seis estilos típicos; el SAIP desarrolla cliente-servidor como patrón, junto con sus descendientes modernos: microservicios y SOA.</p>
+
+<table class="teal">
+<tr><th style="width:16%">Aspecto</th><th>Cliente-servidor <span class="fuente">[SAIP cap. 21]</span></th><th>Peer-to-peer <span class="fuente">[clásico]</span></th></tr>
+<tr><td><b>Componentes</b></td><td><b>Servidores</b> que proveen servicios y <b>clientes</b> que los consumen. Puede haber múltiples instancias del servidor si los clientes exceden su capacidad.</td><td><b>Pares (peers)</b> simétricos: cada uno actúa como cliente y como servidor a la vez.</td></tr>
+<tr><td><b>Conectores</b></td><td><b>Petición-respuesta</b> por protocolo acordado, iniciada <b>siempre por el cliente</b>, precedida por un <b>descubrimiento</b> para ubicar al servidor.</td><td>Protocolos de red simétricos, con descubrimiento de pares y a menudo enrutamiento entre ellos.</td></tr>
+<tr><td><b>Restricciones</b></td><td>La comunicación la <b>inicia el cliente</b>; los clientes no se comunican entre sí. Si el servidor guarda estado del cliente, cada petición debe identificarlo y hace falta un "fin de sesión" o un timeout que libere recursos.</td><td>No hay coordinador central; cualquier par puede entrar y salir en cualquier momento (<i>churn</i>).</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Bajo acoplamiento</b> servidor-clientes (conexión dinámica, el servidor no conoce a sus clientes a priori) y <b>nulo</b> entre clientes; <b>escalabilidad</b> (limitada por la capacidad del servidor, que también puede escalar); <b>evolución independiente</b>; servicios comunes compartidos; la interacción con el usuario queda aislada en el cliente — lo que permitió desarrollar lenguajes y herramientas especializadas de UI.</td><td><b>Escalabilidad sin servidor central</b> (cada par aporta recursos); <b>resiliencia</b> (no hay punto único de falla); aprovecha capacidad ociosa distribuida.</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Performance impredecible</b> (la comunicación va por red, con congestión y la <b>cola larga de latencia</b> del cap. 30); el servidor es cuello de botella y foco de disponibilidad; <b>seguridad</b>: en redes compartidas hay que proveer confidencialidad e integridad explícitamente.</td><td><b>Complejidad</b>: descubrimiento, consistencia y seguridad son mucho más difíciles; latencia variable; difícil de administrar y auditar.</td></tr>
+<tr><td><b>Ejemplos</b></td><td>La web (navegador-servidor); las bases de datos; y sus descendientes: <b>n-tiers</b>, <b>SOA</b> (proveedores y consumidores de distintas organizaciones, con WSDL/SOAP y SLA) y <b>microservicios</b> (un sistema, una organización, comunicación solo por mensajes).</td><td>BitTorrent, las redes blockchain, Gnutella; y los algoritmos de <b>consenso distribuido</b> (Paxos) del cap. 30, que son coordinación entre pares.</td></tr>
+</table>
+<div class="ojo"><span class="t">Cuidado — microservicios NO es sinónimo de "cliente-servidor moderno"</span>
+El SAIP los distingue con precisión: <b>SOA</b> supone servicios <b>heterogéneos y de organizaciones distintas</b>, reutilizables y con SLA; <b>microservicios</b> componen <b>un solo sistema gestionado por una sola organización</b>, con equipos pequeños ("regla de las dos pizzas"), dependencias acíclicas y la prohibición estricta de cualquier comunicación que no sea por mensajes: sin enlace directo, sin leer el almacén de datos de otro equipo, sin memoria compartida, <b>sin puertas traseras</b>.</div>
+
+<h1><span class="num">53.</span>Intérprete y máquina virtual</h1>
+<p>El sexto estilo de la lista de Reynoso. Su idea: en vez de ejecutar directamente sobre el hardware, se construye <b>una máquina abstracta en software</b> que ejecuta un programa expresado en un lenguaje propio. Es el estilo que hace posible que "escribí una vez, corré en cualquier parte".</p>
+
+<div class="diagrama">
+<svg width="660" height="180" viewBox="0 0 660 180">
+  <g font-size="8.6">
+    <rect x="180" y="20" width="300" height="130" rx="8" fill="#F6F5FC" stroke="#534AB7" stroke-width="1.8"/>
+    <text x="330" y="38" text-anchor="middle" font-size="9.6" font-weight="bold" fill="#534AB7">MÁQUINA VIRTUAL / INTÉRPRETE</text>
+    <rect x="200" y="48" width="120" height="40" rx="4" fill="#EEEDFE" stroke="#534AB7"/>
+    <text x="260" y="64" text-anchor="middle" font-weight="bold">Motor de</text><text x="260" y="76" text-anchor="middle" font-weight="bold">interpretación</text>
+    <rect x="340" y="48" width="120" height="40" rx="4" fill="#E1F5EE" stroke="#0F6E56"/>
+    <text x="400" y="64" text-anchor="middle" font-weight="bold">Estado del</text><text x="400" y="76" text-anchor="middle" font-weight="bold">intérprete</text>
+    <rect x="200" y="98" width="120" height="40" rx="4" fill="#FAEEDA" stroke="#854F0B"/>
+    <text x="260" y="114" text-anchor="middle" font-weight="bold">Programa</text><text x="260" y="126" text-anchor="middle" font-size="7.6">(pseudocódigo / AST)</text>
+    <rect x="340" y="98" width="120" height="40" rx="4" fill="#FCEBEB" stroke="#A32D2D"/>
+    <text x="400" y="114" text-anchor="middle" font-weight="bold">Estado del</text><text x="400" y="126" text-anchor="middle" font-weight="bold">programa</text>
+    <rect x="30" y="66" width="110" height="40" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/>
+    <text x="85" y="82" text-anchor="middle">Programa fuente</text><text x="85" y="95" text-anchor="middle" font-size="7.6">(portable)</text>
+    <rect x="520" y="66" width="110" height="40" rx="4" fill="#F1EFE8" stroke="#5F5E5A"/>
+    <text x="575" y="82" text-anchor="middle">Hardware / SO</text><text x="575" y="95" text-anchor="middle" font-size="7.6">(cambia por plataforma)</text>
+    <text x="330" y="168" text-anchor="middle" font-size="8">El programa <tspan font-weight="bold">no sabe</tspan> sobre qué máquina corre: la VM absorbe la diferencia. Se reimplementa la VM, no los programas.</text>
+  </g>
+  <line x1="140" y1="86" x2="180" y2="86" stroke="#5F5E5A" stroke-width="1.5"/><polygon points="180,86 172,82 172,90" fill="#5F5E5A"/>
+  <line x1="480" y1="86" x2="520" y2="86" stroke="#5F5E5A" stroke-width="1.5"/><polygon points="520,86 512,82 512,90" fill="#5F5E5A"/>
+</svg>
+<div class="cap">Figura 53.1 — Los cuatro elementos del estilo intérprete: el motor, la representación del programa, el estado del programa y el estado del propio intérprete (el "program counter" de la máquina abstracta).</div>
+</div>
+
+<table>
+<tr><th style="width:20%">Aspecto</th><th>Intérprete / máquina virtual <span class="fuente">[clásico]</span></th></tr>
+<tr><td><b>Componentes</b></td><td><b>Motor de interpretación</b>; la <b>representación del programa</b> a ejecutar (pseudocódigo, bytecode o árbol sintáctico); el <b>estado del programa</b> en ejecución; y el <b>estado del propio intérprete</b> (dónde va, qué sigue).</td></tr>
+<tr><td><b>Conectores</b></td><td>Llamadas al motor y acceso directo a las estructuras de estado compartidas.</td></tr>
+<tr><td><b>Restricciones</b></td><td>El programa interpretado <b>no accede al hardware</b>: todo pasa por la máquina abstracta, que define el conjunto de operaciones legales.</td></tr>
+<tr><td><b>Cuándo usarlo</b></td><td>Cuando hace falta <b>portabilidad</b> sobre plataformas heterogéneas; cuando la lógica debe poder <b>cambiar sin recompilar</b> (reglas de negocio, scripts de usuario); cuando se simula una máquina que no existe o no está disponible; o cuando conviene ofrecer un <b>lenguaje de dominio</b> a los usuarios.</td></tr>
+<tr><td><b>Favorece</b></td><td><b>Portabilidad</b> (se reimplementa la VM, no los programas); <b>modificabilidad en runtime</b> — es la táctica de <i>diferir la ligadura</i> llevada al extremo: <b>interpretar parámetros</b>; <b>testabilidad</b> (el estado es explícito e inspeccionable, y se puede sandboxear: la propia noción de <i>sandbox</i> del cap. 25 es una máquina abstracta con recursos virtualizados, como el reloj virtual); <b>seguridad por contención</b> (el programa no puede hacer lo que la VM no le permite).</td></tr>
+<tr><td><b>Sacrifica</b></td><td><b>Performance</b>: se paga una capa de indirección en cada operación (el SAIP mide el mismo fenómeno en virtualización: overheads de ~10% con hipervisores, y aclara que un <b>emulador</b> —que simula la ejecución de otro juego de instrucciones— es más caro que un hipervisor, que exige la misma ISA); depuración más difícil (dos niveles de estado: el del programa y el de la VM).</td></tr>
+<tr><td><b>Ejemplos</b></td><td>La <b>JVM</b> y el CLR; Python; los <b>motores de reglas</b>; SQL sobre un planificador de consultas; los <b>emuladores</b> como QEMU (cap. 29); las macros y los lenguajes embebidos.</td></tr>
+<tr><td><b>Parientes de diseño</b></td><td>En el nivel de clases, el patrón <b>Interpreter</b> del GoF (cap. 63): representa la gramática como jerarquía de clases y la interpreta recorriendo el árbol — el mismo estilo, a escala de diseño y "cuando la gramática es simple".</td></tr>
+</table>
+
+<h1><span class="num">54.</span>Comparación, composición y el caso KWIC</h1>
+
+<h2>54.1 Qué atributo de calidad favorece cada estilo</h2>
+<table class="blue">
+<tr><th style="width:19%">Estilo</th><th style="width:27%">Favorece</th><th style="width:27%">Sacrifica</th><th>Táctica dominante que encarna</th></tr>
+<tr><td><b>Tubería y filtro</b></td><td>Modificabilidad · reutilización · paralelismo</td><td>Interactividad · latencia por etapa · estado compartido</td><td>Introducir concurrencia; abstraer servicios comunes</td></tr>
+<tr><td><b>Batch secuencial</b></td><td>Simplicidad · repetibilidad</td><td>Latencia total · uso de recursos</td><td>Bound execution times</td></tr>
+<tr><td><b>Repositorio</b></td><td>Integrabilidad · integridad de datos</td><td>Performance (cuello de botella) · acoplamiento por el esquema</td><td>Usar un intermediario; mantener múltiples copias de datos</td></tr>
+<tr><td><b>Pizarra</b></td><td>Extensibilidad con orden de contribución impredecible</td><td>Determinismo · trazabilidad del control</td><td>Repositorios compartidos + invocación implícita</td></tr>
+<tr><td><b>Capas</b></td><td>Modificabilidad · portabilidad · testabilidad</td><td>Performance (atravesar niveles)</td><td>Restringir dependencias</td></tr>
+<tr><td><b>Microkernel</b></td><td>Extensibilidad · evolución independiente</td><td>Seguridad (código de terceros)</td><td>Diferir la ligadura (binding)</td></tr>
+<tr><td><b>Publish-subscribe</b></td><td>Modificabilidad máxima · integrabilidad</td><td>Latencia · determinismo · cifrado E2E</td><td>Usar un intermediario</td></tr>
+<tr><td><b>Cliente-servidor</b></td><td>Escalabilidad · servicios compartidos · evolución independiente</td><td>Performance por red · disponibilidad del servidor</td><td>Mantener múltiples copias de cómputos</td></tr>
+<tr><td><b>Peer-to-peer</b></td><td>Escalabilidad sin centro · resiliencia</td><td>Consistencia · seguridad · administrabilidad</td><td>Discover (descubrimiento)</td></tr>
+<tr><td><b>Intérprete / VM</b></td><td>Portabilidad · modificabilidad en runtime · contención</td><td>Performance · depurabilidad</td><td>Interpretar parámetros; sandbox</td></tr>
+</table>
+
+<h2>54.2 Los estilos se componen</h2>
+<div class="idea"><span class="t">Idea clave — el rasgo más importante del catálogo</span>
+Reynoso lo dice dos veces: "el conjunto de los estilos cataloga las formas básicas posibles de estructuras de software, mientras que <b>las formas complejas se articulan mediante composición de los estilos fundamentales</b>", y "las arquitecturas complejas o compuestas resultan del agregado o la composición de estilos más básicos". Ningún sistema real es "de un estilo": <b>los sistemas reales son mezclas</b>. Ejemplo del propio material: un sistema de microservicios (cliente-servidor) que se comunica por un bus de eventos (invocación implícita), donde cada servicio está internamente en capas, corre sobre una máquina virtual o contenedor (intérprete/VM), guarda su estado en un repositorio y se despliega por un pipeline (batch secuencial). <b>Cinco estilos en un solo sistema</b> — y eso es lo normal, no la excepción.</div>
+
+<h2>54.3 El caso KWIC: el mismo problema en cuatro estilos</h2>
+<p>Es la demostración que Reynoso elige como la más elocuente de la disciplina — "si hubiera que singularizar un trabajo simple y elegante, representativo del estado del arte, sin duda escogeríamos esta demostración". Shaw y Garlan resuelven <b>un mismo problema</b> — la indexación de palabras clave en contexto (KWIC) — en <b>cuatro estilos distintos</b>, y comparan los resultados <b>antes de escribir una sola línea de código</b>:</p>
+<div class="diagrama">
+<div class="flow">
+  <div class="fb"><b>1. Datos compartidos</b><br>los módulos operan sobre<br>una estructura común<br><i>(repositorio)</i></div>
+  <div class="ar">vs.</div>
+  <div class="fb teal"><b>2. Tubería y filtro</b><br>cada etapa transforma<br>y pasa el resultado<br><i>(flujo de datos)</i></div>
+  <div class="ar">vs.</div>
+  <div class="fb amber"><b>3. Tipos abstractos<br>de datos</b><br>cada módulo oculta su<br>representación<br><i>(ocultamiento, Parnas)</i></div>
+  <div class="ar">vs.</div>
+  <div class="fb red"><b>4. Invocación implícita</b><br>los cambios en los datos<br>disparan los cómputos<br><i>(pub-sub)</i></div>
+</div>
+<div class="cap">Figura 54.1 — Los cuatro estilos comparados en el <i>tour de force</i> de Shaw &amp; Garlan sobre el problema KWIC.</div>
+</div>
+<p>El estudio "articula un modelo que permite estimar relaciones de <b>dependencia, modularidad, refinamiento, reutilización, ventajas y desventajas</b> de cada arquitectura antes de escribir una sola línea de código; demuestra también de qué manera los diferentes estilos definen <b>tácticas específicas de descomposición funcional</b> y establecen la pauta que habrá de seguirse en el desarrollo", y cierra con tablas de comparación de atributos. Es, a la vez, la mejor prueba de las tres tesis centrales de toda esta guía: que <b>la funcionalidad no determina la arquitectura</b> (cuatro arquitecturas, la misma función), que <b>los atributos de calidad sí la determinan</b>, y que <b>una arquitectura se puede evaluar antes de construirla</b>.</p>
+<!-- ================= PARTE X ================= -->
+<div class="parte">
+  <div class="kicker">Parte X</div>
+  <h1 class="pt">Las 23 fichas del catálogo GoF</h1>
+  <div class="sub">Una ficha por patrón: <b>problema</b> que resuelve, <b>solución</b> y participantes, <b>cuándo aplicarlo</b> (aplicabilidad textual del libro), <b>consecuencias</b> a favor y en contra, y <b>patrones relacionados</b>. El material sale del catálogo del GoF (págs. 79–350, secciones <i>Applicability</i> y <i>Consequences</i> de cada patrón) más el fraseo problema→solución de refactoring.guru.</div>
+  <div class="pindex"><div class="pcap"><span class="pn">55</span>Cómo leer una ficha</div><div class="pcap"><span class="pn">56</span>Los 5 patrones creacionales</div><div class="pcap"><span class="pn">57</span>Los 7 patrones estructurales</div><div class="pcap"><span class="pn">58</span>Los 11 patrones de comportamiento</div></div>
+</div>
+
+<h1><span class="num">55.</span>Cómo leer una ficha</h1>
+<p>Cada ficha tiene seis campos, y conviene saber para qué sirve cada uno al estudiar:</p>
+<table class="teal">
+<tr><th style="width:20%">Campo</th><th>Para qué lo usás</th></tr>
+<tr><td><b>Problema</b></td><td>Reconocer la situación en tu código. Es el disparador: si no reconocés el problema, no busques el patrón.</td></tr>
+<tr><td><b>Solución</b></td><td>Entender el mecanismo y los <b>participantes</b> (las clases y objetos que el patrón introduce, con su rol).</td></tr>
+<tr><td><b>Cuándo aplicarlo</b></td><td>La sección <i>Applicability</i> del GoF: la <b>lista de condiciones</b> que deben darse. Es lo que decide si el patrón corresponde o no.</td></tr>
+<tr><td><b>A favor</b> / <b>En contra</b></td><td>La sección <i>Consequences</i>: los tradeoffs. El GoF insiste en que es "la más útil para evaluar los beneficios y pasivos de un patrón".</td></tr>
+<tr><td><b>Qué te deja variar</b></td><td>El eje de la Tabla 1.2 del GoF: <b>qué aspecto del sistema podés cambiar sin rediseñar</b>. Es la forma más rápida de elegir patrón.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Con qué patrones se combina, con cuáles compite y con cuáles se confunde.</td></tr>
+</table>
+<div class="ojo"><span class="t">Antes de aplicar cualquiera de los 23</span>
+Recordá las dos advertencias que atraviesan todo el catálogo: <b>(1)</b> "los patrones no deben aplicarse indiscriminadamente: suelen lograr flexibilidad introduciendo <b>niveles adicionales de indirección</b>, y eso complica el diseño y cuesta performance — un patrón sólo debe aplicarse <b>cuando la flexibilidad que otorga es realmente necesaria</b>"; <b>(2)</b> "si todo lo que tenés es un martillo, todo parece un clavo". Y al implementarlo, <b>nombrá a los participantes con el vocabulario de tu dominio</b>, no con el del libro: <code>TeXLayoutStrategy</code>, no <code>ConcreteStrategy1</code>.</div>
+
+<h1><span class="num">56.</span>Los 5 patrones creacionales</h1>
+<p class="fuente">Abstraen la instanciación: encapsulan qué clases concretas usa el sistema y ocultan cómo se crean y se combinan sus instancias. Ganan importancia a medida que el sistema depende más de la composición de objetos que de la herencia de clases.</p>
+
+<h2>56.1 Abstract Factory <span class="fuente">— objeto · creacional</span></h2>
+<table class="amber">
+<tr><td style="width:16%"><b>Intención</b></td><td>Proveer una interfaz para crear <b>familias de objetos relacionados o dependientes</b> sin especificar sus clases concretas.</td></tr>
+<tr><td><b>Problema</b></td><td>Tu sistema debe funcionar con varias familias de productos que <b>deben usarse juntas y no mezclarse</b> (todos los widgets Motif, o todos los de Presentation Manager — nunca la mitad y la mitad), y no querés que el código del cliente nombre ni una sola clase concreta.</td></tr>
+<tr><td><b>Solución</b></td><td>Una <b>AbstractFactory</b> declara una operación de creación por cada tipo de producto; cada <b>ConcreteFactory</b> implementa la familia completa. Participantes: AbstractFactory · ConcreteFactory · AbstractProduct · ConcreteProduct · Client. El cliente solo conoce las interfaces abstractas.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) el sistema debe ser <b>independiente de cómo se crean, componen y representan</b> sus productos; (b) debe configurarse con <b>una de varias familias</b>; (c) una familia está diseñada para usarse junta y <b>hay que hacer cumplir esa restricción</b>; (d) querés ofrecer una biblioteca de productos revelando <b>solo sus interfaces</b>, no sus implementaciones.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Aísla las clases concretas</b>: los nombres de las clases producto quedan encerrados en la fábrica concreta y no aparecen en el código cliente. <b>2. Facilita intercambiar familias completas</b>: la clase de la fábrica concreta aparece <b>una sola vez</b> en la aplicación (donde se instancia), así que cambiar toda la familia es cambiar un objeto — "pasamos de widgets Motif a Presentation Manager simplemente cambiando la fábrica y recreando la interfaz". <b>3. Promueve consistencia</b> entre los productos de una familia.</td></tr>
+<tr><td><b>En contra</b></td><td><b>Soportar tipos nuevos de producto es difícil</b>: la interfaz de AbstractFactory <b>fija</b> el conjunto de productos creables, así que agregar uno obliga a cambiar la clase abstracta <b>y todas sus subclases</b>.</td></tr>
+<tr><td><b>Varía</b></td><td>Las <b>familias</b> de objetos producto.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Suele implementarse con <b>Factory Method</b> (o con Prototype, para no crear una jerarquía paralela de fábricas). <b>Prototype es su alternativa</b> frecuente. La fábrica concreta suele ser un <b>Singleton</b>. Compite con Prototype y Builder: los tres usan un "objeto fábrica"; la diferencia es que en Prototype la fábrica <b>es</b> el prototipo que se clona. Resuelve las causas de rediseño 1, 3, 4 y 6.</td></tr>
+</table>
+
+<h2>56.2 Builder <span class="fuente">— objeto · creacional</span></h2>
+<table class="amber">
+<tr><td style="width:16%"><b>Intención</b></td><td>Separar la <b>construcción</b> de un objeto complejo de su <b>representación</b>, de modo que el mismo proceso de construcción pueda crear representaciones distintas.</td></tr>
+<tr><td><b>Problema</b></td><td>Un objeto complejo se arma en muchos pasos y querés obtener <b>varias representaciones</b> del resultado sin duplicar el algoritmo de armado (leer un RTF una vez y poder emitir texto plano, TeX o un widget de texto).</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Director</b> conduce el proceso llamando paso a paso a un <b>Builder</b> abstracto; cada <b>ConcreteBuilder</b> construye y ensambla su propio <b>Product</b> y es quien sabe recuperarlo. Participantes: Builder · ConcreteBuilder · Director · Product.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) el <b>algoritmo</b> para crear un objeto complejo debe ser <b>independiente de las partes</b> que lo componen y de cómo se ensamblan; (b) el proceso de construcción debe permitir <b>distintas representaciones</b> del objeto construido.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Permite variar la representación interna</b> del producto: el Builder oculta la estructura interna y cómo se ensambla; para cambiarla, se define un builder nuevo. <b>2. Aísla el código de construcción del de representación</b>: mejora la modularidad; el cliente no sabe nada de las clases internas del producto, y cada ConcreteBuilder concentra todo el código de armado, que <b>se escribe una vez</b> y distintos directores reutilizan. <b>3. Da control más fino del proceso</b>: a diferencia de los creacionales que fabrican de un tiro, construye <b>paso a paso</b> bajo control del director, que recupera el producto solo cuando está terminado.</td></tr>
+<tr><td><b>En contra</b></td><td>Requiere una clase builder por representación y un protocolo de construcción más elaborado: es el creacional con <b>más andamiaje</b>, injustificado si el objeto es simple.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cómo se crea</b> un objeto compuesto.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Suele construir un <b>Composite</b>. Puede usar Abstract Factory o Prototype internamente para decidir qué componentes fabrica. Es el patrón asociado a la <b>causa de rediseño 5</b> (dependencias algorítmicas).</td></tr>
+</table>
+
+<h2>56.3 Factory Method <span class="fuente">— clase · creacional</span></h2>
+<table class="amber">
+<tr><td style="width:16%"><b>Intención</b></td><td>Definir una interfaz para crear un objeto, pero <b>dejar que las subclases decidan qué clase instanciar</b>. Difiere la instanciación a las subclases.</td></tr>
+<tr><td><b>Problema</b></td><td>Una clase (un framework, típicamente) tiene que crear objetos cuyo tipo concreto <b>solo conoce quien la extiende</b>: el framework sabe <i>cuándo</i> crear un documento, pero no <i>de qué clase</i>.</td></tr>
+<tr><td><b>Solución</b></td><td>El <b>Creator</b> declara un método de fábrica (a veces con implementación por defecto) y lo llama donde necesita el producto; cada <b>ConcreteCreator</b> lo sobrescribe. Participantes: Product · ConcreteProduct · Creator · ConcreteCreator.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) una clase <b>no puede anticipar</b> la clase de los objetos que debe crear; (b) una clase quiere que <b>sus subclases especifiquen</b> los objetos que crea; (c) una clase delega responsabilidad en una de varias subclases ayudantes y querés <b>localizar el conocimiento</b> de cuál es la delegada.</td></tr>
+<tr><td><b>A favor</b></td><td>Elimina la necesidad de <b>atar clases específicas de la aplicación</b> al código del framework: este solo trata con la interfaz Product. <b>1. Provee ganchos (hooks) para subclases</b>: crear con un método de fábrica siempre es más flexible que crear directamente. <b>2. Conecta jerarquías paralelas</b> de clases, cuando una clase delega parte de sus responsabilidades en otra jerarquía.</td></tr>
+<tr><td><b>En contra</b></td><td>Los clientes pueden verse forzados a <b>subclasificar el Creator solo para crear</b> un producto concreto — está bien si igual iban a subclasificarlo, pero si no, se agrega "otro punto de evolución" a mantener. Y su uso masivo <b>prolifera subclases que hacen muy poco</b>.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>subclase</b> del objeto que se instancia.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Es el creacional <b>más simple para empezar</b>: "los diseños suelen arrancar con Factory Method y evolucionar hacia Abstract Factory, Prototype o Builder cuando se descubre dónde hace falta más flexibilidad". <b>Template Method</b> suele llamar factory methods. En MVC define el controlador por defecto de una vista.</td></tr>
+</table>
+
+<h2>56.4 Prototype <span class="fuente">— objeto · creacional</span></h2>
+<table class="amber">
+<tr><td style="width:16%"><b>Intención</b></td><td>Especificar los tipos de objetos a crear usando una <b>instancia prototípica</b>, y crear los nuevos <b>copiándola</b> (clonándola).</td></tr>
+<tr><td><b>Problema</b></td><td>Las clases a instanciar se deciden <b>en tiempo de ejecución</b> (carga dinámica, paleta de herramientas configurable), o construir una jerarquía de fábricas paralela a la de productos sería un desperdicio.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Prototype</b> declara <code>Clone()</code>; cada <b>ConcretePrototype</b> se copia a sí mismo; el cliente pide clones a un prototipo que le fue configurado. Participantes: Prototype · ConcretePrototype · Client (+ a menudo un gestor de prototipos).</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando el sistema debe ser independiente de cómo se crean sus productos <b>y</b> además: (a) las clases a instanciar se especifican <b>en runtime</b>, por ejemplo por carga dinámica; (b) querés <b>evitar una jerarquía de fábricas paralela</b> a la de productos; (c) las instancias de una clase tienen <b>pocas combinaciones de estado</b> distintas — es más cómodo instalar otros tantos prototipos y clonarlos que instanciar la clase a mano cada vez con el estado adecuado.</td></tr>
+<tr><td><b>A favor</b></td><td>Comparte con Abstract Factory y Builder que <b>oculta las clases concretas</b> al cliente. Además: <b>1. Agregar y quitar productos en runtime</b> (registrar una instancia prototípica y listo — más flexible que los otros creacionales). <b>2. Especificar objetos nuevos variando valores</b>: se definen "clases" nuevas sin programar, clonando y configurando; <b>reduce drásticamente el número de clases</b> ("una sola clase GraphicTool puede crear una variedad ilimitada de objetos musicales"). <b>3. Especificar objetos nuevos variando la estructura</b>: si el compuesto implementa Clone como copia profunda, un subcircuito completo puede agregarse como prototipo a la paleta.</td></tr>
+<tr><td><b>En contra</b></td><td>Cada subclase debe <b>implementar <code>Clone</code></b>, que puede ser difícil: los objetos con referencias circulares o que no soportan copia lo complican, y hay que decidir en cada caso entre copia <b>superficial y profunda</b>.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>clase</b> del objeto que se instancia.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Alternativa a Abstract Factory</b>. En el ejemplo del editor de dibujo del GoF resulta <b>la mejor de las tres opciones</b> (solo pide implementar Clone, y Clone sirve además para un "Duplicar" del menú). Suele usar Singleton en su implementación y trabaja con <b>Composite</b> y <b>Decorator</b>.</td></tr>
+</table>
+
+<h2>56.5 Singleton <span class="fuente">— objeto · creacional</span></h2>
+<table class="amber">
+<tr><td style="width:16%"><b>Intención</b></td><td>Asegurar que una clase tenga <b>una sola instancia</b> y proveer un <b>punto de acceso global</b> a ella.</td></tr>
+<tr><td><b>Problema</b></td><td>Algo debe existir una única vez en el sistema (un spooler de impresión, un registro de configuración, el gestor de ventanas) y todos deben llegar a esa misma instancia — pero una variable global no controla ni cuándo se crea ni que no se duplique.</td></tr>
+<tr><td><b>Solución</b></td><td>La clase <b>se encarga de sí misma</b>: constructor no público y una operación de clase (<code>Instance()</code>) que crea la instancia la primera vez y la devuelve siempre. Participante único: Singleton.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) debe haber <b>exactamente una instancia</b> de una clase, accesible a los clientes desde un punto conocido; (b) esa única instancia debe poder <b>extenderse por subclasificación</b> y los clientes deben poder usar la instancia extendida <b>sin modificar su código</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Acceso controlado</b> a la instancia única (la clase encapsula cómo y cuándo se accede). <b>2. Reduce el espacio de nombres</b>: es una mejora sobre las variables globales, que contaminan el namespace. <b>3. Permite refinar operaciones y representación</b> (se puede subclasificar y configurar la app con la subclase en runtime). <b>4. Permite un número variable de instancias</b>: si mañana hacen falta tres, solo cambia la operación de acceso. <b>5. Más flexible que las operaciones de clase</b>: los métodos estáticos de C++ no son virtuales, así que las subclases no pueden redefinirlos polimórficamente.</td></tr>
+<tr><td><b>En contra</b></td><td>Es el patrón más criticado del catálogo: introduce <b>estado global</b> y una dependencia oculta que <b>daña la testabilidad</b> (no se puede sustituir por un doble de prueba fácilmente — de ahí que el SAIP recomiende <b>dependency injection</b> justamente para esto) y complica la <b>concurrencia</b> (la creación debe protegerse).</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>instancia única</b> de una clase.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Muchos patrones se implementan con Singleton: <b>Abstract Factory</b>, <b>Builder</b>, <b>Prototype</b> (sus fábricas y gestores). En el material del SAIP, la lógica de votación de la táctica <i>voting</i> se implementa "como un singleton simple, rigurosamente revisado y probado".</td></tr>
+</table>
+
+<h1><span class="num">57.</span>Los 7 patrones estructurales</h1>
+<p class="fuente">Se ocupan de cómo componer clases y objetos en estructuras más grandes. Los de clase usan herencia para componer interfaces o implementaciones; los de objeto componen objetos, con la ventaja de poder cambiar la composición en runtime.</p>
+
+<h2>57.1 Adapter <span class="fuente">— clase y objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Convertir la interfaz de una clase en <b>otra interfaz que los clientes esperan</b>. Permite que colaboren clases que no podrían por interfaces incompatibles.</td></tr>
+<tr><td><b>Problema</b></td><td>Tenés una clase que hace lo que necesitás pero <b>su interfaz no coincide</b> con la que tu sistema espera, y no podés (o no querés) modificarla.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Adapter</b> implementa la interfaz <b>Target</b> que el cliente usa y traduce las llamadas al <b>Adaptee</b>. Dos variantes: <b>de clase</b> (hereda de ambos) y <b>de objeto</b> (contiene una referencia al adaptee — la preferida).</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) querés usar una clase existente y <b>su interfaz no es la que necesitás</b>; (b) querés crear una clase reutilizable que <b>cooperen con clases imprevistas</b>, sin interfaces necesariamente compatibles; (c) <i>(solo el de objeto)</i> necesitás usar varias subclases existentes y sería impracticable adaptar la interfaz subclasificando cada una.</td></tr>
+<tr><td><b>A favor</b></td><td><b>Adapter de clase</b>: permite <b>sobrescribir</b> parte de la conducta del adaptee (es su subclase) e introduce un solo objeto, sin indirección extra. <b>Adapter de objeto</b>: un mismo adapter sirve para <b>el adaptee y todas sus subclases</b>, y puede agregarles funcionalidad a todas de una vez.</td></tr>
+<tr><td><b>En contra</b></td><td>El <b>de clase</b> no funciona si querés adaptar una clase <b>y todas sus subclases</b> (queda atado a una concreta). El <b>de objeto</b> hace más difícil sobrescribir la conducta del adaptee. Y en ambos hay que decidir <b>cuánto adapta</b>: hay un espectro que va del simple cambio de nombres de operaciones a soportar un conjunto de operaciones enteramente distinto. Variante avanzada: los <b>pluggable adapters</b>, que llevan la adaptación de interfaz dentro de la clase para minimizar los supuestos que otras clases deben hacer.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>interfaz</b> a un objeto.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Bridge</b> tiene estructura parecida pero intención distinta: Adapter resuelve incompatibilidades entre interfaces <b>ya existentes</b> (hace que las cosas funcionen <b>después</b> de diseñadas); Bridge separa una abstracción de sus implementaciones <b>previsto de antemano</b>. <b>Facade</b> define una interfaz <b>nueva</b>; Adapter <b>reutiliza una vieja</b>. <b>Decorator</b> no cambia la interfaz, la mantiene. En el SAIP este patrón aparece como el <b>wrapper</b> de las tácticas de integrabilidad. Resuelve la <b>causa de rediseño 8</b>.</td></tr>
+</table>
+
+<h2>57.2 Bridge <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td><b>Desacoplar una abstracción de su implementación</b> para que ambas puedan variar independientemente.</td></tr>
+<tr><td><b>Problema</b></td><td>Una abstracción tiene varias implementaciones posibles (una ventana en X11, en Windows, en macOS) y resolverlo por herencia produce una <b>explosión combinatoria</b> de subclases — las "generalizaciones anidadas" de Rumbaugh — y liga la implementación en tiempo de compilación.</td></tr>
+<tr><td><b>Solución</b></td><td>Dos jerarquías separadas: <b>Abstraction</b> (con su RefinedAbstraction) mantiene una referencia a un <b>Implementor</b> (con sus ConcreteImplementor) y le delega el trabajo. Las dos evolucionan por separado.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) querés <b>evitar un binding permanente</b> entre abstracción e implementación — por ejemplo porque la implementación se elige o se cambia <b>en runtime</b>; (b) tanto abstracciones como implementaciones deben ser <b>extensibles por subclasificación</b> independientemente; (c) los cambios en la implementación <b>no deben impactar a los clientes</b> (ni obligar a recompilar); (d) <i>(C++)</i> querés ocultar completamente la implementación al cliente; (e) hay una <b>proliferación de clases</b> que indica que el objeto debería partirse en dos; (f) querés <b>compartir una implementación</b> entre varios objetos (con conteo de referencias) sin que el cliente lo note.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Desacopla interfaz e implementación</b>: la implementación se configura — incluso se cambia — en runtime; se eliminan las dependencias de compilación, lo que es <b>esencial para mantener compatibilidad binaria</b> entre versiones de una biblioteca; y fomenta una estratificación mejor (la parte alta solo conoce Abstraction e Implementor). <b>2. Mejor extensibilidad</b>: las dos jerarquías crecen por separado. <b>3. Oculta detalles</b> al cliente (como el conteo de referencias del implementor compartido).</td></tr>
+<tr><td><b>En contra</b></td><td>Agrega una indirección y <b>duplica la jerarquía</b>: injustificado si hay una sola implementación o si nunca va a haber más.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>implementación</b> de un objeto.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Abstract Factory</b> suele crear y configurar el bridge. Se distingue de <b>Adapter</b> por el momento y la intención (ver arriba). Si la abstracción y una implementación calzan bien, la abstracción "simplemente delega" — la <b>delegación</b> es su mecanismo. Resuelve las causas de rediseño 3, 4, 6 y 7. En Lexi resuelve el soporte de <b>múltiples sistemas de ventanas</b>.</td></tr>
+</table>
+
+<h2>57.3 Composite <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Componer objetos en <b>estructuras de árbol</b> para representar jerarquías parte-todo, permitiendo que los clientes traten <b>uniformemente</b> a los objetos individuales y a las composiciones.</td></tr>
+<tr><td><b>Problema</b></td><td>El cliente tiene que distinguir constantemente entre "un elemento" y "un grupo de elementos", lo que llena el código de condicionales y verificaciones de tipo.</td></tr>
+<tr><td><b>Solución</b></td><td>Una interfaz común <b>Component</b>; las <b>Leaf</b> son los objetos primitivos y los <b>Composite</b> contienen hijos (leaves u otros composites) y delegan en ellos las operaciones. Recursión hasta cualquier profundidad.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) querés representar <b>jerarquías parte-todo</b> de objetos; (b) querés que los clientes puedan <b>ignorar la diferencia</b> entre composiciones y objetos individuales, tratando a todos de forma uniforme.</td></tr>
+<tr><td><b>A favor</b></td><td><b>Simplifica el cliente</b>: no sabe (ni debe importarle) si trata con una hoja o con un compuesto, lo que evita las funciones "con etiqueta y case" sobre las clases de la composición. <b>Facilita agregar componentes nuevos</b>: las subclases nuevas de Leaf o Composite funcionan <b>automáticamente</b> con las estructuras y el código cliente existentes.</td></tr>
+<tr><td><b>En contra</b></td><td><b>Puede volver el diseño demasiado general</b>: la contracara de que sea fácil agregar componentes es que se vuelve difícil <b>restringir</b> los componentes de un compuesto. Si querés que un compuesto acepte solo cierto tipo de hijos, "no podés apoyarte en el sistema de tipos: hay que usar chequeos en runtime".</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>estructura y composición</b> de un objeto.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Se usa <b>muchísimo con otros</b>: <b>Decorator</b> (comparten la composición recursiva y suelen usarse juntos: desde Decorator un composite es un ConcreteComponent, y desde Composite un decorator es una Leaf); <b>Iterator</b> y <b>Visitor</b> para recorrerlo y operar sobre él; <b>Chain of Responsibility</b> para que los hijos accedan a propiedades globales vía el padre; <b>Flyweight</b> para compartir hojas (con la consecuencia de que la hoja no puede guardar puntero al padre: se pasa como estado extrínseco); se crea con <b>Builder</b>. En Lexi resuelve la <b>estructura del documento</b>.</td></tr>
+</table>
+
+<h2>57.4 Decorator <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Adjuntar responsabilidades <b>adicionales a un objeto dinámicamente</b>. Alternativa flexible a la subclasificación para extender funcionalidad.</td></tr>
+<tr><td><b>Problema</b></td><td>Querés agregar capacidades a objetos <b>individuales</b> (este campo de texto con borde y scroll; ese otro sin nada) y cubrir todas las combinaciones por herencia produciría una explosión de subclases.</td></tr>
+<tr><td><b>Solución</b></td><td>El <b>Decorator</b> implementa la <b>misma interfaz</b> que el componente que envuelve, le delega y agrega su comportamiento antes o después. Al implementar la misma interfaz, los decoradores se <b>anidan</b> recursivamente.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Para (a) agregar responsabilidades a objetos individuales <b>dinámica y transparentemente</b>, sin afectar a otros objetos; (b) responsabilidades que se pueden <b>retirar</b>; (c) cuando extender por subclasificación es impracticable — hay muchas extensiones independientes y cubrir cada combinación explotaría en subclases, o la definición de la clase está oculta y no se puede subclasificar.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Más flexible que la herencia estática</b>: las responsabilidades se agregan y quitan <b>en runtime</b> enganchando y desenganchando decoradores; se pueden mezclar y combinar, e incluso <b>aplicar dos veces la misma</b> (dos BorderDecorators = borde doble; heredar dos veces de Border es propenso a error). <b>2. Evita clases sobrecargadas de features en lo alto de la jerarquía</b>: propone un enfoque "pagá lo que usás" — una clase simple a la que se le suma funcionalidad incremental, así "la aplicación no paga por features que no usa".</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. El decorador y su componente no son idénticos</b>: actúa como envoltorio transparente, pero desde el punto de vista de la <b>identidad de objeto</b> un componente decorado <b>no es</b> el componente — no hay que apoyarse en la identidad cuando se usan decoradores. <b>4. Muchos objetitos</b>: los diseños con Decorator terminan con montones de objetos pequeños que se parecen entre sí y difieren solo en cómo están interconectados, lo que <b>dificulta aprender y depurar</b> el sistema.</td></tr>
+<tr><td><b>Varía</b></td><td>Las <b>responsabilidades</b> de un objeto, <b>sin subclasificar</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Se distingue de <b>Composite</b> (embellecer vs. representar) y de <b>Proxy</b> (agregar vs. controlar el acceso). <b>Strategy</b> es la alternativa cuando conviene cambiar las "entrañas" en vez de la "piel". Resuelve las causas de rediseño 7 y 8. En Lexi <b>embellece la UI</b> (bordes y scrollbars), y en MVC agrega el scrolling a una vista.</td></tr>
+</table>
+
+<h2>57.5 Facade <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Proveer una <b>interfaz unificada</b> a un conjunto de interfaces de un subsistema: una interfaz de más alto nivel que lo hace más fácil de usar.</td></tr>
+<tr><td><b>Problema</b></td><td>Un subsistema creció y se volvió complejo (justamente porque aplicar patrones produce más clases y más chicas): los clientes que solo quieren el caso común tienen que conocer demasiado.</td></tr>
+<tr><td><b>Solución</b></td><td>Una clase <b>Facade</b> que conoce a qué clases del subsistema delegar cada pedido y ofrece las operaciones de alto nivel. Los clientes hablan con la fachada.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) querés una <b>interfaz simple</b> a un subsistema complejo: "una fachada puede dar una vista por defecto simple que alcanza para la mayoría de los clientes; solo los que necesiten personalizar mirarán más allá"; (b) hay <b>muchas dependencias</b> entre los clientes y las clases de implementación de una abstracción — la fachada las desacopla y promueve independencia y portabilidad; (c) querés <b>estratificar</b> los subsistemas: la fachada define el punto de entrada de cada nivel y, si los subsistemas dependen entre sí, se simplifican las dependencias haciendo que se comuniquen <b>solo por sus fachadas</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Escuda a los clientes</b> de los componentes del subsistema: menos objetos con los que lidiar. <b>2. Promueve acoplamiento débil</b> entre el subsistema y sus clientes: se pueden variar los componentes sin afectarlos; ayuda a estratificar y a <b>eliminar dependencias complejas o circulares</b>; y reduce las <b>dependencias de compilación</b>, algo vital en sistemas grandes (limita la recompilación por un cambio chico y facilita portar, porque construir un subsistema ya no obliga a construir todos). <b>3. No impide</b> que las aplicaciones usen las clases del subsistema si lo necesitan: se elige entre <b>facilidad de uso y generalidad</b>.</td></tr>
+<tr><td><b>En contra</b></td><td>Puede convertirse en un <b>objeto dios</b> acoplado a todo el subsistema si se le agregan responsabilidades en vez de solo delegación.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>interfaz a un subsistema</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Abstract Factory</b> puede ser la fachada de creación del subsistema. <b>Mediator</b> se parece pero su propósito es abstraer la comunicación <b>entre</b> colegas, no simplificar el acceso <b>desde afuera</b>. Suele ser <b>Singleton</b>. Es el patrón que da la <b>interfaz gestionada de cada capa</b> en el estilo de capas (cap. 50), y resuelve la causa de rediseño 6.</td></tr>
+</table>
+
+<h2>57.6 Flyweight <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Usar <b>compartición</b> para soportar eficientemente <b>grandes cantidades de objetos de grano fino</b>.</td></tr>
+<tr><td><b>Problema</b></td><td>El diseño "correcto" pide un objeto por cada elemento (un objeto por carácter del documento) y eso <b>no cabe en memoria</b> por la pura cantidad.</td></tr>
+<tr><td><b>Solución</b></td><td>Separar el estado <b>intrínseco</b> (compartible, independiente del contexto: la letra "a") del <b>extrínseco</b> (dependiente del contexto: su posición y su fuente, que pasa el cliente en cada operación). Una <b>FlyweightFactory</b> administra el pool de instancias compartidas.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Su efectividad "depende mucho de cómo y dónde se use". Aplicalo cuando se cumple <b>todo</b> esto: la aplicación usa <b>gran cantidad</b> de objetos; el <b>costo de almacenamiento es alto</b> por la pura cantidad; la mayor parte del estado <b>puede volverse extrínseco</b>; muchos grupos de objetos pueden reemplazarse por <b>pocos compartidos</b> al quitarles el estado extrínseco; y la aplicación <b>no depende de la identidad</b> de los objetos (los tests de identidad darán verdadero para objetos conceptualmente distintos).</td></tr>
+<tr><td><b>A favor</b></td><td><b>Ahorro de memoria</b>, que crece con la cantidad de flyweights compartidos y con la cantidad de estado compartido. El máximo ahorro se da cuando los objetos usan mucho estado de los dos tipos <b>y el extrínseco se puede calcular en vez de almacenar</b>: ahí se gana dos veces — se comparte el intrínseco y se cambia memoria por tiempo de cómputo.</td></tr>
+<tr><td><b>En contra</b></td><td><b>Costos de runtime</b> por transferir, buscar o calcular el estado extrínseco (sobre todo si antes era intrínseco). Y al combinarse con <b>Composite</b>, las hojas compartidas <b>no pueden guardar un puntero a su padre</b>: el padre viaja como estado extrínseco, lo que "impacta fuertemente en cómo se comunican los objetos de la jerarquía".</td></tr>
+<tr><td><b>Varía</b></td><td>Los <b>costos de almacenamiento</b> de los objetos.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Se combina con <b>Composite</b> (grafo con hojas compartidas), y suele aplicarse a los <b>State</b> y <b>Strategy</b> para compartirlos. Es el patrón que resuelve la <b>granularidad</b> en el extremo fino, mientras Facade lo hace en el extremo grueso.</td></tr>
+</table>
+
+<h2>57.7 Proxy <span class="fuente">— objeto · estructural</span></h2>
+<table>
+<tr><td style="width:16%"><b>Intención</b></td><td>Proveer un <b>sustituto o representante</b> de otro objeto para <b>controlar el acceso</b> a él.</td></tr>
+<tr><td><b>Problema</b></td><td>Acceder al objeto real es caro, remoto o debe restringirse, pero el cliente no debería tener que saberlo ni cambiar su código.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Proxy</b> con la <b>misma interfaz</b> que el <b>RealSubject</b>, que mantiene una referencia a él y controla su acceso, creándolo o contactándolo cuando corresponde.</td></tr>
+<tr><td><b>Cuándo</b></td><td>"Siempre que se necesite una referencia a un objeto más versátil o sofisticada que un simple puntero". Los cuatro tipos canónicos: <b>1. Proxy remoto</b> — representante local de un objeto en <b>otro espacio de direcciones</b> (Coplien lo llama "embajador"). <b>2. Proxy virtual</b> — crea objetos caros <b>bajo demanda</b> (la imagen que no se carga hasta que hay que dibujarla). <b>3. Proxy de protección</b> — controla el acceso cuando distintos clientes tienen <b>distintos derechos</b>. <b>4. Referencia inteligente</b> — reemplaza un puntero crudo agregando acciones: contar referencias para liberar automáticamente (<i>smart pointers</i>), cargar un objeto persistente en memoria al primer acceso, o verificar que el objeto esté <b>bloqueado</b> antes de accederlo.</td></tr>
+<tr><td><b>A favor</b></td><td>Introduce un <b>nivel de indirección</b> con muchos usos: el remoto oculta que el objeto está en otro espacio de direcciones; el virtual permite optimizaciones como la creación bajo demanda; los de protección y las referencias inteligentes agregan tareas de mantenimiento en cada acceso. Y habilita el <b>copy-on-write</b>: copiar un objeto grande se posterga hasta que alguien lo modifique — "aseguramos pagar el precio de copiar solo si se modifica", lo que <b>reduce significativamente</b> el costo de copiar objetos pesados.</td></tr>
+<tr><td><b>En contra</b></td><td>La indirección tiene costo, y el copy-on-write exige que el sujeto lleve <b>conteo de referencias</b> con la disciplina que eso implica.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cómo se accede a un objeto y dónde está ubicado</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Se distingue de <b>Decorator</b> (controlar acceso vs. agregar responsabilidades; relación estática vs. recursiva) y de <b>Adapter</b> (misma interfaz vs. interfaz distinta). Los <b>smart pointers</b> son la táctica de <i>exception prevention</i> del SAIP (cap. 17). Resuelve la causa de rediseño 4. En el SAIP, el <b>sidecar</b> del service mesh es "una clase de proxy que acompaña a cada microservicio".</td></tr>
+</table>
+<h1><span class="num">58.</span>Los 11 patrones de comportamiento</h1>
+<p class="fuente">Se ocupan de los algoritmos y de la asignación de responsabilidades entre objetos. No describen solo patrones de objetos o clases, sino los <b>patrones de comunicación</b> entre ellos: quitan el foco del flujo de control para ponerlo en cómo se interconectan los objetos. Los dos de clase (Interpreter y Template Method) usan herencia; los nueve de objeto, composición y delegación.</p>
+
+<h2>58.1 Chain of Responsibility <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Evitar acoplar el emisor de una petición a su receptor dando a <b>más de un objeto la posibilidad de manejarla</b>: se encadenan los receptores y la petición viaja por la cadena hasta que alguno la maneja.</td></tr>
+<tr><td><b>Problema</b></td><td>Varios objetos podrían atender una petición y <b>no se sabe de antemano cuál</b> corresponde (la ayuda contextual: ¿la explica el botón, el diálogo o la aplicación?).</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Handler</b> abstracto declara la operación y mantiene una referencia a su <b>sucesor</b>; cada <b>ConcreteHandler</b> decide si atiende o reenvía. El cliente le entrega la petición al primero de la cadena.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) <b>más de un objeto</b> puede manejar una petición y el handler <b>no se conoce a priori</b> — debe determinarse automáticamente; (b) querés emitir una petición a uno de varios objetos <b>sin especificar el receptor explícitamente</b>; (c) el conjunto de objetos que puede manejarla debe <b>especificarse dinámicamente</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Reduce el acoplamiento</b>: libera al objeto de saber quién maneja la petición — solo sabe que "será manejada apropiadamente"; ni emisor ni receptor se conocen, y un objeto de la cadena no necesita conocer la estructura de la cadena. En vez de mantener referencias a todos los receptores candidatos, cada uno guarda <b>una sola</b>: su sucesor. <b>2. Flexibilidad para asignar responsabilidades</b>: se pueden agregar o cambiar responsabilidades <b>modificando la cadena en runtime</b>, y combinarlo con subclasificación para especializar handlers estáticamente.</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. La recepción no está garantizada</b>: como la petición no tiene receptor explícito, <b>no hay garantía de que alguien la atienda</b> — puede caerse por el final de la cadena sin ser manejada, o quedar sin atender si la cadena está mal configurada.</td></tr>
+<tr><td><b>Varía</b></td><td>El <b>objeto que puede satisfacer una petición</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Suele aplicarse sobre un <b>Composite</b> (la cadena es la jerarquía de padres). Las peticiones se representan con <b>Command</b>. Sus handlers casi siempre usan <b>Template Method</b> para decidir si atienden y a quién reenvían. Comparado con <b>Mediator</b>, <b>Observer</b> y <b>Command</b> como forma de desacoplar emisor y receptor: es la mejor opción "si la cadena <b>ya es parte de la estructura</b> del sistema". Como Mediator, puede requerir un despacho propio con las mismas desventajas de <i>type safety</i>.</td></tr>
+</table>
+
+<h2>58.2 Command <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td><b>Encapsular una petición como un objeto</b>, permitiendo parametrizar clientes con distintas peticiones, encolarlas o registrarlas, y soportar operaciones <b>deshacibles</b>.</td></tr>
+<tr><td><b>Problema</b></td><td>Un menú o un botón tiene que ejecutar "algo" sin saber qué, y ese algo debe poder deshacerse, repetirse, encolarse o registrarse en un log.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Command</b> abstracto con <code>Execute()</code>; cada <b>ConcreteCommand</b> guarda a su <b>Receiver</b> y los parámetros necesarios. El <b>Invoker</b> (el ítem de menú) solo dispara <code>Execute()</code>.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando querés (a) <b>parametrizar objetos por una acción</b> a realizar — "los commands son el reemplazo orientado a objetos de los <i>callbacks</i>"; (b) <b>especificar, encolar y ejecutar</b> peticiones en momentos distintos: un command tiene vida independiente de la petición original y, si el receptor se puede representar de forma independiente del espacio de direcciones, <b>se puede transferir a otro proceso</b> y cumplirlo allá; (c) soportar <b>undo</b>: <code>Execute</code> guarda el estado para revertir sus efectos y se agrega <code>Unexecute</code>; los commands ejecutados se guardan en una <b>lista de historia</b> y recorrerla hacia atrás y adelante da <b>undo y redo ilimitados</b>; (d) soportar <b>logging</b> de cambios para reaplicarlos ante una caída: agregando <i>load</i> y <i>store</i> a la interfaz se mantiene un log persistente y la recuperación consiste en recargar y reejecutar.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Desacopla</b> al objeto que invoca la operación del que sabe cómo realizarla. <b>2. Los commands son objetos de primera clase</b>: se manipulan y extienden como cualquier otro. <b>3. Se pueden ensamblar en commands compuestos</b> (un MacroCommand — que es una instancia de <b>Composite</b>). <b>4. Es fácil agregar commands nuevos</b> porque no hay que cambiar las clases existentes.</td></tr>
+<tr><td><b>En contra</b></td><td>Nominalmente requiere <b>una subclase por cada conexión emisor-receptor</b> (aunque el propio patrón describe técnicas para evitar la subclasificación), y el undo obliga a decidir qué estado guardar y cuánto — de ahí que se combine con Memento.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cuándo y cómo</b> se satisface una petición.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Composite</b> para los macro-commands, <b>Memento</b> para guardar el estado que hace falta revertir, y <b>Prototype</b> si hay que copiar un command antes de ponerlo en la historia. Es la base conceptual de las <b>colas de trabajo</b> y del <b>logging para recuperación</b> — el equivalente de diseño de las tácticas de <i>rollback</i> y <i>transactions</i> del capítulo 17. En Lexi implementa las <b>operaciones de usuario deshacibles</b>. Resuelve las causas de rediseño 2 y 6.</td></tr>
+</table>
+
+<h2>58.3 Interpreter <span class="fuente">— clase · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Dado un lenguaje, definir una <b>representación de su gramática</b> junto con un intérprete que la usa para interpretar sentencias.</td></tr>
+<tr><td><b>Problema</b></td><td>Un tipo de problema aparece tan seguido que conviene expresar sus instancias como <b>sentencias de un lenguaje simple</b> (expresiones regulares, fórmulas, reglas de negocio) e interpretarlas.</td></tr>
+<tr><td><b>Solución</b></td><td>Una jerarquía de clases donde <b>cada regla de la gramática es una clase</b>: <b>TerminalExpression</b> y <b>NonterminalExpression</b>, todas con <code>Interpret(Context)</code>. Una sentencia es un <b>árbol sintáctico abstracto</b> de esas instancias, y se interpreta recorriéndolo.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando hay un lenguaje que interpretar y <b>las sentencias se pueden representar como árboles sintácticos</b>. Funciona mejor cuando (a) <b>la gramática es simple</b> — "para gramáticas complejas la jerarquía de clases se vuelve grande e inmanejable, y ahí son mejores los generadores de parsers"; (b) <b>la eficiencia no es crítica</b> — los intérpretes más eficientes no interpretan el árbol directamente sino que primero traducen a otra forma (las expresiones regulares se transforman en máquinas de estado) aunque "incluso entonces el traductor se puede implementar con Interpreter".</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Es fácil cambiar y extender la gramática</b>: como usa clases para representar reglas, se usa <b>herencia</b> para cambiarla o extenderla; las expresiones existentes se modifican incrementalmente y las nuevas se definen como variaciones. <b>2. Implementar la gramática también es fácil</b>: las clases del árbol tienen implementaciones similares, son sencillas de escribir y "a menudo su generación se puede automatizar con un compilador o un generador de parsers".</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. Las gramáticas complejas son difíciles de mantener</b>: define <b>al menos una clase por regla</b> (y las reglas en BNF pueden requerir varias), así que una gramática con muchas reglas se vuelve inmanejable.</td></tr>
+<tr><td><b>Varía</b></td><td>La <b>gramática y la interpretación</b> de un lenguaje.</td></tr>
+<tr><td><b>Relacionados</b></td><td>El árbol es un <b>Composite</b>; se recorre con <b>Iterator</b>; las operaciones sobre los nodos pueden ir en un <b>Visitor</b>; los símbolos terminales repetidos se comparten con <b>Flyweight</b>; y puede usar <b>State</b> para definir contextos de parseo. Es el patrón hermano — a escala de diseño — del <b>estilo intérprete/máquina virtual</b> del capítulo 53. Nota: refactoring.guru <b>no lo incluye</b> en su catálogo principal.</td></tr>
+</table>
+
+<h2>58.4 Iterator <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Proveer una forma de acceder <b>secuencialmente</b> a los elementos de un agregado <b>sin exponer su representación</b> subyacente.</td></tr>
+<tr><td><b>Problema</b></td><td>Querés recorrer una colección sin que el cliente sepa si por debajo hay un arreglo, una lista o un árbol — y a veces querés recorrerla de <b>varias formas</b> o <b>varias veces a la vez</b>.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Iterator</b> con la interfaz de recorrido (<code>First</code>, <code>Next</code>, <code>IsDone</code>, <code>CurrentItem</code>) que <b>mantiene su propio estado de recorrido</b>; el <b>Aggregate</b> ofrece una operación para crearlo.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Para (a) acceder al contenido de un agregado <b>sin exponer su representación interna</b>; (b) soportar <b>múltiples recorridos</b> del mismo agregado; (c) proveer una <b>interfaz uniforme</b> para recorrer estructuras agregadas distintas — es decir, para soportar <b>iteración polimórfica</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Soporta variaciones en el recorrido</b>: los agregados complejos se recorren de muchas maneras (un árbol sintáctico se puede recorrer <i>inorder</i> o <i>preorder</i>) y cambiar el algoritmo es <b>reemplazar la instancia del iterador</b>; se pueden definir subclases para recorridos nuevos. <b>2. Simplifica la interfaz del agregado</b>: al vivir el recorrido en el iterador, el agregado no necesita una interfaz de recorrido. <b>3. Puede haber más de un recorrido pendiente a la vez</b>, porque cada iterador lleva su propio estado.</td></tr>
+<tr><td><b>En contra</b></td><td>Un objeto extra por recorrido, y la clásica fragilidad de los <b>iteradores robustos</b>: qué pasa si el agregado se modifica mientras se lo recorre.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cómo se accede y se recorren</b> los elementos de un agregado.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Se usa muchísimo sobre <b>Composite</b> para recorrer estructuras recursivas. Los <b>iteradores polimórficos</b> se crean con <b>Factory Method</b>. Puede usar <b>Memento</b> para capturar el estado de una iteración. Y <b>Visitor</b> es su complemento: el iterador recorre, el visitor aplica la operación a cada elemento. En Lexi da el <b>acceso y recorrido</b> de la estructura del documento.</td></tr>
+</table>
+
+<h2>58.5 Mediator <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Definir un objeto que <b>encapsula cómo interactúa un conjunto de objetos</b>: promueve el acoplamiento débil evitando que se referencien explícitamente, y permite variar su interacción de forma independiente.</td></tr>
+<tr><td><b>Problema</b></td><td>Un conjunto de objetos se comunica de formas complejas y las interdependencias resultantes son <b>desestructuradas y difíciles de entender</b> (los controles de un diálogo: cambiar la lista habilita el botón, que valida el campo…).</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>Mediator</b> concentra el protocolo: cada <b>Colleague</b> le avisa de sus cambios y él decide a quién notificar. Las relaciones muchos-a-muchos se vuelven uno-a-muchos con el mediador en el centro.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) un conjunto de objetos se comunica de maneras <b>bien definidas pero complejas</b>, con interdependencias desestructuradas y difíciles de entender; (b) <b>reutilizar un objeto es difícil</b> porque referencia y se comunica con muchos otros; (c) una conducta distribuida entre varias clases debe poder <b>personalizarse sin subclasificar mucho</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Limita la subclasificación</b>: localiza en un solo lugar una conducta que de otro modo estaría distribuida; cambiarla exige subclasificar <b>solo el Mediator</b>, y los colegas se reutilizan tal cual. <b>2. Desacopla a los colegas</b>: se pueden variar y reutilizar colegas y mediador independientemente. <b>3. Simplifica los protocolos</b>: reemplaza interacciones <b>muchos-a-muchos por uno-a-muchos</b>, que son "más fáciles de entender, mantener y extender". <b>4. Abstrae cómo cooperan los objetos</b>: convertir la mediación en un concepto propio permite razonar sobre <b>cómo interactúan</b> los objetos aparte de su conducta individual.</td></tr>
+<tr><td><b>En contra</b></td><td><b>5. Centraliza el control</b>: "cambia complejidad de interacción por complejidad en el mediador". Como encapsula protocolos, puede volverse <b>más complejo que cualquier colega individual</b> y convertirse en "un monolito difícil de mantener". Si necesita despacho ad hoc, se pierde <i>type safety</i>.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cómo y cuáles</b> objetos interactúan entre sí.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Mediator y Observer son patrones que compiten</b>: Observer <b>distribuye</b> la comunicación (más reutilizable, más difícil de seguir); Mediator la <b>centraliza</b> (más legible, menos reutilizable) — "es más fácil hacer Observers y Subjects reutilizables que hacer Mediators reutilizables". A menudo el mediador <b>se comunica con sus colegas usando Observer</b>. Se distingue de <b>Facade</b>: la fachada simplifica el acceso <i>desde afuera</i>; el mediador coordina <i>entre</i> colegas. En el SAIP es el patrón <b>mediator</b> de integrabilidad, el único de los tres (wrapper/bridge/mediator) que decide la traducción <b>en runtime</b>.</td></tr>
+</table>
+
+<h2>58.6 Memento <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td><b>Sin violar el encapsulamiento</b>, capturar y externalizar el estado interno de un objeto para poder <b>restaurarlo</b> más tarde.</td></tr>
+<tr><td><b>Problema</b></td><td>Necesitás poder volver atrás (undo, checkpoints, transacciones) pero exponer el estado interno del objeto para guardarlo <b>rompería su encapsulamiento</b>.</td></tr>
+<tr><td><b>Solución</b></td><td>El <b>Originator</b> crea un <b>Memento</b> con una copia de su estado y sabe restaurarse desde él; el <b>Caretaker</b> lo <b>custodia sin mirar adentro</b>. El memento define <b>dos interfaces</b>: una <i>restringida</i> para el caretaker (solo guardarlo y pasarlo) y una <i>privilegiada</i> para el originator (leer y escribir el estado).</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando debe guardarse <b>una instantánea de (parte de) el estado</b> de un objeto para restaurarlo después, <b>y</b> una interfaz directa para obtener ese estado <b>expondría detalles de implementación y rompería el encapsulamiento</b>.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Preserva los límites del encapsulamiento</b>: evita exponer información que solo el originator debería administrar pero que debe guardarse afuera; escuda a los demás objetos de las <b>internas complejas</b> del originator. <b>2. Simplifica al Originator</b>: en otros diseños que preservan encapsulamiento, el originator debe guardar las versiones que los clientes pidieron y carga con toda la gestión del almacenamiento; que los clientes administren el estado que pidieron lo simplifica y evita que tengan que avisarle cuando terminaron.</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. Puede ser caro</b>: si el originator debe copiar mucha información, o si los clientes crean y devuelven mementos muy seguido, el overhead es considerable — "a menos que encapsular y restaurar el estado sea barato, el patrón puede no ser apropiado". Es exactamente el tradeoff que el SAIP señala en el <b>undo</b>: cortar y pegar secciones enormes y deshacerlo todo enlentece notablemente al procesador de texto.</td></tr>
+<tr><td><b>Varía</b></td><td><b>Qué información privada se guarda fuera</b> del objeto, y <b>cuándo</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td><b>Command</b> lo usa para guardar el estado necesario para deshacer. <b>Iterator</b> puede usarlo para capturar el estado de un recorrido. Junto con Command es uno de los patrones de "<b>token mágico</b>" que se pasa y se invoca después; a diferencia de Command, la interfaz del memento es tan estrecha que <b>se pasa como un valor</b> y no ofrece operaciones polimórficas. En el SAIP es el patrón que <b>implementa la táctica undo</b> de usabilidad (cap. 26).</td></tr>
+</table>
+
+<h2>58.7 Observer <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Definir una dependencia <b>uno-a-muchos</b> entre objetos de modo que, cuando uno cambia de estado, <b>todos sus dependientes sean notificados y actualizados automáticamente</b>.</td></tr>
+<tr><td><b>Problema</b></td><td>Varios objetos deben reflejar el estado de otro (la planilla, el histograma y el gráfico de torta que muestran los mismos datos) y no querés que el que cambia conozca a los que dependen de él.</td></tr>
+<tr><td><b>Solución</b></td><td>El <b>Subject</b> mantiene una lista de <b>Observers</b> que se registran, y al cambiar los <b>notifica</b>; cada observador consulta el estado que le interesa y se actualiza. Participantes: Subject · Observer · ConcreteSubject · ConcreteObserver.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) una abstracción tiene <b>dos aspectos, uno dependiente del otro</b>, y encapsularlos en objetos separados permite variarlos y reutilizarlos por separado; (b) un cambio en un objeto exige cambiar otros y <b>no se sabe cuántos</b>; (c) un objeto debe poder notificar a otros <b>sin hacer suposiciones sobre quiénes son</b> — es decir, sin acoplarse a ellos.</td></tr>
+<tr><td><b>A favor</b></td><td>Permite <b>variar sujetos y observadores independientemente</b>: se reutilizan unos sin los otros y se agregan observadores sin tocar al sujeto ni a los demás. <b>1. Acoplamiento abstracto</b>: el sujeto solo sabe que tiene una lista de observadores conformes a una interfaz simple; no conoce sus clases concretas. Al no estar fuertemente acoplados, <b>pueden pertenecer a capas de abstracción distintas</b> — un sujeto de bajo nivel puede informar a un observador de alto nivel <b>manteniendo intacta la estratificación</b> (si estuvieran fusionados, el objeto resultante violaría las capas o quedaría forzado a una sola). <b>2. Soporta comunicación por difusión</b>: la notificación no especifica receptor, se emite automáticamente a todos los interesados; el sujeto no le importa cuántos hay, y se pueden agregar y quitar en cualquier momento — es el observador quien decide atender o ignorar.</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. Actualizaciones inesperadas</b>: como los observadores no saben unos de otros, pueden ser ciegos al <b>costo real</b> de cambiar el sujeto — "una operación aparentemente inocua sobre el sujeto puede provocar una <b>cascada de actualizaciones</b>" en observadores y sus dependientes. Y si los criterios de dependencia no están bien definidos, aparecen <b>actualizaciones espurias difíciles de rastrear</b>. Se suman los problemas que anota el SAIP: si un observador <b>no se des-registra</b>, su memoria nunca se libera (fuga) y se lo sigue invocando; y el <i>impedance mismatch</i> desperdicia procesamiento (el sensor reporta centésimas de grado y la vista solo muestra grados).</td></tr>
+<tr><td><b>Varía</b></td><td><b>Cuántos objetos dependen</b> de otro y <b>cómo se mantienen al día</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Es la mitad del <b>MVC</b> original de Smalltalk (junto con Composite y Strategy). Compite con <b>Mediator</b> (distribuir vs. centralizar la comunicación) y a menudo <b>lo implementa</b>. Se puede encapsular la semántica de actualización compleja en un <i>ChangeManager</i>, que suele ser un <b>Singleton</b>. Es el equivalente de diseño del <b>estilo de invocación implícita</b> (cap. 51): en un proceso se usa Observer; distribuido, <b>publish-subscribe</b>. Resuelve las causas de rediseño 6 y 7.</td></tr>
+</table>
+
+<h2>58.8 State <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Permitir que un objeto <b>altere su conducta cuando cambia su estado interno</b>: el objeto parecerá cambiar de clase.</td></tr>
+<tr><td><b>Problema</b></td><td>La conducta depende del estado y el código está lleno de <code>switch</code> o cadenas de <code>if</code> sobre una variable de estado, repetidos en varias operaciones.</td></tr>
+<tr><td><b>Solución</b></td><td>Un <b>State</b> abstracto por cada estado posible; el <b>Context</b> delega en el objeto estado actual y cambia de estado reemplazando ese objeto. Cada rama del condicional se vuelve <b>una clase</b>.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) la conducta de un objeto <b>depende de su estado</b> y debe cambiar en runtime según él; (b) las operaciones tienen <b>condicionales grandes y de varias partes</b> que dependen del estado (representado por constantes enumeradas), y "a menudo varias operaciones contienen la misma estructura condicional". El patrón pone cada rama en su clase, lo que permite tratar el estado <b>como un objeto en sí mismo</b> que varía independientemente.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Localiza la conducta específica de cada estado</b> y particiona la conducta entre estados: todo lo de un estado vive en un objeto, y agregar estados o transiciones es definir subclases nuevas. La alternativa — valores de datos y condicionales en el Context — desparrama <b>condicionales calcados</b> por toda la implementación, y agregar un estado obliga a cambiar varias operaciones. <b>2. Hace explícitas las transiciones</b>: cuando el estado es solo un valor, las transiciones no tienen representación (son asignaciones a variables); con objetos separados se vuelven explícitas. "Encapsular cada transición y acción en una clase eleva el estado de ejecución a la categoría de objeto: impone estructura al código y hace su intención más clara."</td></tr>
+<tr><td><b>En contra</b></td><td><b>Distribuye</b> la conducta entre varias subclases: aumenta el número de clases y es <b>menos compacto</b> que una sola clase. El propio GoF matiza: "esa distribución es buena si hay muchos estados, que de otro modo requerirían condicionales enormes" — y los condicionales grandes, como los procedimientos largos, son monolíticos y difíciles de modificar.</td></tr>
+<tr><td><b>Varía</b></td><td>Los <b>estados</b> de un objeto.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Los objetos estado suelen ser <b>Flyweight</b> compartidos (si no guardan datos propios) y a menudo <b>Singleton</b>. Se parece estructuralmente a <b>Strategy</b> — ambos delegan en un objeto intercambiable — pero la intención difiere: Strategy varía <b>el algoritmo</b> por decisión del cliente; State varía <b>la conducta según el estado</b>, y quien cambia el objeto delegado suele ser el propio contexto. "Un objeto tiene un solo estado, pero puede tener muchas strategies para distintas peticiones."</td></tr>
+</table>
+
+<h2>58.9 Strategy <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Definir una <b>familia de algoritmos</b>, encapsular cada uno y hacerlos <b>intercambiables</b>: el algoritmo varía independientemente de los clientes que lo usan.</td></tr>
+<tr><td><b>Problema</b></td><td>Hay varias formas de hacer lo mismo (romper texto en líneas: simple, TeX, con guionado) y elegirlas con condicionales dentro de la clase la vuelve rígida e imposible de extender.</td></tr>
+<tr><td><b>Solución</b></td><td>Una interfaz <b>Strategy</b> con la operación; cada <b>ConcreteStrategy</b> es un algoritmo; el <b>Context</b> tiene una referencia a la strategy y le delega. Se cambia el algoritmo cambiando el objeto.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) <b>muchas clases relacionadas difieren solo en su conducta</b> — las strategies permiten configurar una clase con una de muchas conductas; (b) necesitás <b>variantes de un algoritmo</b> (por ejemplo con distintos tradeoffs de espacio y tiempo); (c) el algoritmo usa <b>datos que el cliente no debería conocer</b> — evita exponer estructuras de datos complejas y específicas; (d) una clase define <b>muchas conductas que aparecen como múltiples condicionales</b> en sus operaciones: en vez de tantos condicionales, cada rama se mueve a su propia clase Strategy.</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Familias de algoritmos reutilizables</b>, con la herencia factorizando lo común. <b>2. Alternativa a la subclasificación</b>: subclasificar el Context "clava la conducta en el Context, mezcla la implementación del algoritmo con la del contexto — lo que lo hace más difícil de entender, mantener y extender — y no permite variar el algoritmo dinámicamente"; encapsularlo aparte permite cambiarlo, entenderlo y extenderlo. <b>3. Elimina los condicionales</b>: el <code>switch (_breakingStrategy)</code> con un case por algoritmo se convierte en una sola línea, <code>_compositor-&gt;Compose()</code> — "código con muchos condicionales suele indicar la necesidad de aplicar Strategy".</td></tr>
+<tr><td><b>En contra</b></td><td>Los clientes <b>deben conocer las strategies</b> para elegir; hay <b>overhead de comunicación</b> entre Context y Strategy (a veces la strategy recibe parámetros que no usa); y <b>aumenta el número de objetos</b>. Además — la crítica moderna de refactoring.guru — en lenguajes con <b>funciones anónimas</b> el patrón se puede reemplazar por una lambda.</td></tr>
+<tr><td><b>Varía</b></td><td>Un <b>algoritmo</b>.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Las strategies suelen ser buenos <b>Flyweight</b>. Se distingue de <b>State</b> (ver arriba), de <b>Template Method</b> (composición vs. herencia para variar pasos) y de <b>Decorator</b> ("cambiar las entrañas vs. cambiar la piel"). En MVC es la relación <b>Vista–Controlador</b>; en Lexi, los <b>algoritmos de formateo</b>; en el SAIP, un patrón de <b>testabilidad</b> (sustituir versiones de prueba) y la forma de realizar la táctica de <i>diferir la ligadura</i> por polimorfismo. Resuelve las causas de rediseño 5 y 7.</td></tr>
+</table>
+
+<h2>58.10 Template Method <span class="fuente">— clase · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Definir el <b>esqueleto de un algoritmo</b> en una operación, <b>difiriendo algunos pasos a las subclases</b>: estas redefinen ciertos pasos sin cambiar la estructura del algoritmo.</td></tr>
+<tr><td><b>Problema</b></td><td>Varias subclases repiten el mismo algoritmo con pequeñas diferencias: hay <b>código duplicado</b> y el orden de los pasos se puede romper por descuido.</td></tr>
+<tr><td><b>Solución</b></td><td>La <b>AbstractClass</b> implementa el <i>template method</i> con la secuencia invariante y declara las <b>operaciones primitivas</b> (abstractas) que cada <b>ConcreteClass</b> implementa. La subclase provee los pasos; nunca el orden.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Para (a) implementar <b>una sola vez las partes invariantes</b> de un algoritmo y dejar a las subclases la conducta que varía; (b) <b>factorizar y localizar</b> en una clase común la conducta compartida entre subclases, para evitar duplicación — "un buen ejemplo de <i>refactorizar para generalizar</i>": primero se identifican las diferencias en el código existente, se separan en operaciones nuevas y se reemplaza el código que difiere por un template method que las llama; (c) <b>controlar las extensiones</b> de las subclases: se define un template method que llama a operaciones <i>hook</i> en puntos específicos, permitiendo extensiones <b>solo en esos puntos</b>.</td></tr>
+<tr><td><b>A favor</b></td><td>"Los template methods son una <b>técnica fundamental de reutilización de código</b>, particularmente importante en las bibliotecas de clases, porque son el medio para factorizar conducta común". Producen una <b>estructura de control invertida</b>, a veces llamada <b>"el principio de Hollywood": "no nos llames, nosotros te llamamos"</b> — la clase padre llama a las operaciones de la subclase y no al revés. Distingue con precisión dos tipos de operaciones: las <b>abstractas</b> (deben sobrescribirse) y los <b>hooks</b> (pueden sobrescribirse; por defecto suelen no hacer nada) — "es importante especificar cuáles son cuáles: para reutilizar bien una clase abstracta, quien la subclasifique debe entender qué operaciones están diseñadas para ser sobrescritas".</td></tr>
+<tr><td><b>En contra</b></td><td>Usa <b>herencia</b>, con todo lo que eso implica: el binding es estático (no se cambia el algoritmo en runtime) y la subclase queda expuesta a la implementación del padre — el "la herencia rompe el encapsulamiento" del capítulo 42.</td></tr>
+<tr><td><b>Varía</b></td><td>Los <b>pasos</b> de un algoritmo.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Suele llamar <b>Factory Methods</b>. Se compara con <b>Strategy</b>: Template Method varía <b>pasos</b> por herencia; Strategy varía el <b>algoritmo completo</b> por composición (y por eso, en runtime). Los handlers de <b>Chain of Responsibility</b> suelen incluir al menos un template method. Es la <b>inversión de control</b> que, según el GoF, define lo que es un <b>framework</b>: "reutilizás el cuerpo principal y escribís el código que él llama".</td></tr>
+</table>
+
+<h2>58.11 Visitor <span class="fuente">— objeto · comportamiento</span></h2>
+<table class="teal">
+<tr><td style="width:16%"><b>Intención</b></td><td>Representar una <b>operación a realizar sobre los elementos de una estructura de objetos</b>, permitiendo definir operaciones nuevas <b>sin cambiar las clases</b> de los elementos visitados.</td></tr>
+<tr><td><b>Problema</b></td><td>Sobre una estructura de objetos (el árbol de un documento, un AST) hay que hacer operaciones muy distintas y no relacionadas — chequear ortografía, guionar, imprimir, calcular estadísticas — y meterlas todas en las clases de la estructura las <b>contamina</b> y obliga a recompilar todo por cada operación nueva.</td></tr>
+<tr><td><b>Solución</b></td><td>Cada operación se vuelve un <b>Visitor</b> con un método <code>VisitXxx</code> por cada tipo concreto de elemento. Los elementos exponen <code>Accept(visitor)</code> y llaman al método que les corresponde — el <b>doble despacho</b> que caracteriza al patrón.</td></tr>
+<tr><td><b>Cuándo</b></td><td>Cuando (a) la estructura contiene <b>muchas clases con interfaces distintas</b> y querés operar sobre ellas <b>según su clase concreta</b>; (b) hay <b>muchas operaciones distintas y no relacionadas</b> y querés evitar "contaminar" las clases con ellas — "Visitor permite mantener juntas las operaciones relacionadas definiéndolas en una clase", y si la estructura se comparte entre varias aplicaciones, poner las operaciones solo en las que las necesitan; (c) <b>las clases de la estructura cambian poco pero se agregan operaciones seguido</b>. Advertencia explícita: "si las clases de la estructura cambian a menudo, probablemente sea mejor definir las operaciones en esas clases".</td></tr>
+<tr><td><b>A favor</b></td><td><b>1. Agregar operaciones nuevas es fácil</b>: una operación nueva sobre toda la estructura es un visitor nuevo; si en cambio la funcionalidad estuviera desparramada, habría que <b>cambiar cada clase</b>. <b>2. Junta lo relacionado y separa lo no relacionado</b>: la conducta afín se localiza en un visitor y los conjuntos no relacionados quedan en visitors distintos, lo que simplifica tanto las clases de los elementos como los algoritmos; las estructuras de datos propias de un algoritmo se <b>esconden en el visitor</b>. <b>4. Puede visitar a través de jerarquías de clases</b> no relacionadas, algo que un iterador no puede.</td></tr>
+<tr><td><b>En contra</b></td><td><b>3. Agregar clases concretas de elemento es difícil</b>: cada ConcreteElement nuevo obliga a agregar una operación abstracta en Visitor y su implementación <b>en cada ConcreteVisitor</b>. De ahí la consideración clave para aplicarlo: <b>¿qué va a cambiar más — el algoritmo sobre la estructura, o las clases de la estructura?</b> Si el conjunto de elementos crece seguido, el visitor se vuelve difícil de mantener y conviene poner las operaciones en las clases. Además puede requerir <b>romper el encapsulamiento</b> de los elementos para hacer su trabajo.</td></tr>
+<tr><td><b>Varía</b></td><td>Las <b>operaciones que se pueden aplicar</b> a objetos sin cambiar sus clases.</td></tr>
+<tr><td><b>Relacionados</b></td><td>Casi siempre se aplica sobre un <b>Composite</b>, y se combina con <b>Iterator</b> (uno recorre, el otro opera) y con <b>Interpreter</b> (para las operaciones sobre el árbol sintáctico). Es el ejemplo canónico de "<b>objeto como argumento</b>": el visitor es el argumento de una operación polimórfica <code>Accept</code> y nunca se considera parte de los objetos que visita. En Lexi resuelve el <b>análisis</b> (ortografía y guionado) sin complicar la estructura del documento. Resuelve las causas de rediseño 5 y 8.</td></tr>
+</table>
+
+<div class="idea"><span class="t">Cierre — la tabla que resume el criterio de elección</span>
+Si tuvieras que quedarte con una sola herramienta de este catálogo, quedate con la pregunta de la Tabla 1.2 del GoF: <b>"¿qué quiero que pueda cambiar sin rediseñar?"</b>. Familias de productos → <b>Abstract Factory</b>. Cómo se arma un compuesto → <b>Builder</b>. La subclase que se instancia → <b>Factory Method</b>. La clase que se instancia → <b>Prototype</b>. La instancia única → <b>Singleton</b>. La interfaz de un objeto → <b>Adapter</b>. Su implementación → <b>Bridge</b>. La estructura y composición → <b>Composite</b>. Las responsabilidades sin subclasificar → <b>Decorator</b>. La interfaz a un subsistema → <b>Facade</b>. El costo de almacenamiento → <b>Flyweight</b>. Cómo y dónde se accede → <b>Proxy</b>. Quién satisface la petición → <b>Chain of Responsibility</b>. Cuándo y cómo se satisface → <b>Command</b>. La gramática de un lenguaje → <b>Interpreter</b>. Cómo se recorre un agregado → <b>Iterator</b>. Quiénes y cómo interactúan → <b>Mediator</b>. Qué estado privado se guarda afuera → <b>Memento</b>. Cuántos dependen y cómo se actualizan → <b>Observer</b>. Los estados → <b>State</b>. El algoritmo → <b>Strategy</b>. Los pasos del algoritmo → <b>Template Method</b>. Las operaciones aplicables sin tocar las clases → <b>Visitor</b>.</div>
