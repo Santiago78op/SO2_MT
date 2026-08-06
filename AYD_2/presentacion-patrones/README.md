@@ -9,10 +9,14 @@ Explica los tres patrones GoF implementados en el proyecto **AutoRent Express S.
   Botón ◐ para tema claro/oscuro.
 - **Proyecto que documenta:** `AYD2_A_2S2026_PRACTICA1_G2` (Django 6.0.7 + PostgreSQL).
 
+> **Para exponer:** leé [`GUION.md`](GUION.md) — es la chuleta de qué decir en cada lámina,
+> la coreografía exacta de las tres demos y las respuestas a las preguntas probables.
+
 ## Estructura
 
 ```
 presentacion-patrones/
+├── GUION.md              ← qué decir al presentar (chuleta del expositor)
 ├── index.html            ← portada + roadmap con links
 ├── contexto.html         ← cómo funciona el sistema y dónde encaja cada patrón
 ├── state.html            ← patrón State
