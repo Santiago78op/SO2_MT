@@ -1,0 +1,98 @@
+/* ============================================================
+   analogias.css — estilos de las tres demos interactivas
+   (dron · pokémon · tubería de Mario).
+   Se cargan encima de estilo.css y usan sus mismas variables.
+   ============================================================ */
+
+.demo {
+  display: grid;
+  grid-template-columns: 1.35fr .95fr;
+  gap: 26px;
+  align-items: start;
+  margin: 22px 0 8px;
+}
+@media (max-width: 900px) { .demo { grid-template-columns: 1fr; } }
+
+/* ---------- escena ---------- */
+.escena-demo {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radio);
+  padding: 10px 14px 6px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.escena-demo svg { width: 100%; height: auto; display: block; }
+
+/* piezas que giran sobre su propio centro (hélices) */
+.escena-demo [data-spin] { transform-box: fill-box; transform-origin: 50% 50%; }
+/* piezas que se mueven: el origen importa para escalar sin desplazarse */
+.escena-demo [data-pieza] { transform-box: fill-box; transform-origin: 50% 100%; }
+
+/* ---------- panel de control ---------- */
+.control { display: flex; flex-direction: column; gap: 14px; }
+
+.estado-actual {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono); font-size: 13px;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--dim);
+}
+.estado-actual b {
+  font-size: 15px; letter-spacing: .08em;
+  color: var(--accent-ink); background: var(--accent);
+  padding: 5px 12px; border-radius: 999px;
+}
+
+.botonera { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.botonera.una { grid-template-columns: 1fr; }
+
+.dbtn {
+  font-family: var(--f-texto); font-size: 15px; font-weight: 600;
+  color: var(--ink); background: var(--surface2);
+  border: 1.5px solid var(--line); border-radius: 12px;
+  padding: 11px 14px; cursor: pointer; text-align: left;
+  display: flex; align-items: center; gap: 9px;
+  transition: transform .12s var(--ease-out), border-color .15s, background .15s;
+}
+.dbtn:hover { border-color: var(--accent); transform: translateY(-1px); }
+.dbtn:active { transform: translateY(1px); }
+.dbtn .ico { font-size: 18px; line-height: 1; }
+
+/* botón que representa una estrategia elegible */
+.dbtn[aria-pressed="true"] {
+  border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ---------- consola de mensajes ---------- */
+.consola {
+  font-family: var(--f-mono); font-size: 13.5px; line-height: 1.55;
+  border-radius: 12px; padding: 12px 14px; min-height: 78px;
+  border: 1px solid var(--line); background: var(--code-bg); color: var(--body);
+}
+.consola .ok  { color: var(--jade); }
+.consola .mal { color: var(--fuego); }
+.consola .nota { color: var(--dim); display: block; margin-top: 6px; }
+
+/* ---------- puente con el código ---------- */
+.puente {
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px;
+  align-items: center; margin-top: 18px;
+}
+@media (max-width: 900px) { .puente { grid-template-columns: 1fr; } }
+.puente .lado {
+  border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 15px; background: var(--surface);
+}
+.puente .lado h4 {
+  margin: 0 0 6px; font-size: 12.5px; letter-spacing: .14em;
+  text-transform: uppercase; font-family: var(--f-mono);
+}
+.puente .lado p { margin: 0; font-size: 14.5px; color: var(--body); }
+.puente .igual {
+  font-size: 26px; color: var(--accent); text-align: center; font-weight: 700;
+}
+.puente .juego h4 { color: var(--ambar); }
+.puente .real  h4 { color: var(--jade); }

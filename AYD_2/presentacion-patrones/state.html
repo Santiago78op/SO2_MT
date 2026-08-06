@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrón State — AutoRent Express</title>
+<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/analogias.css">
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Volver al índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">1 · State</span>
+    <span class="counter"><span id="cur">1</span> / <span id="tot">?</span></span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="stage">
+
+    <!-- 1 · Portadilla -->
+    <section class="slide">
+      <div class="inner titleslide">
+        <p class="eyebrow">Patrón de comportamiento · GoF</p>
+        <h1>State</h1>
+        <p class="lead">«Permite que un objeto altere su comportamiento cuando cambia su estado interno.
+        El objeto parecerá cambiar de clase.»</p>
+        <p class="kicker">Implementado en <code class="inline">reservas/estados.py</code>;
+        el contexto es la clase <code class="inline">Reserva</code> de <code class="inline">reservas/models.py</code>.</p>
+      </div>
+    </section>
+
+    <!-- 2 · Analogía: el dron -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Para entenderlo · la analogía del dron</p>
+        <h2>Un dron tiene botones que a veces no hacen nada</h2>
+        <p class="lead">Probalo: apretá los botones en el orden que quieras. El botón
+        <strong>Aterrizar</strong> está siempre ahí — pero sólo sirve si el dron está volando.
+        <strong>El dron sabe en qué estado está, y él decide qué se puede hacer.</strong></p>
+
+        <div class="demo" id="demoDron">
+          <div class="escena-demo">
+            <svg viewBox="0 0 620 320" role="img" aria-label="Dron animado que despega y aterriza">
+              <!-- cielo -->
+              <rect x="0" y="0" width="620" height="320" fill="none"/>
+              <circle cx="512" cy="52" r="26" fill="color-mix(in srgb, var(--ambar) 35%, transparent)"/>
+              <g opacity=".5" fill="var(--muted)">
+                <ellipse cx="120" cy="66" rx="34" ry="13"/><ellipse cx="146" cy="60" rx="24" ry="15"/>
+                <ellipse cx="420" cy="104" rx="28" ry="11"/><ellipse cx="444" cy="99" rx="20" ry="13"/>
+              </g>
+
+              <!-- suelo -->
+              <rect x="0" y="272" width="620" height="48" fill="var(--surface2)"/>
+              <line x1="0" y1="272" x2="620" y2="272" stroke="var(--line)" stroke-width="2"/>
+              <g stroke="var(--dim)" stroke-width="2" opacity=".55">
+                <line x1="250" y1="288" x2="290" y2="288"/><line x1="310" y1="288" x2="370" y2="288"/>
+                <line x1="390" y1="288" x2="430" y2="288"/>
+              </g>
+              <text x="310" y="308" text-anchor="middle" font-size="12"
+                    font-family="var(--f-mono)" fill="var(--dim)">plataforma de aterrizaje</text>
+
+              <!-- sombra -->
+              <ellipse id="dronSombra" cx="310" cy="286" rx="54" ry="8"
+                       fill="#000" opacity=".45"
+                       style="transform-box:fill-box;transform-origin:50% 50%"/>
+
+              <!-- DRON -->
+              <g id="dron">
+                <!-- brazos -->
+                <g stroke="var(--muted)" stroke-width="7" stroke-linecap="round">
+                  <line x1="310" y1="248" x2="240" y2="226"/>
+                  <line x1="310" y1="248" x2="380" y2="226"/>
+                </g>
+                <!-- hélices -->
+                <g data-spin="1">
+                  <ellipse cx="240" cy="222" rx="42" ry="6" fill="var(--violeta)" opacity=".9"/>
+                </g>
+                <g data-spin="1">
+                  <ellipse cx="380" cy="222" rx="42" ry="6" fill="var(--violeta)" opacity=".9"/>
+                </g>
+                <circle cx="240" cy="222" r="5" fill="var(--muted)"/>
+                <circle cx="380" cy="222" r="5" fill="var(--muted)"/>
+                <!-- cuerpo -->
+                <rect x="272" y="234" width="76" height="34" rx="12"
+                      fill="var(--surface2)" stroke="var(--violeta)" stroke-width="2.5"/>
+                <!-- cámara -->
+                <circle cx="310" cy="270" r="9" fill="var(--bg)" stroke="var(--violeta)" stroke-width="2"/>
+                <!-- luz de estado -->
+                <circle id="dronLuz" cx="332" cy="243" r="5" fill="var(--dim)"/>
+                <!-- patas -->
+                <g stroke="var(--muted)" stroke-width="4" stroke-linecap="round">
+                  <line x1="286" y1="268" x2="278" y2="284"/>
+                  <line x1="334" y1="268" x2="342" y2="284"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+
+          <div class="control">
+            <p class="estado-actual">Estado del dron: <b id="dronEstado">EN TIERRA</b></p>
+            <div class="botonera">
+              <button class="dbtn" data-accion="encender"><span class="ico">🔋</span> Encender</button>
+              <button class="dbtn" data-accion="despegar"><span class="ico">🚀</span> Despegar</button>
+              <button class="dbtn" data-accion="aterrizar"><span class="ico">🛬</span> Aterrizar</button>
+              <button class="dbtn" data-accion="apagar"><span class="ico">⏻</span> Apagar</button>
+            </div>
+            <div class="consola" id="dronConsola">
+              <span class="nota">Apretá un botón para empezar. Probá a propósito uno que no toque
+              — por ejemplo, aterrizar un dron que está apagado.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="puente">
+          <div class="lado juego">
+            <h4>En el dron</h4>
+            <p>«No puedo aterrizar: <strong>estoy en tierra</strong>.» El dron no se rompe ni obedece
+            a medias: avisa que esa acción no aplica en el estado en el que está.</p>
+          </div>
+          <div class="igual">≡</div>
+          <div class="lado real">
+            <h4>En AutoRent</h4>
+            <p>«No se puede aceptar una reserva en estado <strong>EN_RENTA</strong>.» Exactamente el mismo
+            mensaje, generado por la misma idea: cada estado sabe qué se le puede pedir.</p>
+          </div>
+        </div>
+
+        <p class="kicker">Cambiá «dron» por «reserva», y «volando» por «propuesta»: es el mismo diseño.
+        Lo que sigue es cómo se ve eso escrito en Python.</p>
+      </div>
+    </section>
+
+    <!-- 3 · El problema -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El problema</p>
+        <h2>Cinco operaciones con la misma cadena de <code class="inline">if</code></h2>
+        <p>Una reserva se puede proponer, aceptar, rechazar, entregar y finalizar. Sin el patrón, cada una
+        de esas cinco operaciones necesita su propio condicional sobre el campo <code class="inline">estado</code>:</p>
+
+        <pre class="code"><span class="tk-res">class</span> <span class="tk-id">Reserva</span>:
+    <span class="tk-res">def</span> <span class="tk-id">aceptar</span>(self):
+        <span class="tk-res">if</span> self.estado == <span class="tk-str">'PROPUESTA'</span>: ...
+        <span class="tk-res">else</span>: <span class="tk-res">raise</span> Error(<span class="tk-str">'no se puede'</span>)
+
+    <span class="tk-res">def</span> <span class="tk-id">rechazar</span>(self, motivo):
+        <span class="tk-res">if</span> self.estado == <span class="tk-str">'PROPUESTA'</span>: ...
+        <span class="tk-res">else</span>: <span class="tk-res">raise</span> Error(<span class="tk-str">'no se puede'</span>)
+
+    <span class="tk-res">def</span> <span class="tk-id">entregar</span>(self):   <span class="tk-res">if</span> self.estado == <span class="tk-str">'ACEPTADA'</span>: ...
+    <span class="tk-res">def</span> <span class="tk-id">finalizar</span>(self):  <span class="tk-res">if</span> self.estado == <span class="tk-str">'EN_RENTA'</span>: ...
+    <span class="tk-res">def</span> <span class="tk-id">proponer</span>(self, h): <span class="tk-res">if</span> self.estado == <span class="tk-str">'SOLICITADA'</span>: ...</pre>
+
+        <div class="cards three">
+          <div class="card">
+            <h3>Regla dispersa</h3>
+            <p>Para saber qué se puede hacer en el estado <code class="inline">PROPUESTA</code> hay que leer
+            los cinco métodos.</p>
+          </div>
+          <div class="card">
+            <h3>Cerrado a extensión</h3>
+            <p>Agregar un estado obliga a tocar los cinco. Lo contrario al principio abierto/cerrado.</p>
+          </div>
+          <div class="card">
+            <h3>Fácil de romper</h3>
+            <p>Nada garantiza que las cinco cadenas sean coherentes. Basta olvidar un
+            <code class="inline">else</code> para permitir una transición ilegal.</p>
+          </div>
+        </div>
+
+        <div class="callout"><p><strong>Aplicabilidad, textual del GoF:</strong> «Úsese State cuando las
+        operaciones tienen <em>condicionales grandes y de varias partes</em> que dependen del estado del
+        objeto […] y frecuentemente <em>varias operaciones contienen la misma estructura condicional</em>.»
+        Es literalmente este caso.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 · UML -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">La solución</p>
+        <h2>Un estado, una clase</h2>
+
+        <svg viewBox="0 0 1170 470" width="100%" role="img"
+             aria-label="Diagrama de clases UML del patrón State">
+          <defs>
+            <marker id="op" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto">
+              <path d="M0,0 L11,5 L0,10" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+            </marker>
+          </defs>
+
+          <!-- Context -->
+          <g data-step="1">
+            <rect x="18" y="34" width="292" height="196" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2"/>
+            <rect x="18" y="34" width="292" height="46" rx="10" fill="var(--violeta)"/>
+            <rect x="18" y="66" width="292" height="14" fill="var(--violeta)"/>
+            <text x="164" y="55" text-anchor="middle" font-size="19" font-weight="700" fill="var(--accent-ink)">Reserva</text>
+            <text x="164" y="72" text-anchor="middle" font-size="12" fill="var(--accent-ink)" opacity=".75">«Context»</text>
+            <text x="32" y="102" font-size="13.5" fill="var(--body)">- estado : String</text>
+            <line x1="18" y1="112" x2="310" y2="112" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="32" y="132" font-size="13.5" fill="var(--body)">+ estado_actual() : EstadoReserva</text>
+            <text x="32" y="154" font-size="13.5" fill="var(--body)">+ cambiar_estado(nuevo)</text>
+            <text x="32" y="176" font-size="13.5" fill="var(--body)">+ proponer(horario)</text>
+            <text x="32" y="198" font-size="13.5" fill="var(--body)">+ aceptar() / rechazar(motivo)</text>
+            <text x="32" y="220" font-size="13.5" fill="var(--body)">+ entregar() / finalizar()</text>
+          </g>
+
+          <g data-step="2">
+            <line x1="310" y1="132" x2="470" y2="132" stroke="var(--muted)" stroke-width="1.8" marker-end="url(#op)"/>
+            <text x="390" y="122" text-anchor="middle" font-size="13" fill="var(--muted)" font-style="italic">delega</text>
+            <text x="390" y="150" text-anchor="middle" font-size="12" fill="var(--dim)">estado_actual</text>
+          </g>
+
+          <!-- State abstracto -->
+          <g data-step="3">
+            <rect x="472" y="34" width="330" height="196" rx="10" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.2"/>
+            <rect x="472" y="34" width="330" height="46" rx="10" fill="var(--accent)"/>
+            <rect x="472" y="66" width="330" height="14" fill="var(--accent)"/>
+            <text x="637" y="55" text-anchor="middle" font-size="19" font-weight="700" font-style="italic" fill="var(--accent-ink)">EstadoReserva</text>
+            <text x="637" y="72" text-anchor="middle" font-size="12" fill="var(--accent-ink)" opacity=".75">«abstract» · «State»</text>
+            <text x="486" y="102" font-size="13.5" fill="var(--body)"># codigo : String</text>
+            <line x1="472" y1="112" x2="802" y2="112" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="486" y="132" font-size="13.5" fill="var(--body)">+ crear(codigo) : EstadoReserva {static}</text>
+            <text x="486" y="154" font-size="13.5" fill="var(--body)">+ proponer(reserva, horario)</text>
+            <text x="486" y="176" font-size="13.5" fill="var(--body)">+ aceptar(reserva)</text>
+            <text x="486" y="198" font-size="13.5" fill="var(--body)">+ rechazar(reserva, motivo)</text>
+            <text x="486" y="220" font-size="13.5" fill="var(--body)">+ entregar(r) / finalizar(r)</text>
+          </g>
+
+          <!-- nota -->
+          <g data-step="4">
+            <rect x="838" y="46" width="316" height="120" rx="10"
+                  fill="color-mix(in srgb, var(--ambar) 12%, transparent)" stroke="var(--ambar)"
+                  stroke-width="1.5" stroke-dasharray="5 3"/>
+            <text x="854" y="72" font-size="14" font-weight="700" fill="var(--ambar)">Clave del diseño</text>
+            <text x="854" y="96" font-size="13" fill="var(--body)">La implementación por defecto de las</text>
+            <text x="854" y="115" font-size="13" fill="var(--body)">cinco operaciones RECHAZA la transición.</text>
+            <text x="854" y="134" font-size="13" fill="var(--body)">Cada estado concreto sobreescribe</text>
+            <text x="854" y="153" font-size="13" fill="var(--body)">únicamente las que le son legales.</text>
+            <line x1="802" y1="112" x2="838" y2="106" stroke="var(--ambar)" stroke-width="1.3" stroke-dasharray="4 3"/>
+          </g>
+
+          <!-- herencia -->
+          <g data-step="5">
+            <line x1="637" y1="230" x2="637" y2="262" stroke="var(--muted)" stroke-width="1.8"/>
+            <path d="M628,262 L646,262 L637,246 z" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.8"/>
+            <line x1="637" y1="262" x2="637" y2="290" stroke="var(--muted)" stroke-width="1.8"/>
+            <line x1="102" y1="290" x2="1072" y2="290" stroke="var(--muted)" stroke-width="1.8"/>
+          </g>
+
+          <g font-size="13">
+            <g data-step="6">
+              <line x1="102" y1="290" x2="102" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="18" y="322" width="168" height="118" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.6"/>
+              <text x="102" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--violeta)">Solicitada</text>
+              <text x="30" y="372" fill="var(--dim)" font-size="12">« SOLICITADA »</text>
+              <line x1="18" y1="382" x2="186" y2="382" stroke="var(--line)"/>
+              <text x="30" y="404" fill="var(--body)">+ proponer(...)</text>
+            </g>
+            <g data-step="7">
+              <line x1="296" y1="290" x2="296" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="212" y="322" width="168" height="118" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.6"/>
+              <text x="296" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--violeta)">Propuesta</text>
+              <text x="224" y="372" fill="var(--dim)" font-size="12">« PROPUESTA »</text>
+              <line x1="212" y1="382" x2="380" y2="382" stroke="var(--line)"/>
+              <text x="224" y="404" fill="var(--body)">+ aceptar(...)</text>
+              <text x="224" y="426" fill="var(--body)">+ rechazar(...)</text>
+            </g>
+            <g data-step="8">
+              <line x1="490" y1="290" x2="490" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="406" y="322" width="168" height="118" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.6"/>
+              <text x="490" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--violeta)">Aceptada</text>
+              <text x="418" y="372" fill="var(--dim)" font-size="12">« ACEPTADA »</text>
+              <line x1="406" y1="382" x2="574" y2="382" stroke="var(--line)"/>
+              <text x="418" y="404" fill="var(--body)">+ entregar(...)</text>
+            </g>
+            <g data-step="9">
+              <line x1="684" y1="290" x2="684" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="600" y="322" width="168" height="118" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.6"/>
+              <text x="684" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--violeta)">EnRenta</text>
+              <text x="612" y="372" fill="var(--dim)" font-size="12">« EN_RENTA »</text>
+              <line x1="600" y1="382" x2="768" y2="382" stroke="var(--line)"/>
+              <text x="612" y="404" fill="var(--body)">+ finalizar(...)</text>
+            </g>
+            <g data-step="10">
+              <line x1="878" y1="290" x2="878" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="794" y="322" width="168" height="118" rx="10" fill="var(--surface2)" stroke="var(--dim)" stroke-width="1.6"/>
+              <text x="878" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--fuego)">Rechazada</text>
+              <text x="806" y="372" fill="var(--dim)" font-size="12">« RECHAZADA »</text>
+              <line x1="794" y1="382" x2="962" y2="382" stroke="var(--line)"/>
+              <text x="878" y="408" text-anchor="middle" font-style="italic" fill="var(--dim)">terminal</text>
+            </g>
+            <g data-step="11">
+              <line x1="1072" y1="290" x2="1072" y2="322" stroke="var(--muted)" stroke-width="1.8"/>
+              <rect x="988" y="322" width="168" height="118" rx="10" fill="var(--surface2)" stroke="var(--dim)" stroke-width="1.6"/>
+              <text x="1072" y="345" text-anchor="middle" font-weight="700" font-size="15.5" fill="var(--jade)">Finalizada</text>
+              <text x="1000" y="372" fill="var(--dim)" font-size="12">« FINALIZADA »</text>
+              <line x1="988" y1="382" x2="1156" y2="382" stroke="var(--line)"/>
+              <text x="1072" y="408" text-anchor="middle" font-style="italic" fill="var(--dim)">terminal</text>
+            </g>
+          </g>
+        </svg>
+
+        <p class="kicker"><code class="inline">Reserva</code> es el <strong>Context</strong>;
+        <code class="inline">EstadoReserva</code> es el <strong>State</strong>;
+        las seis clases de abajo son los <strong>ConcreteState</strong>.</p>
+      </div>
+    </section>
+
+    <!-- 4 · Máquina de estados -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El flujo, visto como autómata</p>
+        <h2>La máquina de estados de una reserva</h2>
+
+        <svg viewBox="0 0 1160 350" width="100%" role="img"
+             aria-label="Diagrama de máquina de estados UML de una reserva">
+          <defs>
+            <marker id="fl" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto">
+              <path d="M0,0 L10,4.5 L0,9 z" fill="var(--violeta)"/>
+            </marker>
+            <marker id="flr" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto">
+              <path d="M0,0 L10,4.5 L0,9 z" fill="var(--fuego)"/>
+            </marker>
+          </defs>
+
+          <circle cx="30" cy="96" r="11" fill="var(--violeta)"/>
+          <line x1="41" y1="96" x2="86" y2="96" stroke="var(--violeta)" stroke-width="2" marker-end="url(#fl)"/>
+
+          <rect x="90" y="66" width="156" height="60" rx="12" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2.2"/>
+          <text x="168" y="103" text-anchor="middle" font-size="17" font-weight="600" fill="var(--violeta)">SOLICITADA</text>
+
+          <g data-step="1">
+            <line x1="246" y1="96" x2="326" y2="96" stroke="var(--violeta)" stroke-width="2" marker-end="url(#fl)"/>
+            <text x="286" y="60" text-anchor="middle" font-size="13" fill="var(--violeta)" font-weight="600">proponer()</text>
+            <text x="286" y="44" text-anchor="middle" font-size="11.5" fill="var(--dim)">agente</text>
+            <rect x="330" y="66" width="156" height="60" rx="12" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2.2"/>
+            <text x="408" y="103" text-anchor="middle" font-size="17" font-weight="600" fill="var(--violeta)">PROPUESTA</text>
+          </g>
+
+          <g data-step="2">
+            <line x1="486" y1="96" x2="566" y2="96" stroke="var(--violeta)" stroke-width="2" marker-end="url(#fl)"/>
+            <text x="526" y="60" text-anchor="middle" font-size="13" fill="var(--violeta)" font-weight="600">aceptar()</text>
+            <text x="526" y="44" text-anchor="middle" font-size="11.5" fill="var(--dim)">cliente</text>
+            <rect x="570" y="66" width="156" height="60" rx="12" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2.2"/>
+            <text x="648" y="103" text-anchor="middle" font-size="17" font-weight="600" fill="var(--violeta)">ACEPTADA</text>
+            <rect x="556" y="150" width="184" height="30" rx="6"
+                  fill="color-mix(in srgb, var(--jade) 14%, transparent)" stroke="var(--jade)" stroke-width="1.2"/>
+            <text x="648" y="170" text-anchor="middle" font-size="12.5" fill="var(--jade)">vehículo → RESERVADO</text>
+          </g>
+
+          <g data-step="3">
+            <line x1="726" y1="96" x2="806" y2="96" stroke="var(--violeta)" stroke-width="2" marker-end="url(#fl)"/>
+            <text x="766" y="60" text-anchor="middle" font-size="13" fill="var(--violeta)" font-weight="600">entregar()</text>
+            <text x="766" y="44" text-anchor="middle" font-size="11.5" fill="var(--dim)">agente</text>
+            <rect x="810" y="66" width="156" height="60" rx="12" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2.2"/>
+            <text x="888" y="103" text-anchor="middle" font-size="17" font-weight="600" fill="var(--violeta)">EN_RENTA</text>
+            <rect x="1000" y="66" width="150" height="60" rx="6"
+                  fill="color-mix(in srgb, var(--jade) 14%, transparent)" stroke="var(--jade)" stroke-width="1.2"/>
+            <text x="1075" y="90" text-anchor="middle" font-size="12.5" fill="var(--jade)">vehículo →</text>
+            <text x="1075" y="108" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--jade)">EN_RENTA</text>
+            <line x1="966" y1="96" x2="998" y2="96" stroke="var(--jade)" stroke-width="1.2" stroke-dasharray="4 3"/>
+          </g>
+
+          <g data-step="4">
+            <line x1="888" y1="126" x2="888" y2="232" stroke="var(--violeta)" stroke-width="2" marker-end="url(#fl)"/>
+            <text x="902" y="172" font-size="13" fill="var(--violeta)" font-weight="600">finalizar()</text>
+            <text x="902" y="190" font-size="11.5" fill="var(--dim)">agente</text>
+            <rect x="810" y="236" width="156" height="60" rx="12" fill="var(--surface2)" stroke="var(--jade)" stroke-width="2.2"/>
+            <text x="888" y="273" text-anchor="middle" font-size="17" font-weight="600" fill="var(--jade)">FINALIZADA</text>
+            <rect x="1000" y="236" width="150" height="60" rx="6"
+                  fill="color-mix(in srgb, var(--jade) 14%, transparent)" stroke="var(--jade)" stroke-width="1.2"/>
+            <text x="1075" y="260" text-anchor="middle" font-size="12.5" fill="var(--jade)">vehículo →</text>
+            <text x="1075" y="278" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--jade)">DISPONIBLE</text>
+            <line x1="966" y1="266" x2="998" y2="266" stroke="var(--jade)" stroke-width="1.2" stroke-dasharray="4 3"/>
+            <circle cx="888" cy="322" r="11" fill="none" stroke="var(--jade)" stroke-width="2"/>
+            <circle cx="888" cy="322" r="6" fill="var(--jade)"/>
+            <line x1="888" y1="296" x2="888" y2="310" stroke="var(--jade)" stroke-width="2"/>
+          </g>
+
+          <g data-step="5">
+            <line x1="408" y1="126" x2="408" y2="232" stroke="var(--fuego)" stroke-width="2" marker-end="url(#flr)"/>
+            <text x="394" y="166" text-anchor="end" font-size="13" fill="var(--fuego)" font-weight="600">rechazar(motivo)</text>
+            <text x="394" y="184" text-anchor="end" font-size="11.5" fill="var(--dim)">cliente · motivo obligatorio</text>
+            <rect x="330" y="236" width="156" height="60" rx="12" fill="var(--surface2)" stroke="var(--fuego)" stroke-width="2.2"/>
+            <text x="408" y="273" text-anchor="middle" font-size="17" font-weight="600" fill="var(--fuego)">RECHAZADA</text>
+            <rect x="150" y="236" width="150" height="60" rx="6"
+                  fill="color-mix(in srgb, var(--jade) 14%, transparent)" stroke="var(--jade)" stroke-width="1.2"/>
+            <text x="225" y="260" text-anchor="middle" font-size="12.5" fill="var(--jade)">vehículo →</text>
+            <text x="225" y="278" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--jade)">DISPONIBLE</text>
+            <line x1="326" y1="266" x2="304" y2="266" stroke="var(--jade)" stroke-width="1.2" stroke-dasharray="4 3"/>
+            <circle cx="408" cy="322" r="11" fill="none" stroke="var(--fuego)" stroke-width="2"/>
+            <circle cx="408" cy="322" r="6" fill="var(--fuego)"/>
+            <line x1="408" y1="296" x2="408" y2="310" stroke="var(--fuego)" stroke-width="2"/>
+          </g>
+        </svg>
+
+        <p class="kicker">En verde, el efecto colateral sobre el vehículo que cada transición dispara.
+        <code class="inline">RECHAZADA</code> y <code class="inline">FINALIZADA</code> son estados terminales:
+        no aceptan ninguna transición.</p>
+      </div>
+    </section>
+
+    <!-- 5 · Código: la clase abstracta -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El código real · 1 de 2</p>
+        <h2>La clase abstracta que prohíbe todo</h2>
+
+        <pre class="code"><span class="tk-sym"># reservas/estados.py</span>
+<span class="tk-res">class</span> <span class="tk-id">EstadoReserva</span>(ABC):
+    codigo = <span class="tk-res">None</span>
+
+    <span class="tk-res">@staticmethod</span>
+    <span class="tk-res">def</span> <span class="tk-id">crear</span>(codigo):
+        <span class="tk-sym"># del código persistido al ConcreteState</span>
+        <span class="tk-res">return</span> _ESTADOS[codigo]()
+
+    <span class="tk-res">def</span> <span class="tk-id">proponer</span>(self, reserva, horario): self._invalido(<span class="tk-str">'proponer'</span>)
+    <span class="tk-res">def</span> <span class="tk-id">aceptar</span>(self, reserva):           self._invalido(<span class="tk-str">'aceptar'</span>)
+    <span class="tk-res">def</span> <span class="tk-id">rechazar</span>(self, reserva, motivo): self._invalido(<span class="tk-str">'rechazar'</span>)
+    <span class="tk-res">def</span> <span class="tk-id">entregar</span>(self, reserva):          self._invalido(<span class="tk-str">'entregar'</span>)
+    <span class="tk-res">def</span> <span class="tk-id">finalizar</span>(self, reserva):         self._invalido(<span class="tk-str">'finalizar'</span>)
+
+    <span class="tk-res">def</span> <span class="tk-id">_invalido</span>(self, accion):
+        <span class="tk-res">raise</span> ValidationError(
+            f<span class="tk-str">'No se puede {accion} una reserva en estado {self.codigo}.'</span>)</pre>
+
+        <div class="callout"><p><strong>La decisión de diseño:</strong> la clase base no declara métodos
+        abstractos vacíos — declara métodos que <strong>lanzan excepción</strong>. El comportamiento por
+        omisión es «esta transición es ilegal».</p></div>
+
+        <p>Consecuencia directa: un estado concreto sólo escribe los métodos que <em>sí</em> puede ejecutar.
+        Todo lo demás queda prohibido sin escribir una sola línea. Un estado terminal completo son
+        tres líneas:</p>
+
+        <pre class="code"><span class="tk-res">class</span> <span class="tk-id">Rechazada</span>(EstadoReserva):
+    <span class="tk-str">"""Estado terminal: no acepta ninguna transición."""</span>
+    codigo = <span class="tk-str">'RECHAZADA'</span></pre>
+
+        <p class="kicker">Las reglas del negocio dejaron de estar repartidas en condicionales: ahora se leen
+        en la definición de cada clase — lo que una clase implementa es lo que ese estado permite.</p>
+      </div>
+    </section>
+
+    <!-- 6 · Código: concreto + contexto -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El código real · 2 de 2</p>
+        <h2>El estado concreto y el contexto</h2>
+
+        <p><strong>ConcreteState</strong> — la clase que sabe qué significa aceptar cuando la reserva está
+        propuesta:</p>
+        <pre class="code"><span class="tk-res">class</span> <span class="tk-id">Propuesta</span>(EstadoReserva):
+    codigo = <span class="tk-str">'PROPUESTA'</span>
+
+    <span class="tk-res">def</span> <span class="tk-id">aceptar</span>(self, reserva):
+        reserva.precio_dia_aplicado = reserva.vehiculo.precio_dia
+        reserva.descuento_aplicado  = reserva.plan.descuento
+        reserva.precio_total = reserva.calcular_total()
+        reserva.vehiculo.estado = Vehiculo.Estado.RESERVADO
+        reserva.vehiculo.save()
+        reserva.cambiar_estado(Aceptada())
+
+    <span class="tk-res">def</span> <span class="tk-id">rechazar</span>(self, reserva, motivo):
+        <span class="tk-res">if not</span> motivo <span class="tk-res">or not</span> motivo.strip():
+            <span class="tk-res">raise</span> ValidationError(<span class="tk-str">'Debe indicar el motivo del rechazo.'</span>)
+        reserva.motivo_rechazo = motivo
+        reserva.vehiculo.estado = Vehiculo.Estado.DISPONIBLE
+        reserva.vehiculo.save()
+        reserva.cambiar_estado(Rechazada())</pre>
+
+        <p><strong>Context</strong> — las cinco operaciones de <code class="inline">Reserva</code> sólo delegan:</p>
+        <pre class="code"><span class="tk-res">class</span> <span class="tk-id">Reserva</span>(models.Model):
+    estado = models.CharField(choices=Estado.choices)
+
+    <span class="tk-res">@property</span>
+    <span class="tk-res">def</span> <span class="tk-id">estado_actual</span>(self) -&gt; EstadoReserva:
+        <span class="tk-res">return</span> EstadoReserva.crear(self.estado)
+
+    <span class="tk-res">def</span> <span class="tk-id">cambiar_estado</span>(self, nuevo: EstadoReserva):
+        self.estado = nuevo.codigo
+        self.save()
+
+    <span class="tk-res">def</span> <span class="tk-id">proponer</span>(self, horario): self.estado_actual.proponer(self, horario)
+    <span class="tk-res">def</span> <span class="tk-id">aceptar</span>(self):           self.estado_actual.aceptar(self)
+    <span class="tk-res">def</span> <span class="tk-id">rechazar</span>(self, motivo): self.estado_actual.rechazar(self, motivo)
+    <span class="tk-res">def</span> <span class="tk-id">entregar</span>(self):         self.estado_actual.entregar(self)
+    <span class="tk-res">def</span> <span class="tk-id">finalizar</span>(self):        self.estado_actual.finalizar(self)</pre>
+
+        <div class="callout"><p><strong>El punto a destacar en la defensa:</strong> en el Context no quedó
+        <em>ni un solo</em> <code class="inline">if</code> sobre el estado. Cada método es una línea que
+        delega. El objeto de estado se materializa desde el código persistido en la columna
+        <code class="inline">estado</code> y se descarta después.</p></div>
+      </div>
+    </section>
+
+    <!-- 7 · Coherencia con la base -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Patrón y persistencia</p>
+        <h2>La misma regla, en dos capas</h2>
+        <p>Las reglas del patrón no viven sólo en Python: están espejadas en los
+        <code class="inline">CHECK</code> del esquema. Si alguien insertara por SQL directo, la base también
+        las hace cumplir.</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Constraint en el DDL</th><th>Regla equivalente en el patrón</th><th>Dónde se aplica</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code class="inline">chk_estado_reserva</code></td>
+                <td>Sólo existen los seis códigos que conoce el diccionario <code class="inline">_ESTADOS</code>.</td>
+                <td><code class="inline">EstadoReserva.crear()</code></td>
+              </tr>
+              <tr>
+                <td><code class="inline">chk_motivo_si_rechazada</code></td>
+                <td>No se puede rechazar sin motivo: se valida antes de cambiar de estado.</td>
+                <td><code class="inline">Propuesta.rechazar()</code></td>
+              </tr>
+              <tr>
+                <td><code class="inline">chk_horario_si_propuesta</code></td>
+                <td>Se asigna <code class="inline">horario_propuesto</code> <strong>antes</strong> de pasar a PROPUESTA.</td>
+                <td><code class="inline">Solicitada.proponer()</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Efecto colateral controlado</h3>
+            <p>Cada transición además sincroniza el estado del vehículo. Al estar dentro de la clase de
+            estado, es imposible cambiar la reserva y olvidar el vehículo.</p>
+          </div>
+          <div class="card">
+            <h3>Por qué se persiste un código y no el objeto</h3>
+            <p>El objeto de estado <strong>no tiene datos propios</strong>, sólo comportamiento. Por eso se
+            guarda únicamente el discriminador y el ConcreteState se reconstruye cuando se necesita — el
+            consejo del GoF para estados sin atributos.</p>
+          </div>
+        </div>
+
+        <p class="kicker">Siguiente: <strong>Strategy</strong>, el patrón que calcula el precio que este
+        estado acaba de disparar.<br>
+        <a class="btn" href="strategy.html" style="margin-top:14px">Siguiente: Strategy →</a>
+        <a class="btn" href="index.html" style="margin-top:14px">⌂ Índice</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="navbar">
+    <button id="prev" type="button">← Anterior</button>
+    <button id="next" type="button">Siguiente →</button>
+    <span class="hint">también se pueden usar las flechas del teclado</span>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+
+<script>
+/* ============================================================
+   Demo del dron — el patrón State, hecho visible.
+   Cada estado sabe que acciones acepta; el resto se rechaza.
+   Si Motion no cargo, la demo igual funciona (sin animacion).
+   ============================================================ */
+(function () {
+  const raiz = document.getElementById('demoDron');
+  if (!raiz) return;
+
+  const M       = window.Motion;
+  const anima   = !!(M && M.animate) &&
+                  !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dron    = document.getElementById('dron');
+  const sombra  = document.getElementById('dronSombra');
+  const luz     = document.getElementById('dronLuz');
+  const etiqueta= document.getElementById('dronEstado');
+  const consola = document.getElementById('dronConsola');
+  const helices = raiz.querySelectorAll('[data-spin]');
+
+  let girando = [];
+
+  /* ---- la maquina de estados, identica en forma a reservas/estados.py ---- */
+  const ESTADOS = {
+    EN_TIERRA: {
+      nombre: 'EN TIERRA', color: 'var(--dim)', altura: 0, motores: false,
+      encender: { a: 'ENCENDIDO', di: 'Motores encendidos. Las hélices ya giran, pero sigue en el suelo.' }
+    },
+    ENCENDIDO: {
+      nombre: 'ENCENDIDO', color: 'var(--ambar)', altura: 0, motores: true,
+      despegar: { a: 'VOLANDO',   di: '¡Arriba! El dron sube y se queda flotando.' },
+      apagar:   { a: 'EN_TIERRA', di: 'Motores apagados.' }
+    },
+    VOLANDO: {
+      nombre: 'VOLANDO', color: 'var(--jade)', altura: -132, motores: true,
+      aterrizar: { a: 'ENCENDIDO', di: 'Aterrizaje suave. Los motores siguen encendidos.' }
+    }
+  };
+
+  const PORQUE = {
+    encender:  'ya está encendido',
+    despegar:  'o está apagado, o ya está volando',
+    aterrizar: 'no está volando',
+    apagar:    'o ya está apagado, o está volando (¡primero hay que aterrizar!)'
+  };
+
+  let actual = 'EN_TIERRA';
+
+  function pintar(msg, clase, nota) {
+    const e = ESTADOS[actual];
+    etiqueta.textContent = e.nombre;
+    etiqueta.style.background = e.color;
+    luz.setAttribute('fill', e.color);
+    consola.innerHTML = '<span class="' + clase + '">' + msg + '</span>' +
+                        (nota ? '<span class="nota">' + nota + '</span>' : '');
+  }
+
+  function motores(encendidos) {
+    girando.forEach(a => { try { a.stop(); } catch (_) {} });
+    girando = [];
+    if (!encendidos) {
+      helices.forEach(h => { h.style.transform = 'scaleX(1)'; });
+      return;
+    }
+    if (!anima) return;
+    /* vista lateral: la hélice se "aplasta" al girar, que es como se ve de canto */
+    helices.forEach(h => {
+      girando.push(M.animate(h, { scaleX: [1, .12, 1] },
+        { duration: .26, repeat: Infinity, ease: 'linear' }));
+    });
+  }
+
+  function mover() {
+    const e = ESTADOS[actual];
+    if (anima) {
+      M.animate(dron, { y: e.altura }, { type: 'spring', stiffness: 120, damping: 16 });
+      M.animate(sombra, { scale: e.altura ? .55 : 1, opacity: e.altura ? .18 : .45 },
+                { duration: .5 });
+    } else {
+      dron.style.transform = 'translateY(' + e.altura + 'px)';
+    }
+    motores(e.motores);
+  }
+
+  function rechazar(accion) {
+    if (anima) {
+      M.animate(dron, { x: [0, -9, 8, -6, 4, 0] }, { duration: .42 });
+    }
+    pintar('✗ No se puede ' + accion + ': el dron está ' + ESTADOS[actual].nombre + '.',
+           'mal', 'Motivo: ' + PORQUE[accion] + '. El botón existe, pero este estado no lo acepta.');
+  }
+
+  raiz.querySelectorAll('[data-accion]').forEach(boton => {
+    boton.addEventListener('click', () => {
+      const accion = boton.dataset.accion;
+      const transicion = ESTADOS[actual][accion];   /* ← aquí «pregunta» al estado */
+      if (!transicion) { rechazar(accion); return; }
+      actual = transicion.a;
+      mover();
+      pintar('✓ ' + transicion.di, 'ok',
+             'Nuevo estado: ' + ESTADOS[actual].nombre + '.');
+    });
+  });
+
+  pintar('Dron listo.', 'ok', 'Empezá por Encender. Después probá Aterrizar sin haber despegado.');
+})();
+</script>
+</body>
+</html>

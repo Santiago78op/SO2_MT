@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los tres patrones juntos — AutoRent Express</title>
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Volver al índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">Los tres juntos</span>
+    <span class="counter"><span id="cur">1</span> / <span id="tot">?</span></span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="stage">
+
+    <!-- 1 · Secuencia -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">La colaboración, paso a paso</p>
+        <h2>Qué pasa cuando el cliente presiona «Aceptar»</h2>
+
+        <svg viewBox="0 0 1160 430" width="100%" role="img"
+             aria-label="Diagrama de secuencia UML de Reserva.aceptar()">
+          <defs>
+            <marker id="msg" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L9,4 L0,8 z" fill="var(--ink)"/>
+            </marker>
+            <marker id="ret" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L9,4 L0,8" fill="none" stroke="var(--dim)" stroke-width="1.4"/>
+            </marker>
+          </defs>
+
+          <!-- cabezales -->
+          <g>
+            <rect x="10" y="10" width="150" height="50" rx="8" fill="var(--surface2)" stroke="var(--line)" stroke-width="1.6"/>
+            <text x="85" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ink)">Cliente</text>
+            <text x="85" y="49" text-anchor="middle" font-size="11" fill="var(--dim)">actor</text>
+
+            <rect x="205" y="10" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.8"/>
+            <text x="290" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--accent)">Reserva</text>
+            <text x="290" y="49" text-anchor="middle" font-size="11" fill="var(--dim)">Context</text>
+
+            <rect x="425" y="10" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.8"/>
+            <text x="510" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--violeta)">Propuesta</text>
+            <text x="510" y="49" text-anchor="middle" font-size="11" fill="var(--dim)">ConcreteState</text>
+
+            <rect x="645" y="10" width="170" height="50" rx="8" fill="var(--surface)" stroke="var(--ambar)" stroke-width="1.8"/>
+            <text x="730" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--ambar)">PlanRenta</text>
+            <text x="730" y="49" text-anchor="middle" font-size="11" fill="var(--dim)">Creator</text>
+
+            <rect x="865" y="10" width="180" height="50" rx="8" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.8"/>
+            <text x="955" y="32" text-anchor="middle" font-size="14" font-weight="700" fill="var(--jade)">TarifaSemanal</text>
+            <text x="955" y="49" text-anchor="middle" font-size="11" fill="var(--dim)">ConcreteStrategy</text>
+          </g>
+
+          <!-- lineas de vida -->
+          <g stroke-dasharray="5 5" stroke-width="1.3" stroke="var(--line)">
+            <line x1="85"  y1="60" x2="85"  y2="412"/>
+            <line x1="290" y1="60" x2="290" y2="412"/>
+            <line x1="510" y1="60" x2="510" y2="412"/>
+            <line x1="730" y1="60" x2="730" y2="412"/>
+            <line x1="955" y1="60" x2="955" y2="412"/>
+          </g>
+
+          <g font-size="13">
+            <g data-step="1">
+              <line x1="85" y1="96" x2="286" y2="96" stroke="var(--ink)" stroke-width="1.7" marker-end="url(#msg)"/>
+              <text x="186" y="88" text-anchor="middle" fill="var(--body)">1. aceptar()</text>
+            </g>
+            <g data-step="2">
+              <line x1="290" y1="136" x2="506" y2="136" stroke="var(--ink)" stroke-width="1.7" marker-end="url(#msg)"/>
+              <text x="398" y="128" text-anchor="middle" fill="var(--body)">2. estado_actual.aceptar(self)</text>
+              <text x="398" y="154" text-anchor="middle" font-size="11.5" fill="var(--violeta)">el State decide si es legal</text>
+            </g>
+            <g data-step="3">
+              <line x1="510" y1="190" x2="294" y2="190" stroke="var(--ink)" stroke-width="1.7" marker-end="url(#msg)"/>
+              <text x="402" y="182" text-anchor="middle" fill="var(--body)">3. calcular_total()</text>
+            </g>
+            <g data-step="4">
+              <line x1="290" y1="230" x2="726" y2="230" stroke="var(--ink)" stroke-width="1.7" marker-end="url(#msg)"/>
+              <text x="508" y="222" text-anchor="middle" fill="var(--body)">4. plan.calculo()</text>
+              <text x="508" y="248" text-anchor="middle" font-size="11.5" fill="var(--ambar)">Factory Method</text>
+            </g>
+            <g data-step="5">
+              <line x1="730" y1="276" x2="294" y2="276" stroke="var(--dim)" stroke-width="1.5"
+                    stroke-dasharray="6 4" marker-end="url(#ret)"/>
+              <text x="512" y="268" text-anchor="middle" fill="var(--dim)">5. devuelve TarifaSemanal()</text>
+            </g>
+            <g data-step="6">
+              <line x1="290" y1="316" x2="951" y2="316" stroke="var(--ink)" stroke-width="1.7" marker-end="url(#msg)"/>
+              <text x="620" y="308" text-anchor="middle" fill="var(--body)">6. calcular_total(reserva)</text>
+              <text x="620" y="334" text-anchor="middle" font-size="11.5" fill="var(--jade)">Strategy calcula el precio</text>
+            </g>
+            <g data-step="7">
+              <line x1="955" y1="360" x2="294" y2="360" stroke="var(--dim)" stroke-width="1.5"
+                    stroke-dasharray="6 4" marker-end="url(#ret)"/>
+              <text x="624" y="352" text-anchor="middle" fill="var(--dim)">7. precio_total</text>
+            </g>
+            <g data-step="8">
+              <line x1="510" y1="400" x2="294" y2="400" stroke="var(--violeta)" stroke-width="1.9" marker-end="url(#msg)"/>
+              <text x="402" y="392" text-anchor="middle" fill="var(--violeta)">8. cambiar_estado(Aceptada())</text>
+            </g>
+          </g>
+        </svg>
+
+        <div class="callout"><p><strong>El reparto de responsabilidades:</strong>
+        <strong>State</strong> decide <em>si</em> la acción es legal y <em>qué sigue</em> ·
+        <strong>Factory Method</strong> decide <em>quién</em> calcula ·
+        <strong>Strategy</strong> decide <em>cómo</em> se calcula. Ninguno invade al otro.
+        Además, en el paso 8 el vehículo pasa a <code class="inline">RESERVADO</code>.</p></div>
+      </div>
+    </section>
+
+    <!-- 2 · State vs Strategy -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">La pregunta clásica del auxiliar</p>
+        <h2>Si el diagrama es igual, ¿por qué son dos patrones?</h2>
+        <p>State y Strategy tienen la <strong>misma estructura</strong>: un contexto que delega en una
+        jerarquía de clases. Lo que los separa es la <strong>intención</strong>, y en este proyecto se ve
+        con claridad.</p>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th></th><th>State — <code class="inline">reservas/estados.py</code></th><th>Strategy — <code class="inline">reservas/calculos.py</code></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Qué encapsula</strong></td>
+                <td>Una <strong>situación</strong> del objeto y las transiciones legales desde ella.</td>
+                <td>Un <strong>algoritmo</strong> completo e independiente.</td>
+              </tr>
+              <tr>
+                <td><strong>Quién elige</strong></td>
+                <td>Lo elige el <strong>propio patrón</strong>: <code class="inline">Propuesta.aceptar()</code>
+                decide que el siguiente estado es <code class="inline">Aceptada</code>.</td>
+                <td>Lo elige el <strong>cliente</strong>: el plan que el usuario seleccionó al reservar.</td>
+              </tr>
+              <tr>
+                <td><strong>Se conocen entre sí</strong></td>
+                <td><strong>Sí.</strong> <code class="inline">Propuesta</code> nombra a
+                <code class="inline">Aceptada</code> y a <code class="inline">Rechazada</code>.</td>
+                <td><strong>No.</strong> <code class="inline">TarifaSemanal</code> no sabe que existe
+                <code class="inline">TarifaMensual</code>.</td>
+              </tr>
+              <tr>
+                <td><strong>Cambia solo</strong></td>
+                <td><strong>Sí</strong>, durante la vida del objeto: una reserva recorre varios estados.</td>
+                <td><strong>No.</strong> Se fija al crear la reserva y no cambia.</td>
+              </tr>
+              <tr>
+                <td><strong>Frase resumen</strong></td>
+                <td>«El objeto <strong>está</strong> en un estado.»</td>
+                <td>«El objeto <strong>usa</strong> un algoritmo.»</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout"><p><strong>Cómo responderlo en una línea:</strong> una reserva <em>pasa</em> de
+        SOLICITADA a PROPUESTA sola, por efecto de una operación. Nunca «pasa» de TarifaDiaria a
+        TarifaSemanal: esa se elige una vez y se queda.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 · Preguntas -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Preparación para la defensa</p>
+        <h2>Preguntas que conviene tener respondidas</h2>
+
+        <div class="cards">
+          <div class="card">
+            <h3>¿Qué pasa si intento una transición ilegal?</h3>
+            <p>Se lanza <code class="inline">ValidationError</code> con el mensaje «No se puede aceptar una
+            reserva en estado EN_RENTA». La vista lo captura y lo muestra como mensaje de error. El dato
+            nunca se corrompe: las operaciones críticas corren dentro de
+            <code class="inline">transaction.atomic</code>.</p>
+          </div>
+          <div class="card">
+            <h3>¿Cómo agregarían un plan quincenal?</h3>
+            <p>Tres pasos, sin tocar <code class="inline">Reserva</code> ni las vistas: crear
+            <code class="inline">TarifaQuincenal(CalculoPlan)</code>, agregar la entrada al diccionario
+            <code class="inline">_PRODUCTOS</code> y sembrar la fila en
+            <code class="inline">plan_renta</code>. Ese es el argumento concreto de por qué los patrones
+            valieron la pena.</p>
+          </div>
+          <div class="card">
+            <h3>¿Y un estado nuevo?</h3>
+            <p>Una clase que hereda de <code class="inline">EstadoReserva</code>, sobreescribe sólo lo legal
+            y se registra en <code class="inline">_ESTADOS</code>. Las clases existentes no se modifican.</p>
+          </div>
+          <div class="card">
+            <h3>¿Ese Factory Method es el del GoF?</h3>
+            <p>Es la variante <em>parametrizada</em> que el propio GoF describe. Se eligió porque el
+            discriminador ya existía como columna en la base; una subclase por plan habría duplicado la
+            tabla sin ganar nada.</p>
+          </div>
+          <div class="card">
+            <h3>¿Por qué no guardaron el objeto de estado?</h3>
+            <p>Porque no tiene datos propios, sólo comportamiento. Se guarda el código y el ConcreteState
+            se reconstruye con <code class="inline">EstadoReserva.crear()</code>.</p>
+          </div>
+          <div class="card">
+            <h3>¿Dónde está el <code class="inline">if</code> que se supone eliminaron?</h3>
+            <p>No hay ninguno sobre el estado. El único condicional que queda en
+            <code class="inline">Propuesta.rechazar()</code> valida que el motivo no venga vacío — es una
+            validación de dato, no una decisión de transición.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · Resumen -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Cierre</p>
+        <h2>Resumen</h2>
+
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Patrón</th><th>Categoría</th><th>Problema real que resolvió</th><th>Archivo</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>State</strong></td><td>Comportamiento</td>
+                <td>Cinco operaciones con la misma cadena de condicionales sobre el campo
+                <code class="inline">estado</code>.</td>
+                <td><code class="inline">reservas/estados.py</code></td>
+              </tr>
+              <tr>
+                <td><strong>Strategy</strong></td><td>Comportamiento</td>
+                <td>Tres fórmulas de tarifa que deben poder intercambiarse y crecer.</td>
+                <td><code class="inline">reservas/calculos.py</code></td>
+              </tr>
+              <tr>
+                <td><strong>Factory Method</strong></td><td>Creacional</td>
+                <td>Traducir el plan persistido en la base al objeto de cálculo correcto.</td>
+                <td><code class="inline">reservas/models.py</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cards three">
+          <div class="card">
+            <h3>Sin condicionales</h3>
+            <p>El Context quedó sin un solo <code class="inline">if</code> sobre el estado: cinco métodos
+            que sólo delegan.</p>
+          </div>
+          <div class="card">
+            <h3>Abierto a extensión</h3>
+            <p>Un plan nuevo o un estado nuevo se agregan escribiendo una clase, sin modificar las
+            existentes.</p>
+          </div>
+          <div class="card">
+            <h3>Coherente con la base</h3>
+            <p>Las reglas del patrón están espejadas en los <code class="inline">CHECK</code> del DDL:
+            no dependen de una sola capa.</p>
+          </div>
+        </div>
+
+        <p class="kicker">Referencia: Gamma, E., Helm, R., Johnson, R. &amp; Vlissides, J. —
+        <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>.
+        Patrones <strong>State</strong>, <strong>Strategy</strong> y <strong>Factory Method</strong>.<br>
+        <a class="btn" href="index.html" style="margin-top:14px">⌂ Volver al índice</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="navbar">
+    <button id="prev" type="button">← Anterior</button>
+    <button id="next" type="button">Siguiente →</button>
+    <span class="hint">también se pueden usar las flechas del teclado</span>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

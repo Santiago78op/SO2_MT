@@ -1,0 +1,245 @@
+Sistemas Operativos 2
+
+Tarea #3
+
+                    Ponderación: 4 pts
+             Tiempo estimado: 3 hrs/min
+
+Universidad San Carlos de Guatemala
+Facultad de Ingeniería
+Escuela de Ingeniería en Ciencias y Sistemas.
+Segundo Semestre 2026
+Sistemas Operativos 2
+Sistemas Operativos 2
+
+                                                          Índice
+
+1. MARCO FORMATIVO......................................................................................................... 3
+    1.1. Valor............................................................................................................................ 3
+    1.2. Competencia(s)........................................................................................................... 3
+    1.3. Objetivo SMART..........................................................................................................3
+
+2. Enunciado de la Práctica...................................................................................................4
+    3.1 Descripción del problema a resolver............................................................................ 4
+    3.2 Alcance de la práctica.................................................................................................. 4
+    3.3 Entregables.................................................................................................................. 4
+
+3. Material de apoyo.................................................................................................................6
+6. Recursos y herramientas a utilizar...................................................................................7
+7. Cronograma........................................................................................................................ 7
+8. Rúbrica de Calificación..................................................................................................... 7
+
+    8.1 Requisitos para optar a la calificación..........................................................................7
+    8.2 Resumen de Puntuaciones....................................................................................... 9
+    8.5 Comentarios Generales............................................................................................... 9
+    Detalle de la Calificación.................................................................................................. 11
+Sistemas Operativos 2
+
+1. MARCO FORMATIVO
+
+      1.1. Valor
+
+Nombre del valor        ¿Cómo se aplica en tu laboratorio?
+Consistencia
+                        El estudiante debe ser consistente en su participación, en este punto (y
+                        varios más adelante) será necesario utilizar el cajón de herramientas
+                        que vamos formando con cada nuevo tema, el estudiante debe
+                        demostrar consistencia en su aprendizaje y el curso para poder
+                        avanzar de manera adecuada.
+
+1.2. Competencia(s)
+
+Tipo de Competencia             Aplica conocimientos tecnológicos con ética profesional y respetando y
+Competencia General             cuidando los recursos naturales, humanos y financieros.
+
+Competencia Específica          Identifica oportunidades y riesgos para la innovación y adaptación de
+                                conocimientos y tecnologías para resolver problemas.
+
+1.3. Objetivo SMART
+
+    SMART               Definición          Objetivo redactado
+
+Específico        El objetivo es concreto   Instalar y verificar las herramientas GCC, make, GDB y
+(¿Qué?)           y tangible.               librerías de desarrollo en Linux Mint, comprobando su
+                                            funcionamiento mediante la compilación del kernel Linux.
+
+Medible           El objetivo tiene una     Se considerará logrado al instalar todas las herramientas,
+(¿Cuánto?)        medida objetiva de        ejecutar pruebas básicas y compilar el kernel sin errores
+                  éxito.                    críticos.
+
+Alcanzable        El objetivo debe ser      Siguiendo una guía de instalación y verificación paso a
+(¿Cómo?)
+                  posible con los recursos paso con soporte técnico y documentación oficial.
+
+                  disponibles.
+
+Realista (¿Para   El objetivo contribuye a  Para asegurar un entorno funcional de desarrollo en Linux
+qué?)             metas más amplias.        y preparar al estudiante para prácticas avanzadas de
+                                            kernel.
+
+A Tiempo          El objetivo tiene fecha   En una semana como máximo
+(¿Cuándo?)        límite o mejor aún un
+                  cronograma de hitos de
+                  progreso
+Sistemas Operativos 2
+
+2. Enunciado de la Práctica
+
+Esta práctica tiene como propósito que los estudiantes preparen un entorno de desarrollo
+funcional en Linux para la compilación de software a bajo nivel. Se busca que comprendan
+la relación entre las herramientas de compilación, las librerías de desarrollo y el kernel del
+sistema operativo.
+
+2.1 Descripción del problema a resolver
+
+El entorno de desarrollo del laboratorio requiere la instalación y configuración de un
+conjunto de herramientas de compilación para poder analizar, modificar y recompilar
+componentes del kernel Linux. Sin estas herramientas, no es posible realizar prácticas de
+desarrollo o depuración del sistema operativo.
+
+El estudiante deberá instalar y verificar el funcionamiento de GCC, make, GDB y las
+librerías de desarrollo de C en gnu/linux, asegurando que pueda compilar correctamente el
+kernel sin realizar modificaciones mayores.
+
+2.2 Alcance de la práctica
+
+
+Obligatorio:
+
+     Instalar GCC, make, GDB y las librerías de desarrollo de C.
+     Descargar el código fuente del kernel Linux y ejecutar el proceso de configuración y
+
+         compilación sin errores críticos.
+     Deshabilitar la verificación de firmas para los módulos.
+     Modificar el EXTRAVERSION del makefile para mostrar su nombre y número de
+
+         carné.
+     Compilar el kernel.
+     Documentar el procedimiento y los resultados de las pruebas.
+
+Opcional:
+
+     Automatizar parte del proceso de verificación con un script bash.
+     Realizar comparativas de tiempos de compilación entre diferentes configuraciones
+
+         del sistema.
+Sistemas Operativos 2
+
+2.3 Requerimientos técnicos
+
+La práctica se desarrollará en un entorno gnu/linux usando una distribución basada en
+Debian (Se recomienda Linux Mint).
+
+Se deberán utilizar las siguientes herramientas:
+
+     GCC: compilador de C.
+     make: gestor de construcción de proyectos.
+     GDB: depurador para programas en C.
+     Paquetes de desarrollo: librerías y encabezados necesarios para compilar el
+
+         kernel.
+
+El estudiante deberá comprobar las versiones instaladas, ejecutar pruebas básicas de
+compilación y realizar la configuración inicial del kernel mediante los comandos make
+localmodconfig, make -jX, make modules_install y make install.
+
+3. Entregables
+
+La entrega se realizará en UEDI o Classroom (según indique su tutor). Los estudiantes
+deben entregar un informe técnico detallado en formato PDF que incluya: descripción
+completa del proceso seguido, listado de archivos modificados, registros del comando
+-uname -r y solución a errores obtenidos durante la compilación si aplica.
+
+          Tipo                                       Descripción
+Informe Técnico
+                 El estudiante debe entregar un informe PDF detallado con el
+                 proceso, capturas de pantalla, registros de uname -r, análisis
+                 técnico y solución a errores.
+Sistemas Operativos 2
+
+4. Material de apoyo
+
+     Documentación oficial de GCC: https://gcc.gnu.org/onlinedocs/
+     Documentación oficial de GNU Make: https://www.gnu.org/software/make/manual/
+     Guía oficial de GDB: https://sourceware.org/gdb/current/onlinedocs/
+     Documentación del kernel Linux: https://www.kernel.org/doc/html/latest/
+
+5. Recursos y herramientas a utilizar
+
+Software: Linux Mint, GCC, make, GDB, util-linux, build-essential.
+Plataformas:
+
+     UEDI o Classroom (para entrega oficial).
+Lecturas recomendadas:
+
+               Documentacion del kernel https://kernel.org
+               Introducción a la documentación del kernel linux
+               Guía introductoria a herramientas GNU.
+
+6. Cronograma
+
+Tipo                 Fecha Inicio  Fecha Fin
+Asignación de Tarea  31/07/2026    31/07/2026
+Elaboración          31/07/2026    07/08/2026
+Sistemas Operativos 2
+
+7. Rúbrica de Calificación
+
+7.1 Requisitos para optar a la calificación
+
+      Tema             Descripción                                                           Cumple
+                                                                                             (Sí/No)
+
+Instalación de GCC     El estudiante instaló correctamente el compilador GCC y
+                       verificó su funcionamiento mediante gcc --version.
+
+Instalación de make    Se comprobó la instalación de la herramienta make y su
+                       ejecución con un archivo Makefile simple.
+
+Librerías de desarrollo Se instalaron los encabezados y librerías necesarias para la
+
+de C                   compilación del kernel (build-essential, libncurses-dev, etc.).
+
+                                 El entorno de compilación funciona correctamente (se puede
+Verificación de entorno compilar un programa en C sin errores).
+
+Descarga del kernel    Se descargó correctamente el código fuente del kernel
+Linux                  desde un repositorio oficial o fuente válida.
+
+Configuración del      Se ejecutaron correctamente los comandos de configuración
+kernel                 (make localmodconfig).
+
+Compilación del kernel Se completó la compilación del kernel sin errores críticos.
+
+Evidencias             El estudiante presentó las capturas solicitadas
+documentadas
+
+Entrega en             Se realizó la entrega de lo solicitado en UEDI
+UEDI/Classroom
+Sistemas Operativos 2
+
+7.2 Resumen de Puntuaciones
+
+                             Área                 Puntos          Puntos
+HABILIDADES                                       Totales       Obtenidos
+Instalación correcta de GCC, make y librerías de
+desarrollo                                                  10
+Descarga y configuración del código fuente del              10
+kernel Linux                                                30
+Modificación del kernel para mostrar el nombre              20
+del estudiante con el comando uname -r                      60
+Compilación exitosa del kernel modificado sin
+errores críticos                                            30
+Subtotal Habilidades                                        30
+CONOCIMIENTOS                                             100
+Documentación
+Subtotal Conocimientos
+TOTAL GENERAL
+
+7.3 Comentarios Generales
+
+_________________________________________________________________________
+_________________________________________________________________________
+_________________________________________________________________________
+_________________________________________________________________________
+

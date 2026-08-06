@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrones de diseño — AutoRent Express S.A.</title>
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<div class="hub">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">Práctica 1 · AYD2</span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+
+  <div class="hub-main">
+    <p class="eyebrow">Universidad de San Carlos de Guatemala · Facultad de Ingeniería</p>
+    <h1>Patrones de diseño aplicados</h1>
+    <p class="lead">Plataforma de renta de vehículos <strong>AutoRent Express S.A.</strong>, construida con
+    <strong>Django 6.0.7</strong> y <strong>PostgreSQL</strong>. Tres patrones del catálogo GoF resuelven
+    problemas reales del enunciado: el ciclo de vida de una reserva y el cálculo de tarifas.</p>
+
+    <div class="cards three">
+      <div class="card">
+        <div class="step">1</div>
+        <h3>State</h3>
+        <p>De comportamiento. El ciclo de vida de la reserva: qué transición es legal en cada momento.</p>
+        <p class="kicker" style="margin-top:10px"><code class="inline">reservas/estados.py</code></p>
+      </div>
+      <div class="card">
+        <div class="step">2</div>
+        <h3>Strategy</h3>
+        <p>De comportamiento. Tres formas intercambiables de calcular el total de una renta.</p>
+        <p class="kicker" style="margin-top:10px"><code class="inline">reservas/calculos.py</code></p>
+      </div>
+      <div class="card">
+        <div class="step">3</div>
+        <h3>Factory Method</h3>
+        <p>Creacional. Traduce el plan guardado en la base al algoritmo de cálculo concreto.</p>
+        <p class="kicker" style="margin-top:10px"><code class="inline">reservas/models.py</code></p>
+      </div>
+    </div>
+
+    <ul class="roadmap">
+      <li><a href="contexto.html">
+        <strong>Contexto</strong> — cómo funciona el sistema: roles, flujo de la renta y dónde encaja cada patrón
+        <span class="state">4 láminas</span></a></li>
+      <li><a href="state.html">
+        <strong>State</strong> — analogía del dron 🚁, la cadena de <code class="inline">if</code> que se eliminó, el UML y el código real
+        <span class="state">8 láminas</span></a></li>
+      <li><a href="strategy.html">
+        <strong>Strategy</strong> — analogía Pokémon ⚡, tres fórmulas de tarifa intercambiables
+        <span class="state">4 láminas</span></a></li>
+      <li><a href="factory.html">
+        <strong>Factory Method</strong> — analogía de la tubería 🍄, del texto persistido al objeto
+        <span class="state">4 láminas</span></a></li>
+      <li><a href="colaboracion.html">
+        <strong>Los tres juntos</strong> — diagrama de secuencia, State frente a Strategy y preguntas de defensa
+        <span class="state">4 láminas</span></a></li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Cada patrón abre con una analogía jugable:</strong> un <strong>dron</strong> que se niega a
+      aterrizar si no está volando (State), un <strong>Pokémon</strong> que cambia de ataque sin cambiar la
+      orden (Strategy) y una <strong>tubería de Mario</strong> que devuelve el enemigo que le pidas
+      (Factory). Son interactivas: se pueden apretar durante la exposición.</p>
+    </div>
+
+    <div class="callout">
+      <p><strong>La idea que amarra todo:</strong> no son tres patrones sueltos puestos para cumplir el
+      requisito. Se activan en cadena en una sola operación — cuando el cliente <em>acepta</em> la propuesta,
+      el <strong>State</strong> decide que la acción es legal, el <strong>Factory</strong> entrega el
+      algoritmo y la <strong>Strategy</strong> calcula el precio.</p>
+    </div>
+
+    <p class="kicker">
+      Todo el contenido está verificado contra el código del repositorio
+      <code class="inline">AYD2_A_2S2026_PRACTICA1_G2</code>: los fragmentos que aparecen en las láminas
+      son los del proyecto, no pseudocódigo.<br>
+      Referencia: Gamma, Helm, Johnson &amp; Vlissides — <em>Design Patterns: Elements of Reusable
+      Object-Oriented Software</em>.
+    </p>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

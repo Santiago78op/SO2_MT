@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrón Strategy — AutoRent Express</title>
+<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/analogias.css">
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Volver al índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">2 · Strategy</span>
+    <span class="counter"><span id="cur">1</span> / <span id="tot">?</span></span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="stage">
+
+    <!-- 1 · Portadilla -->
+    <section class="slide">
+      <div class="inner titleslide">
+        <p class="eyebrow">Patrón de comportamiento · GoF</p>
+        <h1>Strategy</h1>
+        <p class="lead">«Define una familia de algoritmos, encapsula cada uno y los hace intercambiables.
+        Permite que el algoritmo varíe independientemente de los clientes que lo usan.»</p>
+        <p class="kicker">Implementado en <code class="inline">reservas/calculos.py</code>.
+        El enunciado pide <strong>planes de renta</strong>, y cada plan cobra distinto.</p>
+      </div>
+    </section>
+
+    <!-- 2 · Analogía: pokémon -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Para entenderlo · la analogía del Pokémon</p>
+        <h2>El entrenador siempre grita lo mismo: «¡Ataca!»</h2>
+        <p class="lead">Elegí un ataque y apretá el botón. <strong>La orden nunca cambia</strong> —
+        cambia el ataque que el Pokémon lleva equipado. Cada ataque es una clase distinta, y se pueden
+        intercambiar sin tocar al entrenador ni al Pokémon.</p>
+
+        <div class="demo" id="demoPoke">
+          <div class="escena-demo">
+            <svg viewBox="0 0 620 300" role="img" aria-label="Pokémon lanzando un ataque a un muñeco de entrenamiento">
+              <!-- suelo de arena -->
+              <ellipse cx="310" cy="268" rx="290" ry="26" fill="var(--surface2)"/>
+              <line x1="30" y1="268" x2="590" y2="268" stroke="var(--line)" stroke-width="1.5"/>
+
+              <!-- ATACANTE -->
+              <g id="pokeAtacante" data-pieza="1">
+                <ellipse cx="130" cy="262" rx="46" ry="8" fill="#000" opacity=".35"/>
+                <!-- cuerpo -->
+                <ellipse cx="130" cy="212" rx="48" ry="44" fill="var(--ambar)"/>
+                <!-- orejas -->
+                <path d="M100,178 L86,132 L118,166 z" fill="var(--ambar)"/>
+                <path d="M160,178 L174,132 L142,166 z" fill="var(--ambar)"/>
+                <path d="M97,148 L88,133 L104,157 z" fill="#4a3410"/>
+                <path d="M163,148 L172,133 L156,157 z" fill="#4a3410"/>
+                <!-- cara -->
+                <circle cx="114" cy="204" r="5.5" fill="var(--bg)"/>
+                <circle cx="148" cy="204" r="5.5" fill="var(--bg)"/>
+                <circle cx="115.5" cy="202" r="1.8" fill="#fff"/>
+                <circle cx="149.5" cy="202" r="1.8" fill="#fff"/>
+                <circle cx="102" cy="220" r="7" fill="var(--fuego)" opacity=".65"/>
+                <circle cx="160" cy="220" r="7" fill="var(--fuego)" opacity=".65"/>
+                <path d="M122,222 q9,9 18,0" stroke="var(--bg)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                <!-- cola -->
+                <path d="M176,232 L206,214 L192,240 L216,244" stroke="var(--ambar)" stroke-width="9"
+                      fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+              </g>
+
+              <!-- PROYECTIL -->
+              <g id="pokeTiro" opacity="0">
+                <circle id="pokeTiroBola" cx="0" cy="206" r="17" fill="var(--ambar)"/>
+                <circle cx="0" cy="206" r="8" fill="#fff" opacity=".75"/>
+              </g>
+
+              <!-- OBJETIVO -->
+              <g id="pokeObjetivo" data-pieza="1">
+                <ellipse cx="490" cy="262" rx="42" ry="8" fill="#000" opacity=".35"/>
+                <rect x="480" y="214" width="20" height="48" rx="4" fill="var(--muted)"/>
+                <circle cx="490" cy="196" r="34" fill="var(--surface2)" stroke="var(--muted)" stroke-width="3"/>
+                <circle cx="490" cy="196" r="22" fill="none" stroke="var(--fuego)" stroke-width="3"/>
+                <circle cx="490" cy="196" r="10" fill="var(--fuego)" opacity=".55"/>
+                <text x="490" y="288" text-anchor="middle" font-size="12"
+                      font-family="var(--f-mono)" fill="var(--dim)">muñeco de entrenamiento</text>
+              </g>
+
+              <!-- daño flotante -->
+              <text id="pokeDanio" x="490" y="150" text-anchor="middle" opacity="0"
+                    font-size="34" font-weight="800" fill="var(--jade)">-0</text>
+            </svg>
+          </div>
+
+          <div class="control">
+            <p class="estado-actual">Ataque equipado: <b id="pokeEquipado">ELÉCTRICO</b></p>
+            <div class="botonera">
+              <button class="dbtn" data-ataque="electrico" aria-pressed="true"><span class="ico">⚡</span> Eléctrico</button>
+              <button class="dbtn" data-ataque="fuego" aria-pressed="false"><span class="ico">🔥</span> Fuego</button>
+              <button class="dbtn" data-ataque="planta" aria-pressed="false"><span class="ico">🌿</span> Planta</button>
+              <button class="dbtn" data-ataque="agua" aria-pressed="false"><span class="ico">💧</span> Agua</button>
+            </div>
+            <div class="botonera una">
+              <button class="dbtn" id="pokeAtacar" style="justify-content:center;font-size:17px">
+                <span class="ico">🎮</span> ¡Ataca!
+              </button>
+            </div>
+            <div class="consola" id="pokeConsola">
+              <span class="nota">Elegí un ataque y apretá «¡Ataca!». Después cambiá de ataque y volvé a
+              apretar el mismo botón: la orden es idéntica, el resultado no.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="puente">
+          <div class="lado juego">
+            <h4>En el Pokémon</h4>
+            <p>Cuatro ataques distintos, <strong>una sola orden</strong>: <code class="inline">atacar()</code>.
+            Agregar un ataque nuevo no obliga a reescribir al entrenador.</p>
+          </div>
+          <div class="igual">≡</div>
+          <div class="lado real">
+            <h4>En AutoRent</h4>
+            <p>Tres tarifas distintas, <strong>una sola orden</strong>:
+            <code class="inline">calcular_total(reserva)</code>. Agregar un plan nuevo no obliga a
+            reescribir <code class="inline">Reserva</code>.</p>
+          </div>
+        </div>
+
+        <p class="kicker">Ojo con la diferencia clave: el ataque <strong>lo elegís vos desde afuera</strong>,
+        y no cambia solo a mitad del combate. Por eso esto es Strategy y no State.</p>
+      </div>
+    </section>
+
+    <!-- 3 · Problema + UML -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Problema y solución</p>
+        <h2>Tres formas de cobrar la misma renta</h2>
+        <p>Por día, por semana con descuento, por mes con descuento. Sin el patrón,
+        <code class="inline">Reserva.calcular_total()</code> tendría un <code class="inline">if</code> por
+        plan, y agregar un «Plan quincenal» obligaría a modificar una clase que no tiene nada que ver con
+        fórmulas de precio.</p>
+
+        <svg viewBox="0 0 1160 380" width="100%" role="img"
+             aria-label="Diagrama de clases UML del patrón Strategy">
+          <defs>
+            <marker id="ops" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto">
+              <path d="M0,0 L11,5 L0,10" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+            </marker>
+          </defs>
+
+          <!-- Context -->
+          <g data-step="1">
+            <rect x="40" y="30" width="290" height="150" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="2"/>
+            <rect x="40" y="30" width="290" height="44" rx="10" fill="var(--violeta)"/>
+            <rect x="40" y="60" width="290" height="14" fill="var(--violeta)"/>
+            <text x="185" y="50" text-anchor="middle" font-size="18" font-weight="700" fill="var(--accent-ink)">Reserva</text>
+            <text x="185" y="67" text-anchor="middle" font-size="12" fill="var(--accent-ink)" opacity=".75">«Context»</text>
+            <text x="56" y="98" font-size="13.5" fill="var(--body)">+ cantidad_dias</text>
+            <text x="56" y="120" font-size="13.5" fill="var(--body)">+ vehiculo · plan</text>
+            <line x1="40" y1="130" x2="330" y2="130" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="56" y="152" font-size="13.5" fill="var(--body)">+ calcular_total() : Decimal</text>
+          </g>
+
+          <g data-step="2">
+            <line x1="330" y1="100" x2="470" y2="100" stroke="var(--muted)" stroke-width="1.8"
+                  stroke-dasharray="7 4" marker-end="url(#ops)"/>
+            <text x="400" y="90" text-anchor="middle" font-size="13" fill="var(--muted)" font-style="italic">usa</text>
+          </g>
+
+          <!-- Strategy -->
+          <g data-step="3">
+            <rect x="472" y="30" width="330" height="118" rx="10" fill="var(--surface)" stroke="var(--jade)" stroke-width="2.2"/>
+            <rect x="472" y="30" width="330" height="44" rx="10" fill="var(--jade)"/>
+            <rect x="472" y="60" width="330" height="14" fill="var(--jade)"/>
+            <text x="637" y="50" text-anchor="middle" font-size="18" font-weight="700" font-style="italic" fill="var(--bg)">CalculoPlan</text>
+            <text x="637" y="67" text-anchor="middle" font-size="12" fill="var(--bg)" opacity=".8">«abstract» · «Strategy»</text>
+            <line x1="472" y1="104" x2="802" y2="104" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="488" y="128" font-size="13.5" fill="var(--body)">+ calcular_total(reserva) : Decimal</text>
+          </g>
+
+          <g data-step="4">
+            <rect x="846" y="36" width="286" height="106" rx="10"
+                  fill="color-mix(in srgb, var(--jade) 12%, transparent)" stroke="var(--jade)"
+                  stroke-width="1.4" stroke-dasharray="5 3"/>
+            <text x="862" y="62" font-size="13.5" font-weight="700" fill="var(--jade)">Una sola firma</text>
+            <text x="862" y="86" font-size="13" fill="var(--body)">Los tres algoritmos son intercambiables</text>
+            <text x="862" y="105" font-size="13" fill="var(--body)">porque comparten la misma interfaz.</text>
+            <text x="862" y="124" font-size="13" fill="var(--body)">Reserva no nombra a ninguno.</text>
+          </g>
+
+          <!-- herencia -->
+          <g data-step="5">
+            <line x1="637" y1="148" x2="637" y2="182" stroke="var(--muted)" stroke-width="1.8"/>
+            <path d="M628,182 L646,182 L637,166 z" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.8"/>
+            <line x1="637" y1="182" x2="637" y2="216" stroke="var(--muted)" stroke-width="1.8"/>
+            <line x1="205" y1="216" x2="1069" y2="216" stroke="var(--muted)" stroke-width="1.8"/>
+          </g>
+
+          <g data-step="6">
+            <line x1="205" y1="216" x2="205" y2="250" stroke="var(--muted)" stroke-width="1.8"/>
+            <rect x="55" y="250" width="300" height="108" rx="10" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.7"/>
+            <text x="205" y="280" text-anchor="middle" font-size="17" font-weight="700" fill="var(--jade)">TarifaDiaria</text>
+            <line x1="55" y1="294" x2="355" y2="294" stroke="var(--line)"/>
+            <text x="205" y="318" text-anchor="middle" font-size="13" fill="var(--body)">precio_dia × cantidad_dias</text>
+            <text x="205" y="341" text-anchor="middle" font-size="12.5" fill="var(--dim)">sin descuento</text>
+          </g>
+          <g data-step="7">
+            <line x1="637" y1="216" x2="637" y2="250" stroke="var(--muted)" stroke-width="1.8"/>
+            <rect x="487" y="250" width="300" height="108" rx="10" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.7"/>
+            <text x="637" y="280" text-anchor="middle" font-size="17" font-weight="700" fill="var(--jade)">TarifaSemanal</text>
+            <line x1="487" y1="294" x2="787" y2="294" stroke="var(--line)"/>
+            <text x="637" y="318" text-anchor="middle" font-size="13" fill="var(--body)">bloques de 7 días · −10 %</text>
+            <text x="637" y="341" text-anchor="middle" font-size="12.5" fill="var(--dim)">los sueltos, a tarifa plena</text>
+          </g>
+          <g data-step="8">
+            <line x1="1069" y1="216" x2="1069" y2="250" stroke="var(--muted)" stroke-width="1.8"/>
+            <rect x="919" y="250" width="230" height="108" rx="10" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.7"/>
+            <text x="1034" y="280" text-anchor="middle" font-size="17" font-weight="700" fill="var(--jade)">TarifaMensual</text>
+            <line x1="919" y1="294" x2="1149" y2="294" stroke="var(--line)"/>
+            <text x="1034" y="318" text-anchor="middle" font-size="13" fill="var(--body)">bloques de 30 · −20 %</text>
+            <text x="1034" y="341" text-anchor="middle" font-size="12.5" fill="var(--dim)">misma idea, otro bloque</text>
+          </g>
+        </svg>
+
+        <div class="callout"><p><strong>Aplicabilidad, GoF:</strong> «Úsese Strategy cuando muchas clases
+        relacionadas difieren sólo en su comportamiento» y «cuando se necesitan distintas variantes de un
+        algoritmo». Agregar un plan nuevo es agregar una clase, no modificar una existente.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 · Código -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El código real</p>
+        <h2>Una fórmula, una clase</h2>
+
+        <pre class="code"><span class="tk-sym"># reservas/calculos.py</span>
+<span class="tk-res">class</span> <span class="tk-id">CalculoPlan</span>(ABC):
+    <span class="tk-str">"""Strategy: interfaz común a todas las formas de calcular el total."""</span>
+
+    <span class="tk-res">@abstractmethod</span>
+    <span class="tk-res">def</span> <span class="tk-id">calcular_total</span>(self, reserva) -&gt; Decimal: ...
+
+
+<span class="tk-res">class</span> <span class="tk-id">TarifaDiaria</span>(CalculoPlan):
+    <span class="tk-res">def</span> <span class="tk-id">calcular_total</span>(self, reserva) -&gt; Decimal:
+        <span class="tk-res">return</span> reserva.vehiculo.precio_dia * reserva.cantidad_dias
+
+
+<span class="tk-res">class</span> <span class="tk-id">TarifaSemanal</span>(CalculoPlan):
+    <span class="tk-res">def</span> <span class="tk-id">calcular_total</span>(self, reserva) -&gt; Decimal:
+        precio = reserva.vehiculo.precio_dia
+        semanas, sueltos = divmod(reserva.cantidad_dias, <span class="tk-num">7</span>)
+        factor = Decimal(<span class="tk-str">'1'</span>) - (reserva.plan.descuento / Decimal(<span class="tk-str">'100'</span>))
+        <span class="tk-res">return</span> (semanas * <span class="tk-num">7</span> * precio * factor) + (sueltos * precio)</pre>
+
+        <p><code class="inline">TarifaMensual</code> es idéntica cambiando 7 por 30. Y así es como el
+        Context las usa, sin saber cuál le tocó:</p>
+
+        <pre class="code"><span class="tk-sym"># reservas/models.py — clase Reserva</span>
+<span class="tk-res">def</span> <span class="tk-id">calcular_total</span>(self) -&gt; Decimal:
+    estrategia = self.plan.calculo() <span class="tk-res">if</span> self.plan <span class="tk-res">else</span> TarifaDiaria()
+    <span class="tk-res">return</span> estrategia.calcular_total(self)</pre>
+
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>Plan sembrado en la base</th><th><code class="inline">calculo_codigo</code></th><th>Días mínimos</th><th>Descuento</th></tr></thead>
+            <tbody>
+              <tr><td>Plan Diario</td><td><code class="inline">DIARIA</code></td><td>1</td><td>0 %</td></tr>
+              <tr><td>Plan Semanal</td><td><code class="inline">SEMANAL</code></td><td>7</td><td>10 %</td></tr>
+              <tr><td>Plan Mensual</td><td><code class="inline">MENSUAL</code></td><td>30</td><td>20 %</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout"><p><strong>Detalle de negocio que conviene explicar:</strong> el descuento aplica
+        <em>sólo sobre bloques completos</em>. En el plan semanal, 10 días se cobran como 7 días con
+        descuento más 3 días a tarifa plena. Esa regla vive en una sola clase, y por eso se puede cambiar
+        sin tocar nada más.</p></div>
+
+        <p class="kicker">Queda una pregunta abierta: si <code class="inline">Reserva</code> no nombra a
+        ninguna estrategia, <strong>¿quién decide cuál se usa?</strong> Ese es el trabajo del Factory Method.<br>
+        <a class="btn" href="factory.html" style="margin-top:14px">Siguiente: Factory Method →</a>
+        <a class="btn" href="index.html" style="margin-top:14px">⌂ Índice</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="navbar">
+    <button id="prev" type="button">← Anterior</button>
+    <button id="next" type="button">Siguiente →</button>
+    <span class="hint">también se pueden usar las flechas del teclado</span>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+
+<script>
+/* ============================================================
+   Demo Pokémon — el patrón Strategy, hecho visible.
+   Una sola orden, atacar(), y cuatro algoritmos intercambiables.
+   ============================================================ */
+(function () {
+  const raiz = document.getElementById('demoPoke');
+  if (!raiz) return;
+
+  const M     = window.Motion;
+  const anima = !!(M && M.animate) &&
+                !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const tiro     = document.getElementById('pokeTiro');
+  const bola     = document.getElementById('pokeTiroBola');
+  const objetivo = document.getElementById('pokeObjetivo');
+  const atacante = document.getElementById('pokeAtacante');
+  const danio    = document.getElementById('pokeDanio');
+  const equipado = document.getElementById('pokeEquipado');
+  const consola  = document.getElementById('pokeConsola');
+
+  /* ---- la familia de algoritmos: mismo metodo, distinta formula ---- */
+  const ATAQUES = {
+    electrico: { nombre: 'ELÉCTRICO', color: 'var(--ambar)',   base: 40, ico: '⚡',
+                 formula: 'daño = 40 + 10 × nivel',       calc: n => 40 + 10 * n },
+    fuego:     { nombre: 'FUEGO',     color: 'var(--fuego)',   base: 55, ico: '🔥',
+                 formula: 'daño = 55 + 6 × nivel',        calc: n => 55 + 6 * n },
+    planta:    { nombre: 'PLANTA',    color: 'var(--jade)',    base: 25, ico: '🌿',
+                 formula: 'daño = 25 + 18 × nivel',       calc: n => 25 + 18 * n },
+    agua:      { nombre: 'AGUA',      color: 'var(--violeta)', base: 45, ico: '💧',
+                 formula: 'daño = 45 + 9 × nivel',        calc: n => 45 + 9 * n }
+  };
+
+  let elegido = 'electrico';
+  let nivel   = 1;
+
+  function equipar(clave) {
+    elegido = clave;
+    const a = ATAQUES[clave];
+    equipado.textContent = a.nombre;
+    equipado.style.background = a.color;
+    bola.setAttribute('fill', a.color);
+    raiz.querySelectorAll('[data-ataque]').forEach(b => {
+      b.setAttribute('aria-pressed', String(b.dataset.ataque === clave));
+    });
+    consola.innerHTML = '<span class="ok">' + a.ico + ' Ataque ' + a.nombre + ' equipado.</span>' +
+      '<span class="nota">Su fórmula: ' + a.formula + '. El entrenador no la conoce: sólo llama a atacar().</span>';
+  }
+
+  function atacar() {
+    const a = ATAQUES[elegido];
+    const total = a.calc(nivel);
+
+    if (!anima) {
+      consola.innerHTML = '<span class="ok">' + a.ico + ' ¡' + a.nombre + '! Daño: ' + total + '</span>' +
+        '<span class="nota">' + a.formula.replace('nivel', 'nivel ' + nivel) + ' = ' + total + '</span>';
+      nivel++;
+      return;
+    }
+
+    /* 1 · el atacante toma impulso */
+    M.animate(atacante, { x: [0, -14, 6, 0] }, { duration: .45 });
+
+    /* 2 · el proyectil viaja: mismo recorrido, distinto color y tamaño */
+    tiro.style.opacity = '1';
+    M.animate(tiro,
+      { x: [130, 470], scale: [.5, 1 + a.base / 160] },
+      { duration: .52, ease: 'easeIn' }
+    ).finished.then(() => {
+      tiro.style.opacity = '0';
+      M.animate(tiro, { x: 130 }, { duration: 0 });
+
+      /* 3 · el objetivo encaja el golpe */
+      M.animate(objetivo, { x: [0, 12, -8, 5, 0] }, { duration: .4 });
+
+      /* 4 · sale el número de daño */
+      danio.textContent = '-' + total;
+      danio.setAttribute('fill', a.color);
+      danio.style.opacity = '1';
+      M.animate(danio, { y: [0, -46], opacity: [1, 1, 0], scale: [.6, 1.25, 1] },
+                { duration: 1.05, ease: 'easeOut' });
+
+      consola.innerHTML = '<span class="ok">' + a.ico + ' ¡' + a.nombre + '! Daño: ' + total + '</span>' +
+        '<span class="nota">' + a.formula.replace('nivel', 'nivel ' + nivel) + ' = ' + total +
+        ' · La orden fue la misma; la fórmula la puso el ataque equipado.</span>';
+      nivel++;
+    });
+  }
+
+  raiz.querySelectorAll('[data-ataque]').forEach(b => {
+    b.addEventListener('click', () => equipar(b.dataset.ataque));
+  });
+  document.getElementById('pokeAtacar').addEventListener('click', atacar);
+
+  equipar('electrico');
+})();
+</script>
+</body>
+</html>

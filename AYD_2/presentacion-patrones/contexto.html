@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contexto · cómo funciona el sistema — AutoRent Express</title>
+<link rel="stylesheet" href="assets/estilo.css">
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Volver al índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">Contexto</span>
+    <span class="counter"><span id="cur">1</span> / <span id="tot">?</span></span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="stage">
+
+    <!-- 1 · Intro -->
+    <section class="slide">
+      <div class="inner titleslide">
+        <p class="eyebrow">Contexto · parte 1</p>
+        <h1>Qué pidió el enunciado</h1>
+        <p class="lead">AutoRent Express S.A. necesita una plataforma de renta de vehículos con
+        <strong>tres roles</strong>: cliente, agente de renta y administrador. La parte difícil no es el
+        catálogo de carros: es el <strong>ida y vuelta</strong> entre cliente y agente para cerrar una renta,
+        y el <strong>precio</strong>, que depende del plan contratado.</p>
+        <p class="kicker">Esos dos problemas — el ciclo de vida de la reserva y el cálculo de la tarifa —
+        son exactamente los que resuelven los tres patrones de esta presentación.</p>
+      </div>
+    </section>
+
+    <!-- 2 · El recorrido -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El flujo del negocio</p>
+        <h2>El recorrido de una renta, y quién actúa en cada paso</h2>
+        <p>Ninguno de los dos puede avanzar solo: se van pasando el turno. Eso es justamente lo que el
+        patrón <strong>State</strong> vigila.</p>
+
+        <svg viewBox="0 0 1160 340" width="100%" role="img"
+             aria-label="Diagrama de carriles: pasos del cliente y del agente para completar una renta">
+          <defs>
+            <marker id="stp" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L9,4 L0,8 z" fill="var(--dim)"/>
+            </marker>
+          </defs>
+
+          <rect x="120" y="20" width="1030" height="86" rx="10"
+                fill="color-mix(in srgb, var(--violeta) 10%, transparent)" stroke="var(--line)"/>
+          <rect x="120" y="116" width="1030" height="86" rx="10"
+                fill="color-mix(in srgb, var(--ambar) 10%, transparent)" stroke="var(--line)"/>
+          <text x="112" y="60" text-anchor="end" font-size="16" font-weight="700" fill="var(--violeta)">Cliente</text>
+          <text x="112" y="80" text-anchor="end" font-size="12" fill="var(--dim)">rol CLIENTE</text>
+          <text x="112" y="156" text-anchor="end" font-size="16" font-weight="700" fill="var(--ambar)">Agente</text>
+          <text x="112" y="176" text-anchor="end" font-size="12" fill="var(--dim)">rol AGENTE</text>
+
+          <g font-size="13.5">
+            <g data-step="1">
+              <rect x="140" y="34" width="176" height="58" rx="8" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.7"/>
+              <text x="228" y="57" text-anchor="middle" font-weight="700" fill="var(--violeta)">1 · Solicita</text>
+              <text x="228" y="77" text-anchor="middle" font-size="12" fill="var(--muted)">elige vehículo y plan</text>
+            </g>
+            <g data-step="2">
+              <path d="M316,63 L330,63 L330,159 L340,159" fill="none" stroke="var(--dim)" stroke-width="1.6" marker-end="url(#stp)"/>
+              <rect x="344" y="130" width="176" height="58" rx="8" fill="var(--surface)" stroke="var(--ambar)" stroke-width="1.7"/>
+              <text x="432" y="153" text-anchor="middle" font-weight="700" fill="var(--ambar)">2 · Propone</text>
+              <text x="432" y="173" text-anchor="middle" font-size="12" fill="var(--muted)">horario de entrega</text>
+            </g>
+            <g data-step="3">
+              <path d="M520,159 L534,159 L534,63 L544,63" fill="none" stroke="var(--dim)" stroke-width="1.6" marker-end="url(#stp)"/>
+              <rect x="548" y="34" width="176" height="58" rx="8" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.7"/>
+              <text x="636" y="57" text-anchor="middle" font-weight="700" fill="var(--violeta)">3 · Acepta o rechaza</text>
+              <text x="636" y="77" text-anchor="middle" font-size="12" fill="var(--muted)">el rechazo exige motivo</text>
+            </g>
+            <g data-step="4">
+              <path d="M724,63 L738,63 L738,159 L748,159" fill="none" stroke="var(--dim)" stroke-width="1.6" marker-end="url(#stp)"/>
+              <rect x="752" y="130" width="176" height="58" rx="8" fill="var(--surface)" stroke="var(--ambar)" stroke-width="1.7"/>
+              <text x="840" y="153" text-anchor="middle" font-weight="700" fill="var(--ambar)">4 · Entrega</text>
+              <text x="840" y="173" text-anchor="middle" font-size="12" fill="var(--muted)">el auto sale a renta</text>
+            </g>
+            <g data-step="5">
+              <line x1="928" y1="159" x2="952" y2="159" stroke="var(--dim)" stroke-width="1.6" marker-end="url(#stp)"/>
+              <rect x="956" y="130" width="176" height="58" rx="8" fill="var(--surface)" stroke="var(--ambar)" stroke-width="1.7"/>
+              <text x="1044" y="153" text-anchor="middle" font-weight="700" fill="var(--ambar)">5 · Finaliza</text>
+              <text x="1044" y="173" text-anchor="middle" font-size="12" fill="var(--muted)">registra devolución</text>
+            </g>
+          </g>
+
+          <g data-step="6">
+            <rect x="120" y="224" width="1030" height="94" rx="10"
+                  fill="color-mix(in srgb, var(--accent) 8%, transparent)" stroke="var(--line)"/>
+            <text x="112" y="262" text-anchor="end" font-size="14" font-weight="700" fill="var(--accent)">Qué patrón</text>
+            <text x="112" y="281" text-anchor="end" font-size="14" font-weight="700" fill="var(--accent)">actúa</text>
+            <g font-size="12.5">
+              <rect x="140" y="238" width="380" height="28" rx="6" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.3"/>
+              <text x="330" y="257" text-anchor="middle" fill="var(--violeta)" font-weight="600">State — valida que la transición sea legal</text>
+              <rect x="548" y="238" width="176" height="28" rx="6" fill="var(--surface)" stroke="var(--ambar)" stroke-width="1.3"/>
+              <text x="636" y="257" text-anchor="middle" fill="var(--ambar)" font-weight="600">+ Factory Method</text>
+              <rect x="548" y="274" width="176" height="28" rx="6" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.3"/>
+              <text x="636" y="293" text-anchor="middle" fill="var(--jade)" font-weight="600">+ Strategy (precio)</text>
+              <rect x="752" y="238" width="380" height="28" rx="6" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.3"/>
+              <text x="942" y="257" text-anchor="middle" fill="var(--violeta)" font-weight="600">State — y sincroniza el estado del vehículo</text>
+            </g>
+          </g>
+        </svg>
+
+        <div class="callout"><p><strong>El paso 3 es el importante:</strong> es el único momento en que se
+        calcula dinero, y por eso es donde los tres patrones trabajan juntos.</p></div>
+      </div>
+    </section>
+
+    <!-- 3 · De la vista al patrón -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Cómo se conecta con la aplicación</p>
+        <h2>Del clic del usuario a la clase de estado</h2>
+        <p>Django organiza el código en <strong>MTV</strong>: plantilla, vista y modelo. Los patrones viven en
+        el <strong>modelo</strong>, no en la vista. La vista sólo traduce el clic en una llamada de negocio y
+        muestra el error si lo hay.</p>
+
+        <svg viewBox="0 0 1160 250" width="100%" role="img"
+             aria-label="Cadena: plantilla, vista, modelo y base de datos">
+          <defs>
+            <marker id="ch" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+              <path d="M0,0 L9,4 L0,8 z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+          <g data-step="1">
+            <rect x="10" y="8" width="264" height="72" rx="12" fill="var(--surface2)" stroke="var(--line)" stroke-width="1.5"/>
+            <text x="142" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)">Plantilla</text>
+            <text x="142" y="55" text-anchor="middle" font-size="12" fill="var(--muted)">detalle_reserva.html</text>
+            <text x="142" y="71" text-anchor="middle" font-size="11.5" fill="var(--dim)">botón «Aceptar» (POST)</text>
+          </g>
+          <line x1="278" y1="44" x2="308" y2="44" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#ch)"/>
+          <g data-step="2">
+            <rect x="312" y="8" width="264" height="72" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.8"/>
+            <text x="444" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent)">Vista</text>
+            <text x="444" y="55" text-anchor="middle" font-size="12" fill="var(--muted)">reservas/views.py</text>
+            <text x="444" y="71" text-anchor="middle" font-size="11.5" fill="var(--dim)">verifica rol · abre transacción</text>
+          </g>
+          <line x1="580" y1="44" x2="610" y2="44" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#ch)"/>
+          <g data-step="3">
+            <rect x="614" y="8" width="264" height="72" rx="12" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.8"/>
+            <text x="746" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="var(--violeta)">Modelo — Reserva</text>
+            <text x="746" y="55" text-anchor="middle" font-size="12" fill="var(--muted)">delega en el estado actual</text>
+            <text x="746" y="71" text-anchor="middle" font-size="11.5" fill="var(--dim)">aquí viven los tres patrones</text>
+          </g>
+          <line x1="882" y1="44" x2="912" y2="44" stroke="var(--accent)" stroke-width="1.8" marker-end="url(#ch)"/>
+          <g data-step="4">
+            <rect x="916" y="8" width="234" height="72" rx="12" fill="var(--surface2)" stroke="var(--jade)" stroke-width="1.5"/>
+            <text x="1033" y="36" text-anchor="middle" font-size="15" font-weight="700" fill="var(--jade)">PostgreSQL</text>
+            <text x="1033" y="58" text-anchor="middle" font-size="12" fill="var(--muted)">reserva · propuesta_renta</text>
+          </g>
+          <g data-step="5">
+            <rect x="10" y="112" width="1140" height="126" rx="12"
+                  fill="color-mix(in srgb, var(--violeta) 8%, transparent)" stroke="var(--line)" stroke-dasharray="6 4"/>
+            <text x="34" y="140" font-size="13.5" font-weight="700" fill="var(--violeta)">La vista no conoce ningún estado ni ninguna tarifa.</text>
+            <text x="34" y="166" font-size="13" fill="var(--body)">Sólo sabe llamar a reserva.aceptar() y mostrar el mensaje de error si el modelo se queja.</text>
+            <text x="34" y="192" font-size="13" fill="var(--body)">Si mañana cambia la regla de qué estado puede aceptar, la vista no se toca: ese es el beneficio concreto</text>
+            <text x="34" y="218" font-size="13" fill="var(--body)">de haber puesto los patrones en el modelo y no en la capa de presentación.</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 4 · La vista completa -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El código de la vista, completo</p>
+        <h2>Una sola línea de negocio</h2>
+        <pre class="code"><span class="tk-sym"># reservas/views.py</span>
+<span class="tk-res">@login_required</span>
+<span class="tk-res">@require_POST</span>
+<span class="tk-res">@transaction.atomic</span>
+<span class="tk-res">def</span> <span class="tk-id">aceptar_reserva</span>(request, reserva_id):
+    <span class="tk-res">if not</span> es_cliente(request.user):
+        <span class="tk-res">return</span> HttpResponseForbidden(<span class="tk-str">'Solo el cliente puede aceptar.'</span>)
+
+    reserva = get_object_or_404(
+        Reserva.objects.select_for_update(),        <span class="tk-sym"># bloqueo de fila</span>
+        pk=reserva_id, cliente__usuario=request.user)
+
+    <span class="tk-res">try</span>:
+        reserva.aceptar()                          <span class="tk-sym"># ← toda la regla vive aquí</span>
+        messages.success(request, <span class="tk-str">'Reserva aceptada.'</span>)
+    <span class="tk-res">except</span> ValidationError <span class="tk-res">as</span> error:
+        messages.error(request, <span class="tk-str">' '</span>.join(error.messages))
+
+    <span class="tk-res">return</span> redirect(<span class="tk-str">'reservas:detalle'</span>, reserva_id=reserva.id_reserva)</pre>
+
+        <div class="callout"><p><strong>Detalle de robustez que conviene mencionar:</strong> corre dentro de
+        <code class="inline">transaction.atomic</code> y toma la fila con
+        <code class="inline">select_for_update()</code>. Si dos peticiones intentaran avanzar la misma reserva
+        al mismo tiempo, la segunda espera — <strong>no hay dos transiciones simultáneas</strong>, y si el
+        cálculo de precio falla, la reserva no queda a medio camino entre dos estados.</p></div>
+
+        <p class="kicker">Las ocho vistas de <code class="inline">reservas/urls.py</code> siguen el mismo molde:
+        verificar rol, tomar la fila, llamar al método del modelo, traducir el error a un mensaje.<br>
+        <a class="btn" href="state.html" style="margin-top:14px">Siguiente: el patrón State →</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="navbar">
+    <button id="prev" type="button">← Anterior</button>
+    <button id="next" type="button">Siguiente →</button>
+    <span class="hint">también se pueden usar las flechas del teclado</span>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

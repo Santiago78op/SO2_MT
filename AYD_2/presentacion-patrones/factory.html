@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patrón Factory Method — AutoRent Express</title>
+<link rel="stylesheet" href="assets/estilo.css">
+<link rel="stylesheet" href="assets/analogias.css">
+</head>
+<body>
+
+<div class="deck">
+  <div class="topbar">
+    <a class="brand" href="index.html" title="Volver al índice">AutoRent<em>Express</em> · patrones de diseño</a>
+    <span class="chip">3 · Factory Method</span>
+    <span class="counter"><span id="cur">1</span> / <span id="tot">?</span></span>
+    <button id="theme" type="button" title="Cambiar tema claro/oscuro" aria-label="Cambiar tema claro/oscuro">◐</button>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+
+  <div class="stage">
+
+    <!-- 1 · Portadilla -->
+    <section class="slide">
+      <div class="inner titleslide">
+        <p class="eyebrow">Patrón creacional · GoF</p>
+        <h1>Factory Method</h1>
+        <p class="lead">«Define una interfaz para crear un objeto, pero deja que sea la implementación
+        la que decida qué clase concreta instanciar.»</p>
+        <p class="kicker">Implementado como <code class="inline">PlanRenta.calculo()</code> en
+        <code class="inline">reservas/models.py</code>.</p>
+      </div>
+    </section>
+
+    <!-- 2 · Analogía: la tubería de Mario -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Para entenderlo · la analogía de la tubería</p>
+        <h2>Le pedís un nombre a la tubería y ella te da el enemigo</h2>
+        <p class="lead">Vos no armás al Goomba pieza por pieza. Sólo decís
+        <strong>«GOOMBA»</strong> y la tubería sabe cuál construir.
+        Eso es una <strong>fábrica</strong>: le das un nombre, te devuelve el objeto correcto.</p>
+
+        <div class="demo" id="demoMario">
+          <div class="escena-demo">
+            <svg viewBox="0 0 620 300" role="img" aria-label="Tubería de la que sale un enemigo de Mario">
+              <defs>
+                <clipPath id="bocaTuberia">
+                  <!-- todo lo que quede por debajo de y=174 está "dentro" de la tubería -->
+                  <rect x="0" y="-140" width="620" height="314"/>
+                </clipPath>
+              </defs>
+
+              <!-- cielo y suelo -->
+              <g opacity=".45" fill="var(--muted)">
+                <ellipse cx="118" cy="58" rx="30" ry="12"/><ellipse cx="142" cy="52" rx="22" ry="14"/>
+                <ellipse cx="500" cy="80" rx="26" ry="10"/><ellipse cx="522" cy="75" rx="18" ry="12"/>
+              </g>
+              <rect x="0" y="268" width="620" height="32" fill="var(--surface2)"/>
+              <line x1="0" y1="268" x2="620" y2="268" stroke="var(--line)" stroke-width="2"/>
+
+              <!-- cuerpo de la tubería -->
+              <rect x="252" y="196" width="116" height="72" fill="#1f8f4d"/>
+              <rect x="252" y="196" width="26" height="72" fill="#2fbf68" opacity=".55"/>
+
+              <!-- ENEMIGOS (salen de aquí, recortados por la boca) -->
+              <g clip-path="url(#bocaTuberia)">
+                <g id="marioEnemigo" style="transform:translateY(120px)">
+                 <!-- los enemigos se dibujan parados SOBRE la boca (y=174) -->
+                 <g transform="translate(0,-44)">
+
+                  <!-- GOOMBA -->
+                  <g id="enGOOMBA" opacity="0">
+                    <ellipse cx="310" cy="176" rx="46" ry="30" fill="#8a5a2b"/>
+                    <ellipse cx="310" cy="164" rx="46" ry="28" fill="#a56a33"/>
+                    <ellipse cx="292" cy="160" rx="9" ry="11" fill="#fff"/>
+                    <ellipse cx="328" cy="160" rx="9" ry="11" fill="#fff"/>
+                    <ellipse cx="294" cy="162" rx="4" ry="5.5" fill="#111"/>
+                    <ellipse cx="326" cy="162" rx="4" ry="5.5" fill="#111"/>
+                    <path d="M280,148 L300,156" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M340,148 L320,156" stroke="#111" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M296,182 q14,9 28,0" stroke="#3b2410" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="288" cy="196" rx="16" ry="8" fill="#f0d8a8"/>
+                    <ellipse cx="332" cy="196" rx="16" ry="8" fill="#f0d8a8"/>
+                  </g>
+
+                  <!-- KOOPA -->
+                  <g id="enKOOPA" opacity="0">
+                    <ellipse cx="310" cy="178" rx="44" ry="34" fill="#1f8f4d"/>
+                    <ellipse cx="310" cy="178" rx="33" ry="25" fill="#f2c14e"/>
+                    <path d="M310,153 L310,203 M285,178 L335,178" stroke="#c99a2e" stroke-width="3"/>
+                    <circle cx="310" cy="178" r="9" fill="#c99a2e"/>
+                    <circle cx="266" cy="146" r="18" fill="#f2c14e"/>
+                    <circle cx="261" cy="143" r="3.5" fill="#111"/>
+                    <path d="M250,150 q-8,3 -2,8" stroke="#f2c14e" stroke-width="6" fill="none" stroke-linecap="round"/>
+                    <ellipse cx="292" cy="208" rx="13" ry="7" fill="#f2c14e"/>
+                    <ellipse cx="330" cy="208" rx="13" ry="7" fill="#f2c14e"/>
+                  </g>
+
+                  <!-- PLANTA PIRAÑA -->
+                  <g id="enPLANTA" opacity="0">
+                    <rect x="303" y="168" width="14" height="46" fill="#2fbf68"/>
+                    <ellipse cx="288" cy="192" rx="16" ry="8" fill="#1f8f4d" transform="rotate(-25 288 192)"/>
+                    <ellipse cx="332" cy="200" rx="15" ry="7" fill="#1f8f4d" transform="rotate(22 332 200)"/>
+                    <circle cx="310" cy="150" r="34" fill="#e03b3b"/>
+                    <path d="M276,150 a34,34 0 0,1 68,0 z" fill="#c92e2e"/>
+                    <ellipse cx="310" cy="152" rx="22" ry="10" fill="#fff"/>
+                    <g fill="#fff">
+                      <circle cx="290" cy="132" r="5"/><circle cx="330" cy="132" r="5"/>
+                      <circle cx="310" cy="122" r="5"/><circle cx="286" cy="162" r="4.5"/>
+                      <circle cx="334" cy="162" r="4.5"/>
+                    </g>
+                  </g>
+
+                 </g>
+                </g>
+              </g>
+
+              <!-- boca de la tubería (tapa a los enemigos en reposo) -->
+              <rect x="238" y="172" width="144" height="26" rx="5" fill="#1f8f4d"/>
+              <rect x="238" y="172" width="144" height="9" rx="4" fill="#2fbf68" opacity=".7"/>
+              <rect x="238" y="172" width="22" height="26" fill="#2fbf68" opacity=".45"/>
+
+              <text x="310" y="288" text-anchor="middle" font-size="12"
+                    font-family="var(--f-mono)" fill="var(--dim)">la fábrica</text>
+            </svg>
+          </div>
+
+          <div class="control">
+            <p class="estado-actual">Último pedido: <b id="marioPedido">—</b></p>
+            <div class="botonera">
+              <button class="dbtn" data-enemigo="GOOMBA"><span class="ico">🍄</span> 'GOOMBA'</button>
+              <button class="dbtn" data-enemigo="KOOPA"><span class="ico">🐢</span> 'KOOPA'</button>
+              <button class="dbtn" data-enemigo="PLANTA"><span class="ico">🌺</span> 'PLANTA'</button>
+              <button class="dbtn" data-enemigo="DRAGON"><span class="ico">❓</span> 'DRAGON'</button>
+            </div>
+            <div class="consola" id="marioConsola">
+              <span class="nota">Pedile un enemigo a la tubería. Después probá 'DRAGON', que no está
+              en la lista, y mirá qué pasa.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="puente">
+          <div class="lado juego">
+            <h4>En la tubería</h4>
+            <p><code class="inline">tuberia.crear('KOOPA')</code> → te devuelve un Koopa.
+            Vos no sabés cómo se arma; sólo sabés pedirlo por su nombre.</p>
+          </div>
+          <div class="igual">≡</div>
+          <div class="lado real">
+            <h4>En AutoRent</h4>
+            <p><code class="inline">plan.calculo()</code> lee <code class="inline">'SEMANAL'</code> y te
+            devuelve un <code class="inline">TarifaSemanal</code>. <code class="inline">Reserva</code>
+            nunca escribe ese nombre.</p>
+          </div>
+        </div>
+
+        <p class="kicker">Para agregar un enemigo nuevo no se toca a Mario: se agrega a la lista de la
+        tubería. Igual que agregar un plan de renta nuevo al diccionario
+        <code class="inline">_PRODUCTOS</code>.</p>
+      </div>
+    </section>
+
+    <!-- 3 · Problema, UML y código -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">Problema y solución</p>
+        <h2>¿Quién decide cuál Strategy se usa?</h2>
+        <p>Strategy resolvió <em>cómo</em> se calcula. Queda un hueco: el plan que eligió el cliente está
+        guardado en la base como un <strong>texto</strong> (<code class="inline">'SEMANAL'</code>).
+        Alguien tiene que traducir ese texto a un objeto — y si esa traducción la hiciera
+        <code class="inline">Reserva</code>, el Context volvería a conocer los nombres de las clases
+        concretas, justo lo que Strategy vino a evitar.</p>
+
+        <svg viewBox="0 0 1160 465" width="100%" role="img"
+             aria-label="Diagrama de clases UML del patrón Factory Method">
+          <defs>
+            <marker id="opf" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto">
+              <path d="M0,0 L11,5 L0,10" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+            </marker>
+            <marker id="cre" markerWidth="12" markerHeight="10" refX="11" refY="5" orient="auto">
+              <path d="M0,0 L11,5 L0,10" fill="none" stroke="var(--ambar)" stroke-width="1.6"/>
+            </marker>
+          </defs>
+
+          <!-- Creator -->
+          <g data-step="1">
+            <rect x="30" y="24" width="300" height="170" rx="10" fill="var(--surface)" stroke="var(--ambar)" stroke-width="2.2"/>
+            <rect x="30" y="24" width="300" height="44" rx="10" fill="var(--ambar)"/>
+            <rect x="30" y="54" width="300" height="14" fill="var(--ambar)"/>
+            <text x="180" y="44" text-anchor="middle" font-size="18" font-weight="700" fill="var(--bg)">PlanRenta</text>
+            <text x="180" y="61" text-anchor="middle" font-size="12" fill="var(--bg)" opacity=".8">«Creator»</text>
+            <text x="46" y="92" font-size="13.5" fill="var(--body)">+ nombre</text>
+            <text x="46" y="114" font-size="13.5" fill="var(--body)">+ calculo_codigo   ← el discriminador</text>
+            <text x="46" y="136" font-size="13.5" fill="var(--body)">+ descuento</text>
+            <line x1="30" y1="146" x2="330" y2="146" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="46" y="170" font-size="14" font-weight="700" fill="var(--ambar)">+ calculo() : CalculoPlan</text>
+          </g>
+
+          <!-- Reserva -->
+          <g data-step="2">
+            <rect x="430" y="24" width="250" height="96" rx="10" fill="var(--surface)" stroke="var(--violeta)" stroke-width="1.8"/>
+            <rect x="430" y="24" width="250" height="38" rx="10" fill="var(--violeta)"/>
+            <rect x="430" y="48" width="250" height="14" fill="var(--violeta)"/>
+            <text x="555" y="49" text-anchor="middle" font-size="17" font-weight="700" fill="var(--accent-ink)">Reserva</text>
+            <text x="446" y="84" font-size="13.5" fill="var(--body)">+ plan</text>
+            <text x="446" y="106" font-size="13.5" fill="var(--body)">+ calcular_total()</text>
+            <line x1="430" y1="72" x2="336" y2="72" stroke="var(--muted)" stroke-width="1.7" marker-end="url(#opf)"/>
+            <text x="383" y="62" text-anchor="middle" font-size="12.5" fill="var(--muted)">tiene</text>
+          </g>
+
+          <!-- mapa discriminador -->
+          <g data-step="3">
+            <rect x="740" y="24" width="392" height="96" rx="10"
+                  fill="color-mix(in srgb, var(--ambar) 12%, transparent)" stroke="var(--ambar)"
+                  stroke-width="1.4" stroke-dasharray="5 3"/>
+            <text x="758" y="48" font-size="13" font-weight="700" fill="var(--ambar)">El mapa que vive dentro del Creator</text>
+            <text x="758" y="72" font-size="13" fill="var(--body)">'DIARIA'   →  TarifaDiaria</text>
+            <text x="758" y="92" font-size="13" fill="var(--body)">'SEMANAL'  →  TarifaSemanal</text>
+            <text x="758" y="112" font-size="13" fill="var(--body)">'MENSUAL'  →  TarifaMensual</text>
+          </g>
+
+          <!-- create -->
+          <g data-step="4">
+            <line x1="180" y1="194" x2="180" y2="240" stroke="var(--ambar)" stroke-width="2"
+                  stroke-dasharray="7 4" marker-end="url(#cre)"/>
+            <text x="194" y="222" font-size="13" fill="var(--ambar)" font-style="italic">«create»</text>
+          </g>
+
+          <!-- Product -->
+          <g data-step="5">
+            <rect x="30" y="242" width="300" height="96" rx="10" fill="var(--surface)" stroke="var(--jade)" stroke-width="2"/>
+            <rect x="30" y="242" width="300" height="40" rx="10" fill="var(--jade)"/>
+            <rect x="30" y="268" width="300" height="14" fill="var(--jade)"/>
+            <text x="180" y="268" text-anchor="middle" font-size="17" font-weight="700" font-style="italic" fill="var(--bg)">CalculoPlan</text>
+            <line x1="30" y1="298" x2="330" y2="298" stroke="var(--line)" stroke-width="1.2"/>
+            <text x="46" y="322" font-size="13.5" fill="var(--body)">+ calcular_total(reserva)</text>
+          </g>
+
+          <g data-step="6">
+            <line x1="180" y1="338" x2="180" y2="360" stroke="var(--muted)" stroke-width="1.7"/>
+            <path d="M172,360 L188,360 L180,346 z" fill="var(--surface)" stroke="var(--muted)" stroke-width="1.7"/>
+            <line x1="180" y1="360" x2="180" y2="372" stroke="var(--muted)" stroke-width="1.7"/>
+            <line x1="480" y1="372" x2="1030" y2="372" stroke="var(--muted)" stroke-width="1.7"/>
+            <line x1="180" y1="372" x2="480" y2="372" stroke="var(--muted)" stroke-width="1.7"/>
+            <g font-size="13.5">
+              <line x1="480" y1="372" x2="480" y2="392" stroke="var(--muted)" stroke-width="1.7"/>
+              <rect x="380" y="392" width="200" height="56" rx="8" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.5"/>
+              <text x="480" y="426" text-anchor="middle" font-weight="600" fill="var(--jade)">TarifaDiaria</text>
+              <line x1="755" y1="372" x2="755" y2="392" stroke="var(--muted)" stroke-width="1.7"/>
+              <rect x="655" y="392" width="200" height="56" rx="8" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.5"/>
+              <text x="755" y="426" text-anchor="middle" font-weight="600" fill="var(--jade)">TarifaSemanal</text>
+              <line x1="1030" y1="372" x2="1030" y2="392" stroke="var(--muted)" stroke-width="1.7"/>
+              <rect x="930" y="392" width="200" height="56" rx="8" fill="var(--surface)" stroke="var(--jade)" stroke-width="1.5"/>
+              <text x="1030" y="426" text-anchor="middle" font-weight="600" fill="var(--jade)">TarifaMensual</text>
+            </g>
+          </g>
+        </svg>
+
+        <p class="kicker">El Creator conoce a los productos; <code class="inline">Reserva</code> no.
+        Ese es todo el punto.</p>
+      </div>
+    </section>
+
+    <!-- 3 · Código y matiz honesto -->
+    <section class="slide">
+      <div class="inner">
+        <p class="eyebrow">El código real</p>
+        <h2>El discriminador persistido fabrica el producto</h2>
+
+        <pre class="code"><span class="tk-sym"># reservas/models.py</span>
+<span class="tk-res">class</span> <span class="tk-id">PlanRenta</span>(models.Model):
+
+    _PRODUCTOS = {
+        Calculo.DIARIA:  TarifaDiaria,
+        Calculo.SEMANAL: TarifaSemanal,
+        Calculo.MENSUAL: TarifaMensual,
+    }
+    calculo_codigo = models.CharField(max_length=<span class="tk-num">20</span>, choices=Calculo.choices)
+
+    <span class="tk-sym"># ---------- FACTORY METHOD ----------</span>
+    <span class="tk-res">def</span> <span class="tk-id">calculo</span>(self) -&gt; CalculoPlan:
+        <span class="tk-res">return</span> self._PRODUCTOS[self.calculo_codigo]()</pre>
+
+        <div class="cards">
+          <div class="card">
+            <h3>Qué desacopló</h3>
+            <p>La persistencia del algoritmo. La tabla guarda un texto; el código trabaja con objetos.
+            Nadie más en el sistema necesita saber que ese texto existe.</p>
+          </div>
+          <div class="card">
+            <h3>Dónde se extiende</h3>
+            <p>Un plan nuevo entra por un solo punto: una clase nueva, una entrada en
+            <code class="inline">_PRODUCTOS</code> y una fila en <code class="inline">plan_renta</code>.
+            Ni <code class="inline">Reserva</code> ni las vistas se tocan.</p>
+          </div>
+        </div>
+
+        <div class="callout">
+          <p><strong>Un matiz que conviene decir antes de que lo pregunten:</strong> esta es la variante que
+          el propio GoF llama <em>factory method parametrizado</em> — un solo método recibe un identificador
+          y devuelve el producto, en lugar de una subclase por producto.</p>
+          <p>Se eligió así porque el discriminador ya existía como columna en la base
+          (<code class="inline">plan_renta.calculo_codigo</code>): crear una subclase de
+          <code class="inline">PlanRenta</code> por cada plan habría duplicado la tabla sin ganar nada.
+          El mismo mecanismo se usa en <code class="inline">EstadoReserva.crear()</code>, que es la pieza
+          que conecta una base relacional con un patrón de comportamiento — porque una tabla no puede
+          guardar un objeto que sólo tiene comportamiento.</p>
+        </div>
+
+        <p class="kicker">Con los tres patrones ya explicados por separado, falta verlos trabajar juntos.<br>
+        <a class="btn" href="colaboracion.html" style="margin-top:14px">Siguiente: los tres juntos →</a>
+        <a class="btn" href="index.html" style="margin-top:14px">⌂ Índice</a></p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="navbar">
+    <button id="prev" type="button">← Anterior</button>
+    <button id="next" type="button">Siguiente →</button>
+    <span class="hint">también se pueden usar las flechas del teclado</span>
+  </div>
+</div>
+
+<script src="assets/motion.js"></script>
+<script src="assets/deck.js"></script>
+
+<script>
+/* ============================================================
+   Demo de la tubería — el patrón Factory Method, hecho visible.
+   El codigo pedido se busca en un diccionario y se "construye"
+   el producto correcto. Un codigo desconocido no existe: KeyError.
+   ============================================================ */
+(function () {
+  const raiz = document.getElementById('demoMario');
+  if (!raiz) return;
+
+  const M     = window.Motion;
+  const anima = !!(M && M.animate) &&
+                !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const grupo   = document.getElementById('marioEnemigo');
+  const pedido  = document.getElementById('marioPedido');
+  const consola = document.getElementById('marioConsola');
+
+  /* ---- el diccionario de la fábrica: mismo papel que _PRODUCTOS ---- */
+  const CATALOGO = {
+    GOOMBA: { id: 'enGOOMBA', clase: 'Goomba',       color: 'var(--ambar)',
+              di: 'camina en línea recta y cae por los precipicios' },
+    KOOPA:  { id: 'enKOOPA',  clase: 'KoopaTroopa',  color: 'var(--jade)',
+              di: 'se esconde en el caparazón y sale disparado' },
+    PLANTA: { id: 'enPLANTA', clase: 'PlantaPiraña', color: 'var(--fuego)',
+              di: 'asoma desde la tubería cada cierto tiempo' }
+  };
+
+  function ocultarTodos() {
+    Object.values(CATALOGO).forEach(p => {
+      document.getElementById(p.id).setAttribute('opacity', '0');
+    });
+  }
+
+  function crear(codigo) {
+    const producto = CATALOGO[codigo];          /* ← la búsqueda en el diccionario */
+
+    if (!producto) {
+      pedido.textContent = codigo;
+      pedido.style.background = 'var(--fuego)';
+      consola.innerHTML =
+        '<span class="mal">✗ KeyError: ' + codigo + '</span>' +
+        '<span class="nota">La tubería sólo conoce GOOMBA, KOOPA y PLANTA. ' +
+        'Para que exista un DRAGON hay que agregarlo al catálogo — y sólo ahí. ' +
+        'Ni Mario ni el resto del juego se enteran.</span>';
+      if (anima) M.animate(grupo, { x: [0, -8, 7, -5, 0] }, { duration: .4 });
+      return;
+    }
+
+    ocultarTodos();
+    document.getElementById(producto.id).setAttribute('opacity', '1');
+    pedido.textContent = codigo;
+    pedido.style.background = producto.color;
+
+    if (anima) {
+      /* sale de la tubería con un rebote */
+      M.animate(grupo, { y: [120, -8, 0] },
+                { duration: .8, ease: [.34, 1.56, .64, 1] });
+    } else {
+      grupo.style.transform = 'translateY(0px)';
+    }
+
+    consola.innerHTML =
+      '<span class="ok">✓ La tubería devolvió un ' + producto.clase + '</span>' +
+      '<span class="nota">' + producto.clase + ': ' + producto.di + '. ' +
+      'Quien lo pidió sólo escribió el texto «' + codigo + '»; nunca el nombre de la clase.</span>';
+  }
+
+  raiz.querySelectorAll('[data-enemigo]').forEach(b => {
+    b.addEventListener('click', () => crear(b.dataset.enemigo));
+  });
+})();
+</script>
+</body>
+</html>
