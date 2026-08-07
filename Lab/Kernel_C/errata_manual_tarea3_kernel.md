@@ -1,5 +1,22 @@
 # Errata y Mejoras al Manual — Tarea 3 Kernel (Campo real)
 
+> ✅ **YA INTEGRADO (2026-08-07).** Los 11 puntos de esta errata están incorporados en `MANUAL_Tarea3_Kernel.md`, marcados con **🔧 CAMPO**. Este archivo se conserva como registro de origen — el manual es la fuente única a seguir.
+>
+> | # de esta errata | Dónde quedó en el manual |
+> |---|---|
+> | 1 · directorio `linux-6.12.69` | Convención de rutas (`$KVER`) · Bloque 3 · §1.8 · §E1.13 |
+> | 2 · `.config` sin `canonical-certs` | §1.10 (orden del `cp`) · §1.11 |
+> | 3 · pegar durante `oldconfig` | §1.10 · §E1.12 |
+> | 4 · loop de `MODULE_SIG` | §1.11 (reescrita) · §T4.3b · §T6.1b · §E1.10 · Bloque 5 |
+> | 5 · `grep '^CONFIG_MODULE_SIG='` | §1.11 · §1.14 · §1.17 · §E1.11 |
+> | 6 · `libfakeroot internal error` | §1.14 · Bloque 7 · §E1.9 |
+> | 7 · `vmlinux` en vez de `vmlinuz` | §1.15 · §1.16 · §1.17 · §T2.1 · §T7.2 · §E2.8 |
+> | 8 · `kernel-release.txt` ausente | §1.13 · §1.15 · §E2.9 |
+> | 9 · reiniciar no alcanza (GRUB) | Bloque 9 · §1.16 · §T7.4 · §E2.7 |
+> | 10 · `menuconfig` muestra `-*-` | §1.11 · §T4.3b · §T6.1b |
+> | 11 · initramfs de 532 MB | §1.15 · §T7.1 · §E1.4 |
+> | checklist final | **Checklist de campo** al final del manual |
+
 > Documento generado a partir de la sesión de compilación real en Debian 13 arm64 sobre VMware Fusion + Mac M5.
 > Aplica al manual base que usa `linux-6.12.69` pero los problemas son idénticos para cualquier 6.12.x.
 
