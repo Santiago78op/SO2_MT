@@ -206,23 +206,50 @@ SYSCALL_DEFINE0(getpid_counter)
 }
 ```
 
-no estás definiendo *una* función. El preprocesador genera **varias**. En esencia:
+no estás definiendo *una* función con ese nombre. La macro (definida en `arch/arm64/include/asm/syscall_wrapper.h`) es literalmente esta:
 
 ```c
-/* 1. El punto de entrada real, con la firma que espera la tabla:
-      recibe UN puntero a pt_regs (los registros guardados del usuario). */
-asmlinkage long __arm64_sys_getpid_counter(const struct pt_regs *regs);
+#define SYSCALL_DEFINE0(sname)                                              \
+        SYSCALL_METADATA(_##sname, 0);                                      \
+        asmlinkage long __arm64_sys_##sname(const struct pt_regs *__unused);\
+        ALLOW_ERROR_INJECTION(__arm64_sys_##sname, ERRNO);                  \
+        asmlinkage long __arm64_sys_##sname(const struct pt_regs *__unused)
+```
 
-/* 2. Tu cuerpo, movido a una función inline aparte. */
-static inline long __do_sys_getpid_counter(void);
+Así que tu código se expande a:
 
-/* 3. El puente: extrae argumentos de pt_regs y llama a tu cuerpo. */
-asmlinkage long __arm64_sys_getpid_counter(const struct pt_regs *regs)
+```c
+/* 1. Metadatos para ftrace/tracing (nombre, cantidad de argumentos) */
+SYSCALL_METADATA(_getpid_counter, 0);
+
+/* 2. Prototipo del punto de entrada real */
+asmlinkage long __arm64_sys_getpid_counter(const struct pt_regs *__unused);
+
+/* 3. Permiso para inyección de errores (testing del kernel) */
+ALLOW_ERROR_INJECTION(__arm64_sys_getpid_counter, ERRNO);
+
+/* 4. Y tu cuerpo se convierte DIRECTAMENTE en esta función: */
+asmlinkage long __arm64_sys_getpid_counter(const struct pt_regs *__unused)
 {
-        return __do_sys_getpid_counter();
+        int count = atomic_read(&getpid_call_count);
+        pr_info(...);
+        return count;
 }
+```
 
-/* 4. Metadatos para tracing, ftrace, error injection, etc. */
+> ### 💡 La idea de diseño que explica todo
+> Fijate que tu función **recibe un `struct pt_regs *`** aunque vos no declaraste ningún parámetro — y que se llama **`__unused`**.
+>
+> Eso es a propósito: **todas** las entradas de `sys_call_table` tienen la misma firma, `long (*)(const struct pt_regs *)`, sin importar cuántos argumentos tenga la syscall. Reciben la bandeja completa de registros guardados (§0.2 ④). Las que necesitan argumentos los sacan de ahí; las que no —como la tuya— ignoran el parámetro. Por eso el array puede ser homogéneo.
+
+**`SYSCALL_DEFINE0` es el caso simple.** Para 1 o más argumentos (`SYSCALL_DEFINEx`) la macro genera **tres** funciones encadenadas, porque ahí sí hay que extraer y validar argumentos:
+
+```
+__arm64_sys_foo(regs)        ← punto de entrada; extrae args de pt_regs
+        ↓
+__se_sys_foo(long, long…)    ← "sign extend": normaliza los tipos
+        ↓
+__do_sys_foo(int, char*…)    ← TU cuerpo, con los tipos reales
 ```
 
 Por qué esto importa para vos:
@@ -271,7 +298,7 @@ En 6.12, el último número asignado en la tabla común es:
 | 1 | `kernel/sys.c` | La variable contador | Tiene que persistir entre llamadas → duración estática |
 | 2 | `kernel/sys.c` | `atomic_inc()` dentro de `SYSCALL_DEFINE0(getpid)` | Es el punto que querés instrumentar |
 | 3 | `kernel/sys.c` | `SYSCALL_DEFINE0(getpid_counter)` | El cuerpo de la syscall nueva |
-| 4 | `include/linux/syscalls.h` | `asmlinkage long sys_getpid_counter(void);` | Sin prototipo → warning `-Wmissing-prototypes` |
+| 4 | `include/linux/syscalls.h` | `asmlinkage long sys_getpid_counter(void);` | Convención del kernel: toda syscall declara su prototipo ahí |
 | 5 | `scripts/syscall.tbl` **(arm64)** | La línea `463 common …` | Sin esto la función existe pero es **inalcanzable** |
 
 Fijate que 1, 2 y 3 caen en el **mismo archivo**. Eso es deliberado: si el contador y la syscall que lo lee viven juntos, no necesitás `extern` ni un header nuevo, y hay menos superficie para errores de enlazado.
@@ -813,7 +840,9 @@ Esperado: **4 apariciones** — la declaración, el `atomic_inc`, `SYSCALL_DEFIN
 <a name="p15"></a>
 ## 1.5 Archivo 3 — el prototipo en `include/linux/syscalls.h`
 
-Sin esto, el compilador te tira `warning: no previous prototype for '__arm64_sys_getpid_counter'`. La rúbrica penaliza advertencias.
+Es la **convención del kernel**: toda syscall declara su prototipo en ese archivo, con el nombre genérico `sys_*` (sin prefijo de arquitectura).
+
+> **Nota honesta:** en arm64 la macro `SYSCALL_DEFINE0` ya emite su propio prototipo de `__arm64_sys_getpid_counter`, así que omitir esta línea probablemente **no** te genere un warning. Aun así hacelo: es lo que espera cualquier revisor, es lo que exige la documentación oficial, y es lo que hace que tu syscall sea portable a arquitecturas que no usan wrappers (donde `SYSCALL_DEFINE0` sí define `sys_getpid_counter` directo). La rúbrica premia "código limpio".
 
 ```bash
 nano +$(grep -n "asmlinkage long sys_getpid(void);" include/linux/syscalls.h | cut -d: -f1) include/linux/syscalls.h
@@ -1377,6 +1406,48 @@ Ideas concretas y defendibles para desarrollar:
 | ¿Qué es `current`? | Macro que devuelve el `struct task_struct *` del proceso que está ejecutando en este núcleo. En arm64 sale de `sp_el0`. |
 | ¿Por qué recompilar todo el kernel y no un módulo? | Porque `sys_getpid` está compilado dentro de la imagen del kernel (`vmlinux`), no en un módulo. La tabla de syscalls es un array estático de tamaño fijo (`__NR_syscalls`) que se define en tiempo de compilación — un módulo no puede agregarle entradas de forma soportada. |
 | ¿Qué es `__NR_syscalls`? | El total de syscalls. Se genera automáticamente desde la tabla y se usa como límite en la validación `nr < __NR_syscalls` que impide accesos fuera de rango. |
+
+## 2.5 Material de apoyo — y una advertencia
+
+> ### ⚠️ No sigas ningún tutorial de internet paso a paso
+> Casi todo el material que existe sobre agregar syscalls **no aplica literalmente a tu caso**:
+>
+> | Lo que hacen los tutoriales | Tu caso (6.12.69 arm64) |
+> |---|---|
+> | Editan `arch/x86/entry/syscalls/syscall_64.tbl` | El archivo es **`scripts/syscall.tbl`** |
+> | Usan kernels **5.x**: editan `include/uapi/asm-generic/unistd.h` y actualizan `__NR_syscalls` **a mano** | En 6.11+ las tablas se unificaron; `__NR_syscalls` **se genera solo** |
+> | Crean un directorio nuevo con `hello.c` + `Makefile` y lo suman a `core-y` | Todo va en `kernel/sys.c` — menos pasos, y es donde vive `getpid` |
+>
+> Si seguís un video literalmente, editás el archivo equivocado y tu syscall devuelve `ENOSYS` **sin ningún error de compilación** (el fallo silencioso de §1.6).
+>
+> **Usá el material externo para entender el concepto; usá este manual para ejecutar.**
+
+### Fuente autoritativa (verificada)
+
+- **[Agregando una Nueva Llamada del Sistema — doc oficial del kernel, en español](https://docs.kernel.org/translations/sp_SP/process/adding-syscalls.html)**
+  Cubre `SYSCALL_DEFINEn()`, prototipos en `include/linux/syscalls.h`, tablas por arquitectura y capas de compatibilidad. Citala en el informe.
+  *Salvedad:* menciona `include/uapi/asm-generic/unistd.h` como tabla genérica — eso era así **antes de 6.11**. En tu 6.12.69 la tabla es `scripts/syscall.tbl`.
+
+- **[Documentación del kernel (índice general)](https://www.kernel.org/doc/html/latest/)** — la que pide la práctica en su §5.
+
+### Teoría de PARTE 0 (espacio usuario vs. kernel)
+
+- [El Kernel — apunte de Sistemas Operativos, FISOP/UBA](https://fisop.github.io/apunte/kernel.html) — modo usuario/kernel en español
+- [Syscalls: funcionamiento de las llamadas al sistema](https://www.profesionalreview.com/2023/07/08/syscalls-llamadas-sistema/) — panorama general, capa SCI
+- [Modo de usuario y modo kernel (Microsoft Learn)](https://learn.microsoft.com/es-es/windows-hardware/drivers/gettingstarted/user-mode-and-kernel-mode) — es de Windows, pero los dos modos son el mismo concepto y está muy claro
+- [Tema 1: Visión general e introducción al kernel (UAL)](https://w3.ual.es/~acorral/DSO/Tema_1.pdf) — material universitario sobre modo privilegiado
+
+### Videos (contenido NO verificado)
+
+Los títulos salen del índice del buscador; no se pudo confirmar duración ni versión de kernel que usan:
+
+- [Implementa funcionalidades nuevas al kernel de Linux con syscall](https://www.youtube.com/watch?v=DDu9WjQqlec) — español, sobre este tema
+- [Linux Tutorial: How a Linux System Call Works](https://www.youtube.com/watch?v=FkIWDAtVIUM) — inglés, sobre el **mecanismo** del cruce (§0.2) ← el más útil conceptualmente
+
+### Libros que pide la práctica
+
+- Love, R. (2010). *Linux Kernel Development* (3ª ed.) — cap. 5 es específicamente sobre syscalls
+- Corbet, J., Rubini, A., & Kroah-Hartman, G. (2005). *Linux Device Drivers* (3ª ed.)
 
 ---
 <a name="parte-3"></a>
