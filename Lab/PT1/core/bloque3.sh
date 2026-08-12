@@ -32,3 +32,38 @@ echo "getpid_linea  : $GL"
 echo "getpid_cuerpo : $GBODY"
 echo "proto_linea   : $PL"
 echo "tabs_en_tbl   : $TABS"
+
+/*
+=== FIX LOCALVERSION ===
+LOCALVERSION : "-jbarrera-202012345"
+LOCALVER_AUTO: not-set
+kernelrelease: 6.12.69
+=== BLOQUE 3 - RECONOCIMIENTO ===
+symlink_arm64 : ../../../scripts/syscall.tbl
+ultimo_syscall: 462	common	mseal				sys_mseal
+MI_NUMERO     : 463
+getpid_linea  : 967
+getpid_cuerpo :
+ * the pid are identical unless CLONE_THREAD was specified on clone() in
+ * which case the tgid is the same in all threads of the same group.
+ *
+ * This is SMP safe as current->tgid does not change.
+ */
+SYSCALL_DEFINE0(getpid)
+{
+	return task_tgid_vnr(current);
+}
+
+/* Thread ID - the internal kernel "pid" */
+SYSCALL_DEFINE0(gettid)
+{
+	return task_pid_vnr(current);
+}
+
+/*
+ * Accessing ->real_parent is not SMP-safe, it could
+ * change from under us. However, we can use a stale
+ * value of ->real_parent under rcu_read_lock(), see
+ * release_task()->call_rcu(delayed_put_task_struct).
+tabs_en_tbl   : si
+*/
