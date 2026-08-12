@@ -45,3 +45,17 @@ echo "SIG_ALL      : $SA"
 echo "LOCALVERSION : $LV"
 echo "kernelrelease: $KR"
 echo "/boot        : $BOOTP"
+
+/*
+=== RESUMEN BLOQUE 2 ===
+sha256       : OK
+SUBLEVEL     : 69
+config_src   : arbol-T3
+TRUSTED_KEYS : ""
+SIG_FORCE    : not-set
+SIG_ALL      : not-set
+LOCALVERSION : ""
+kernelrelease: 6.12.69
+/boot        : no-separada
+
+*/
