@@ -580,18 +580,32 @@ Y volvé a verificar. (Que `CONFIG_MODULE_SIG=y` quede activo **está bien** —
 grep "^CONFIG_LOCALVERSION=" .config
 ```
 
-Debería venir heredado de la Tarea 3 (ej. `CONFIG_LOCALVERSION="-jbarrera-202012345"`). Si no, ponelo:
+> **🔧 CAMPO — probablemente venga VACÍO.** Si en la Tarea 3 pasaste el nombre por línea de comandos (`make LOCALVERSION="-jbarrera-$CARNE" ...`), ese valor **nunca quedó guardado en el `.config`**, así que no se hereda. Vas a ver `CONFIG_LOCALVERSION=""`.
+>
+> **Fijalo en el `.config`, no lo pases por línea de comandos.** Si lo pasás en `make` pero te olvidás en `make modules_install`, el kernel se instala como `6.12.69-jbarrera-<carné>` pero los módulos van a `/lib/modules/6.12.69/`. Los nombres no coinciden → el kernel arranca **sin drivers** → pánico. Fijándolo en el `.config`, todos los pasos leen el mismo valor y ese riesgo desaparece.
 
 ```bash
 scripts/config --set-str LOCALVERSION "-jbarrera-$CARNE"
+scripts/config --disable LOCALVERSION_AUTO
 make olddefconfig
 ```
+
+> ### ⛔ 🔧 CAMPO — hace falta `make syncconfig`, y ningún tutorial lo dice
+> Después de cambiar `LOCALVERSION`, `make -s kernelrelease` **sigue mostrando el nombre viejo**. No es un error tuyo.
+>
+> **Por qué:** `scripts/setlocalversion` no lee `.config` — lee `include/config/auto.conf`, que es un archivo **generado**. `make olddefconfig` actualiza `.config` pero **no** regenera `auto.conf`.
+>
+> ```bash
+> make syncconfig
+> ```
+>
+> Eso regenera `auto.conf` desde tu `.config`. (Durante un `make` completo la sincronización ocurre sola, así que el kernel real saldría bien igual — pero conviene confirmarlo acá y no descubrirlo en `/boot`.)
 
 ⛔ **VERIFICAR:**
 ```bash
 make -s kernelrelease
 ```
-Esperado: `6.12.69-jbarrera-202012345` — con el **69**, que es lo que demuestra que usaste la versión exigida.
+Esperado: `6.12.69-jbarrera-202012345` — con el **69**, que es lo que demuestra que usaste la versión exigida. Si sale `6.12.69` pelado, te falta el `make syncconfig` de arriba.
 
 ### (f) La captura de `menuconfig` (la rúbrica la pide)
 
