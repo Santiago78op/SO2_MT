@@ -461,21 +461,16 @@ Esta parte documenta la implementación efectiva de la práctica: la preparació
 | Espacio en disco disponible | 39 GB |
 | Partición `/boot` | No independiente (integrada en `/`) |
 
-> **Nota sobre el kernel base.** La compilación se realizó desde el kernel de la distribución (`6.12.101+deb13-arm64`) y no desde un kernel compilado previamente. El criterio responde a que `make localmodconfig`, en caso de requerirse, inspecciona los módulos cargados en tiempo de ejecución; ejecutarlo bajo un kernel previamente reducido produciría un recorte acumulativo del conjunto de módulos y podría omitir controladores necesarios para el arranque.
-
-> ### 💾 PUNTO DE COMMIT 0 — estructura del repositorio
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> Crear la estructura **antes** de empezar, no al final: las capturas de la compilación y de `dmesg` no se pueden recrear.
+> Creación de la estructura **antes** de empezar: para las capturas de la compilación y de `dmesg` ya que no se pueden recrear.
 >
 > ```bash
 > export DEST="$HOME/Practica_1_2S2026"
 > export CARNE="201905884"
 > mkdir -p "$DEST"/{kernel,include/linux,scripts,Programa_Intermedio,img,evidencias}
 > cd "$DEST"
-> git init -q
-> git checkout -b "$CARNE"          # la rama DEBE ser el carné
-> git add -A && git commit -qm "Estructura inicial de la practica"
+> git clone https://gitlab.com/ingenieria.usac/sistemas/so2/mapa.git
+> git pull
+> git switch -c 201905884
 > ```
 
 ## 9. Preparación del entorno de desarrollo
