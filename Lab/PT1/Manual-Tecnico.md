@@ -536,8 +536,6 @@ grep -c '^CONFIG' .config
 grep -c '^CONFIG' /boot/config-$(uname -r)
 ```
 
-<!-- ⬜ AGREGAR aquí los dos números obtenidos y comentar la diferencia -->
-
 La configuración de Debian habilita varios miles de opciones adicionales, en su mayoría controladores compilados como módulos para hardware que esta máquina virtual no posee. Al no arrastrarlos, el tiempo de compilación y el espacio ocupado se reducen de forma considerable.
 
 La segunda consecuencia es el motivo de la sección siguiente: `defconfig` apunta a una plataforma ARM64 *genérica* y desconoce el hardware virtual concreto de este entorno. Los controladores de almacenamiento y de red deben verificarse de forma explícita antes de compilar.
@@ -555,9 +553,6 @@ findmnt -no SOURCE,FSTYPE /
 lsblk -o NAME,TYPE,TRAN,MOUNTPOINTS
 lspci -k 2>/dev/null | grep -B1 -A2 -E 'Non-Volatile|SCSI|SATA|Ethernet'
 ```
-
-<!-- ⬜ AGREGAR aquí la salida real: transporte del disco (nvme, sata, virtio)
-     y controlador de red que reporta la máquina virtual -->
 
 Conocidos esos datos, se consulta el estado de las opciones correspondientes en la configuración recién generada:
 
@@ -928,7 +923,9 @@ user	51m53.046s
 sys	2m57.028s
 ```
 
-![Proceso de compilación del kernel Finalizado](./img/17-compilacion-2.png)
+![Compilación del kernel finalizada](./img/18-compilacion-finalizada.png)
+
+*Figura 18. Finalización de la compilación y tiempo total registrado por `time`.*
 
 **Observación.** Durante la compilación puede presentarse el mensaje `libfakeroot internal error: payload not recognized!`. Corresponde a un defecto conocido de `libfakeroot` en Debian 13 sobre ARM64 al interceptar llamadas al sistema durante el enlazado de `vmlinux`. Si el proceso continúa avanzando con etapas posteriores (`LD`, `AR`, `BTF`), el mensaje no afecta el resultado.
 
@@ -981,7 +978,9 @@ ls -lh /boot/ | grep "$KREL"
 -rw-r--r-- 1 root root  37M Aug 13 14:40 vmlinux-6.12.69-jbarrera-201905884
 ```
 
-![Modulos del Kernel Instaldos](./img/17-modulos-install.png)
+![Módulos del kernel instalados](./img/19-modulos-instalados.png)
+
+*Figura 19. Módulos instalados y archivos depositados en `/boot` para el kernel compilado.*
 
 > **Nota sobre la nomenclatura de la imagen en ARM64.** El procedimiento de instalación depositó la imagen del kernel con el nombre `vmlinux-6.12.69-jbarrera-201905884`, sin la letra `z` final. Los kernels provistos por la distribución utilizan el prefijo `vmlinuz-`, que por convención designa la imagen comprimida. La verificación de los archivos instalados debe realizarse considerando el nombre `vmlinux-`; buscar `vmlinuz-` conduciría a concluir erróneamente que la instalación no se completó.
 
@@ -1000,9 +999,9 @@ Verificación del kernel en ejecución:
 uname -r
 ```
 
-![Kernel modificado en ejecución](./img/18-uname.png)
+![Kernel modificado en ejecución](./img/20-uname.png)
 
-*Figura 18. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
+*Figura 20. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
 
 ### 13.4 Verificación de los símbolos en el kernel en ejecución
 
@@ -1107,9 +1106,9 @@ gcc -Wall -Wextra -o test_getpid test_getpid.c
 ./test_getpid 10
 ```
 
-![Ejecución del programa de prueba](./img/19-programa.png)
+![Ejecución del programa de prueba](./img/21-programa.png)
 
-*Figura 19. Ejecución del programa de validación en espacio de usuario.*
+*Figura 21. Ejecución del programa de validación en espacio de usuario.*
 
 Salida registrada:
 
@@ -1148,9 +1147,9 @@ for i in 1 2 3 4 5; do ./test_getpid 100; done > /dev/null
 sudo dmesg | grep "SO2-P1"
 ```
 
-![Validación del contador mediante dmesg](./img/20-dmesg.png)
+![Validación del contador mediante dmesg](./img/22-dmesg.png)
 
-*Figura 20. Registros del kernel que evidencian el incremento acumulativo del contador.*
+*Figura 22. Registros del kernel que evidencian el incremento acumulativo del contador.*
 
 Salida registrada:
 
@@ -1178,10 +1177,10 @@ Los valores presentan un crecimiento estrictamente monótono entre invocaciones 
 | Implementación de la syscall `getpid_counter()` | <!-- ⬜ --> | Sección 11.3 |
 | Declaración de variable global persistente | <!-- ⬜ --> | Sección 11.1 |
 | Compilación del kernel sin errores | <!-- ⬜ --> | Figura 17 |
-| Arranque del kernel modificado | <!-- ⬜ --> | Figura 18 |
+| Arranque del kernel modificado | <!-- ⬜ --> | Figura 20 |
 | Uso de `printk` con nivel de severidad adecuado | <!-- ⬜ --> | Sección 11.3 |
-| Validación mediante programa en espacio de usuario | <!-- ⬜ --> | Figura 19 |
-| Verificación del contador mediante `dmesg` | <!-- ⬜ --> | Figura 20 |
+| Validación mediante programa en espacio de usuario | <!-- ⬜ --> | Figura 21 |
+| Verificación del contador mediante `dmesg` | <!-- ⬜ --> | Figura 22 |
 
 ## 17. Incidencias durante el desarrollo
 
