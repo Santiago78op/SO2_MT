@@ -573,10 +573,32 @@ done
 
 La salida asigna a cada opción el valor `y` (integrada en la imagen), `m` (módulo) o `n` / `undef` (ausente). Las opciones del bloque inicial sostienen el arranque y los requisitos de `systemd`; las del bloque final corresponden a los controladores de disco y red, de los cuales solo importan los que el paso anterior haya identificado como presentes en esta máquina.
 
+![Controladores de entorno virtualizado](./img/14-contro-entorno-virtualizador.png)
+
+``lspci`` muestra tanto SATA como NVMe. Si en la raíz (/) está en el disco NVMe, BLK_DEV_NVME=m puede impedir el arranque porque el driver está en /lib/modules pero el kernel necesita ese driver para montar la raíz y acceder a /lib/modules
+
+Si se tiene el siguiente resultado:
+
+```shell
+julian@debian-so2:~/kernel/linux-6.12.69$ findmnt -no SOURCE /
+/dev/nvme0n1p3
+
+julian@debian-so2:~/kernel/linux-6.12.69$ lsblk -o NAME,TYPE,MOUNTPOINT,TRAN | grep -E 'nvme|sda|sdb'
+nvme0n1     disk            nvme
+├─nvme0n1p1 part            nvme
+├─nvme0n1p2 part /boot/efi  nvme
+├─nvme0n1p3 part /          nvme
+└─nvme0n1p4 part [SWAP]     nvme
+julian@debian-so2:~/kernel/linux-6.12.69$ 
+```
+
+como en la figura-14 se pudo apreciar el ``BLK_DEV_NVME         m`` actualmente se encuentra en estado m, lo que impide el arranque ya que esta en la raiz.
+
 Toda opción necesaria que figure como `n` o `undef` se habilita y se resuelven sus dependencias:
 
 ```bash
 scripts/config --enable <OPCION>
+scripts/config --enable BLK_DEV_NVME
 make olddefconfig
 ```
 
@@ -653,6 +675,8 @@ make -s kernelrelease
 6.12.69-jbarrera-201905884
 ```
 
+![Configuracion del local version](./img/15-identificaro-version-local.png)
+
 ### 9.6 Verificación mediante la interfaz de configuración
 
 La interfaz `menuconfig` presenta el mismo archivo `.config` que las secciones anteriores construyeron, pero organizado en la jerarquía de menús con la que el kernel agrupa sus opciones. Se empleó para revisar el resultado de forma visual antes de compilar:
@@ -673,16 +697,6 @@ La herramienta permite además localizar cualquier opción por nombre con la tec
 ![Interfaz de configuración del kernel](./img/13-menuconfig.png)
 
 *Figura 13. Interfaz `menuconfig` sobre el árbol de fuentes `linux-6.12.69`.*
-
-> ### 💾 PUNTO DE COMMIT 1 — configuración y captura de `menuconfig`
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> cp "$KDIR/.config" "$DEST/evidencias/config-6.12.69"
-> # colocar 13-menuconfig.png en $DEST/img/
-> cd "$DEST"
-> git add -A && git commit -qm "Configuracion del kernel 6.12.69 generada desde defconfig"
-> ```
 
 ## 10. Reconocimiento del árbol de fuentes
 
