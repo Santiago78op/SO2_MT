@@ -454,8 +454,9 @@ Esta parte documenta la implementación efectiva de la práctica: la preparació
 | Virtualizador | VMware Fusion |
 | Sistema operativo huésped | Debian 13 (Trixie) |
 | Arquitectura | `aarch64` (ARM64) |
-| Kernel base de compilación | `6.12.101+deb13-arm64` (kernel de la distribución) |
+| Kernel en ejecución durante la compilación | `6.12.101+deb13-arm64` (kernel de la distribución) |
 | Kernel objetivo | `linux-6.12.69` (versión indicada por el laboratorio) |
+| Configuración base | `arch/arm64/configs/defconfig`, generada desde el propio árbol |
 | Identificador del kernel compilado | `6.12.69-jbarrera-201905884` |
 | Compilador | GCC (`build-essential`) |
 | Espacio en disco disponible | 39 GB |
@@ -509,20 +510,92 @@ SUBLEVEL = 69
 
 El valor `SUBLEVEL = 69` confirma que el árbol corresponde a la versión exigida.
 
-### 9.2 Herencia de la configuración del kernel
+### 9.2 Generación de la configuración base
 
-Se reutilizó la configuración de una compilación previa de la serie 6.12 verificada como funcional en la máquina virtual, en lugar de generar una configuración nueva. El criterio evita repetir la resolución de las opciones de firma de módulos, la selección de controladores del virtualizador y la ejecución de `localmodconfig`, procedimientos ya validados en el entorno.
+La configuración no se heredó de ninguna compilación anterior ni del kernel de la distribución: se generó desde el propio árbol de fuentes mediante `make defconfig`.
 
 ```bash
-cp ~/kernel/linux-6.12.102/.config .config
+cd ~/kernel/linux-6.12.69
+make defconfig
+```
+
+```
+#
+# configuration written to .config
+#
+```
+
+El objetivo `defconfig` no produce una configuración arbitraria. Copia el archivo `arch/arm64/configs/defconfig`, que los mantenedores de la arquitectura ARM64 conservan dentro del árbol y actualizan en cada versión, y resuelve a partir de él todas las dependencias. Constituye la configuración mínima que los propios desarrolladores del kernel consideran funcional para una plataforma ARM64 genérica.
+
+> **Nota sobre la arquitectura.** El equipo de desarrollo es `aarch64` y el kernel objetivo también, de modo que la compilación es nativa. `make defconfig` deduce la arquitectura del sistema y selecciona el archivo de ARM64 sin necesidad de indicar `ARCH=` ni `CROSS_COMPILE=`. La verificación se realiza con `make -s kernelrelease` y con la presencia de `CONFIG_ARM64=y` en el archivo generado.
+
+Dos consecuencias de este criterio conviene dimensionarlas antes de continuar. La primera es la magnitud de la configuración resultante frente a la de la distribución:
+
+```bash
+grep -c '^CONFIG' .config
+grep -c '^CONFIG' /boot/config-$(uname -r)
+```
+
+<!-- ⬜ AGREGAR aquí los dos números obtenidos y comentar la diferencia -->
+
+La configuración de Debian habilita varios miles de opciones adicionales, en su mayoría controladores compilados como módulos para hardware que esta máquina virtual no posee. Al no arrastrarlos, el tiempo de compilación y el espacio ocupado se reducen de forma considerable.
+
+La segunda consecuencia es el motivo de la sección siguiente: `defconfig` apunta a una plataforma ARM64 *genérica* y desconoce el hardware virtual concreto de este entorno. Los controladores de almacenamiento y de red deben verificarse de forma explícita antes de compilar.
+
+> **Nota.** En los pasos siguientes se emplea `make olddefconfig` y no `make oldconfig`. La segunda variante opera en modo interactivo y formula una consulta por cada opción de configuración nueva; el ingreso accidental de texto durante esas consultas corrompe el archivo `.config`. `olddefconfig` acepta los valores predeterminados sin interacción, y se invoca después de cada modificación hecha con `scripts/config` para que las dependencias de las opciones activadas queden resueltas.
+
+### 9.3 Verificación de los controladores del entorno virtualizado
+
+Este es el punto donde una configuración generada desde `defconfig` puede fallar, y el error no se manifiesta durante la compilación sino en el arranque siguiente. Si el kernel carece del controlador del disco donde reside el sistema de archivos raíz, la máquina virtual no completa el arranque.
+
+El procedimiento consiste en identificar primero qué hardware virtual expone el entorno y verificar después que cada elemento tenga su opción habilitada. Se determina el dispositivo raíz y su sistema de archivos:
+
+```bash
+findmnt -no SOURCE,FSTYPE /
+lsblk -o NAME,TYPE,TRAN,MOUNTPOINTS
+lspci -k 2>/dev/null | grep -B1 -A2 -E 'Non-Volatile|SCSI|SATA|Ethernet'
+```
+
+<!-- ⬜ AGREGAR aquí la salida real: transporte del disco (nvme, sata, virtio)
+     y controlador de red que reporta la máquina virtual -->
+
+Conocidos esos datos, se consulta el estado de las opciones correspondientes en la configuración recién generada:
+
+```bash
+for opt in EXT4_FS BLK_DEV_INITRD MODULES DEVTMPFS DEVTMPFS_MOUNT \
+           TMPFS TMPFS_POSIX_ACL TMPFS_XATTR AUTOFS_FS FANOTIFY \
+           CGROUPS NAMESPACES NET_NS SECCOMP INOTIFY_USER BINFMT_ELF \
+           UNIX INET BLK_DEV_NVME SATA_AHCI VIRTIO_BLK VIRTIO_NET \
+           VIRTIO_PCI VMXNET3 E1000E; do
+  printf '%-20s %s\n' "$opt" "$(scripts/config --state "$opt")"
+done
+```
+
+La salida asigna a cada opción el valor `y` (integrada en la imagen), `m` (módulo) o `n` / `undef` (ausente). Las opciones del bloque inicial sostienen el arranque y los requisitos de `systemd`; las del bloque final corresponden a los controladores de disco y red, de los cuales solo importan los que el paso anterior haya identificado como presentes en esta máquina.
+
+Toda opción necesaria que figure como `n` o `undef` se habilita y se resuelven sus dependencias:
+
+```bash
+scripts/config --enable <OPCION>
 make olddefconfig
 ```
 
-> **Nota.** Se utilizó `make olddefconfig` y no `make oldconfig`. La segunda variante opera en modo interactivo y formula una consulta por cada opción de configuración nueva; el ingreso accidental de texto durante esas consultas corrompe el archivo `.config`. `olddefconfig` acepta los valores predeterminados sin interacción.
+> **Advertencia.** Los controladores del disco raíz y del sistema de archivos raíz deben quedar como `y`, no como `m`. Un módulo reside en `/lib/modules` dentro del sistema de archivos raíz, de modo que el kernel necesitaría montar ese sistema para poder cargar el controlador que le permite montarlo. Debian construye un `initramfs` que resuelve esta circularidad, pero integrar ambos controladores en la imagen elimina la dependencia por completo.
 
-### 9.3 Verificación de las opciones de firma de módulos
+> **Recuperación ante un arranque fallido.** El procedimiento de instalación no reemplaza el kernel de la distribución: agrega una entrada nueva y conserva la anterior. Si la máquina virtual no arranca con el kernel compilado, se mantiene presionada la tecla `Shift` durante el inicio para desplegar el menú de GRUB y se selecciona la entrada de Debian en *Advanced options*. Desde el kernel original se corrige la configuración y se repite la compilación.
 
-`make olddefconfig` puede reactivar opciones de firma que impiden completar la compilación. Se aplicaron las siguientes directivas de forma preventiva, dado que son idempotentes:
+### 9.4 Verificación de las opciones de firma de módulos
+
+La configuración de Debian habilita la firma de módulos y hace referencia a almacenes de certificados que no están disponibles en este árbol, lo que interrumpe la compilación. `defconfig` no activa ese mecanismo, pero la verificación se realiza igualmente en lugar de asumirlo:
+
+```bash
+for opt in MODULE_SIG MODULE_SIG_ALL MODULE_SIG_FORCE \
+           SYSTEM_TRUSTED_KEYS SYSTEM_REVOCATION_LIST; do
+  printf '%-24s %s\n' "$opt" "$(scripts/config --state "$opt")"
+done
+```
+
+Si alguna de esas opciones aparece habilitada, se aplican las siguientes directivas, que son idempotentes y pueden ejecutarse aunque el mecanismo ya esté desactivado:
 
 ```bash
 scripts/config --set-str SYSTEM_TRUSTED_KEYS ""
@@ -547,9 +620,9 @@ CONFIG_SYSTEM_TRUSTED_KEYS=""
 
 `CONFIG_MODULE_SIG` puede permanecer habilitado sin afectar la compilación: al estar desactivadas las variantes `FORCE` y `ALL`, y vacías las rutas a los almacenes de certificados, el sistema de compilación firma los módulos con una clave generada localmente.
 
-### 9.4 Configuración del identificador de versión local
+### 9.5 Configuración del identificador de versión local
 
-La configuración heredada presentaba `CONFIG_LOCALVERSION` vacío, dado que en la compilación anterior el identificador se había suministrado por línea de comandos y ese valor no se persiste en el archivo `.config`.
+`defconfig` deja `CONFIG_LOCALVERSION` vacío, de modo que el identificador exigido por el laboratorio debe fijarse de forma explícita.
 
 ```bash
 scripts/config --set-str LOCALVERSION "-jbarrera-201905884"
@@ -559,7 +632,7 @@ make olddefconfig
 
 > **Criterio de implementación.** El identificador se fijó en el archivo `.config` en lugar de suministrarlo por línea de comandos en cada invocación de `make`. Si el valor se pasa como argumento durante la compilación pero se omite en `make modules_install`, la imagen se instala como `6.12.69-jbarrera-201905884` mientras que los módulos se depositan en `/lib/modules/6.12.69/`. La discrepancia entre ambos nombres provoca que el kernel arranque sin los controladores necesarios. Al establecer el valor en la configuración, todas las etapas del proceso leen el mismo identificador y esa inconsistencia no puede producirse.
 
-**Incidencia detectada.** Tras aplicar la configuración, `make -s kernelrelease` continuaba reportando el identificador anterior:
+**Incidencia detectada.** Tras aplicar la configuración, `make -s kernelrelease` continuaba reportando la versión sin el identificador:
 
 ```bash
 make -s kernelrelease
@@ -580,13 +653,15 @@ make -s kernelrelease
 6.12.69-jbarrera-201905884
 ```
 
-### 9.5 Verificación mediante la interfaz de configuración
+### 9.6 Verificación mediante la interfaz de configuración
 
-Se verificó el estado de la configuración mediante la interfaz `menuconfig`, sin aplicar modificaciones adicionales:
+La interfaz `menuconfig` presenta el mismo archivo `.config` que las secciones anteriores construyeron, pero organizado en la jerarquía de menús con la que el kernel agrupa sus opciones. Se empleó para revisar el resultado de forma visual antes de compilar:
 
 ```bash
 make menuconfig
 ```
+
+La herramienta permite además localizar cualquier opción por nombre con la tecla `/`, que despliega la ruta de menús donde reside y las dependencias que la condicionan. Es el procedimiento a seguir si alguna de las verificaciones anteriores reportó una opción como `undef`: ese valor indica que la opción no es seleccionable en el estado actual de la configuración, generalmente porque otra de la que depende está desactivada.
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      FIGURA 13 · archivo: img/13-menuconfig.png
@@ -606,7 +681,7 @@ make menuconfig
 > cp "$KDIR/.config" "$DEST/evidencias/config-6.12.69"
 > # colocar 13-menuconfig.png en $DEST/img/
 > cd "$DEST"
-> git add -A && git commit -qm "Configuracion del kernel 6.12.69 heredada y verificada"
+> git add -A && git commit -qm "Configuracion del kernel 6.12.69 generada desde defconfig"
 > ```
 
 ## 10. Reconocimiento del árbol de fuentes
@@ -1190,8 +1265,8 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
 | # | Incidencia | Causa | Resolución |
 |---|---|---|---|
 | 1 | `arch/arm64/tools/syscall_64.tbl` no es el archivo real | En ARM64 es un enlace simbólico hacia `../../../scripts/syscall.tbl` | Editar `scripts/syscall.tbl`. Verificado con `readlink` antes de modificar. |
-| 2 | `CONFIG_LOCALVERSION` vacío tras heredar la configuración | En la compilación previa el identificador se pasó por línea de comandos, valor que no se persiste en `.config` | Fijarlo con `scripts/config --set-str LOCALVERSION` |
-| 3 | `make -s kernelrelease` reportaba el identificador anterior | `scripts/setlocalversion` lee `include/config/auto.conf`, archivo generado que `olddefconfig` no regenera | `make syncconfig` |
+| 2 | `CONFIG_LOCALVERSION` vacío en la configuración generada | `defconfig` no fija ningún identificador local; la opción queda en su valor predeterminado | Fijarlo con `scripts/config --set-str LOCALVERSION` |
+| 3 | `make -s kernelrelease` no reflejaba el identificador recién fijado | `scripts/setlocalversion` lee `include/config/auto.conf`, archivo generado que `olddefconfig` no regenera | `make syncconfig` |
 | 4 | Imagen instalada como `vmlinux-`, no `vmlinuz-` | Comportamiento del procedimiento de instalación en ARM64 | Verificar los archivos de `/boot` considerando el nombre `vmlinux-` |
 | 5 | `libfakeroot internal error: payload not recognized!` | Defecto conocido de `libfakeroot` en Debian 13 sobre ARM64 | Sin efecto sobre el resultado si la compilación continúa avanzando |
 
@@ -1266,7 +1341,7 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
        [ ] este bloque
 
      CAPTURAS A COLOCAR EN ./img/
-       [ ] 13-menuconfig.png        (§9.5)  recuperable
+       [ ] 13-menuconfig.png        (§9.6)  recuperable
        [ ] 14-tabla-tabuladores.png (§11.5) recuperable
        [ ] 15-compilacion.png       (§12.2) ⚠️ NO RECUPERABLE - capturar durante el make
        [ ] 16-uname.png             (§13.3) recuperable
