@@ -573,9 +573,11 @@ done
 
 La salida asigna a cada opción el valor `y` (integrada en la imagen), `m` (módulo) o `n` / `undef` (ausente). Las opciones del bloque inicial sostienen el arranque y los requisitos de `systemd`; las del bloque final corresponden a los controladores de disco y red, de los cuales solo importan los que el paso anterior haya identificado como presentes en esta máquina.
 
-![Controladores de entorno virtualizado](./img/14-contro-entorno-virtualizador.png)
+![Estado de los controladores de disco y red en la configuración generada](./img/13-controladores-entorno-virtualizado.png)
 
-``lspci`` muestra tanto SATA como NVMe. Si en la raíz (/) está en el disco NVMe, BLK_DEV_NVME=m puede impedir el arranque porque el driver está en /lib/modules pero el kernel necesita ese driver para montar la raíz y acceder a /lib/modules
+*Figura 13. Estado de las opciones de arranque y de los controladores del entorno virtualizado sobre la configuración generada desde `defconfig`.*
+
+`lspci` reporta tanto SATA como NVMe. Si el sistema de archivos raíz reside en el disco NVMe, `BLK_DEV_NVME=m` impide el arranque: el controlador se encuentra en `/lib/modules`, y el kernel necesita ese mismo controlador para montar la raíz donde ese directorio reside.
 
 Si se tiene el siguiente resultado:
 
@@ -592,7 +594,7 @@ nvme0n1     disk            nvme
 julian@debian-so2:~/kernel/linux-6.12.69$ 
 ```
 
-como en la figura-14 se pudo apreciar el ``BLK_DEV_NVME         m`` actualmente se encuentra en estado m, lo que impide el arranque ya que esta en la raiz.
+Como se aprecia en la Figura 13, `BLK_DEV_NVME` se encuentra en estado `m`. Dado que la raíz ocupa la partición `/dev/nvme0n1p3`, esa configuración impide el arranque y la opción debe integrarse en la imagen.
 
 Toda opción necesaria que figure como `n` o `undef` se habilita y se resuelven sus dependencias:
 
@@ -675,7 +677,9 @@ make -s kernelrelease
 6.12.69-jbarrera-201905884
 ```
 
-![Configuracion del local version](./img/15-identificaro-version-local.png)
+![Identificador de versión local aplicado y sincronizado](./img/14-identificador-version-local.png)
+
+*Figura 14. Resultado de `make -s kernelrelease` tras fijar `CONFIG_LOCALVERSION` y sincronizar la configuración con `make syncconfig`.*
 
 ### 9.6 Verificación mediante la interfaz de configuración
 
@@ -688,15 +692,15 @@ make menuconfig
 La herramienta permite además localizar cualquier opción por nombre con la tecla `/`, que despliega la ruta de menús donde reside y las dependencias que la condicionan. Es el procedimiento a seguir si alguna de las verificaciones anteriores reportó una opción como `undef`: ese valor indica que la opción no es seleccionable en el estado actual de la configuración, generalmente porque otra de la que depende está desactivada.
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 13 · archivo: img/13-menuconfig.png
+     FIGURA 15 · archivo: img/15-menuconfig.png
      CONTENIDO: la interfaz de make menuconfig abierta, con el menú
                 principal visible (General setup, Kernel Features, etc.).
      ¿RECUPERABLE?: SÍ — se puede volver a abrir menuconfig en cualquier momento.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Interfaz de configuración del kernel](./img/13-menuconfig.png)
+![Interfaz de configuración del kernel](./img/15-menuconfig.png)
 
-*Figura 13. Interfaz `menuconfig` sobre el árbol de fuentes `linux-6.12.69`.*
+*Figura 15. Interfaz `menuconfig` sobre el árbol de fuentes `linux-6.12.69`.*
 
 ## 10. Reconocimiento del árbol de fuentes
 
@@ -879,15 +883,15 @@ tail -2 scripts/syscall.tbl | cat -A
 ```
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 14 · archivo: img/14-tabla-tabuladores.png
+     FIGURA 16 · archivo: img/16-tabla-tabuladores.png
      CONTENIDO: terminal con la salida de `tail -2 scripts/syscall.tbl | cat -A`,
                 donde se aprecien los ^I que confirman el uso de tabuladores.
      ¿RECUPERABLE?: SÍ
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Verificación de tabuladores en la tabla de syscalls](./img/14-tabla-tabuladores.png)
+![Verificación de tabuladores en la tabla de syscalls](./img/16-tabla-tabuladores.png)
 
-*Figura 14. Verificación del uso de tabuladores como separadores en `scripts/syscall.tbl`.*
+*Figura 16. Verificación del uso de tabuladores como separadores en `scripts/syscall.tbl`.*
 
 > ### 💾 PUNTO DE COMMIT 2 — los archivos del kernel modificados ⭐
 > *Bloque de trabajo. **Eliminar antes de entregar.***
@@ -898,7 +902,7 @@ tail -2 scripts/syscall.tbl | cat -A
 > cp "$KDIR/kernel/sys.c"             "$DEST/kernel/"
 > cp "$KDIR/include/linux/syscalls.h" "$DEST/include/linux/"
 > cp "$KDIR/scripts/syscall.tbl"      "$DEST/scripts/"
-> # colocar 14-tabla-tabuladores.png en $DEST/img/
+> # colocar 16-tabla-tabuladores.png en $DEST/img/
 > cd "$DEST"
 > git add -A
 > git commit -qm "Contador atomico en sys_getpid() y syscall getpid_counter() (nro 463)"
@@ -928,7 +932,7 @@ time make -j$(nproc) 2>&1 | tee ~/evidencias/practica1/log-compilacion.txt
 ```
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 15 · archivo: img/15-compilacion.png
+     FIGURA 17 · archivo: img/17-compilacion.png
      CONTENIDO: la terminal DURANTE la compilación, con líneas CC / LD / AR
                 visibles en pantalla.
      ⚠️ NO RECUPERABLE: una vez finalizada la compilación esas líneas ya no
@@ -936,9 +940,9 @@ time make -j$(nproc) 2>&1 | tee ~/evidencias/practica1/log-compilacion.txt
         produce una salida distinta. DEBE capturarse mientras el proceso corre.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Proceso de compilación del kernel](./img/15-compilacion.png)
+![Proceso de compilación del kernel](./img/17-compilacion.png)
 
-*Figura 15. Compilación del kernel `6.12.69` con las modificaciones aplicadas.*
+*Figura 17. Compilación del kernel `6.12.69` con las modificaciones aplicadas.*
 
 Tiempo total de compilación registrado:
 
@@ -979,7 +983,7 @@ grep -i "warning" ~/evidencias/practica1/log-compilacion.txt | grep -i "getpid\|
 > cp ~/evidencias/practica1/log-compilacion.txt "$DEST/evidencias/"
 > grep -rn "getpid_counter" "$KDIR/include/generated/" \
 >      > "$DEST/evidencias/unistd-generado.txt"
-> # colocar 15-compilacion.png en $DEST/img/  (⚠️ NO recuperable)
+> # colocar 17-compilacion.png en $DEST/img/  (⚠️ NO recuperable)
 > cd "$DEST"
 > git add -A && git commit -qm "Evidencias de compilacion y encabezados generados"
 > ```
@@ -1029,7 +1033,7 @@ uname -r
 ```
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 16 · archivo: img/16-uname.png
+     FIGURA 18 · archivo: img/18-uname.png
      CONTENIDO: terminal con la salida de `uname -r` mostrando
                 6.12.69-jbarrera-201905884
      ¿RECUPERABLE?: SÍ
@@ -1038,9 +1042,9 @@ uname -r
                  a la calificación.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Kernel modificado en ejecución](./img/16-uname.png)
+![Kernel modificado en ejecución](./img/18-uname.png)
 
-*Figura 16. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
+*Figura 18. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
 
 ### 13.4 Verificación de los símbolos en el kernel en ejecución
 
@@ -1066,7 +1070,7 @@ El símbolo aparece con el prefijo `__arm64_` aplicado por la macro, conforme a 
 > ls -lh /boot/ | grep "$(uname -r)"         >> "$DEST/evidencias/uname.txt"
 > sudo grep " __arm64_sys_getpid_counter$" /proc/kallsyms \
 >      > "$DEST/evidencias/kallsyms.txt"
-> # colocar 16-uname.png en $DEST/img/
+> # colocar 18-uname.png en $DEST/img/
 > cd "$DEST"
 > git add -A && git commit -qm "Kernel modificado instalado y arrancando"
 > ```
@@ -1163,15 +1167,15 @@ gcc -Wall -Wextra -o test_getpid test_getpid.c
 ```
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 17 · archivo: img/17-programa.png
+     FIGURA 19 · archivo: img/19-programa.png
      CONTENIDO: la salida completa del programa, con los valores del contador
                 antes y después, el incremento observado y el mensaje CORRECTO.
      ¿RECUPERABLE?: SÍ
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Ejecución del programa de prueba](./img/17-programa.png)
+![Ejecución del programa de prueba](./img/19-programa.png)
 
-*Figura 17. Ejecución del programa de validación en espacio de usuario.*
+*Figura 19. Ejecución del programa de validación en espacio de usuario.*
 
 Salida registrada:
 
@@ -1193,7 +1197,7 @@ Este resultado constituye la evidencia empírica de que la instrumentación se a
 > ```bash
 > cp test_getpid.c "$DEST/Programa_Intermedio/"
 > ./test_getpid 20 > "$DEST/evidencias/salida-programa.txt" 2>&1
-> # colocar 17-programa.png en $DEST/img/
+> # colocar 19-programa.png en $DEST/img/
 > cd "$DEST"
 > git add -A && git commit -qm "Programa de prueba en espacio de usuario y su salida"
 > ```
@@ -1213,7 +1217,7 @@ sudo dmesg | grep "SO2-P1"
 ```
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 18 · archivo: img/18-dmesg.png  ← LA MÁS IMPORTANTE
+     FIGURA 20 · archivo: img/20-dmesg.png  ← LA MÁS IMPORTANTE
      CONTENIDO: la salida de `sudo dmesg | grep "SO2-P1"` con VARIAS líneas
                 visibles simultáneamente y valores estrictamente crecientes.
      ⚠️ EVIDENCIA FRÁGIL: el ring buffer es circular y se sobrescribe. Si
@@ -1223,9 +1227,9 @@ sudo dmesg | grep "SO2-P1"
                  verificación de syscall" de la rúbrica.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Validación del contador mediante dmesg](./img/18-dmesg.png)
+![Validación del contador mediante dmesg](./img/20-dmesg.png)
 
-*Figura 18. Registros del kernel que evidencian el incremento acumulativo del contador.*
+*Figura 20. Registros del kernel que evidencian el incremento acumulativo del contador.*
 
 Salida registrada:
 
@@ -1242,7 +1246,7 @@ Los valores presentan un crecimiento estrictamente monótono entre invocaciones 
 >
 > ```bash
 > sudo dmesg | grep "SO2-P1" > "$DEST/evidencias/dmesg-contador.txt"
-> # colocar 18-dmesg.png en $DEST/img/  (⚠️ evidencia frágil)
+> # colocar 20-dmesg.png en $DEST/img/  (⚠️ evidencia frágil)
 > cd "$DEST"
 > git add -A && git commit -qm "Validacion del contador mediante dmesg"
 > ```
@@ -1254,23 +1258,23 @@ Los valores presentan un crecimiento estrictamente monótono entre invocaciones 
 | Modificación de la syscall `getpid()` | <!-- ⬜ --> | Sección 11.2 |
 | Implementación de la syscall `getpid_counter()` | <!-- ⬜ --> | Sección 11.3 |
 | Declaración de variable global persistente | <!-- ⬜ --> | Sección 11.1 |
-| Compilación del kernel sin errores | <!-- ⬜ --> | Figura 15 |
-| Arranque del kernel modificado | <!-- ⬜ --> | Figura 16 |
+| Compilación del kernel sin errores | <!-- ⬜ --> | Figura 17 |
+| Arranque del kernel modificado | <!-- ⬜ --> | Figura 18 |
 | Uso de `printk` con nivel de severidad adecuado | <!-- ⬜ --> | Sección 11.3 |
-| Validación mediante programa en espacio de usuario | <!-- ⬜ --> | Figura 17 |
-| Verificación del contador mediante `dmesg` | <!-- ⬜ --> | Figura 18 |
+| Validación mediante programa en espacio de usuario | <!-- ⬜ --> | Figura 19 |
+| Verificación del contador mediante `dmesg` | <!-- ⬜ --> | Figura 20 |
 
 <!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 19 · archivo: img/19-diff.png
+     FIGURA 21 · archivo: img/21-diff.png
      CONTENIDO: la salida de `git diff --stat` sobre el árbol del kernel, o
                 bien `grep -n "getpid_call_count\|getpid_counter" kernel/sys.c`,
                 acreditando qué archivos fueron intervenidos.
      ¿RECUPERABLE?: SÍ
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Archivos modificados del árbol de fuentes](./img/19-diff.png)
+![Archivos modificados del árbol de fuentes](./img/21-diff.png)
 
-*Figura 19. Archivos del árbol de fuentes intervenidos durante la práctica.*
+*Figura 21. Archivos del árbol de fuentes intervenidos durante la práctica.*
 
 ## 17. Incidencias durante el desarrollo
 
@@ -1325,7 +1329,7 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
 >
 > # 2. Verificaciones OBLIGATORIAS antes de subir
 > git branch --show-current      # ⛔ tiene que ser tu CARNÉ
-> ls -1 img/                     # ⛔ las 7 capturas (13 a 19)
+> ls -1 img/                     # ⛔ las 9 capturas (13 a 21)
 > git status                     # ⛔ nada sin agregar
 >
 > # 3. Commit final
@@ -1355,13 +1359,13 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
        [ ] este bloque
 
      CAPTURAS A COLOCAR EN ./img/
-       [ ] 13-menuconfig.png        (§9.6)  recuperable
-       [ ] 14-tabla-tabuladores.png (§11.5) recuperable
-       [ ] 15-compilacion.png       (§12.2) ⚠️ NO RECUPERABLE - capturar durante el make
-       [ ] 16-uname.png             (§13.3) recuperable
-       [ ] 17-programa.png          (§14.2) recuperable
-       [ ] 18-dmesg.png             (§15)   ⚠️ evidencia frágil - capturar en el momento
-       [ ] 19-diff.png              (§16)   recuperable
+       [ ] 15-menuconfig.png        (§9.6)  recuperable
+       [ ] 16-tabla-tabuladores.png (§11.5) recuperable
+       [ ] 17-compilacion.png       (§12.2) ⚠️ NO RECUPERABLE - capturar durante el make
+       [ ] 18-uname.png             (§13.3) recuperable
+       [ ] 19-programa.png          (§14.2) recuperable
+       [ ] 20-dmesg.png             (§15)   ⚠️ evidencia frágil - capturar en el momento
+       [ ] 21-diff.png              (§16)   recuperable
 
      SALIDAS DE COMANDOS A PEGAR
        [ ] §10.4  número de línea del prototipo
