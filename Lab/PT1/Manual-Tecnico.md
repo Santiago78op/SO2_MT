@@ -456,7 +456,7 @@ Esta parte documenta la implementación efectiva de la práctica: la preparació
 | Arquitectura | `aarch64` (ARM64) |
 | Kernel base de compilación | `6.12.101+deb13-arm64` (kernel de la distribución) |
 | Kernel objetivo | `linux-6.12.69` (versión indicada por el laboratorio) |
-| Identificador del kernel compilado | `6.12.69-jbarrera-202012345` |
+| Identificador del kernel compilado | `6.12.69-jbarrera-201905884` |
 | Compilador | GCC (`build-essential`) |
 | Espacio en disco disponible | 39 GB |
 | Partición `/boot` | No independiente (integrada en `/`) |
@@ -470,7 +470,7 @@ Esta parte documenta la implementación efectiva de la práctica: la preparació
 >
 > ```bash
 > export DEST="$HOME/Practica_1_2S2026"
-> export CARNE="202012345"
+> export CARNE="201905884"
 > mkdir -p "$DEST"/{kernel,include/linux,scripts,Programa_Intermedio,img,evidencias}
 > cd "$DEST"
 > git init -q
@@ -557,12 +557,12 @@ CONFIG_SYSTEM_TRUSTED_KEYS=""
 La configuración heredada presentaba `CONFIG_LOCALVERSION` vacío, dado que en la compilación anterior el identificador se había suministrado por línea de comandos y ese valor no se persiste en el archivo `.config`.
 
 ```bash
-scripts/config --set-str LOCALVERSION "-jbarrera-202012345"
+scripts/config --set-str LOCALVERSION "-jbarrera-201905884"
 scripts/config --disable LOCALVERSION_AUTO
 make olddefconfig
 ```
 
-> **Criterio de implementación.** El identificador se fijó en el archivo `.config` en lugar de suministrarlo por línea de comandos en cada invocación de `make`. Si el valor se pasa como argumento durante la compilación pero se omite en `make modules_install`, la imagen se instala como `6.12.69-jbarrera-202012345` mientras que los módulos se depositan en `/lib/modules/6.12.69/`. La discrepancia entre ambos nombres provoca que el kernel arranque sin los controladores necesarios. Al establecer el valor en la configuración, todas las etapas del proceso leen el mismo identificador y esa inconsistencia no puede producirse.
+> **Criterio de implementación.** El identificador se fijó en el archivo `.config` en lugar de suministrarlo por línea de comandos en cada invocación de `make`. Si el valor se pasa como argumento durante la compilación pero se omite en `make modules_install`, la imagen se instala como `6.12.69-jbarrera-201905884` mientras que los módulos se depositan en `/lib/modules/6.12.69/`. La discrepancia entre ambos nombres provoca que el kernel arranque sin los controladores necesarios. Al establecer el valor en la configuración, todas las etapas del proceso leen el mismo identificador y esa inconsistencia no puede producirse.
 
 **Incidencia detectada.** Tras aplicar la configuración, `make -s kernelrelease` continuaba reportando el identificador anterior:
 
@@ -582,7 +582,7 @@ make -s kernelrelease
 ```
 
 ```
-6.12.69-jbarrera-202012345
+6.12.69-jbarrera-201905884
 ```
 
 ### 9.5 Verificación mediante la interfaz de configuración
@@ -681,7 +681,7 @@ Se insertó la declaración inmediatamente antes del bloque de comentario que do
 
 ```c
 /* ==========================================================================
- * Práctica 1 - Sistemas Operativos 2 - 2S2026 - Carné 202012345
+ * Práctica 1 - Sistemas Operativos 2 - 2S2026 - Carné 201905884
  *
  * Contador global de invocaciones a sys_getpid().
  *
@@ -715,7 +715,7 @@ La definición se incorporó a continuación del cierre de `SYSCALL_DEFINE0(gett
 
 ```c
 /**
- * sys_getpid_counter - Práctica 1 SO2 2S2026 - Carné 202012345
+ * sys_getpid_counter - Práctica 1 SO2 2S2026 - Carné 201905884
  *
  * Syscall nueva (nº 463). Imprime en el log del kernel cuántas veces se
  * ha invocado sys_getpid() desde el arranque, y devuelve ese valor a
@@ -725,7 +725,7 @@ SYSCALL_DEFINE0(getpid_counter)
 {
 	int count = atomic_read(&getpid_call_count);
 
-	pr_info("SO2-P1 [202012345]: sys_getpid() invocada %d veces (consultado por PID %d)\n",
+	pr_info("SO2-P1 [201905884]: sys_getpid() invocada %d veces (consultado por PID %d)\n",
 		count, task_tgid_vnr(current));
 
 	return count;
@@ -760,7 +760,7 @@ Se agregó la declaración a continuación del prototipo de `sys_getpid`:
 
 ```c
 asmlinkage long sys_getpid(void);
-/* Práctica 1 SO2 2S2026 - Carné 202012345 */
+/* Práctica 1 SO2 2S2026 - Carné 201905884 */
 asmlinkage long sys_getpid_counter(void);
 asmlinkage long sys_getppid(void);
 ```
@@ -927,7 +927,7 @@ ls -lh /boot/ | grep "$KREL"
 [salida del comando]
 ```
 
-> **Nota sobre la nomenclatura de la imagen en ARM64.** El procedimiento de instalación depositó la imagen del kernel con el nombre `vmlinux-6.12.69-jbarrera-202012345`, sin la letra `z` final. Los kernels provistos por la distribución utilizan el prefijo `vmlinuz-`, que por convención designa la imagen comprimida. La verificación de los archivos instalados debe realizarse considerando el nombre `vmlinux-`; buscar `vmlinuz-` conduciría a concluir erróneamente que la instalación no se completó.
+> **Nota sobre la nomenclatura de la imagen en ARM64.** El procedimiento de instalación depositó la imagen del kernel con el nombre `vmlinux-6.12.69-jbarrera-201905884`, sin la letra `z` final. Los kernels provistos por la distribución utilizan el prefijo `vmlinuz-`, que por convención designa la imagen comprimida. La verificación de los archivos instalados debe realizarse considerando el nombre `vmlinux-`; buscar `vmlinuz-` conduciría a concluir erróneamente que la instalación no se completó.
 
 ### 13.3 Selección del kernel en el gestor de arranque
 
@@ -947,7 +947,7 @@ uname -r
 <!-- ═══════════════════════════════════════════════════════════════════════
      FIGURA 16 · archivo: img/16-uname.png
      CONTENIDO: terminal con la salida de `uname -r` mostrando
-                6.12.69-jbarrera-202012345
+                6.12.69-jbarrera-201905884
      ¿RECUPERABLE?: SÍ
      RELEVANCIA: acredita simultáneamente el uso de la versión exigida (69)
                  y que el kernel modificado arranca — requisito para optar
@@ -956,7 +956,7 @@ uname -r
 
 ![Kernel modificado en ejecución](./img/16-uname.png)
 
-*Figura 16. Kernel `6.12.69-jbarrera-202012345` en ejecución.*
+*Figura 16. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
 
 ### 13.4 Verificación de los símbolos en el kernel en ejecución
 
@@ -996,7 +996,7 @@ El programa se ubica en el directorio `Programa_Intermedio` del repositorio, seg
 ```c
 /* ==========================================================================
  * Práctica 1 - Sistemas Operativos 2 - 2S2026
- * Carné: 202012345
+ * Carné: 201905884
  *
  * Valida la instrumentación de sys_getpid() y la nueva syscall
  * getpid_counter() (nº 463) agregadas al kernel.

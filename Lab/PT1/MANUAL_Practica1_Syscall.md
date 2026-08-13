@@ -54,9 +54,9 @@ df -h /           # ⚠️ esperado: >= 20 GB libres (vas a tener DOS árboles)
 Una instalación de Debian soporta **varios kernels en paralelo**. Cada uno deja su propio juego de archivos identificado por su *release string*, así que no se pisan:
 
 ```
-/boot/vmlinux-6.12.69-jbarrera-202012345      ← el nuevo
-/boot/initrd.img-6.12.69-jbarrera-202012345
-/lib/modules/6.12.69-jbarrera-202012345/      ← sus módulos
+/boot/vmlinux-6.12.69-jbarrera-201905884      ← el nuevo
+/boot/initrd.img-6.12.69-jbarrera-201905884
+/lib/modules/6.12.69-jbarrera-201905884/      ← sus módulos
 ```
 
 Elegís cuál arrancar en GRUB (*Advanced options*). Al cambiar de kernel **tu sistema sigue siendo el mismo**: mismos programas, mismos archivos, misma configuración. Solo cambia el núcleo por debajo.
@@ -80,7 +80,7 @@ export KVER="6.12.69"                          # la versión que exige el lab
 export KDIR="$HOME/kernel/linux-$KVER"
 export KVER_T3="6.12.102"                      # ⚠️ tu versión de la Tarea 3
 export KDIR_T3="$HOME/kernel/linux-$KVER_T3"
-export CARNE="202012345"                       # ⚠️ tu carné real
+export CARNE="201905884"                       # ⚠️ tu carné real
 echo "Nuevo: $KDIR" ; echo "Tarea 3: $KDIR_T3"
 ```
 
@@ -605,7 +605,7 @@ make olddefconfig
 ```bash
 make -s kernelrelease
 ```
-Esperado: `6.12.69-jbarrera-202012345` — con el **69**, que es lo que demuestra que usaste la versión exigida. Si sale `6.12.69` pelado, te falta el `make syncconfig` de arriba.
+Esperado: `6.12.69-jbarrera-201905884` — con el **69**, que es lo que demuestra que usaste la versión exigida. Si sale `6.12.69` pelado, te falta el `make syncconfig` de arriba.
 
 ### (f) La captura de `menuconfig` (la rúbrica la pide)
 
@@ -1017,7 +1017,7 @@ KREL=$(make -s kernelrelease)
 echo "$KREL" | tee ~/evidencias/practica1/kernel-release.txt
 ```
 
-⛔ **VERIFICAR:** tiene que mostrar tu versión con tu nombre y carné, ej. `6.12.102-jbarrera-202012345`.
+⛔ **VERIFICAR:** tiene que mostrar tu versión con tu nombre y carné, ej. `6.12.102-jbarrera-201905884`.
 
 ```bash
 sudo make modules_install    # 2-5 min
@@ -1190,7 +1190,7 @@ cd ~/practica1/Programa_Intermedio
 
 ```
 === Práctica 1 SO2 - Validación de syscalls ===
-Kernel en ejecución: 6.12.102-jbarrera-202012345
+Kernel en ejecución: 6.12.102-jbarrera-201905884
 PID de este proceso: 1834
 
 [1] Contador ANTES de las llamadas: 15427
@@ -1216,8 +1216,8 @@ sudo dmesg | grep "SO2-P1"
 Esperado — una línea por cada llamada a `getpid_counter()`:
 
 ```
-[  312.445821] SO2-P1 [202012345]: sys_getpid() invocada 15427 veces (consultado por PID 1834)
-[  312.446103] SO2-P1 [202012345]: sys_getpid() invocada 15441 veces (consultado por PID 1834)
+[  312.445821] SO2-P1 [201905884]: sys_getpid() invocada 15427 veces (consultado por PID 1834)
+[  312.446103] SO2-P1 [201905884]: sys_getpid() invocada 15441 veces (consultado por PID 1834)
 ```
 
 **La rúbrica pide demostrar que "el contador incrementa secuencialmente en cada llamada".** Así lo demostrás de forma contundente:
