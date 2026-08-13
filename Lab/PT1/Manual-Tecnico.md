@@ -11,7 +11,7 @@
 
 Esta parte describe el mecanismo de llamadas al sistema en Linux sobre la arquitectura AArch64 (ARM64), que es la base sobre la cual se implementa la syscall `getpid_counter` documentada en la Parte II.
 
-![Arquitectura general del kernel de Linux](./img/Kernel_8.png)
+![Arquitectura general del kernel de Linux](./img/01-kernel-capas-hardware.png)
 
 *Figura 1. Ubicación del kernel entre las aplicaciones de usuario y el hardware.*
 
@@ -28,7 +28,7 @@ Un programa escrito en C se ejecuta en **espacio de usuario**, que en ARM64 corr
 | EL2 | Hipervisor. |
 | EL3 | Firmware de bajo nivel, incluido el Monitor Seguro. |
 
-![Niveles de excepción de la arquitectura AArch64](./img/aarch64.png)
+![Niveles de excepción de la arquitectura AArch64](./img/02-niveles-excepcion-aarch64.png)
 
 *Figura 2. Niveles de excepción EL0–EL3 en AArch64.*
 
@@ -48,19 +48,19 @@ Esa solicitud constituye la llamada al sistema: **la única vía legítima de tr
 
 El mecanismo descrito admite una analogía con la atención al público en una agencia bancaria. El cliente permanece del lado del mostrador destinado al público y no accede a la bóveda ni a los sistemas internos; para obtener un dato de su cuenta debe solicitarlo a un cajero, quien lo consulta en su nombre. El mostrador cumple la misma función que la frontera EL0/EL1: delimita dos zonas con privilegios distintos y concentra en un único punto todas las solicitudes autorizadas.
 
-![Analogía entre la atención bancaria y una llamada al sistema](./img/Kernel_9.png)
+![Analogía entre la atención bancaria y una llamada al sistema](./img/03-analogia-banco-syscall.png)
 
 *Figura 3. Analogía entre la atención en una agencia bancaria y el mecanismo de llamadas al sistema.*
 
 La figura siguiente establece la correspondencia entre cada elemento de la analogía y su equivalente técnico:
 
-![Correspondencia entre los elementos de la analogía y los del mecanismo real](./img/Kernel_10.png)
+![Correspondencia entre los elementos de la analogía y los del mecanismo real](./img/04-frontera-privilegio-mmu.png)
 
 *Figura 4. Equivalencia entre los elementos de la analogía y los componentes del mecanismo de syscalls.*
 
 Aplicada al caso concreto de esta práctica, la correspondencia se expresa de la siguiente forma:
 
-![Aplicación de la analogía a la llamada getpid()](./img/Kernel_11.png)
+![Aplicación de la analogía a la llamada getpid()](./img/05-equivalencia-terminos-el0-el1.png)
 
 *Figura 5. Aplicación de la analogía al recorrido de la llamada `getpid()`.*
 
@@ -85,7 +85,7 @@ svc  #0            ; supervisor call: se solicita atención al kernel
 
 En términos de la analogía bancaria, el formulario tiene casillas fijas que no pueden intercambiarse de lugar: cada dato debe escribirse en la casilla que le corresponde para que el cajero lo interprete de forma correcta.
 
-![Casillas del formulario: registros que fija el contrato ABI](./img/Kernel_12.png)
+![Casillas del formulario: registros que fija el contrato ABI](./img/06-registros-abi-arm64-x86.png)
 
 *Figura 6. Registros definidos por el contrato ABI: `x8` transporta el número de syscall y `x0`–`x5` los argumentos.*
 
@@ -112,7 +112,7 @@ El punto de entrada reside en `arch/arm64/kernel/entry.S`, escrito íntegramente
 
 La primera acción que ejecuta el kernel es guardar todos los registros en una estructura denominada `struct pt_regs`, ubicada en la pila del kernel.
 
-![Preservación de los registros de usuario en struct pt_regs](./img/Kernel_13.png)
+![Preservación de los registros de usuario en struct pt_regs](./img/07-pila-kernel-pt-regs.png)
 
 *Figura 7. Preservación de los registros del usuario en `struct pt_regs` sobre la pila del kernel.*
 
@@ -154,7 +154,7 @@ SYSCALL_DEFINE0(getpid)
 
 Esta función es el punto de instrumentación de la práctica: dentro de este cuerpo se incrementa el contador de llamadas, según se detalla en los apartados posteriores.
 
-![Elementos que componen el cuerpo de la syscall getpid](./img/Kernel_14.png)
+![Elementos que componen el cuerpo de la syscall getpid](./img/08-current-task-tgid-vnr.png)
 
 *Figura 8. Piezas que intervienen en el cuerpo de `sys_getpid`: la macro `current`, la función `task_tgid_vnr()` y el sufijo `vnr`.*
 
@@ -168,7 +168,7 @@ Ya en espacio de usuario, `glibc` verifica si el resultado devuelto es negativo,
 
 La Figura 9 muestra la secuencia completa que se ejecuta al invocar `getpid()` desde un programa en C.
 
-![Recorrido de una llamada al sistema desde EL0 hasta el kernel](./img/Kernel_7.png)
+![Recorrido de una llamada al sistema desde EL0 hasta el kernel](./img/09-recorrido-syscall-el0-el1.png)
 
 *Figura 9. Trayecto de una llamada al sistema, de espacio de usuario a espacio de kernel.*
 
@@ -279,7 +279,7 @@ asmlinkage long __arm64_sys_getpid_counter(const struct pt_regs *__unused) /* 4 
 
 La interpretación de cada una de las construcciones generadas es la siguiente:
 
-![Desglose de las construcciones que genera la macro SYSCALL_DEFINE0](./img/Kernel_15.png)
+![Desglose de las construcciones que genera la macro SYSCALL_DEFINE0](./img/10-expansion-syscall-define0.png)
 
 *Figura 10. Desglose de las cuatro construcciones que genera `SYSCALL_DEFINE0` al expandirse.*
 
@@ -298,7 +298,7 @@ De esa propiedad se derivan dos reglas de asignación:
 
 En la versión 6.12 la última entrada asignada en la ABI común es:
 
-![Última entrada asignada en la tabla de syscalls de ARM64](./img/tabla_syscalls_append_only_463.png)
+![Última entrada asignada en la tabla de syscalls de ARM64](./img/11-tabla-syscalls-append-only.png)
 
 *Figura 11. Última entrada asignada en la tabla y posición donde se agrega la syscall nueva.*
 
@@ -306,7 +306,7 @@ Por lo tanto, a la syscall de esta práctica le corresponde el número **463**. 
 
 Cada entrada de la tabla se compone de cuatro columnas:
 
-![Anatomía de una entrada de la tabla de syscalls](./img/anatomia_entrada_syscall_tbl_463.png)
+![Anatomía de una entrada de la tabla de syscalls](./img/12-anatomia-entrada-syscall-tbl.png)
 
 *Figura 12. Estructura de una entrada de `syscall.tbl` y significado de cada columna.*
 
