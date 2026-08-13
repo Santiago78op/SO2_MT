@@ -691,13 +691,6 @@ make menuconfig
 
 La herramienta permite además localizar cualquier opción por nombre con la tecla `/`, que despliega la ruta de menús donde reside y las dependencias que la condicionan. Es el procedimiento a seguir si alguna de las verificaciones anteriores reportó una opción como `undef`: ese valor indica que la opción no es seleccionable en el estado actual de la configuración, generalmente porque otra de la que depende está desactivada.
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 15 · archivo: img/15-menuconfig.png
-     CONTENIDO: la interfaz de make menuconfig abierta, con el menú
-                principal visible (General setup, Kernel Features, etc.).
-     ¿RECUPERABLE?: SÍ — se puede volver a abrir menuconfig en cualquier momento.
-     ═══════════════════════════════════════════════════════════════════════ -->
-
 ![Interfaz de configuración del kernel](./img/15-menuconfig.png)
 
 *Figura 15. Interfaz `menuconfig` sobre el árbol de fuentes `linux-6.12.69`.*
@@ -753,10 +746,9 @@ La función se encuentra en la línea **967** del archivo `kernel/sys.c`, y su c
 grep -n "asmlinkage long sys_getpid(void);" include/linux/syscalls.h
 ```
 
-<!-- ⬜ PENDIENTE: pegar el número de línea obtenido -->
-
 ```
 [número de línea]:asmlinkage long sys_getpid(void);
+704:asmlinkage long sys_getpid(void);
 ```
 
 ## 11. Modificación del código fuente
