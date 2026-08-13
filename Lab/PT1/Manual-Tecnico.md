@@ -48,21 +48,21 @@ Esa solicitud constituye la llamada al sistema: **la única vía legítima de tr
 
 El mecanismo descrito admite una analogía con la atención al público en una agencia bancaria. El cliente permanece del lado del mostrador destinado al público y no accede a la bóveda ni a los sistemas internos; para obtener un dato de su cuenta debe solicitarlo a un cajero, quien lo consulta en su nombre. El mostrador cumple la misma función que la frontera EL0/EL1: delimita dos zonas con privilegios distintos y concentra en un único punto todas las solicitudes autorizadas.
 
-![Analogía entre la atención bancaria y una llamada al sistema](./img/03-analogia-banco-syscall.png)
+![Correspondencia entre los elementos de la agencia bancaria y los del mecanismo de syscalls](./img/03-analogia-banco-syscall.png)
 
-*Figura 3. Analogía entre la atención en una agencia bancaria y el mecanismo de llamadas al sistema.*
+*Figura 3. Correspondencia entre los elementos de la atención bancaria y los componentes del mecanismo de llamadas al sistema.*
 
-La figura siguiente establece la correspondencia entre cada elemento de la analogía y su equivalente técnico:
+Dos aspectos de la analogía requieren precisión adicional: la razón por la cual el cliente no puede acceder a la bóveda por cuenta propia y la razón por la cual el cajero sí puede hacerlo.
 
-![Correspondencia entre los elementos de la analogía y los del mecanismo real](./img/04-frontera-privilegio-mmu.png)
+![La MMU como frontera infranqueable y el catálogo de operaciones autorizadas](./img/04-frontera-privilegio-mmu.png)
 
-*Figura 4. Equivalencia entre los elementos de la analogía y los componentes del mecanismo de syscalls.*
+*Figura 4. Motivo por el que la frontera no admite cruce desde EL0: la MMU marca la memoria del kernel como inaccesible y solo se atienden las operaciones registradas en el catálogo.*
 
-Aplicada al caso concreto de esta práctica, la correspondencia se expresa de la siguiente forma:
+La nomenclatura que la arquitectura asigna a cada uno de esos elementos se resume a continuación:
 
-![Aplicación de la analogía a la llamada getpid()](./img/05-equivalencia-terminos-el0-el1.png)
+![Equivalencia entre los términos de la analogía y los niveles de privilegio EL0 y EL1](./img/05-equivalencia-terminos-el0-el1.png)
 
-*Figura 5. Aplicación de la analogía al recorrido de la llamada `getpid()`.*
+*Figura 5. Equivalencia entre los términos de la analogía y los niveles de privilegio de AArch64: EL0 para el espacio de usuario y EL1 para el kernel (`ring 3` y `ring 0` en x86).*
 
 ## 2. Recorrido de la llamada `getpid()`
 
