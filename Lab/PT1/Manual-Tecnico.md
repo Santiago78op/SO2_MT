@@ -892,10 +892,10 @@ Antes de iniciar la compilación completa se compiló de forma aislada el único
 make kernel/sys.o
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real -->
-
 ```
-[salida del comando: debe finalizar con "CC kernel/sys.o" y sin errores]
+julian@debian-so2:~/kernel/linux-6.12.69$ make kernel/sys.o
+  CALL    scripts/checksyscalls.sh
+  CC      kernel/sys.o
 ```
 
 ### 12.2 Compilación completa
