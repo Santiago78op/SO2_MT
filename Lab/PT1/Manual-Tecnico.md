@@ -627,6 +627,17 @@ scripts/config --set-str SYSTEM_REVOCATION_KEYS ""
 scripts/config --disable MODULE_SIG_ALL
 scripts/config --disable MODULE_SIG_FORCE
 scripts/config --disable SYSTEM_REVOCATION_LIST
+```
+```bash
+# Habilitar DRM y el driver VMware
+scripts/config --enable DRM
+scripts/config --enable DRM_VMWGFX
+scripts/config --enable FB
+scripts/config --enable FB_SIMPLE
+scripts/config --enable FRAMEBUFFER_CONSOLE
+```
+
+```bash
 make olddefconfig
 ```
 
@@ -905,26 +916,19 @@ mkdir -p ~/evidencias/practica1
 time make -j$(nproc) 2>&1 | tee ~/evidencias/practica1/log-compilacion.txt
 ```
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 17 · archivo: img/17-compilacion.png
-     CONTENIDO: la terminal DURANTE la compilación, con líneas CC / LD / AR
-                visibles en pantalla.
-     ⚠️ NO RECUPERABLE: una vez finalizada la compilación esas líneas ya no
-        están en pantalla, y una recompilación posterior es incremental y
-        produce una salida distinta. DEBE capturarse mientras el proceso corre.
-     ═══════════════════════════════════════════════════════════════════════ -->
-
 ![Proceso de compilación del kernel](./img/17-compilacion.png)
 
 *Figura 17. Compilación del kernel `6.12.69` con las modificaciones aplicadas.*
 
 Tiempo total de compilación registrado:
 
-<!-- ⬜ PENDIENTE: pegar la salida del comando `time` -->
+```
+real	11m17.179s
+user	51m53.046s
+sys	2m57.028s
+```
 
-```
-[salida de time: real / user / sys]
-```
+![Proceso de compilación del kernel Finalizado](./img/17-compilacion-2.png)
 
 **Observación.** Durante la compilación puede presentarse el mensaje `libfakeroot internal error: payload not recognized!`. Corresponde a un defecto conocido de `libfakeroot` en Debian 13 sobre ARM64 al interceptar llamadas al sistema durante el enlazado de `vmlinux`. Si el proceso continúa avanzando con etapas posteriores (`LD`, `AR`, `BTF`), el mensaje no afecta el resultado.
 
@@ -933,13 +937,14 @@ Tiempo total de compilación registrado:
 Esta verificación determina si la entrada agregada a la tabla fue efectivamente procesada por el sistema de compilación. Constituye el control más importante de todo el procedimiento: si la entrada no se procesó, la syscall devolverá `ENOSYS` en tiempo de ejecución sin que la compilación haya reportado ningún error.
 
 ```bash
-grep -rn "getpid_counter" include/generated/
+cd ~/kernel/linux-6.12.69
+grep -rn "getpid_counter" arch/arm64/include/generated/
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real -->
 
 ```
-[salida esperada: include/generated/asm/unistd_64.h con #define __NR_getpid_counter 463]
+arch/arm64/include/generated/asm/syscall_table_64.h:464:__SYSCALL(463, sys_getpid_counter)
+arch/arm64/include/generated/uapi/asm/unistd_64.h:322:#define __NR_getpid_counter 463
 ```
 
 Verificación de ausencia de advertencias atribuibles a las modificaciones:
@@ -947,20 +952,6 @@ Verificación de ausencia de advertencias atribuibles a las modificaciones:
 ```bash
 grep -i "warning" ~/evidencias/practica1/log-compilacion.txt | grep -i "getpid\|sys\.c"
 ```
-
-<!-- ⬜ PENDIENTE: la salida debe ser vacía -->
-
-> ### 💾 PUNTO DE COMMIT 3 — evidencias de compilación
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> cp ~/evidencias/practica1/log-compilacion.txt "$DEST/evidencias/"
-> grep -rn "getpid_counter" "$KDIR/include/generated/" \
->      > "$DEST/evidencias/unistd-generado.txt"
-> # colocar 17-compilacion.png en $DEST/img/  (⚠️ NO recuperable)
-> cd "$DEST"
-> git add -A && git commit -qm "Evidencias de compilacion y encabezados generados"
-> ```
 
 ## 13. Instalación y arranque del kernel modificado
 
@@ -983,11 +974,14 @@ Verificación de los archivos depositados en `/boot`:
 ls -lh /boot/ | grep "$KREL"
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real -->
+```
+-rw-r--r-- 1 root root 295K Aug 13 14:40 config-6.12.69-jbarrera-201905884
+-rw-r--r-- 1 root root  48M Aug 13 14:40 initrd.img-6.12.69-jbarrera-201905884
+-rw-r--r-- 1 root root 7.2M Aug 13 14:40 System.map-6.12.69-jbarrera-201905884
+-rw-r--r-- 1 root root  37M Aug 13 14:40 vmlinux-6.12.69-jbarrera-201905884
+```
 
-```
-[salida del comando]
-```
+![Modulos del Kernel Instaldos](./img/17-modulos-install.png)
 
 > **Nota sobre la nomenclatura de la imagen en ARM64.** El procedimiento de instalación depositó la imagen del kernel con el nombre `vmlinux-6.12.69-jbarrera-201905884`, sin la letra `z` final. Los kernels provistos por la distribución utilizan el prefijo `vmlinuz-`, que por convención designa la imagen comprimida. La verificación de los archivos instalados debe realizarse considerando el nombre `vmlinux-`; buscar `vmlinuz-` conduciría a concluir erróneamente que la instalación no se completó.
 
@@ -1006,16 +1000,6 @@ Verificación del kernel en ejecución:
 uname -r
 ```
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 18 · archivo: img/18-uname.png
-     CONTENIDO: terminal con la salida de `uname -r` mostrando
-                6.12.69-jbarrera-201905884
-     ¿RECUPERABLE?: SÍ
-     RELEVANCIA: acredita simultáneamente el uso de la versión exigida (69)
-                 y que el kernel modificado arranca — requisito para optar
-                 a la calificación.
-     ═══════════════════════════════════════════════════════════════════════ -->
-
 ![Kernel modificado en ejecución](./img/18-uname.png)
 
 *Figura 18. Kernel `6.12.69-jbarrera-201905884` en ejecución.*
@@ -1028,26 +1012,9 @@ El archivo `/proc/kallsyms` expone la tabla de símbolos del kernel en ejecució
 sudo grep " __arm64_sys_getpid_counter$" /proc/kallsyms
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real -->
-
 ```
-[dirección] T __arm64_sys_getpid_counter
+ffff8000800b346c T __arm64_sys_getpid_counter
 ```
-
-El símbolo aparece con el prefijo `__arm64_` aplicado por la macro, conforme a lo descrito en la sección 4, y no con el nombre declarado en la tabla.
-
-> ### 💾 PUNTO DE COMMIT 4 — instalación y arranque
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> uname -r                                    > "$DEST/evidencias/uname.txt"
-> ls -lh /boot/ | grep "$(uname -r)"         >> "$DEST/evidencias/uname.txt"
-> sudo grep " __arm64_sys_getpid_counter$" /proc/kallsyms \
->      > "$DEST/evidencias/kallsyms.txt"
-> # colocar 18-uname.png en $DEST/img/
-> cd "$DEST"
-> git add -A && git commit -qm "Kernel modificado instalado y arrancando"
-> ```
 
 ## 14. Programa de prueba en espacio de usuario
 
@@ -1140,23 +1107,25 @@ gcc -Wall -Wextra -o test_getpid test_getpid.c
 ./test_getpid 10
 ```
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 19 · archivo: img/19-programa.png
-     CONTENIDO: la salida completa del programa, con los valores del contador
-                antes y después, el incremento observado y el mensaje CORRECTO.
-     ¿RECUPERABLE?: SÍ
-     ═══════════════════════════════════════════════════════════════════════ -->
-
 ![Ejecución del programa de prueba](./img/19-programa.png)
 
 *Figura 19. Ejecución del programa de validación en espacio de usuario.*
 
 Salida registrada:
 
-<!-- ⬜ PENDIENTE: pegar la salida real del programa -->
-
 ```
-[salida completa de ./test_getpid 10]
+=== Práctica 1 SO2 - Validación de syscalls ===
+PID de este proceso: 2586
+
+[1] Contador ANTES de las llamadas: 14523
+[2] Invocando sys_getpid() 10 veces...
+[3] Contador DESPUÉS de las llamadas: 14533
+
+=== Resultado ===
+Incremento observado : 10
+Incremento esperado  : >= 10
+
+CORRECTO: el contador incrementa de forma acumulativa.
 ```
 
 ### 14.3 Interpretación del resultado
@@ -1164,17 +1133,6 @@ Salida registrada:
 El incremento observado resulta **superior** al número de invocaciones realizadas por el programa. El comportamiento es el esperado y no constituye un defecto: el contador es global al sistema y no por proceso, dado que la instrumentación se aplicó dentro del kernel, que constituye un recurso único compartido por todos los procesos. Entre las dos lecturas del contador, otros procesos del sistema —el intérprete de comandos, `systemd`, servicios en ejecución— también invocaron `sys_getpid()`, y esas invocaciones quedaron igualmente registradas.
 
 Este resultado constituye la evidencia empírica de que la instrumentación se aplicó en espacio de kernel y no en la biblioteca de espacio de usuario: una instrumentación en `glibc` habría contabilizado únicamente las llamadas del propio proceso, dado que cada proceso posee su propia copia de la biblioteca.
-
-> ### 💾 PUNTO DE COMMIT 5 — programa de prueba
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> cp test_getpid.c "$DEST/Programa_Intermedio/"
-> ./test_getpid 20 > "$DEST/evidencias/salida-programa.txt" 2>&1
-> # colocar 19-programa.png en $DEST/img/
-> cd "$DEST"
-> git add -A && git commit -qm "Programa de prueba en espacio de usuario y su salida"
-> ```
 
 ## 15. Validación mediante `dmesg`
 
@@ -1190,40 +1148,27 @@ for i in 1 2 3 4 5; do ./test_getpid 100; done > /dev/null
 sudo dmesg | grep "SO2-P1"
 ```
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 20 · archivo: img/20-dmesg.png  ← LA MÁS IMPORTANTE
-     CONTENIDO: la salida de `sudo dmesg | grep "SO2-P1"` con VARIAS líneas
-                visibles simultáneamente y valores estrictamente crecientes.
-     ⚠️ EVIDENCIA FRÁGIL: el ring buffer es circular y se sobrescribe. Si
-        transcurre tiempo con la máquina en ejecución, los mensajes propios
-        pueden ser desplazados por otros del kernel. Capturar en el momento.
-     RELEVANCIA: corresponde al criterio "Uso de comando dmesg para
-                 verificación de syscall" de la rúbrica.
-     ═══════════════════════════════════════════════════════════════════════ -->
-
 ![Validación del contador mediante dmesg](./img/20-dmesg.png)
 
 *Figura 20. Registros del kernel que evidencian el incremento acumulativo del contador.*
 
 Salida registrada:
 
-<!-- ⬜ PENDIENTE: pegar la salida real de dmesg (varias líneas crecientes) -->
-
 ```
-[salida de sudo dmesg | grep "SO2-P1"]
+julian@debian-so2:~/Documents$ sudo dmesg | grep "SO2-P1"
+[ 1785.997899] SO2-P1 [201905884]: sys_getpid() invocada 14571 veces (consultado por PID 2607)
+[ 1785.997945] SO2-P1 [201905884]: sys_getpid() invocada 14671 veces (consultado por PID 2607)
+[ 1785.998672] SO2-P1 [201905884]: sys_getpid() invocada 14673 veces (consultado por PID 2608)
+[ 1785.998693] SO2-P1 [201905884]: sys_getpid() invocada 14773 veces (consultado por PID 2608)
+[ 1785.999357] SO2-P1 [201905884]: sys_getpid() invocada 14775 veces (consultado por PID 2609)
+[ 1785.999380] SO2-P1 [201905884]: sys_getpid() invocada 14875 veces (consultado por PID 2609)
+[ 1786.000119] SO2-P1 [201905884]: sys_getpid() invocada 14877 veces (consultado por PID 2610)
+[ 1786.000141] SO2-P1 [201905884]: sys_getpid() invocada 14977 veces (consultado por PID 2610)
+[ 1786.000880] SO2-P1 [201905884]: sys_getpid() invocada 14979 veces (consultado por PID 2611)
+[ 1786.000901] SO2-P1 [201905884]: sys_getpid() invocada 15079 veces (consultado por PID 2611)
 ```
 
 Los valores presentan un crecimiento estrictamente monótono entre invocaciones consecutivas, lo que acredita que el contador acumula correctamente y que su valor no se reinicia entre llamadas.
-
-> ### 💾 PUNTO DE COMMIT 6 — validación con `dmesg`
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> sudo dmesg | grep "SO2-P1" > "$DEST/evidencias/dmesg-contador.txt"
-> # colocar 20-dmesg.png en $DEST/img/  (⚠️ evidencia frágil)
-> cd "$DEST"
-> git add -A && git commit -qm "Validacion del contador mediante dmesg"
-> ```
 
 ## 16. Resultados obtenidos
 
@@ -1238,18 +1183,6 @@ Los valores presentan un crecimiento estrictamente monótono entre invocaciones 
 | Validación mediante programa en espacio de usuario | <!-- ⬜ --> | Figura 19 |
 | Verificación del contador mediante `dmesg` | <!-- ⬜ --> | Figura 20 |
 
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 21 · archivo: img/21-diff.png
-     CONTENIDO: la salida de `git diff --stat` sobre el árbol del kernel, o
-                bien `grep -n "getpid_call_count\|getpid_counter" kernel/sys.c`,
-                acreditando qué archivos fueron intervenidos.
-     ¿RECUPERABLE?: SÍ
-     ═══════════════════════════════════════════════════════════════════════ -->
-
-![Archivos modificados del árbol de fuentes](./img/21-diff.png)
-
-*Figura 21. Archivos del árbol de fuentes intervenidos durante la práctica.*
-
 ## 17. Incidencias durante el desarrollo
 
 Se documentan las incidencias efectivamente encontradas y su resolución.
@@ -1262,13 +1195,8 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
 | 4 | Imagen instalada como `vmlinux-`, no `vmlinuz-` | Comportamiento del procedimiento de instalación en ARM64 | Verificar los archivos de `/boot` considerando el nombre `vmlinux-` |
 | 5 | `libfakeroot internal error: payload not recognized!` | Defecto conocido de `libfakeroot` en Debian 13 sobre ARM64 | Sin efecto sobre el resultado si la compilación continúa avanzando |
 
-<!-- ⬜ AGREGAR aquí cualquier otra incidencia que surja durante la ejecución -->
 
 ## 18. Conclusiones y lecciones aprendidas
-
-<!-- ⬜ PENDIENTE: redactar tras completar la ejecución.
-     Desarrollar los siguientes ejes, que responden al criterio de la rúbrica
-     "análisis profundo sobre la diferencia entre espacios de memoria": -->
 
 **Sobre la separación entre espacios de memoria.** La frontera EL0/EL1 la impone el hardware y no el software. La comprobación práctica de esta afirmación es que la variable `getpid_call_count` resulta inaccesible desde espacio de usuario por cualquier medio: fue necesario implementar una llamada al sistema completa —con su registro en la tabla, su prototipo y su recompilación del kernel— con el único propósito de leer el valor de un entero. Un acceso directo a esa dirección desde EL0 produce la señal `SIGSEGV`, generada por la unidad de gestión de memoria y no por el programa.
 
@@ -1280,10 +1208,6 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
 
 **Sobre el carácter compartido del kernel.** Que el contador registre incrementos originados en procesos distintos del programa de prueba constituye la demostración empírica de que existe una única instancia del kernel para la totalidad de los procesos del sistema.
 
-<!-- ⬜ AGREGAR: lecciones aprendidas de carácter procedimental, p. ej.
-     la conveniencia de compilar la unidad modificada de forma aislada antes
-     de la compilación completa, o la verificación de los encabezados
-     generados como control previo a la instalación. -->
 
 ## 19. Referencias
 
@@ -1292,70 +1216,3 @@ Se documentan las incidencias efectivamente encontradas y su resolución.
 - Love, R. (2010). *Linux Kernel Development* (3.ª ed.). Addison-Wesley.
 - Corbet, J., Rubini, A., & Kroah-Hartman, G. (2005). *Linux Device Drivers* (3.ª ed.). O'Reilly Media.
 - Código fuente de Linux 6.12.69: `kernel/sys.c`, `include/linux/syscalls.h`, `scripts/syscall.tbl`, `arch/arm64/include/asm/syscall_wrapper.h`.
-
-> ### 💾 PUNTO DE COMMIT 7 — informe final y PUSH ⭐
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> ```bash
-> # 1. Este informe, ya depurado (sin los bloques de trabajo)
-> cp Manual-Tecnico.md "$DEST/"
-> cd "$DEST"
->
-> # 2. Verificaciones OBLIGATORIAS antes de subir
-> git branch --show-current      # ⛔ tiene que ser tu CARNÉ
-> ls -1 img/                     # ⛔ las 9 capturas (13 a 21)
-> git status                     # ⛔ nada sin agregar
->
-> # 3. Commit final
-> git add -A
-> git commit -qm "Informe tecnico completo con evidencias y capturas"
-> git log --oneline              # deberian verse los 8 commits
->
-> # 4. PUSH
-> git remote add origin <URL_DE_TU_REPO_GITLAB>
-> git push -u origin "$CARNE"
-> ```
->
-> **Si la rama no es tu carné**, corregila antes del push — es requisito de entrega:
-> ```bash
-> git branch -m "$CARNE"
-> ```
-
----
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     ⬜ LISTA DE PENDIENTES — ELIMINAR ESTE BLOQUE ANTES DE ENTREGAR
-
-     DEPURACIÓN FINAL (buscar y borrar)
-       [ ] los 8 bloques "💾 PUNTO DE COMMIT"  → buscar: PUNTO DE COMMIT
-       [ ] los comentarios "⬜ PENDIENTE"       → buscar: PENDIENTE
-       [ ] los bloques de instrucciones de figura (FIGURA nn · archivo:)
-       [ ] este bloque
-
-     CAPTURAS A COLOCAR EN ./img/
-       [ ] 15-menuconfig.png        (§9.6)  recuperable
-       [ ] 16-tabla-tabuladores.png (§11.5) recuperable
-       [ ] 17-compilacion.png       (§12.2) ⚠️ NO RECUPERABLE - capturar durante el make
-       [ ] 18-uname.png             (§13.3) recuperable
-       [ ] 19-programa.png          (§14.2) recuperable
-       [ ] 20-dmesg.png             (§15)   ⚠️ evidencia frágil - capturar en el momento
-       [ ] 21-diff.png              (§16)   recuperable
-
-     SALIDAS DE COMANDOS A PEGAR
-       [ ] §10.4  número de línea del prototipo
-       [ ] §11.3  grep de verificación (4 líneas)
-       [ ] §11.5  tail | cat -A con los ^I
-       [ ] §12.1  make kernel/sys.o
-       [ ] §12.2  salida de time
-       [ ] §12.3  grep en include/generated/  ← control crítico
-       [ ] §12.3  grep de warnings (debe ser vacío)
-       [ ] §13.2  ls -lh /boot
-       [ ] §13.4  grep en /proc/kallsyms
-       [ ] §14.2  salida del programa
-       [ ] §15    salida de dmesg
-
-     REDACCIÓN
-       [ ] §16  completar la columna "Resultado" de la tabla
-       [ ] §17  agregar incidencias nuevas si surgen
-       [ ] §18  revisar y ampliar conclusiones tras la ejecución
-     ═══════════════════════════════════════════════════════════════════════ -->
