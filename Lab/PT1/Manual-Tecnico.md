@@ -828,10 +828,13 @@ Verificación de las tres modificaciones:
 grep -n "getpid_call_count\|SYSCALL_DEFINE0(getpid" kernel/sys.c
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real (deben aparecer 4 líneas) -->
 
 ```
-[salida del comando]
+978:static atomic_t getpid_call_count = ATOMIC_INT(0);
+980:SYSCALL_DEFINE0(getpid)
+982:	atomic_inc(&getpid_call_count);
+1000:SYSCALL_DEFINE0(getpid_counter)
+1002:	int count = atomic_read(&getpid_call_count);
 ```
 
 ### 11.4 `include/linux/syscalls.h` — declaración del prototipo
@@ -868,37 +871,16 @@ Verificación del formato:
 tail -2 scripts/syscall.tbl | cat -A
 ```
 
-<!-- ⬜ PENDIENTE: pegar la salida real. Deben aparecer secuencias ^I (tabuladores) -->
-
 ```
 [salida del comando: deben verse ^I entre columnas y $ al final]
+julian@debian-so2:~/kernel/linux-6.12.69$ tail -2 scripts/syscall.tbl | cat -A
+462^Icommon^Imseal^I^I^I^Isys_mseal$
+463^Icommon^Igetpid_counter^I^I^Isys_getpid_counter$
 ```
-
-<!-- ═══════════════════════════════════════════════════════════════════════
-     FIGURA 16 · archivo: img/16-tabla-tabuladores.png
-     CONTENIDO: terminal con la salida de `tail -2 scripts/syscall.tbl | cat -A`,
-                donde se aprecien los ^I que confirman el uso de tabuladores.
-     ¿RECUPERABLE?: SÍ
-     ═══════════════════════════════════════════════════════════════════════ -->
 
 ![Verificación de tabuladores en la tabla de syscalls](./img/16-tabla-tabuladores.png)
 
 *Figura 16. Verificación del uso de tabuladores como separadores en `scripts/syscall.tbl`.*
-
-> ### 💾 PUNTO DE COMMIT 2 — los archivos del kernel modificados ⭐
-> *Bloque de trabajo. **Eliminar antes de entregar.***
->
-> **El más importante.** Se hace **antes de compilar**: si el build falla o hay que revertir, queda registrado el estado exacto de los tres archivos. Son los entregables de código de la práctica.
->
-> ```bash
-> cp "$KDIR/kernel/sys.c"             "$DEST/kernel/"
-> cp "$KDIR/include/linux/syscalls.h" "$DEST/include/linux/"
-> cp "$KDIR/scripts/syscall.tbl"      "$DEST/scripts/"
-> # colocar 16-tabla-tabuladores.png en $DEST/img/
-> cd "$DEST"
-> git add -A
-> git commit -qm "Contador atomico en sys_getpid() y syscall getpid_counter() (nro 463)"
-> ```
 
 ## 12. Compilación del kernel
 
