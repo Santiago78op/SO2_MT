@@ -600,7 +600,7 @@ make menuconfig
      ¿RECUPERABLE?: SÍ — se puede volver a abrir menuconfig en cualquier momento.
      ═══════════════════════════════════════════════════════════════════════ -->
 
-![Interfaz de configuración del kernel](./img/kernel/13-menuconfig.png)
+![Interfaz de configuración del kernel](./img/13-menuconfig.png)
 
 *Figura 13. Interfaz `menuconfig` sobre el árbol de fuentes `linux-6.12.69`.*
 
