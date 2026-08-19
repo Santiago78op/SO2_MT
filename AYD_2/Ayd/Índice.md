@@ -45,6 +45,10 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Estilos arquitectónicos]] — punto 1.9: el catálogo de estilos, sus canjes de atributos y las trampas típicas
 - [[Relaciones y dependencias en UML]] — qué significa cada flecha, hacia dónde apunta, y el puente con la matriz de dependencias
 
+### Calidad del software
+
+- [[Atributos de calidad]] — unidad 2: definición, los seis del programa, escenarios de 6 partes, tradeoffs e ISO
+
 ### Requisitos
 
 - [[Matriz de trazabilidad de requisitos]] — trazabilidad pre-RS y post-RS, la RTM y la cadena de arquitectura (**tema externo**, no está en las presentaciones)
@@ -72,6 +76,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Flashcards - Diagrama de despliegue]] (23 tarjetas)
 - [[Flashcards - Estilos arquitectónicos]] (24 tarjetas)
 - [[Flashcards - Relaciones y dependencias en UML]] (22 tarjetas)
+- [[Flashcards - Atributos de calidad]] (23 tarjetas)
 
 ## Tareas
 
@@ -79,6 +84,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Plan - Caso 1 FarmaHosp]] — la rúbrica desarmada: 4 criterios, 100 puntos, y las ambigüedades a preguntar
 - [[Guía - Caso de negocio]] — la secuencia canónica: contexto → core → primera descomposición → CDU expandidos → matriz
 - [[Guía - Diagrama de casos de uso del negocio]] — paso a paso con ejemplo visual incremental
+- [[Guía - Drivers de calidad y restricción]] — criterio 3 (30 pts): escenarios, restricciones y la priorización de los 5
 - [[Guía - Matrices de trazabilidad]] — las tres matrices que pide la rúbrica (20 pts)
 
 ## Referencias de herramientas
@@ -108,9 +114,9 @@ El detalle punto por punto está en [[Programa oficial del curso]].
 
 ### Unidad 2 — Calidad del Software
 
-- [ ] Conceptos generales · ¿Por qué es importante?
-- [ ] **Normas ISO**
-- [ ] **Atributos de calidad**: funcionalidad, fiabilidad, usabilidad, eficiencia, mantenibilidad, portabilidad
+- [x] Conceptos generales · ¿Por qué es importante? — [[Atributos de calidad]] (**complemento**: falta la presentación)
+- [x] **Normas ISO** — ISO 9126 y 25010 en [[Atributos de calidad]] (**complemento**)
+- [x] **Atributos de calidad**: los seis del programa, con escenarios de 6 partes — [[Atributos de calidad]] (**complemento**)
 
 ### Unidad 3 — Arquitectura en el Ciclo de Vida
 
@@ -134,7 +140,7 @@ Lo que **falta material** para poder escribir la nota, ordenado por urgencia:
 | **Alta** | Presentación de **1.9** para validar [[Estilos arquitectónicos]], que hoy es todo complemento | Se está dando ahora (17–24 de agosto) |
 | **Alta** | **Arquitectura candidata**, **arquitectura de referencia** y **on premise vs cloud** — el material local casi no los cubre | Parte de 1.9 |
 | Media | 1.8 Categorías de Estructuras | Segundo parcial |
-| Media | Unidad 2 completa (Calidad del Software) | Se da del 25 de agosto al 7 de septiembre |
+| **Alta** | Presentación de la **unidad 2** para validar [[Atributos de calidad]], que hoy es todo complemento | Se da del 25 de agosto al 7 de septiembre |
 | Baja | Unidades 3 y 4 | Septiembre y octubre |
 
 Y lo que falta por otras razones:

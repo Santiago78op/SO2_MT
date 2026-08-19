@@ -14,6 +14,7 @@ líneas y el enlace a la nota donde se explica a fondo.
 ## A
 
 - **Actor del negocio** — Rol que alguien o algo juega cuando interactúa con el negocio para beneficiarse de sus resultados. Siempre modela algo *fuera* del negocio. → [[Actor del negocio]]
+- **ADD (Attribute-Driven Design)** — Método del SAIP para diseñar la arquitectura convirtiendo drivers en estructuras, en rondas e iteraciones. → [[Guía - Drivers de calidad y restricción]]
 - **Agregación** — Relación es-parte-de con rombo **hueco** en el todo: la parte sobrevive al todo. → [[Relaciones y dependencias en UML]]
 - **allocated-to / migrates-to** — Las dos relaciones de la estructura de despliegue: dónde reside un elemento de software, y a dónde puede migrar si la asignación es dinámica. → [[Diagrama de despliegue]]
 - **Arquitecting** — El proceso de la arquitectura del software. → [[Proceso de diseño arquitectónico]]
@@ -22,6 +23,8 @@ líneas y el enlace a la nota donde se explica a fondo.
 - **Artefacto (UML)** — El archivo físico que se despliega (`.jar`, `.ear`, `.dll`); se dibuja como rectángulo con la esquina doblada y se une a su nodo con `«deploy»`. → [[Diagrama de despliegue]]
 - **Asociación** — Vínculo estructural estable entre elementos, con línea llena. → [[Relaciones y dependencias en UML]]
 - **Asociación (en CUN)** — Relación entre un actor del negocio y un CUN que significa que el actor envía y/o recibe mensajes. → [[Modelo de casos de uso del negocio]]
+- **ASR (requisito arquitectónicamente significativo)** — Requisito de calidad que impacta en la estructura del sistema; es uno de los componentes de los drivers en ADD. → [[Guía - Drivers de calidad y restricción]]
+- **Atributo de calidad (QA)** — Propiedad **medible o testeable** que indica cuán bien un sistema satisface las necesidades de sus stakeholders más allá de la función básica. → [[Atributos de calidad]]
 - **Atributos de un buen diseño** — Durabilidad, utilidad y encanto; en software: de confianza y fácil de evolucionar, fácil de implementar, entendible. → [[Arquitectura de software]]
 
 ## B
@@ -52,11 +55,13 @@ líneas y el enlace a la nota donde se explica a fondo.
 - **Diagrama de despliegue** — Diagrama UML que muestra cómo el software se asigna a los procesadores y las vías de comunicación del hardware. → [[Diagrama de despliegue]]
 - **Diagrama de Kiviat** — Diagrama radar de cinco ejes (features, quality, cost, schedule, staff) usado como "diagrama de flexibilidad" del proyecto. → [[Equilibrio de restricciones del proyecto]]
 - **Driver arquitectónico** — Requisito que impacta en la estructura del sistema. El enunciado del Caso 1 pide tratar los escenarios de calidad como drivers. → [[Plan - Caso 1 FarmaHosp]]
+- **Driver de restricción** — Decisión de diseño ya tomada que no se negocia; se reconoce por el "debe" o "no se puede" y por no tener medida. → [[Guía - Drivers de calidad y restricción]]
 - **Driver de restricción** — Decisión ya tomada que no se negocia (tecnología prohibida, política, ley). En el Caso 1 son los "lo que NO debe hacer el sistema". → [[Plan - Caso 1 FarmaHosp]]
 - **Driver RF** — Driver de requisito funcional; se modela con casos de uso expandidos. → [[Guía - Matrices de trazabilidad]]
 
 ## E
 
+- **Escenario de atributo de calidad** — La especificación de un requisito de calidad en seis partes: fuente, estímulo, artefacto, entorno, respuesta y **medida**. → [[Atributos de calidad]]
 - **Escenarios (vista de)** — La vista "+1" del modelo 4+1: los casos de uso que amarran las otras cuatro vistas y dan trazabilidad. → [[Modelo 4+1 vistas]]
 - **Estereotipo** — Extensión de UML que define un tipo especializado; se escribe entre `«»` y se aplica tanto a clases como a **relaciones**. → [[Relaciones y dependencias en UML]]
 - **Estereotipo** — En el modelo de CUN, los dos elementos base: actor del negocio y caso de uso del negocio. → [[Modelo de casos de uso del negocio]]
@@ -79,6 +84,8 @@ líneas y el enlace a la nota donde se explica a fondo.
 
 - **Include (relación de inclusión)** — Relación en que el comportamiento de un CU se inserta explícitamente dentro del CU base; siempre ocurre. → [[Relación de inclusión include]]
 - **Invocación implícita** — Estilo basado en eventos: el emisor anuncia un evento y la infraestructura decide a quién le llega; los suscriptores se invocan implícitamente. → [[Estilos arquitectónicos]]
+- **ISO 9126** — Norma de calidad de producto con seis características: funcionalidad, fiabilidad, usabilidad, eficiencia, mantenibilidad y portabilidad. Es la lista del programa. → [[Atributos de calidad]]
+- **ISO/IEC 25010** — Sucesora de ISO 9126; asciende la seguridad y la compatibilidad a características de primer nivel, llegando a ocho. → [[Atributos de calidad]]
 
 ## L
 
@@ -108,6 +115,10 @@ líneas y el enlace a la nota donde se explica a fondo.
 - **Proceso de negocio** — Grupo de tareas lógicamente relacionadas, en cierta secuencia y manera, que emplean recursos de la organización para dar resultados en apoyo a sus objetivos. → [[Proceso de negocio]]
 - **Punto de vista arquitectónico** — Plantilla que describe la forma de crear y utilizar una perspectiva de la arquitectura. → [[Arquitectura de software]]
 
+## Q
+
+- **QAW (Quality Attribute Workshop)** — Método facilitado de siete pasos para generar, priorizar y refinar escenarios de calidad con los stakeholders. → [[Guía - Drivers de calidad y restricción]]
+
 ## R
 
 - **Realización** — Relación punteada con triángulo hueco: el elemento implementa una interfaz. → [[Relaciones y dependencias en UML]]
@@ -123,6 +134,7 @@ líneas y el enlace a la nota donde se explica a fondo.
 ## T
 
 - **Trabajador del negocio** — Quien ejecuta el proceso desde *adentro* del negocio; aparece en las realizaciones de CUN y **no** es un actor. → [[Realizaciones de casos de uso del negocio]]
+- **Tradeoff (de atributos)** — Ningún atributo de calidad se logra en aislamiento: lograr uno afecta a los otros, y casi todos afectan negativamente a la performance. → [[Atributos de calidad]]
 - **Trazabilidad bidireccional** — Hacia adelante y hacia atrás a la vez; la única completa y la que exigen los estándares. → [[Matriz de trazabilidad de requisitos]]
 - **Trazabilidad de requisitos** — Capacidad de describir y seguir la vida de un requisito en ambas direcciones, desde su origen hasta su despliegue (Gotel y Finkelstein). → [[Matriz de trazabilidad de requisitos]]
 - **Triángulo del proyecto** — Las tres restricciones alcance / costo / tiempo: se pueden fijar dos, la tercera queda como consecuencia. → [[Equilibrio de restricciones del proyecto]]
