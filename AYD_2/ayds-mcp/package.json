@@ -11,7 +11,9 @@
     "build": "tsc",
     "start": "node dist/src/index.js",
     "demo": "node dist/pruebas/demo.js",
-    "verificar": "node dist/pruebas/verificaciones.js"
+    "verificar": "node dist/pruebas/verificaciones.js",
+    "auditoria": "node dist/pruebas/auditoria.js",
+    "auditar-boveda": "node pruebas/auditar-boveda.mjs"
   },
   "engines": {
     "node": ">=20"

@@ -46,6 +46,8 @@ Cada RF es una herramienta MCP. La columna *escribe* es la que importa para la s
 | RF-08 | `registrar_resultado(tema, puntaje, comentarios?)` | Agrega una línea con fecha al registro de progreso | — | `05-Quizzes/progreso.md` |
 | RF-09 | `progreso()` | Resumen del progreso: temas evaluados, puntajes, pendientes | `05-Quizzes/progreso.md`, `01-Notas/` | — |
 | RF-10 | `referencia(herramienta?)` | El manual condensado de StarUML y Excalidraw, y el puente de la teoría al diagrama | `07-Referencias/` | — |
+| RF-11 | `metodo_tarea(entregable?)` | El método de trabajo para resolver una tarea, o la guía paso a paso de un entregable | `08-Tareas/` | — |
+| RF-12 | `enunciado(nombre?)` | El enunciado de una tarea, para poder citarlo textual | `08-Tareas/enunciados/` | — |
 
 > [!info] RF-10 se agregó el 2026-08-19
 > No estaba en el diseño original. Salió de una necesidad real: el cliente puede generar un
@@ -55,7 +57,16 @@ Cada RF es una herramienta MCP. La columna *escribe* es la que importa para la s
 > Encaja sin romper nada: sigue siendo servir conocimiento de la bóveda, sigue siendo solo
 > lectura, y sigue sin dibujar nada. Ver **DA-12**.
 
-Ocho de nueve son de lectura. **RF-08 es la única escritura de todo el servidor**, y toca un
+> [!info] RF-11 y RF-12 se agregaron el 2026-08-19
+> Salieron de un pedido concreto: ayuda para hacer las tareas, con un punto de inicio y ejemplos
+> visuales, siendo riguroso con lo que pide el enunciado.
+>
+> La tentación era una herramienta que reciba el enunciado y devuelva el entregable. **No se hizo**,
+> por tres razones: es lo contrario de lo que el estudiante pidió (guía, no solución), resolverle la
+> tarea le hace perder el parcial, y además sería razonar — que por diseño vive en el cliente
+> (RNF-09). Así que sirven **método**, no soluciones. Ver **DA-13**.
+
+Once de doce son de lectura. **RF-08 es la única escritura de todo el servidor**, y toca un
 único archivo.
 
 Dos requerimientos derivados que salieron del análisis y que conviene dejar escritos:
@@ -206,7 +217,7 @@ flowchart LR
     CU6 --- FS
 ```
 
-Fijate que **"Validar ruta dentro de la bóveda" es un `<<include>>` de los siete casos de uso**:
+Fijate que **"Validar ruta dentro de la bóveda" es un `<<include>>` de TODOS los casos de uso**:
 siempre ocurre, y el flujo completo de cada caso de uso está en el caso base más el incluido. Es
 exactamente el criterio de la [[Relación de inclusión include]] — se reusa en todos y simplifica
 la comprensión de cada uno. Si lo hubiera puesto como `<<extend>>` estaría diciendo que la
@@ -223,6 +234,7 @@ validación es opcional, y eso sería un agujero de seguridad escrito en UML.
 | CU5 Obtener flashcards | `obtener_flashcards` | Host | No |
 | CU6 Registrar resultado | `registrar_resultado` | Host | **Sí** |
 | CU7 Consultar progreso | `progreso` | Host | No |
+| CU8 Consultar método y enunciados | `referencia`, `metodo_tarea`, `enunciado` | Host | No |
 | VAL Validar ruta | interno, no expuesto | — | No |
 
 `VAL` **no se expone como herramienta**. Es comportamiento incluido, no una operación que el
@@ -354,6 +366,7 @@ Verificado hoy contra npm y `modelcontextprotocol.io`.
 | **DA-10** | **Logs a `stderr`** | En stdio, `stdout` transporta JSON-RPC. Un `console.log` corrompe la trama (RNF-04) | `console.log`: rompe el protocolo de forma silenciosa y confusa |
 | **DA-11** | **Proyecto fuera de la bóveda (`../ayds-mcp/`)** | `node_modules` en una bóveda de Obsidian son decenas de miles de archivos: indexa basura y ensucia el grafo | Dentro de la bóveda con `.obsidianignore`: frágil, se olvida |
 | **DA-12** | **Las referencias de herramientas van en `07-Referencias/`, no en `01-Notas/`** | Dos razones: (a) no son material de la materia y ensuciarían `listar_temas`; (b) `progreso()` calcula los pendientes cruzando con los `tema` de `01-Notas/`, así que "StarUML" quedaría como tema pendiente de examen para siempre | Ponerlas en `01-Notas/` con un `tema` especial: más simple pero contamina dos herramientas |
+| **DA-13** | **Las herramientas de tarea sirven método, no soluciones** | El estudiante pidió guía paso a paso, no el entregable armado. Y generar el entregable sería razonar, que vive en el cliente (RNF-09) | Una herramienta `resolver_tarea(enunciado)`: le haría aprobar la tarea y perder el parcial |
 
 ### 5.1 Stack verificado
 

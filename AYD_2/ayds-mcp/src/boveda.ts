@@ -78,7 +78,21 @@ export function normalizar(texto: string): string {
  * a veces si y a veces no segun como lo escriba el modelo.
  */
 export function clave(texto: string): string {
-  return normalizar(texto).toLowerCase().trim();
+  return (
+    normalizar(texto)
+      .toLowerCase()
+      .trim()
+      // Y ademas SIN ACENTOS. La boveda esta en espanol y esta llena de acentos
+      // ("Descripcion textual", "reutilizacion", "Generalizacion"), pero el modelo
+      // — y una persona apurada — los escribe indistintamente. Sin esto,
+      // buscar("reutilizacion") devuelve 0 resultados aunque la palabra este en
+      // tres notas, y eso se lee como "no hay material" cuando si lo hay.
+      //
+      // Se descompone a NFD para separar la letra de su tilde, se borran los
+      // diacriticos (categoria Unicode Mn) y queda la letra base.
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -95,6 +109,8 @@ export const CARPETAS = {
   // Segundo cerebro de HERRAMIENTAS (StarUML, Excalidraw) y el puente entre la
   // teoria y el diagrama. Va aparte de 01-Notas a proposito: ver referencias.ts.
   referencias: "07-Referencias",
+  // Metodo de trabajo, guias paso a paso por entregable y enunciados del curso.
+  tareas: "08-Tareas",
 } as const;
 
 /** RF-08: la UNICA ruta que este servidor puede escribir (RNF-02). */
@@ -154,7 +170,7 @@ export function raiz(): string {
  * Convierte una ruta relativa a la boveda en una ruta absoluta VERIFICADA.
  *
  * Este es el `<<include>>` que el diagrama de casos de uso del diseno pone en
- * los siete casos de uso: siempre se ejecuta, nunca es opcional.
+ * todos los casos de uso: siempre se ejecuta, nunca es opcional.
  *
  * COMO SE ROMPE UNA VALIDACION DE RUTAS (y como lo evitamos):
  *

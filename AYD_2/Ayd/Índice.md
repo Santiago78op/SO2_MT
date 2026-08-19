@@ -22,8 +22,10 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 | `02-Diagramas/` | Diagramas exportados (`.excalidraw`, `.svg`, imágenes). |
 | [[03-Glosario]] | Glosario global de términos. |
 | `04-Flashcards/` | Tarjetas de repaso por tema (`pregunta::respuesta`). |
+| `00-Fuentes/lecturas/` | Lecturas complementarias en PDF (Reynoso). |
 | `05-Quizzes/` | Quizzes generados y mis resultados, con fecha. |
 | `06-Proyecto-MCP/` | El proyecto práctico: diseño del servidor MCP `tutor-ayds`. |
+| `08-Tareas/` | Método de trabajo, guías paso a paso por entregable, planes de tarea y enunciados. |
 | `07-Referencias/` | Manual de las herramientas de dibujo (StarUML, Excalidraw) y el puente de la teoría al diagrama. No es materia de examen. |
 
 ## Notas por tema
@@ -39,6 +41,8 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Proceso de diseño arquitectónico]] — los cuatro pasos, el producto final y las comprobaciones
 - [[Equilibrio de restricciones del proyecto]] — triángulo, diagrama de Kiviat y cubo de dimensiones
 - [[Arquitectura en el ciclo de vida del software]] — por qué es iterativa y no una fase
+- [[Diagrama de despliegue]] — punto 1.7: la vista física, la estructura de despliegue y la notación UML
+- [[Estilos arquitectónicos]] — punto 1.9: el catálogo de estilos, sus canjes de atributos y las trampas típicas
 
 ### Requisitos
 
@@ -64,6 +68,24 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Flashcards - Arquitectura de software]] (20 tarjetas)
 - [[Flashcards - Casos de uso del negocio]] (27 tarjetas)
 - [[Flashcards - Trazabilidad de requisitos]] (25 tarjetas)
+- [[Flashcards - Diagrama de despliegue]] (23 tarjetas)
+- [[Flashcards - Estilos arquitectónicos]] (24 tarjetas)
+
+## Tareas
+
+- [[_Método para resolver una tarea]] — el método general: punto de inicio y 6 pasos
+- [[Plan - Caso 1 FarmaHosp]] — la rúbrica desarmada: 4 criterios, 100 puntos, y las ambigüedades a preguntar
+- [[Guía - Caso de negocio]] — la secuencia canónica: contexto → core → primera descomposición → CDU expandidos → matriz
+- [[Guía - Diagrama de casos de uso del negocio]] — paso a paso con ejemplo visual incremental
+- [[Guía - Matrices de trazabilidad]] — las tres matrices que pide la rúbrica (20 pts)
+
+## Referencias de herramientas
+
+No es materia de examen: es el manual de las herramientas del ecosistema.
+
+- [[StarUML]] — los 7 tipos de Mermaid importables y qué se pierde en el camino
+- [[Excalidraw]] — los 5 tipos nativos y el fallback a imagen SVG
+- [[De la teoría al diagrama]] — el puente: qué sintaxis usar para cada diagrama de la materia
 
 ## Contenido del curso — estado real
 
@@ -78,9 +100,9 @@ El detalle punto por punto está en [[Programa oficial del curso]].
 - [x] 1.4 Pasos para la definición — [[Proceso de diseño arquitectónico]]
 - [ ] 1.5 ¿Qué se tiene en cuenta para el diseño? — parcial: [[Ciclo de influencias en la arquitectura]], [[Equilibrio de restricciones del proyecto]]
 - [x] 1.6 Arquitectura y Requerimientos (CDU de negocio) — bloque de casos de uso + [[Matriz de trazabilidad de requisitos]]
-- [ ] **1.7 Diagramas de Despliegue** — sin nota; solo mencionado en [[Modelo 4+1 vistas]]
-- [ ] 1.8 Estructuras y Vistas · Categorías de Estructuras — parcial: [[Estructuras y vistas arquitectónicas]]
-- [ ] **1.9 Géneros y Estilos Arquitectónicos** — sin nada
+- [x] **1.7 Diagramas de Despliegue** — [[Diagrama de despliegue]] (núcleo de la presentación + complemento del SAIP y Reynoso)
+- [ ] 1.8 Estructuras y Vistas · Categorías de Estructuras — parcial: [[Estructuras y vistas arquitectónicas]]; las **tres categorías** están en [[Diagrama de despliegue]] §3
+- [x] **1.9 Géneros y Estilos Arquitectónicos** — [[Estilos arquitectónicos]] (**complemento entero**: Reynoso + SAIP + guía; sin material de clase)
 
 ### Unidad 2 — Calidad del Software
 
@@ -107,8 +129,8 @@ Lo que **falta material** para poder escribir la nota, ordenado por urgencia:
 
 | Prioridad | Qué falta | Por qué urge |
 |---|---|---|
-| **Alta** | **1.7 Diagramas de Despliegue** | Entra en el primer parcial |
-| **Alta** | **1.9 Géneros y Estilos Arquitectónicos** | Se está dando ahora (17–24 de agosto) |
+| **Alta** | Presentación de **1.9** para validar [[Estilos arquitectónicos]], que hoy es todo complemento | Se está dando ahora (17–24 de agosto) |
+| **Alta** | **Arquitectura candidata**, **arquitectura de referencia** y **on premise vs cloud** — el material local casi no los cubre | Parte de 1.9 |
 | Media | 1.8 Categorías de Estructuras | Segundo parcial |
 | Media | Unidad 2 completa (Calidad del Software) | Se da del 25 de agosto al 7 de septiembre |
 | Baja | Unidades 3 y 4 | Septiembre y octubre |

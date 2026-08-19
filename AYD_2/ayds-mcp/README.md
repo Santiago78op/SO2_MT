@@ -189,7 +189,7 @@ ventana: salí de la app del todo).
 
 ---
 
-## Las 10 herramientas
+## Las 12 herramientas
 
 | Herramienta | Qué devuelve | Escribe |
 |---|---|---|
@@ -203,8 +203,10 @@ ventana: salí de la app del todo).
 | `registrar_resultado(tema, puntaje, comentarios?)` | Agrega una línea a `05-Quizzes/progreso.md` | **Sí** |
 | `progreso()` | Temas evaluados, puntajes y temas pendientes | No |
 | `referencia(herramienta?)` | El manual de StarUML/Excalidraw y el puente de la teoría al diagrama | No |
+| `metodo_tarea(entregable?)` | El método para resolver una tarea, o la guía paso a paso de un entregable | No |
+| `enunciado(nombre?)` | El enunciado de una tarea, para citarlo textual | No |
 
-**Nueve de diez son de solo lectura.** La única escritura toca un único archivo.
+**Once de doce son de solo lectura.** La única escritura toca un único archivo.
 
 ### Cómo se identifican los diagramas
 
@@ -358,10 +360,13 @@ ayds-mcp/                    (fuera de la bóveda: node_modules son decenas de
 │   ├── diagramas.ts         RF-05, RF-06  ← el flujo cruzado
 │   ├── flashcards.ts        RF-07
 │   ├── progreso.ts          RF-08, RF-09  ← la única escritura
-│   └── referencias.ts       RF-10  ← el segundo cerebro de herramientas
+│   ├── referencias.ts       RF-10  ← el segundo cerebro de herramientas
+│   └── tareas.ts            RF-11, RF-12  ← método y guías de tareas
 └── pruebas/
     ├── demo.ts              Cliente MCP real: handshake + llamadas
-    └── verificaciones.ts    33 pruebas de seguridad, Unicode y escritura
+    ├── verificaciones.ts    33 pruebas de seguridad, Unicode y escritura
+    ├── auditoria.ts         Auditoría: las 12 herramientas por el protocolo MCP real
+    └── auditar-boveda.mjs   Auditoría: contenido de la bóveda y coherencia de la documentación
 ```
 
 Para entender el código, el orden que conviene: **`boveda.ts` → `index.ts` → el resto**.

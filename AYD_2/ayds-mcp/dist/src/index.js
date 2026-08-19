@@ -4,11 +4,11 @@
  *
  * Aca se hacen tres cosas y nada mas:
  *   1. Arrancar y validar la boveda (VAULT_PATH).
- *   2. Registrar las 10 herramientas con su descripcion para el modelo.
+ *   2. Registrar las 12 herramientas con su descripcion para el modelo.
  *   3. Conectar el transporte stdio y quedarse escuchando.
  *
  * La logica de cada herramienta vive en su modulo (notas.ts, glosario.ts,
- * diagramas.ts, flashcards.ts, progreso.ts, referencias.ts). Este archivo es la CAPA DE
+ * diagramas.ts, flashcards.ts, progreso.ts, referencias.ts, tareas.ts). Este archivo es la CAPA DE
  * PRESENTACION: traduce entre el protocolo MCP y esos modulos.
  *
  * ------------------------------------------------------------------------
@@ -32,6 +32,7 @@ import { listarDiagramas, obtenerDiagrama } from "./diagramas.js";
 import { obtenerFlashcards } from "./flashcards.js";
 import { obtenerProgreso, registrarResultado } from "./progreso.js";
 import { listarReferencias, obtenerReferencia } from "./referencias.js";
+import { listarEnunciados, listarGuias, obtenerEnunciado, obtenerMetodo } from "./tareas.js";
 function texto(cuerpo) {
     return { content: [{ type: "text", text: cuerpo }] };
 }
@@ -444,6 +445,96 @@ server.registerTool("referencia", {
     ].join("\n");
 }));
 // ---------------------------------------------------------------------------
+// RF-11 — metodo_tarea
+// ---------------------------------------------------------------------------
+server.registerTool("metodo_tarea", {
+    title: "Metodo y guia paso a paso para una tarea",
+    description: "Devuelve el METODO de trabajo para resolver una tarea del curso, o la guia paso a paso de " +
+        "un entregable concreto. Sin argumento devuelve el metodo general, que arranca con el PUNTO " +
+        "DE INICIO (el enunciado, no el diagrama) y los 6 pasos. " +
+        "USALA EN CUANTO EL ESTUDIANTE MENCIONE UNA TAREA, un entregable o pregunte 'por donde " +
+        "empiezo'. " +
+        "Las guias traen: el punto de inicio, los pasos en orden, un EJEMPLO VISUAL de otro dominio " +
+        "que crece etapa por etapa, una CHECKLIST DE RIGOR donde cada item cita la regla de teoria y " +
+        "la nota de donde sale, y un anti-ejemplo con los errores que se descuentan. " +
+        "IMPORTANTE — COMO USARLA: esto es para GUIAR, no para resolver. Acompaña al estudiante paso " +
+        "a paso, hace que EL decida en cada 'tu turno', y NO produzcas el diagrama, la tabla ni el " +
+        "documento por el. Si le entregas el trabajo hecho, aprueba la tarea y pierde el parcial. " +
+        "Verifica siempre contra la teoria de las presentaciones (leer_nota), que es lo que se " +
+        "evalua: el enunciado manda sobre todo, despues la clase, y el material complementario " +
+        "nunca contradice a los dos primeros. " +
+        "Valores utiles: sin argumento (metodo general), o 'diagrama de casos de uso del negocio'.",
+    inputSchema: z.object({
+        entregable: z
+            .string()
+            .optional()
+            .describe("Tipo de entregable del que se quiere la guia paso a paso. Si se omite, devuelve el " +
+            "metodo general de trabajo con el punto de inicio y los 6 pasos."),
+    }),
+    annotations: { readOnlyHint: true },
+}, async ({ entregable }) => ejecutar("metodo_tarea", () => {
+    const d = obtenerMetodo(entregable);
+    const otras = listarGuias().filter((g) => g.nombre !== d.nombre);
+    const lineas = [
+        d.esMetodoGeneral ? `# Metodo general de trabajo` : `# Guia: ${d.nombre}`,
+        `Ruta en la boveda: ${d.ruta}`,
+    ];
+    if (d.entregable)
+        lineas.push(`Entregable: ${d.entregable}`);
+    lineas.push("", "RECORDATORIO: guiar paso a paso, no resolver. El estudiante hace el entregable.", "", "--- contenido ---", "", d.contenido);
+    if (otras.length > 0) {
+        lineas.push("", "--- otras guias disponibles ---");
+        for (const o of otras) {
+            lineas.push(`- ${o.nombre}${o.entregable ? `  (entregable: ${o.entregable})` : ""}`);
+        }
+    }
+    return lineas.join("\n");
+}));
+// ---------------------------------------------------------------------------
+// RF-12 — enunciado
+// ---------------------------------------------------------------------------
+server.registerTool("enunciado", {
+    title: "Consultar el enunciado de una tarea",
+    description: "Devuelve el enunciado de una tarea guardado en 08-Tareas/enunciados/, o el listado de los " +
+        "que hay. Sirve para poder CITAR TEXTUAL lo que pide la tarea, que es el paso 1 del metodo: " +
+        "desarmar el enunciado en entregables, restricciones, formato y criterios de calificacion, " +
+        "sin parafrasear. " +
+        "Usala antes de empezar cualquier tarea, junto con metodo_tarea. " +
+        "Si el enunciado esta en PDF se lista pero NO se puede leer su texto: en ese caso pedile al " +
+        "estudiante que lo pegue en un .md o que te lo copie, y decilo en vez de adivinar el " +
+        "contenido. Si algo del enunciado es ambiguo, marcalo como pregunta para el auxiliar en vez " +
+        "de asumir una interpretacion.",
+    inputSchema: z.object({
+        nombre: z
+            .string()
+            .optional()
+            .describe("Nombre del enunciado. Si se omite, devuelve la lista de los que hay guardados."),
+    }),
+    annotations: { readOnlyHint: true },
+}, async ({ nombre }) => ejecutar("enunciado", () => {
+    if (!nombre || nombre.trim() === "") {
+        const todos = listarEnunciados();
+        if (todos.length === 0) {
+            return (`No hay enunciados guardados todavia.
+` +
+                `Para usarlos, poner el archivo en 08-Tareas/enunciados/: en .md se puede leer y ` +
+                `citar textual; en .pdf solo se lista el nombre.`);
+        }
+        const lineas = [`${todos.length} enunciado(s) guardados:`, ""];
+        for (const e of todos) {
+            lineas.push(`- ${e.nombre}  (${e.formato})${e.contenido === null ? "  [no legible desde aca]" : ""}`);
+        }
+        return lineas.join("\n");
+    }
+    const e = obtenerEnunciado(nombre);
+    if (e.contenido === null) {
+        return (`El enunciado "${e.nombre}" existe en ${e.ruta} pero esta en formato ${e.formato} y no ` +
+            `puedo leer su texto. Pedile al estudiante que lo pegue como .md en ` +
+            `08-Tareas/enunciados/, o que te copie el texto.`);
+    }
+    return [`# Enunciado: ${e.nombre}`, `Ruta: ${e.ruta}`, "", "--- contenido ---", "", e.contenido].join("\n");
+}));
+// ---------------------------------------------------------------------------
 // Red de seguridad global (RNF-03)
 // ---------------------------------------------------------------------------
 /**
@@ -467,7 +558,7 @@ async function main() {
     // console.error, NO console.log: stdout es del protocolo (RNF-04).
     console.error(`[tutor-ayds] Servidor MCP escuchando en stdio.`);
     console.error(`[tutor-ayds] Boveda: ${raiz()}`);
-    console.error(`[tutor-ayds] 10 herramientas registradas (9 de lectura, 1 de escritura).`);
+    console.error(`[tutor-ayds] 12 herramientas registradas (11 de lectura, 1 de escritura).`);
 }
 main().catch((error) => {
     console.error("[tutor-ayds] Error fatal al conectar el transporte:", error);

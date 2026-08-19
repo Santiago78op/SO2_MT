@@ -103,6 +103,11 @@ export function buscar(consulta, maximo = 40) {
     for (const a of listarArchivos(".", [".md"])) {
         objetivos.push(a);
     }
+    // Y las guias de tareas: si buscas "checklist" o "actor" querés encontrar tanto la
+    // teoría como el paso de la guía donde esa regla se verifica.
+    for (const a of listarArchivos(CARPETAS.tareas, [".md"])) {
+        objetivos.push(rutaRelativa(CARPETAS.tareas, a));
+    }
     for (const ruta of objetivos) {
         let contenido;
         try {
