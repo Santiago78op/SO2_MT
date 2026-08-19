@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // Apuntamos a una version moderna de JS porque exigimos Node >= 20 (DA-02).
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    // El SDK v2 se distribuye como ESM. "nodenext" hace que TypeScript resuelva
+    // los imports igual que Node, respetando el campo "exports" del package.json
+    // de cada dependencia (que es como el SDK expone ".../server/stdio").
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    "outDir": "dist",
+    "rootDir": ".",
+
+    // Chequeos estrictos: las entradas de una herramienta MCP vienen de un modelo,
+    // o sea texto libre. Cuanto mas nos avise el compilador, mejor (RNF-03).
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+
+    "declaration": false,
+    "sourceMap": true,
+    "skipLibCheck": true,
+
+    // Ojo con esto: TypeScript 7 NO toma @types/node automaticamente como lo
+    // hacia TypeScript 5. Sin esta linea, tsc no encuentra ni "node:fs" ni
+    // "process" ni "console" y tira ~25 errores que parecen otra cosa
+    // ("Cannot find name 'node:fs'"). Si al clonar el proyecto ves esos errores,
+    // este es el motivo.
+    "types": ["node"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts", "pruebas/**/*.ts"]
+}

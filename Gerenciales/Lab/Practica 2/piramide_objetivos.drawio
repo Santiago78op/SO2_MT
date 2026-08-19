@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram id="piramide-quetzaldev" name="Pirámide de objetivos">
+    <mxGraphModel dx="1422" dy="794" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="titulo" value="Pirámide de objetivos — Estrategia digital de QuetzalDev" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#4A2C17;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1090" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="n1" value="&lt;b&gt;PROPÓSITO&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;razón de ser&lt;/font&gt;" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=60;fillColor=#4A2C17;strokeColor=none;fontColor=#FFFFFF;fontSize=13;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="220" y="110" width="260" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="n2" value="&lt;b&gt;OBJETIVO ESTRATÉGICO&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;sección 5.1&lt;/font&gt;" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=60;fillColor=#7B4B2A;strokeColor=none;fontColor=#FFFFFF;fontSize=13;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="228" width="380" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" value="&lt;b&gt;OBJETIVOS TÁCTICOS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;sección 5.2&lt;/font&gt;" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=60;fillColor=#B07D4F;strokeColor=none;fontColor=#FFFFFF;fontSize=13;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="100" y="346" width="500" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" value="&lt;b&gt;OBJETIVOS OPERATIVOS&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:10px;&quot;&gt;el trabajo de cada semana&lt;/font&gt;" style="shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;fixedSize=1;size=60;fillColor=#D8B08C;strokeColor=none;fontColor=#3E2312;fontSize=13;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="464" width="620" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="&lt;b&gt;Nivel 1 · Plan Permanente – Golden Circle&lt;/b&gt;&lt;br&gt;Popularizar el acceso al café de calidad y acompañar a las personas en su rutina diaria, sin importar lo acelerada que sea." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#3A3028;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="110" width="430" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="&lt;b&gt;Nivel 2 · Qué quiere lograr la empresa&lt;/b&gt;&lt;br&gt;100 pedidos en línea y 80 clientes nuevos durante el primer trimestre de operación digital (septiembre a noviembre de 2026)." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#3A3028;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="228" width="430" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="&lt;b&gt;Nivel 3 · Cómo se divide ese objetivo&lt;/b&gt;&lt;br&gt;Dar a conocer la marca · Reunir una base de contactos propia · Convertir las visitas en ventas · Fidelizar a los primeros clientes." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#3A3028;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="346" width="430" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="&lt;b&gt;Nivel 4 · Qué se hace en el día a día&lt;/b&gt;&lt;br&gt;Publicar en redes tres veces por semana · Pauta activa de Q2,000 al mes · Responder consultas en menos de cuatro horas · Correo quincenal · Revisar indicadores cada lunes." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontColor=#3A3028;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="464" width="430" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c1" style="edgeStyle=none;html=1;strokeColor=#C9BAAC;strokeWidth=2;endArrow=none;startArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n1" target="e1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" style="edgeStyle=none;html=1;strokeColor=#C9BAAC;strokeWidth=2;endArrow=none;startArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n2" target="e2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" style="edgeStyle=none;html=1;strokeColor=#C9BAAC;strokeWidth=2;endArrow=none;startArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n3" target="e3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" style="edgeStyle=none;html=1;strokeColor=#C9BAAC;strokeWidth=2;endArrow=none;startArrow=none;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n4" target="e4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="linea" value="" style="line;strokeWidth=1;html=1;strokeColor=#DED4CA;" vertex="1" parent="1">
+          <mxGeometry x="40" y="600" width="1090" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="nota1" value="Hacia abajo, cada objetivo se descompone en otros más concretos." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#78695C;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="612" width="500" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="nota2" value="Hacia arriba, ninguna acción existe si no aporta al nivel superior." style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#78695C;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="630" y="612" width="500" height="26" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
