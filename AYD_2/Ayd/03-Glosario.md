@@ -14,11 +14,13 @@ líneas y el enlace a la nota donde se explica a fondo.
 ## A
 
 - **Actor del negocio** — Rol que alguien o algo juega cuando interactúa con el negocio para beneficiarse de sus resultados. Siempre modela algo *fuera* del negocio. → [[Actor del negocio]]
+- **Agregación** — Relación es-parte-de con rombo **hueco** en el todo: la parte sobrevive al todo. → [[Relaciones y dependencias en UML]]
 - **allocated-to / migrates-to** — Las dos relaciones de la estructura de despliegue: dónde reside un elemento de software, y a dónde puede migrar si la asignación es dinámica. → [[Diagrama de despliegue]]
 - **Arquitecting** — El proceso de la arquitectura del software. → [[Proceso de diseño arquitectónico]]
 - **Arquitecto de software** — Rol responsable de obtener los requisitos del cliente, generar el diseño de arquitectura, dar soluciones a los desarrolladores e integrar los requerimientos no funcionales. → [[Arquitecto de software]]
 - **Arquitectura de software** — La organización fundamental de un sistema: sus componentes, la relación entre ellos y con el ambiente, y los principios que guían su diseño y evolución. → [[Arquitectura de software]]
 - **Artefacto (UML)** — El archivo físico que se despliega (`.jar`, `.ear`, `.dll`); se dibuja como rectángulo con la esquina doblada y se une a su nodo con `«deploy»`. → [[Diagrama de despliegue]]
+- **Asociación** — Vínculo estructural estable entre elementos, con línea llena. → [[Relaciones y dependencias en UML]]
 - **Asociación (en CUN)** — Relación entre un actor del negocio y un CUN que significa que el actor envía y/o recibe mensajes. → [[Modelo de casos de uso del negocio]]
 - **Atributos de un buen diseño** — Durabilidad, utilidad y encanto; en software: de confianza y fácil de evolucionar, fácil de implementar, entendible. → [[Arquitectura de software]]
 
@@ -33,13 +35,16 @@ líneas y el enlace a la nota donde se explica a fondo.
 - **Caso de uso del negocio (CUN)** — Secuencia de acciones realizadas en el negocio que producen un resultado de valor observable para ciertos actores del negocio. Representa un proceso de negocio. → [[Caso de uso del negocio]]
 - **Ciclo de influencias en la arquitectura** — Las cuatro influencias (stakeholders, organizaciones de desarrollo, ambiente técnico, experiencia del arquitecto) que moldean la arquitectura y que el sistema resultante retroalimenta. → [[Ciclo de influencias en la arquitectura]]
 - **Clasificación de procesos** — Técnica que separa los procesos del negocio en núcleo, soporte y gerenciales. → [[Identificación de procesos del negocio]]
+- **Cliente y proveedor (en una dependencia)** — El cliente es el que depende; el proveedor, el que se depende. La flecha sale del cliente. → [[Relaciones y dependencias en UML]]
 - **Cliente-servidor** — Estilo asimétrico: el cliente siempre inicia la petición y los clientes no se comunican entre sí. → [[Estilos arquitectónicos]]
+- **Composición** — Relación es-parte-de con rombo **macizo** en el todo: si muere el todo, mueren las partes. → [[Relaciones y dependencias en UML]]
 - **Comprobaciones** — Revisión, en cada etapa, de que los productos del diseño sean claros, correctos, completos y consistentes con los requerimientos y entre sí. → [[Proceso de diseño arquitectónico]]
 - **CUN expandidos** — Los CUN con relaciones de inclusión, extensión y generalización-especialización. → [[Caso de uso del negocio]]
 - **Curso alterno** — La variante, excepción o desvío del flujo de trabajo, contada en el texto del mismo caso de uso. → [[Descripción textual de casos de uso]]
 
 ## D
 
+- **Dependencia (UML)** — Relación débil de línea **punteada** y punta abierta, del cliente al proveedor: si cambia el proveedor puede haber que cambiar el cliente. → [[Relaciones y dependencias en UML]]
 - **Deployability** — Atributo de calidad que mide la capacidad de despliegue; la estructura de despliegue es la clave para lograrlo. → [[Diagrama de despliegue]]
 - **Descripción de la arquitectura** — Conjunto de productos que documentan la arquitectura. → [[Arquitectura de software]]
 - **Descripción textual (de un CU)** — Documento con nombre, actores, propósito, resumen, flujo de trabajo (básico y alterno), prioridad y mejoras. → [[Descripción textual de casos de uso]]
@@ -53,6 +58,7 @@ líneas y el enlace a la nota donde se explica a fondo.
 ## E
 
 - **Escenarios (vista de)** — La vista "+1" del modelo 4+1: los casos de uso que amarran las otras cuatro vistas y dan trazabilidad. → [[Modelo 4+1 vistas]]
+- **Estereotipo** — Extensión de UML que define un tipo especializado; se escribe entre `«»` y se aplica tanto a clases como a **relaciones**. → [[Relaciones y dependencias en UML]]
 - **Estereotipo** — En el modelo de CUN, los dos elementos base: actor del negocio y caso de uso del negocio. → [[Modelo de casos de uso del negocio]]
 - **Estilo arquitectónico** — Concepto descriptivo que define una forma de organización arquitectónica; conjuga componentes, conectores, configuraciones y restricciones (Reynoso). → [[Estilos arquitectónicos]]
 - **Estructura arquitectónica** — El conjunto de elementos en sí, tal como existen en el software o el hardware. Se representa mediante vistas. → [[Estructuras y vistas arquitectónicas]]
@@ -104,6 +110,7 @@ líneas y el enlace a la nota donde se explica a fondo.
 
 ## R
 
+- **Realización** — Relación punteada con triángulo hueco: el elemento implementa una interfaz. → [[Relaciones y dependencias en UML]]
 - **Realizaciones de CUN** — Muestran cómo colaboran los trabajadores y entidades de negocio para ejecutar el proceso; se documentan con diagramas de actividad, clases y secuencia, y descripción textual. → [[Realizaciones de casos de uso del negocio]]
 - **Repositorio** — Variante pasiva del estilo centrado en datos: los accesores tienen la iniciativa y el esquema de datos es el contrato común. → [[Estilos arquitectónicos]]
 - **Requisito huérfano** — Requisito sin diseño o sin caso de prueba asociado; hueco de cobertura. → [[Matriz de trazabilidad de requisitos]]

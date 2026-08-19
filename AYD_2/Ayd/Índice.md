@@ -43,6 +43,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Arquitectura en el ciclo de vida del software]] — por qué es iterativa y no una fase
 - [[Diagrama de despliegue]] — punto 1.7: la vista física, la estructura de despliegue y la notación UML
 - [[Estilos arquitectónicos]] — punto 1.9: el catálogo de estilos, sus canjes de atributos y las trampas típicas
+- [[Relaciones y dependencias en UML]] — qué significa cada flecha, hacia dónde apunta, y el puente con la matriz de dependencias
 
 ### Requisitos
 
@@ -70,6 +71,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Flashcards - Trazabilidad de requisitos]] (25 tarjetas)
 - [[Flashcards - Diagrama de despliegue]] (23 tarjetas)
 - [[Flashcards - Estilos arquitectónicos]] (24 tarjetas)
+- [[Flashcards - Relaciones y dependencias en UML]] (22 tarjetas)
 
 ## Tareas
 
