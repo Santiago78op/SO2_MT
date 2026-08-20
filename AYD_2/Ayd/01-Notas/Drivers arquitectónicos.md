@@ -97,6 +97,30 @@ calidad no es la de ISO 9126** de la unidad 2.
 
 ![[adjuntos/capturas-clase/drivers-de-calidad.png]]
 
+> [!important] La definición de la diapositiva simplifica: uno de los siete no es del sistema
+> Ella define los drivers de calidad como *"definen cómo debe comportarse **el sistema**"*. Eso vale
+> para seis de los siete, pero **no para mantenibilidad**: *"cobertura de pruebas > 80 %"* y *"añadir
+> un reporte en menos de 2 días-persona"* no son comportamiento del sistema — ahí **quien responde es
+> el equipo**.
+>
+> | Atributo | ¿Quién responde al estímulo? | Categoría |
+> |---|---|---|
+> | Rendimiento · Escalabilidad · Disponibilidad · Seguridad · Usabilidad · Fiabilidad | **el sistema**, corriendo | **de ejecución** |
+> | **Mantenibilidad** | **el equipo**, al modificar | **del desarrollo** |
+>
+> No es un error de la diapositiva: es una **simplificación** que cubre la mayoría de los casos. Pero
+> conviene tenerlo claro porque es una pregunta cruzada fácil de hacer: *"¿la mantenibilidad define
+> cómo se comporta el sistema?"* → **no**: define cuánto le cuesta al equipo cambiarlo.
+>
+> El respaldo está en [[Atributos de calidad]] §4, con la distinción del SAIP: *"un estímulo para
+> modificabilidad es **una solicitud de modificación**"*, y la respuesta la ejecutan **los
+> desarrolladores**, no el sistema.
+>
+> **Consecuencia práctica al escribir el escenario:** si el que responde es el sistema, el escenario
+> se mide corriéndolo; si el que responde es el equipo, se mide en **esfuerzo** (días-persona,
+> cobertura, cantidad de archivos tocados). Por eso los dos ejemplos de mantenibilidad de ella están
+> en esas unidades y no en milisegundos.
+
 > [!warning] Son SIETE, no los seis del programa
 > | | Programa (unidad 2) | Drivers de calidad (esta clase) |
 > |---|---|---|

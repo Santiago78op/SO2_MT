@@ -172,7 +172,10 @@ Revisión honesta de si el complemento de la bóveda cae **dentro** de la biblio
 > [!note] Dos de estos ya aparecen en clase
 > **Bass/Clements/Kazman** es la fuente de la definición de arquitectura que está en
 > [[Arquitectura de software]] ("la estructura de estructuras..."), y el PDF
-> `software-architecture-in-practice-4th-edition.pdf` está en la carpeta `Unidad_1` del disco.
+> el libro está **en la bóveda**, en
+> `00-Fuentes/lecturas/Bass, Clements, Kazman - Software Architecture in Practice 4a ed.pdf`.
+> Es el único libro de la bibliografía oficial que viaja con el repo, justamente porque es el que
+> las notas citan.
 > Rozanski y Woods es de donde sale el vocabulario de **vistas y perspectivas** de
 > [[Estructuras y vistas arquitectónicas]].
 
@@ -194,6 +197,17 @@ Dos cosas que conectan con lo que ya tengo:
 
 Y en el disco ya hay una presentación de patrones (Factory, State, Strategy) en
 `Unidad_1/presentacion-patrones/`, que corresponde a la unidad de patrones del laboratorio.
+
+> [!note] Qué material del curso **no** viaja en el repo
+> Estos quedaron fuera a propósito, en `AYD_2/Unidad_1/` del disco local:
+>
+> | Archivo | Por qué no viaja |
+> |---|---|
+> | `articulo.pdf` (18 MB) | contenido no identificado; nada lo cita |
+> | `Guia_Arquitectura_Software.pdf` (2,7 MB) | ya está destilado en las notas; es una guía derivada, no fuente oficial |
+> | `Introduccion.PDF`, `Practica 1.pdf`, `presentacion_patrones.pdf` | material de laboratorio, fuera del contenido teórico |
+>
+> Si alguno hace falta en la Mac, hay que copiarlo a mano o agregarlo a `00-Fuentes/lecturas/`.
 
 ---
 

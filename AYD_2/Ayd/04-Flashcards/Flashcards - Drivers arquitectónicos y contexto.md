@@ -10,7 +10,8 @@ Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una 
 pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 Salen de [[Drivers arquitectónicos]], [[Diagrama de contexto]], [[Categorías de estructuras]] y
-[[Proceso de diseño arquitectónico]]. **Todas son de clase** — sin complemento.
+[[Proceso de diseño arquitectónico]] — todas de **diapositivas de clase**. Las respuestas marcadas
+**«(lectura nuestra)»** derivan de ellas pero **no son texto de la catedrática**.
 
 #flashcards/arquitectura
 
@@ -20,7 +21,7 @@ Dá la definición de **driver arquitectónico** de la clase.::Son los **factore
 
 ¿Un driver es un RF?::Un RF es **uno de los tres tipos** de driver, no el driver. La clase titula la diapositiva *"Drivers Arquitectónicos: RF – Requisitos Funcionales"*, con el calificativo puesto — igual que la rúbrica.
 
-¿Todo requisito es un driver?::**No.** La definición dice "factores **críticos**". El filtro es estructural: si el requisito cambia y hay que cambiar la estructura, es driver.
+¿Todo requisito es un driver?::**No.** La definición dice "factores **críticos**" y que "determinan su estructura fundamental". De ahí se sigue el filtro: si el requisito cambia y hay que cambiar la estructura, es driver. **«(lectura nuestra)»**
 
 ¿Qué son los **drivers RF** según la clase?::**Funcionalidades específicas que moldean la estructura del sistema.** La palabra clave es "moldean": no es cualquier funcionalidad, es la que le da forma a la estructura.
 
@@ -34,7 +35,7 @@ Nombrá los **siete** atributos de la diapositiva de drivers de calidad.::**Rend
 
 ¿Qué dos atributos suben a primer nivel respecto de ISO 9126, y por qué tiene sentido?::**Seguridad** (que en 9126 es subcaracterística de funcionalidad) y **Disponibilidad** (que es subcaracterística de fiabilidad). Tiene sentido porque es lo mismo que hacen ISO 25010 y el SAIP.
 
-¿Qué tienen en común **todos** los ejemplos de drivers de calidad de la clase?::**Todos llevan un número.** 300 ms, 10,000 peticiones, 99.99 %, AES-256, TLS 1.3, 80 % de cobertura, 2 días-persona, 3 clics, WCAG 2.1 AA. Un driver de calidad sin número no es driver, es un deseo.
+¿Qué tienen en común **todos** los ejemplos de drivers de calidad de la clase?::**Todos llevan un número.** 300 ms, 10,000 peticiones, 99.99 %, AES-256, TLS 1.3, 80 % de cobertura, 2 días-persona, 3 clics, WCAG 2.1 AA. Y de ahí la regla práctica: un driver de calidad sin número no se puede evaluar. **«(lectura nuestra)»**
 
 Dá dos ejemplos de driver de **rendimiento** de la clase.::Las consultas de búsqueda deben responder en **menos de 300 ms (percentil 95)**. El sistema debe soportar **10,000 peticiones simultáneas**.
 

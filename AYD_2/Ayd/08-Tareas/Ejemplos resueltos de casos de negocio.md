@@ -32,7 +32,9 @@ contra lo que estés armando.
 > [!important] Las tres reglas que se repiten en los cuatro casos
 > **1. El core es UNA sola elipse** y nombra el **negocio o sistema completo**. Nunca dos, nunca cinco.
 >
-> **2. La descomposición tiene entre 3 y 5 procesos.** No dos, no quince. Esa es la escala que ella usa.
+> **2. La descomposición tiene entre 3 y 5 procesos** en sus cuatro ejemplos (5, 5, 3, —).
+> **Ojo: es un patrón observado, no una regla que ella haya dictado.** Sirve como señal de alarma
+> —si te salen dos o quince, revisá— pero no como criterio para defender un número.
 >
 > **3. Los actores del core reaparecen en la descomposición.** En la Fábrica pasa de 3 a 6 porque al
 > abrir los procesos aparecen contrapartes que antes estaban implícitas (Banco, Contabilidad,
@@ -243,6 +245,11 @@ flowchart LR
 > **trabajadores** en las realizaciones, no como actores del core.
 >
 > Y notá que el **Paciente** sí es actor: es quien recibe el resultado de valor.
+>
+> **Y esto no es solo induccion de su ejemplo: tiene base doctrinal.** La diapositiva de
+> candidatos a actor incluye ***"otras partes de la organización, si ésta es grande"***, y el
+> concepto que lo unifica es el **campo de acción** — la frontera no es la empresa, es el campo que
+> estás modelando. Ver [[Actor del negocio]] §La frontera es el campo de acción.
 
 ### Generalización entre actores
 

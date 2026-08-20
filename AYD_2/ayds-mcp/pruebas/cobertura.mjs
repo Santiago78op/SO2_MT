@@ -67,6 +67,15 @@ const CASOS = [
   ["obtener_flashcards", { tema: "Drivers arquitectonicos y contexto" }, "factores cr"],
   ["obtener_flashcards", { tema: "CUN, convenios y metodo" }, "paso 0"],
 
+  // --- REGRESION M-01: consultas en lenguaje natural que antes daban 0 resultados
+  ["buscar", { consulta: "diferencia entre include y extend" }, "inclusi"],
+  ["buscar", { consulta: "priorizar drivers" }, "priorizar"],
+  ["buscar", { consulta: "cuantos actores debe tener un caso de uso" }, "Convenios"],
+
+  // --- REGRESION M-03: leer_nota resuelve los alias del frontmatter
+  ["leer_nota", { nombre: "drivers" }, "factores cr"],
+  ["leer_nota", { nombre: "driver arquitectonico" }, "factores cr"],
+
   // --- REGRESION: la linea que explica el formato NO debe salir como tarjeta
   ["obtener_flashcards", { tema: "Drivers arquitectonicos y contexto", cantidad: 1 }, "driver arquitect"],
 

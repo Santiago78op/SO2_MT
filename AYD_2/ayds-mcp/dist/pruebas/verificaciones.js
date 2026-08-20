@@ -20,7 +20,7 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { ErrorHerramienta, clave, inicializarBoveda, raiz, rutaSegura, resolverArchivo, } from "../src/boveda.js";
 import { registrarResultado, leerRegistros, obtenerProgreso } from "../src/progreso.js";
-import { listarTemas } from "../src/notas.js";
+import { listarTemas, buscar } from "../src/notas.js";
 let pasadas = 0;
 let falladas = 0;
 function verificar(descripcion, condicion, detalle = "") {
@@ -189,6 +189,24 @@ verificar("cuenta las 3 evaluaciones", p.totalEvaluaciones === 3);
 verificar("'Tema de prueba' aparece como evaluado y NO como pendiente", p.temasEvaluados.some((t) => clave(t.tema) === clave("Tema de prueba")) &&
     !p.temasPendientes.some((t) => clave(t) === clave("Tema de prueba")));
 verificar("los pendientes salen de los temas de las notas", p.temasPendientes.every((t) => temasEnNotas.some((n) => clave(n) === clave(t))), `pendientes: ${p.temasPendientes.join(", ") || "(ninguno)"}`);
+// ---------------------------------------------------------------------------
+// M-01 / M-02 — buscar: tokens, sin duplicados y con puntaje
+// ---------------------------------------------------------------------------
+titulo("M-01 / M-02 — buscar por tokens y sin duplicados");
+// El glosario de la boveda temporal define "Alfa" como "primera letra". Una
+// consulta en lenguaje natural no contiene esa frase literal en ninguna linea.
+const porTokens = buscar("cual es la primera letra");
+verificar("encuentra por tokens una consulta que no aparece literal", porTokens.length > 0 && porTokens.some((c) => clave(c.fragmento).includes(clave("primera letra"))), `resultados: ${porTokens.length}`);
+// M-02: el glosario entraba dos veces a la lista de objetivos (push explicito +
+// listado de la raiz), asi que cada coincidencia salia duplicada.
+const dupes = buscar("primera letra");
+const llaves = dupes.map((c) => `${c.ruta}:${c.linea}`);
+verificar("ninguna coincidencia se repite (ruta:linea unicos)", llaves.length === new Set(llaves).size, `${llaves.length} resultados, ${new Set(llaves).size} unicos`);
+// La frase exacta tiene que puntuar mas que un match por tokens sueltos.
+const exacta = buscar("primera letra");
+verificar("la frase exacta puntua 100 o mas", exacta.length > 0 && (exacta[0]?.puntaje ?? 0) >= 100, `puntaje del primero: ${exacta[0]?.puntaje}`);
+// Consulta que queda sin tokens utiles tras las stopwords: no debe explotar.
+verificar("una consulta de solo stopwords no rompe", Array.isArray(buscar("de la que")));
 // ---------------------------------------------------------------------------
 // Limpieza y resultado
 // ---------------------------------------------------------------------------

@@ -14,7 +14,8 @@
     "verificar": "node dist/pruebas/verificaciones.js",
     "auditoria": "node dist/pruebas/auditoria.js",
     "auditar-boveda": "node pruebas/auditar-boveda.mjs",
-    "cobertura": "node pruebas/cobertura.mjs"
+    "cobertura": "node pruebas/cobertura.mjs",
+    "atlas": "node herramientas/atlas.mjs"
   },
   "engines": {
     "node": ">=20"

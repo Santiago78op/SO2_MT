@@ -1,6 +1,6 @@
 ---
 tema: Arquitectura de software
-fuente: "COMPLEMENTO — docs.staruml.io + Garland & Anthony cap. 5 + Reynoso + verificación propia del render Mermaid"
+fuente: "Tabla *Resumen de los Tipos de Relaciones en UML* (diapositiva de clase) + docs.staruml.io, Garland & Anthony cap. 5 y Reynoso (complemento) + verificación propia del render Mermaid"
 fecha: 2026-08-19
 ---
 
@@ -230,6 +230,32 @@ la piden enumeradas:
 >
 > Esa es la regla general de UML y sirve para no dudar: **dependencia = punteada**, **herencia =
 > llena**.
+
+### Siete grafías para dos relaciones: la tabla de reconciliación
+
+El material de clase escribe estos estereotipos de **siete formas distintas**, según el deck. Todas
+nombran **las mismas dos relaciones** — no hay diferencia semántica entre ellas:
+
+| Forma | Dónde aparece en el material |
+|---|---|
+| `«extiende»` · `«incluye»` | la tabla *Resumen de los Tipos de Relaciones* (la de arriba) |
+| `«extends»` · `«include»` | las diapositivas de definición (*Extensión* / *Inclusión*) |
+| `«extender»` | el expandido del restaurante, con guardas `{si se pidió vino}` |
+| `«includes»` · `«extends»` | el expandido *Procesamiento de Pedido* |
+
+> [!important] Las tres reglas para no equivocarse
+> **1. En una entrega: elegí UNA pareja y sé consistente.** Da igual cuál —`«include»`/`«extend»` es
+> la más común en UML— pero mezclarlas en el mismo documento se lee como descuido.
+>
+> **2. Al citar una diapositiva: citá textual.** Si estás reproduciendo su tabla resumen, va
+> `«extiende»`; si reproducís el expandido del restaurante, va `«extender»`. La cita se respeta.
+>
+> **3. Nunca son relaciones distintas.** Si en un examen aparecen dos grafías, no hay trampa: es la
+> misma relación con otro rótulo. Lo que cambia el significado es la **dirección de la flecha** y el
+> **tipo de línea**, no la palabra.
+
+Ver [[Relación de inclusión include]] y [[Relación de extensión extend]] para el mecanismo de cada
+una, y [[Ejemplos resueltos de casos de negocio]] para verlas usadas en sus cuatro casos.
 
 > [!important] La frase que distingue extiende de incluye, en una línea
 > **Extiende:** *"sin que éste tenga conocimiento"* — el base **no sabe** que lo extienden.

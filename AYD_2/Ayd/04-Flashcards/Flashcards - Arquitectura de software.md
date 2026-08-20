@@ -35,7 +35,7 @@ Según IEEE 1471, ¿qué es la arquitectura de software?::La organización funda
 
 ¿Cuáles son los tres beneficios de una arquitectura de software?::1) Proporciona la comunicación entre stakeholders. 2) Manifiesta las decisiones de diseño tempranamente. 3) Las arquitecturas como modelo reusable y transferible.
 
-¿Cuáles son los cuatro pasos del proceso de diseño arquitectónico?::1) Diseño de los datos. 2) Obtención de las representaciones de la estructura arquitectónica. 3) Análisis de alternativas de estilos o patrones arquitectónicos. 4) Elaboración de la arquitectura con un método de diseño.
+¿Cuáles son los cuatro pasos del proceso de diseño arquitectónico?::1) Diseño de los datos. 2) Obtención de las representaciones de la estructura arquitectónica. 3) Análisis de alternativas de estilos o patrones arquitectónicos. 4) Elaboración de la arquitectura con un método de diseño. **Ojo:** son los cuatro del **deck en PDF**; hay otras dos versiones de "los pasos" en el material — la lista de **7 actividades** y las **8 etapas** de la Figura 2-8. No confundirlas.
 
 ¿Qué cuatro propiedades se revisan en las comprobaciones de cada etapa del diseño?::Que los productos sean **claros, correctos, completos y consistentes** con los requerimientos y entre sí.
 
@@ -50,3 +50,7 @@ Completá: la arquitectura del software es el resultado de equilibrar ______ y _
 ¿Por qué la arquitectura no es una fase del ciclo de vida?::Porque es un **proceso iterativo** a través de requisitos y calidad: se va y se vuelve entre requisitos, atributos de calidad y decisiones de diseño.
 
 ¿Qué significa "menos es más" como beneficio de la arquitectura?::Que un **vocabulario restringido de alternativas de diseño** es bueno: un equipo con pocas formas acordadas de hacer las cosas es más consistente y más rápido que uno donde cada quien inventa.
+
+En el material hay **tres** versiones de "los pasos para definir una arquitectura". Nombralas y decí qué aporta cada una.::**1)** Los **4 pasos** del deck en PDF (datos → representaciones → alternativas de estilos → método de diseño). **2)** La lista de **7 actividades** (caso de negocio, requisitos, creación y selección, documentación, evaluación, implementación, aseguramiento) — es la más citable porque está en viñetas. **3)** Las **8 etapas** de la Figura 2-8 en 4 fases, con el **paso 0** (caso de negocio) y los lazos de refinamiento — la única que trae **experimentación** y una **decisión de ir/no ir**. Se reconcilian en [[Proceso de diseño arquitectónico]].
+
+Si en un parcial preguntan "¿cuáles son los pasos?" sin más contexto, ¿qué conviene responder?::La **lista de 7**: es la que ella dio en viñetas y la más reconocible. Y agregar una línea diciendo que el método completo (Figura 2-8) las organiza en **8 etapas y 4 fases** con el caso de negocio como **paso 0**. Eso demuestra que conocés las tres sin contradecirte.

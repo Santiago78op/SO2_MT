@@ -10,7 +10,8 @@ Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una 
 pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 Salen de [[Convenios del diagrama de CUN]], [[Método de diseño centrado en la arquitectura]],
-[[Guía - Caso de negocio]] y [[Descripción textual de casos de uso]]. **Todas de clase.**
+[[Guía - Caso de negocio]] y [[Descripción textual de casos de uso]] — todas de **diapositivas de
+clase**. Las marcadas **«(lectura nuestra)»** derivan de ellas pero no son texto de ella.
 
 #flashcards/casos-de-uso
 
@@ -40,7 +41,7 @@ En la etapa 5 (decisión de llevar a producción), ¿a dónde va cada salida?::*
 
 Si la flecha apunta al CUN, ¿quién inicia? ¿Y si apunta al actor?::Si apunta al **CUN**, inicia el **actor**. Si apunta al **actor**, inicia el **CUN**.
 
-¿Cómo se dibuja una relación en los **dos sentidos**?::**Sin saetas** — una línea sin puntas de flecha. Una línea sin flecha no significa "no sé": significa "en los dos sentidos".
+¿Cómo se dibuja una relación en los **dos sentidos**?::**Sin saetas** — una línea sin puntas de flecha. **Ojo:** eso es la notación general; el **convenio de la clase** manda, para ambos-inician, **una sola flecha actor → CUN**. Y como ese convenio permite omitir flechas, una línea sin puntas **no prueba** bidireccionalidad.
 
 ¿Hay que dibujar el mensaje de respuesta en el diagrama de CUN?::**No.** "Por cada flecha de comunicación **se asume un mensaje de retorno**".
 

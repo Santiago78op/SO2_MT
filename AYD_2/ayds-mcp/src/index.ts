@@ -198,9 +198,13 @@ server.registerTool(
       "herramientas (07-Referencias), y devuelve los fragmentos " +
       "encontrados con su archivo y numero de linea. Usala cuando no sepas en que nota " +
       "esta un concepto, o para verificar si un tema ya esta cubierto. " +
-      "OJO: es busqueda literal de subcadena, no semantica: buscar 'herencia' no " +
-      "encuentra 'generalizacion'. Si buscas un concepto y no aparece, proba con " +
-      "sinonimos o usa listar_temas.",
+      "Acepta consultas en lenguaje natural: parte la frase en palabras y busca las " +
+      "que importan, asi que 'diferencia entre include y extend' funciona. Los " +
+      "resultados vienen ordenados por relevancia (frase exacta primero) y se " +
+      "muestran hasta 3 lineas por archivo, avisando si hay mas. " +
+      "OJO: no es semantica: buscar 'herencia' no encuentra 'generalizacion' si esa " +
+      "palabra no esta escrita. Si un concepto no aparece, proba con sinonimos o usa " +
+      "listar_temas.",
     inputSchema: z.object({
       consulta: z
         .string()
@@ -219,6 +223,11 @@ server.registerTool(
       for (const h of hallazgos) {
         lineas.push(`- ${h.nombre}  (${h.ruta}:${h.linea})`);
         lineas.push(`    ${h.fragmento}`);
+        // M-04: avisamos cuando recortamos, para que el cliente sepa que hay mas
+        // en esa nota y pueda pedirla completa con leer_nota.
+        if (h.mas) {
+          lineas.push(`    (+${h.mas} coincidencias mas en esta nota: usa leer_nota)`);
+        }
       }
       return lineas.join("\n");
     }),

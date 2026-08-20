@@ -38,7 +38,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Ciclo de influencias en la arquitectura]] — las cuatro influencias y la retroalimentación del sistema
 - [[Estructuras y vistas arquitectónicas]] — estructura ≠ vista
 - [[Modelo 4+1 vistas]] — las cinco vistas y sus diagramas UML
-- [[Proceso de diseño arquitectónico]] — los cuatro pasos, el producto final y las comprobaciones
+- [[Proceso de diseño arquitectónico]] — las **tres versiones** de "los pasos" reconciliadas (4 del deck, 7 de la lista, 8 etapas), el producto final y las comprobaciones
 - [[Equilibrio de restricciones del proyecto]] — triángulo, diagrama de Kiviat y cubo de dimensiones
 - [[Arquitectura en el ciclo de vida del software]] — por qué es iterativa y no una fase
 - [[Diagrama de despliegue]] — punto 1.7: la vista física, la estructura de despliegue y la notación UML
@@ -65,7 +65,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 
 ### Requisitos
 
-- [[Matriz de trazabilidad de requisitos]] — trazabilidad pre-RS y post-RS, la RTM y la cadena de arquitectura (**tema externo**, no está en las presentaciones)
+- [[Matriz de trazabilidad de requisitos]] — trazabilidad pre-RS y post-RS, la RTM y la cadena de arquitectura. **De clase**: sale de `NT1. Trazabilidad de Requerimientos.pdf`, que además trae la **plantilla obligatoria** de la matriz
 
 ### Casos de uso
 
@@ -84,7 +84,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 
 ## Flashcards
 
-- [[Flashcards - Arquitectura de software]] (20 tarjetas)
+- [[Flashcards - Arquitectura de software]] (22 tarjetas)
 - [[Flashcards - Casos de uso del negocio]] (27 tarjetas)
 - [[Flashcards - Trazabilidad de requisitos]] (25 tarjetas)
 - [[Flashcards - Diagrama de despliegue]] (23 tarjetas)
@@ -93,9 +93,14 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Flashcards - Atributos de calidad]] (24 tarjetas)
 - [[Flashcards - Stakeholders, tácticas y evaluación]] (30 tarjetas)
 - [[Flashcards - Arquitectura y proceso de desarrollo]] (28 tarjetas)
-- [[Flashcards - Drivers arquitectónicos y contexto]] (39 tarjetas) — **todas de clase**
-- [[Flashcards - CUN, convenios y método]] (34 tarjetas) — **todas de clase**
-- [[Flashcards - Ejemplos resueltos y descripción textual]] (25 tarjetas) — **todas de clase**
+- [[Flashcards - Drivers arquitectónicos y contexto]] (39 tarjetas) — de diapositivas de clase
+- [[Flashcards - CUN, convenios y método]] (34 tarjetas) — de diapositivas de clase
+- [[Flashcards - Ejemplos resueltos y descripción textual]] (25 tarjetas) — de diapositivas de clase
+
+> [!note] Sobre las tres últimas
+> Salen de **diapositivas de clase**, pero unas pocas respuestas llevan el marcador
+> **«(lectura nuestra)»**: derivan de lo que ella dijo y son correctas, pero **no son su texto**.
+> Sirve para saber qué se puede citar como suyo y qué no.
 
 ## Tareas
 
@@ -106,7 +111,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Guía - Identificación de stakeholders]] — criterio 2 (25 pts): las tres checklists, la necesidad oculta y los conflictos
 - [[Guía - Drivers de calidad y restricción]] — criterio 3 (30 pts): escenarios, restricciones y la priorización de los 5
 - [[Guía - Matrices de trazabilidad]] — las tres matrices que pide la rúbrica (20 pts)
-- [[Ejemplos resueltos de casos de negocio]] — **de clase**: los tres encadenamientos completos (Tienda Electrónica, Fábrica, **Hospital**) y la checklist para compararte
+- [[Ejemplos resueltos de casos de negocio]] — **de clase**: los **cuatro** encadenamientos completos (Tienda Electrónica, Fábrica, Restaurante, **Hospital**) y la checklist para compararte
 
 ## Referencias de herramientas
 
@@ -115,6 +120,40 @@ No es materia de examen: es el manual de las herramientas del ecosistema.
 - [[StarUML]] — los 7 tipos de Mermaid importables y qué se pierde en el camino
 - [[Excalidraw]] — los 5 tipos nativos y el fallback a imagen SVG
 - [[De la teoría al diagrama]] — el puente: qué sintaxis usar para cada diagrama de la materia
+
+## Preparación del primer parcial — 22 de agosto
+
+> [!warning] El parcial cae DENTRO del bloque 1.8 / 1.9
+> El cronograma pone *"Principios de Diseño de Software (1.8 y 1.9): **17 al 24 de agosto**"* y el
+> parcial es el **22**. **No se puede asumir que solo entra hasta 1.7.**
+>
+> **Pregunta para el auxiliar, antes del sábado:** *¿el parcial cubre 1.8 y 1.9, o solo hasta 1.7?*
+
+Estado real de preparación, punto por punto:
+
+| Punto | Estado | Con qué contás |
+|---|---|---|
+| 1.1 – 1.3 Concepto, importancia, beneficios | ✅ **núcleo sólido** | [[Arquitectura de software]], [[Beneficios de la arquitectura de software]] |
+| 1.4 Pasos para la definición | ✅ **núcleo** | [[Proceso de diseño arquitectónico]] — con las **tres** versiones reconciliadas |
+| 1.5 Qué se tiene en cuenta | ✅ **núcleo** | [[Método de diseño centrado en la arquitectura]] (8 etapas + paso 0), [[Ciclo de influencias en la arquitectura]] |
+| 1.6 Arquitectura y Requerimientos (CDU de negocio) | ✅ **núcleo fuerte** | el bloque de 12 notas de casos de uso + [[Convenios del diagrama de CUN]] + [[Drivers arquitectónicos]] |
+| 1.7 Diagramas de Despliegue | ✅ **núcleo** | [[Diagrama de despliegue]] |
+| 1.8 Estructuras y Vistas · Categorías | ✅ **núcleo** | [[Categorías de estructuras]], [[Estructuras y vistas arquitectónicas]], [[Modelo 4+1 vistas]] |
+| **1.9 Géneros y Estilos** | ⚠️ **el punto débil** | [[Estilos arquitectónicos]] es **complemento entero** (Reynoso + SAIP, sin presentación) |
+
+> [!important] Si el parcial cubre 1.9, ahí está el riesgo
+> Tres subpuntos, tres estados distintos:
+>
+> | Subpunto | Fuente |
+> |---|---|
+> | **Arquitectura candidata** y **de referencia** | ✅ ya tienen fuente de clase: el *Flujo de Definición* de Ambler, en [[Proceso de diseño arquitectónico]] |
+> | **Catálogo de estilos** (cliente-servidor, capas, centrada en datos, flujo de datos, llamada y retorno, eventos) | ⚠️ complemento: los seis están cubiertos, pero de Reynoso y el SAIP |
+> | **Diseño arquitectónico: on premise vs cloud** | ❌ **sin fuente alguna** — ni clase, ni libros locales |
+>
+> Prioridad de repaso si el tiempo es corto: **1.6 y 1.9**. El 1.6 porque es el más pesado y el que
+> alimenta el Caso 1; el 1.9 porque es el que menos respaldo tiene.
+
+---
 
 ## Contenido del curso — estado real
 
@@ -185,6 +224,7 @@ Y lo que falta por otras razones:
 | ProgramaClase-AYD2-2-26.pdf | 5 | 2026-08-19 | [[Programa oficial del curso]] |
 | Caso FarmaHosp.pdf | 8 | 2026-08-19 | [[Plan - Caso 1 FarmaHosp]] + las 5 guías de `08-Tareas/` |
 | Large-Scale Software Architecture.pdf | 281 | 2026-08-19 | [[Arquitectura y proceso de desarrollo]] (complemento) |
+| **Bass, Clements, Kazman — SAIP 4ª ed.** | 620 | 2026-08-19 | el **único libro de la bibliografía oficial** en la bóveda; sostiene [[Atributos de calidad]], [[Tácticas y patrones arquitectónicos]], [[Evaluación de la arquitectura]], [[El ciclo del architecting]], [[Stakeholders]] y [[Guía - Drivers de calidad y restricción]] |
 | **capturas de clase** (68 imágenes) | — | 2026-08-19 | [[Ejemplos resueltos de casos de negocio]], [[Drivers arquitectónicos]], [[Diagrama de contexto]], [[Categorías de estructuras]], [[Método de diseño centrado en la arquitectura]], [[Convenios del diagrama de CUN]] + aportan a 6 notas y 2 guías más |
 
 ### Capturas de clase: inventario verificado

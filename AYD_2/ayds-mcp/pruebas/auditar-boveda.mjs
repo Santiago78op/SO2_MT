@@ -230,8 +230,9 @@ if (existsSync(disenio)) {
   }
 }
 
-// 2.3 cada modulo y cada prueba figuran en el README
-for (const carpeta of ["src", "pruebas"]) {
+// 2.3 cada modulo, cada prueba y cada herramienta figuran en el README
+for (const carpeta of ["src", "pruebas", "herramientas"]) {
+  if (!existsSync(join(PROYECTO, carpeta))) continue;
   for (const f of readdirSync(join(PROYECTO, carpeta))) {
     if (!/\.(ts|mjs)$/.test(f)) continue;
     if (!readme.includes(f)) anotar("BAJA", "README", `${carpeta}/${f} no figura en el arbol`);

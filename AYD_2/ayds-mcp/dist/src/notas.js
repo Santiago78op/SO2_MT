@@ -54,7 +54,31 @@ export function notasPorTema() {
  * mayusculas y la diferencia NFC/NFD de macOS (DA-05).
  */
 export function leerNota(nombre) {
-    const ruta = resolverArchivo(CARPETAS.notas, nombre, [".md"]);
+    let ruta;
+    try {
+        ruta = resolverArchivo(CARPETAS.notas, nombre, [".md"]);
+    }
+    catch (error) {
+        // M-03. Antes de rendirse: los `alias` del frontmatter. Varias notas
+        // declaran por que nombres se las va a pedir de verdad ("drivers" para
+        // "Drivers arquitectonicos"), y sin esto el cliente necesita DOS llamadas:
+        // una que falla con sugerencias y otra con el nombre exacto.
+        //
+        // Es la misma mecanica que ya usa metodo_tarea en tareas.ts. Se aplica solo
+        // como respaldo para no cambiar el comportamiento de lo que ya resolvia.
+        const porAlias = resolverPorAlias(nombre);
+        if (porAlias.length === 1) {
+            ruta = porAlias[0];
+        }
+        else if (porAlias.length > 1) {
+            const nombres = porAlias.map((r) => `  - ${paraMostrar(nombreDeNota(r))}`).join("\n");
+            throw new ErrorHerramienta(`"${nombre}" es un alias ambiguo: lo declaran varias notas.\n\n` +
+                `Pedi una de estas por su nombre exacto:\n${nombres}`);
+        }
+        else {
+            throw error; // El error original ya trae las sugerencias por parecido.
+        }
+    }
     const contenido = leerTexto(ruta);
     const { datos } = parsearFrontmatter(contenido);
     return {
@@ -64,6 +88,56 @@ export function leerNota(nombre) {
         contenido,
     };
 }
+/**
+ * Devuelve las rutas de las notas cuyo frontmatter declara `pedido` como alias.
+ *
+ * El campo `alias` es una lista separada por comas, igual que en las guias de
+ * 08-Tareas. Se compara con `clave()` para que "drivers" matchee "Drivers" y
+ * "diagrama de contexto" matchee "Diagrama de Contexto".
+ */
+function resolverPorAlias(pedido) {
+    const buscado = clave(pedido);
+    if (buscado.length === 0)
+        return [];
+    const encontradas = [];
+    for (const archivo of listarArchivos(CARPETAS.notas, [".md"])) {
+        const ruta = rutaRelativa(CARPETAS.notas, archivo);
+        let datos;
+        try {
+            datos = parsearFrontmatter(leerTexto(ruta)).datos;
+        }
+        catch {
+            continue; // Una nota ilegible no puede tumbar la resolucion (RNF-03).
+        }
+        const alias = (datos.alias ?? "")
+            .split(",")
+            .map((a) => clave(a))
+            .filter((a) => a.length > 0);
+        if (alias.includes(buscado))
+            encontradas.push(ruta);
+    }
+    return encontradas;
+}
+// ---------------------------------------------------------------------------
+// RF-03 — buscar
+// ---------------------------------------------------------------------------
+/**
+ * Palabras que se descartan al tokenizar una consulta. Sin esto, "diferencia
+ * entre include y extend" exigiria que la linea contuviera "entre" y "y", que
+ * aparecen en cualquier parte y no aportan nada a la relevancia.
+ */
+const VACIAS = new Set([
+    "de", "la", "el", "los", "las", "un", "una", "unos", "unas", "y", "o", "u",
+    "que", "como", "entre", "debe", "deben", "tener", "cuantos", "cuantas", "cual",
+    "cuales", "es", "son", "en", "del", "al", "por", "para", "se", "con", "sin",
+    "sobre", "mas", "muy", "hay", "ser", "esta", "este", "esto", "lo", "le", "su",
+]);
+/**
+ * Cuantas lineas se muestran como maximo por archivo. Existe para que un archivo
+ * con muchas menciones no acapare la salida y tape la nota relevante: buscar
+ * "paso 0" daba 19 coincidencias y la mayoria eran del mismo archivo.
+ */
+const POR_ARCHIVO = 3;
 /**
  * Busca texto en las notas y en el glosario.
  *
@@ -87,7 +161,13 @@ export function buscar(consulta, maximo = 40) {
     if (termino.length < 2) {
         throw new ErrorHerramienta(`La consulta "${consulta}" es demasiado corta: usa al menos 2 caracteres.`);
     }
-    const resultados = [];
+    // M-01. Tokenizamos para poder responder consultas en lenguaje natural.
+    // Antes esto era `clave(linea).includes(termino)` sobre la consulta COMPLETA, asi
+    // que "diferencia entre include y extend" daba cero resultados aunque el tema
+    // estuviera en tres notas: la frase literal no aparece en ningun archivo.
+    const tokens = termino
+        .split(/[^a-z0-9]+/)
+        .filter((t) => t.length >= 2 && !VACIAS.has(t));
     // Armamos la lista de archivos a revisar: las notas, el glosario y las
     // referencias de herramientas. Incluimos 07-Referencias porque si buscas
     // "mermaid" o "casos de uso" querés encontrar tanto la teoría como la nota que
@@ -108,7 +188,12 @@ export function buscar(consulta, maximo = 40) {
     for (const a of listarArchivos(CARPETAS.tareas, [".md"])) {
         objetivos.push(rutaRelativa(CARPETAS.tareas, a));
     }
-    for (const ruta of objetivos) {
+    // M-02. El glosario entraba DOS veces: una por el push explicito de arriba y
+    // otra por el listado de la raiz, que tambien lo incluye. Eso hacia que cada
+    // coincidencia en el glosario se reportara duplicada.
+    const unicos = [...new Set(objetivos.map((r) => paraMostrar(r)))].map((mostrado, i) => objetivos.find((r) => paraMostrar(r) === mostrado) ?? objetivos[i]);
+    const porArchivo = [];
+    for (const ruta of unicos) {
         let contenido;
         try {
             contenido = leerTexto(ruta);
@@ -118,26 +203,99 @@ export function buscar(consulta, maximo = 40) {
         }
         // Para las notas salteamos el frontmatter; el glosario no tiene cuerpo aparte
         // que valga la pena separar, asi que lo tratamos igual por consistencia.
-        const { cuerpo } = parsearFrontmatter(contenido);
+        const { datos, cuerpo } = parsearFrontmatter(contenido);
         const lineas = cuerpo.split("\n");
         // Offset: cuantas lineas nos comio el frontmatter, para reportar el numero
         // de linea REAL del archivo y no el del cuerpo recortado.
         const offset = contenido.split("\n").length - lineas.length;
+        const nombre = nombreDeNota(ruta);
+        // Bonus por identidad: si el match cae en una nota cuyo TITULO o cuyos ALIAS
+        // contienen los tokens, esa nota es mas relevante que una que solo los
+        // menciona de paso. Sin esto, buscar "navegabilidad" podia devolver primero
+        // una mencion lateral en otra nota antes que la nota de Convenios.
+        const identidad = clave(`${nombre} ${datos.alias ?? ""} ${datos.tema ?? ""}`);
+        const bonusNota = tokens.length > 0 && tokens.every((t) => identidad.includes(t)) ? 40 : 0;
+        const delArchivo = [];
         for (let i = 0; i < lineas.length; i++) {
             const linea = lineas[i] ?? "";
-            if (!clave(linea).includes(termino))
+            const llave = clave(linea);
+            // Tres pasadas con puntaje decreciente, segun la especificacion del
+            // backlog: frase exacta > todos los tokens en la linea > (fuera del bucle)
+            // todos los tokens en el archivo.
+            let puntaje = 0;
+            let ancla = termino;
+            if (llave.includes(termino)) {
+                puntaje = 100;
+            }
+            else if (tokens.length > 0 && tokens.every((t) => llave.includes(t))) {
+                puntaje = 60;
+                ancla = tokens.find((t) => llave.includes(t)) ?? termino;
+            }
+            else {
                 continue;
-            resultados.push({
+            }
+            // Un match en un encabezado vale mas: es el tema de la seccion, no una
+            // mencion al pasar.
+            if (/^#{1,6}\s/.test(linea.trim()))
+                puntaje += 20;
+            delArchivo.push({
                 ruta: paraMostrar(ruta),
-                nombre: paraMostrar(nombreDeNota(ruta)),
+                nombre: paraMostrar(nombre),
                 linea: i + 1 + offset,
-                fragmento: recortarAlrededor(linea, termino),
+                fragmento: recortarAlrededor(linea, ancla),
+                puntaje: puntaje + bonusNota,
             });
-            if (resultados.length >= maximo)
-                return resultados;
         }
+        // Tercera pasada: si ninguna LINEA junta todos los tokens pero el ARCHIVO si,
+        // reportamos la linea que mas tokens junta. Es lo que hace que
+        // "cuantos actores debe tener un caso de uso" encuentre la nota de Convenios,
+        // donde la regla esta redactada con otras palabras.
+        if (delArchivo.length === 0 && tokens.length > 1) {
+            const llaveArchivo = clave(cuerpo);
+            if (tokens.every((t) => llaveArchivo.includes(t))) {
+                let mejor = -1;
+                let mejorCuenta = 0;
+                for (let i = 0; i < lineas.length; i++) {
+                    const llave = clave(lineas[i] ?? "");
+                    const cuenta = tokens.filter((t) => llave.includes(t)).length;
+                    if (cuenta > mejorCuenta) {
+                        mejorCuenta = cuenta;
+                        mejor = i;
+                    }
+                }
+                if (mejor >= 0) {
+                    const linea = lineas[mejor] ?? "";
+                    const ancla = tokens.find((t) => clave(linea).includes(t)) ?? tokens[0];
+                    delArchivo.push({
+                        ruta: paraMostrar(ruta),
+                        nombre: paraMostrar(nombre),
+                        linea: mejor + 1 + offset,
+                        fragmento: recortarAlrededor(linea, ancla),
+                        puntaje: 30 + bonusNota,
+                    });
+                }
+            }
+        }
+        if (delArchivo.length > 0)
+            porArchivo.push(delArchivo);
     }
-    return resultados;
+    // M-04. Antes el tope global de 40 se llenaba por orden de recorrido, asi que
+    // un archivo con 19 menciones podia acaparar la salida y tapar la nota
+    // realmente relevante. Ahora: cada archivo aporta a lo sumo POR_ARCHIVO lineas
+    // (las de mejor puntaje) y el conjunto se ordena por relevancia.
+    const resultados = [];
+    for (const grupo of porArchivo) {
+        grupo.sort((a, b) => b.puntaje - a.puntaje || a.linea - b.linea);
+        const visibles = grupo.slice(0, POR_ARCHIVO);
+        const resto = grupo.length - visibles.length;
+        if (resto > 0) {
+            const ultimo = visibles[visibles.length - 1];
+            ultimo.mas = resto;
+        }
+        resultados.push(...visibles);
+    }
+    resultados.sort((a, b) => b.puntaje - a.puntaje || a.ruta.localeCompare(b.ruta) || a.linea - b.linea);
+    return resultados.slice(0, maximo);
 }
 /**
  * Recorta una linea larga para mostrar el termino con contexto a los lados.

@@ -15,8 +15,8 @@ La secuencia completa de un entregable de modelado del negocio, tal como se pide
 >
 > | # | Diagrama | Qué muestra |
 > |---|---|---|
-> | 1 | **Contexto** | El negocio como una caja y todo lo que interactúa con él desde afuera |
-> | 2 | **Core** | Los CDU de alto nivel: el corazón del negocio |
+> | 1 | **Contexto** | El **producto** en una elipse y todo lo que interactúa con él desde afuera |
+> | 2 | **Core** | **Una sola elipse**: el negocio completo, sin abrir |
 > | 3 | **Primera descomposición** | Los CDU que modelan los procesos de negocio |
 >
 > Y después del caso de negocio:
@@ -38,21 +38,40 @@ flowchart LR
     EXP --> MAT["5. Matriz de trazabilidad<br/>1 o 2 según el enunciado"]
 ```
 
-Por qué ese orden y no otro: cada diagrama **acota** al siguiente. El contexto fija la frontera del
-negocio; el core dice qué hace el negocio dentro de esa frontera; la descomposición abre esos CDU en
-procesos; los expandidos abren los procesos en requisitos; la matriz cruza lo que ya tiene nombre.
-Saltearse uno deja el siguiente sin fundamento.
+Por qué ese orden y no otro: cada diagrama **acota** al siguiente. El contexto fija la frontera y
+los agentes externos; el core nombra el negocio completo como una sola cosa; la descomposición
+**abre esa elipse** en procesos; los expandidos abren los procesos en requisitos; la matriz cruza lo
+que ya tiene nombre. Saltearse uno deja el siguiente sin fundamento.
 
 ---
 
 ## Diagrama 1 — Contexto
 
-**Qué responde:** *¿dónde termina el negocio y qué hay afuera?*
+**Qué responde:** *¿dónde termina el producto y qué hay afuera?*
 
-El negocio se dibuja como **una sola caja** y alrededor todo lo que interactúa con él. Nada de
-procesos internos todavía: es la vista más externa que existe.
+**La notación es la de clase** — está en [[Diagrama de contexto]], que es la nota núcleo de este
+entregable. Tres símbolos y nada más:
 
-### La definición formal (Garland & Anthony, cap. 6)
+| Símbolo | Qué representa |
+|---|---|
+| **Elipse / óvalo** | **El Producto** — el sistema que se construye. **Uno solo**, al centro |
+| **Rectángulo** | **Entidades o agentes** — lo externo con lo que el producto interactúa |
+| **Flecha** | ***Streamlines*** — los flujos, **siempre con nombre**, en sustantivo |
+
+Nada de procesos internos todavía: es la vista más externa que existe. Y los flujos bidireccionales
+van como **dos flechas separadas**, cada una con su nombre.
+
+> [!important] Es el contexto DEL SISTEMA — ya no es una duda
+> Esto estuvo abierto un tiempo como "ambigüedad #2" y **está resuelto con fuente de clase**: la
+> diapositiva *"Diagramas de Contexto"* pone el **producto** en el óvalo, y sus dos ejemplos resueltos
+> nombran sistemas (*"Sistema de préstamos y devoluciones de la biblioteca"*, *"Planificación de
+> producción y gestión de materiales"*). El [[Plan - Caso 1 FarmaHosp|Plan]] la marca **RESUELTA**.
+>
+> Y ojo con el ejemplo del bibliotecario: **trabaja en la biblioteca y aun así es entidad externa**,
+> porque el producto es el *software*, no la biblioteca. Ver [[Actor del negocio]] §La frontera es el
+> campo de acción.
+
+### La definición formal (Garland & Anthony, cap. 6) — complemento
 
 El libro *Large-Scale Software Architecture* define un **Context Viewpoint** y es la definición más
 precisa que tenemos:
@@ -79,81 +98,100 @@ Y el cuadro del libro trae reglas concretas:
 > técnica del libro es **agruparlos en actores de más alto nivel** — y eso es una decisión de diseño
 > que conviene justificar en el documento, no un atajo.
 
-> [!warning] Negocio o sistema: sigue siendo ambigüedad #2
-> El libro define el contexto **del sistema**. La rúbrica, en cambio, agrupa este diagrama bajo
-> *"identificar el caso de negocio"*, lo que sugiere contexto **del negocio**.
+> [!note] Cómo encaja el libro con la notación de clase
+> Garland define el contexto **del sistema**, igual que ella. Y su regla de layout —*"el sistema va
+> siempre en el medio, los actores alrededor"*— es exactamente lo que hacen los dos ejemplos de
+> clase. El libro **no contradice** a la diapositiva: le agrega el vocabulario formal (*viewpoint*,
+> *interfaces*) y la técnica de agrupar actores.
 >
-> La buena noticia: **la estructura es idéntica** en los dos casos —una caja en el medio, actores
-> alrededor, interfaces rotuladas—. Lo único que cambia es **qué hay dentro de la caja**: el negocio
-> completo, o el software.
->
-> Igual **preguntalo**, y mientras no haya respuesta declará en el documento cuál interpretaste y por
-> qué. Con la estructura del libro, cambiar de una lectura a la otra es rotular distinto la caja.
+> Donde difieren es solo en la **forma del símbolo**: el libro dibuja cajas, ella dibuja el producto
+> como **elipse** y las entidades como rectángulos. **Manda la notación de clase.**
 
 Lo que va y lo que no:
 
 | Va | No va |
 |---|---|
-| El negocio, como una caja única | Los procesos internos |
-| Los actores del negocio | Los trabajadores del negocio |
+| El producto, como **una sola elipse** | Los procesos internos |
+| Las entidades o agentes externos, en rectángulos | Los trabajadores del negocio |
 | Los sistemas de información **externos** | Los CDU |
-| Los flujos de entrada y salida | Detalle de qué pasa adentro |
+| Los *streamlines*, **con nombre** | Detalle de qué pasa adentro |
 
-La decisión que se toma acá y que condiciona todo: **dónde se pone la frontera**. Es lo mismo que
-señala [[Actor del negocio]] — *"cada actor modela algo fuera del negocio"* — pero "el negocio" lo
-definís vos, y de esa definición depende quién es actor y quién trabajador.
+La decisión que se toma acá y que condiciona todo: **dónde se pone la frontera**. Y la frontera tiene
+nombre en el material de clase — es el **campo de acción** que estás modelando, no la empresa. De esa
+definición depende quién es entidad externa y quién trabajador: ver [[Actor del negocio]].
 
-Forma, con el ejemplo del **restaurante** de la nota técnica:
+Forma, con el ejemplo del **restaurante** de la nota técnica, ya con la notación de clase:
 
 ```mermaid
 flowchart LR
-    CL(["Cliente"]) -->|"pedidos, pagos"| N["NEGOCIO<br/>Restaurante"]
+    CL["Cliente"] -->|"pedido"| N(("Sistema de gestión<br/>del Restaurante X"))
     N -->|"servicio de comida"| CL
-    PR(["Proveedor"]) -->|"suministros"| N
-    N -->|"órdenes de compra"| PR
-    CP(["Cliente potencial"]) -->|"consultas"| N
+    PR["Proveedor"] -->|"suministros"| N
+    N -->|"orden de compra"| PR
+    CP["Cliente potencial"] -->|"consulta"| N
     N -->|"promoción"| CP
-    ERP(["Experto en<br/>relaciones públicas"]) -->|"campañas"| N
 ```
 
 > [!tip] Tu turno
-> Escribí en una línea qué es "el negocio" en tu caso, y hacé la lista de todo lo que queda afuera y
-> lo toca. Esa lista son tus actores candidatos.
+> Escribí en una línea **qué es el producto** en tu caso (el nombre que va dentro de la elipse), y
+> hacé la lista de todo lo que queda afuera y lo toca. Esa lista son tus entidades y, de paso, tus
+> candidatos a stakeholder.
 
 ---
 
-> [!tip] Los tres casos resueltos por ella, en paralelo
-> Antes de dibujar nada, mirá [[Ejemplos resueltos de casos de negocio]]: tiene los **tres**
-> encadenamientos completos que resolvió en clase (Tienda Electrónica, Fábrica de Materiales y
-> **Hospital**) puestos lado a lado, con la checklist para comparar tu entrega contra ellos.
+> [!tip] Los cuatro casos resueltos por ella, en paralelo
+> Antes de dibujar nada, mirá [[Ejemplos resueltos de casos de negocio]]: tiene los **cuatro**
+> encadenamientos completos que resolvió en clase (Tienda Electrónica, Fábrica de Materiales,
+> Restaurante y **Hospital**) puestos lado a lado, con la checklist para comparar tu entrega.
 >
 > El del **hospital** te resuelve la decisión de actor vs. trabajador: en su ejemplo *Farmacia* y
 > *Encamamiento* son **actores** del *Sistema Hospitalario*.
 
 ## Diagrama 2 — Core
 
-**Qué responde:** *¿cuál es el corazón del negocio?*
+**Qué responde:** *¿cuál es el negocio, visto como una sola cosa?*
 
-Los CDU de **alto nivel**: pocos, gruesos, los que responden a la pregunta que la nota técnica pone
-como criterio del proceso **núcleo**:
+**Una sola elipse**, que nombra el **negocio o sistema completo**, con **todos los actores
+alrededor**. Eso es el core.
 
-> ¿Cuáles son los **servicios básicos** que un cliente recibe del negocio?
-
-Acá se usa la técnica de **clasificación** de [[Identificación de procesos del negocio]], y el core
-es la categoría **núcleo**. Los de soporte y gerenciales todavía no: esos aparecen en la
-descomposición.
-
-Ejemplo (restaurante): el core es **Servicio de comida**. Uno solo. Comprar suministros es soporte y
-Marketing es gerencial — no son core.
+No es un subconjunto de procesos: es el negocio entero **sin abrir todavía**. La descomposición
+(diagrama 3) es la que lo abre en procesos.
 
 ```mermaid
 flowchart LR
-    CL(["Cliente"]) --- SC(("Servicio<br/>de comida"))
+    A1["Actor 1"] --- N(("EL NEGOCIO<br/>completo"))
+    A2["Actor 2"] --- N
+    A3["Actor 3"] --- N
+    A4["Actor n"] --- N
 ```
 
+> [!important] Está verificado en los CUATRO casos que ella resolvió
+> | Caso | Qué dice la única elipse |
+> |---|---|
+> | Tienda Electrónica | *Sistema de Ventas on line Tienda X* |
+> | Fábrica de Materiales | *Gestión de la Producción de Productos de Construcción* |
+> | Restaurante | *Automatización de Procesos del Restaurante X* |
+> | Hospital | *Sistema Hospitalario* |
+>
+> Cuatro de cuatro: **una elipse con el nombre del todo**. Ninguno usa el core para listar procesos.
+> Ver [[Ejemplos resueltos de casos de negocio]].
+
 > [!warning] El error de este diagrama es inflarlo
-> Si tu diagrama "core" tiene ocho CDU, no es core: ya es la descomposición. El core son los
-> servicios básicos que el cliente recibe. En el ejemplo de la nota técnica es **uno**.
+> **Si tu core tiene más de una elipse, ya es la descomposición.** No es cuestión de cuántos CDU
+> "de alto nivel" elegís: el core tiene exactamente **uno**, y es el negocio completo.
+
+> [!note] Entonces, ¿dónde entra la clasificación núcleo / soporte / gerencial?
+> En el **diagrama 3**, no acá. Es un punto donde esta guía decía antes otra cosa y vale aclararlo,
+> porque el criterio de la nota técnica —*"¿cuáles son los servicios básicos que un cliente recibe?"*—
+> **suena** a definición de core.
+>
+> La evidencia de que va en el 3: en el ejemplo del **restaurante** de ella, *Servicio de comida*
+> (núcleo), *Comprar suministros* (soporte) y *Marketing* (gerencial) son los **tres procesos de la
+> primera descomposición** — el core de ese mismo caso es *"Automatización de Procesos del Restaurante
+> X"*.
+>
+> Así que el criterio de la NT sirve, pero para **clasificar los procesos que salen en el diagrama 3**.
+> Ver [[Identificación de procesos del negocio]].
 
 > [!important] El ejemplo resuelto por ella: Tienda Electrónica
 > Hay una diapositiva titulada **"Ejemplo Diagrama Core Tienda Electrónica"**, y es el molde exacto:
@@ -186,10 +224,9 @@ Almacén) y externas (Banco, Transporte). Todas son **actores del negocio** porq
 *proceso* que el CUN modela.
 
 > [!tip] Tu turno
-> Respondé la pregunta del núcleo con tu caso. Con el molde de la Tienda Electrónica, lo más
-> probable es que te salga **un solo CUN** — algo como *"Gestión de medicamentos de alto costo"* —
-> rodeado de todos los actores. Si te salen más de tres o cuatro CUN, revisá si ya te fuiste a la
-> descomposición.
+> Escribí **el nombre que va dentro de la única elipse** — algo como *"Sistema Integral de Gestión de
+> Medicamentos de Alto Costo"*, que es el nombre que el propio enunciado le da — y poné alrededor los
+> actores que ya identificaste en el contexto. Si te sale más de una elipse, estás en el diagrama 3.
 
 ---
 
@@ -416,7 +453,8 @@ digan lo mismo**.
 - [ ] La **frontera del negocio** del diagrama 1 es la misma que se asume en 2 y 3
 - [ ] Todo actor del diagrama 1 aparece en 2 o en 3 asociado a algún CDU
 - [ ] Ningún actor nuevo aparece en 3 sin estar en 1
-- [ ] El core del diagrama 2 está contenido en la descomposición del 3
+- [ ] La **única elipse** del core se abre en los procesos del 3, **conservando el juego de
+      actores** (pueden aparecer contrapartes nuevas; no puede desaparecer ninguna)
 - [ ] Los CDU del 3 son **procesos de negocio** que pasan el test de [[Proceso de negocio]]
 - [ ] Los nombres están en **gerundio o verbo** y dicen qué sucede
 - [ ] La clasificación núcleo/soporte/gerencial es coherente con el campo de acción declarado

@@ -1,0 +1,2610 @@
+<!-- Atlas de diagramas de la boveda AYDS. Generado por herramientas/atlas.mjs -->
+<title>Atlas de Diagramas AYDS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* La paleta sale de su plantilla de diapositivas: el teal de la banda del pie
+   y el granate de la regla bajo los titulos. */
+:root {
+  --papel:        #f6f8f7;
+  --superficie:   #ffffff;
+  --hoja:         #ffffff;
+  --tinta:        #172526;
+  --tinta-media:  #4a5c5d;
+  --tinta-suave:  #748686;
+  --linea:        #d9e2e0;
+  --teal:         #1f7a72;
+  --teal-suave:   #e4f0ee;
+  --granate:      #9b3a30;
+  --granate-suave:#f7e7e4;
+  --ambar:        #8a6410;
+  --ambar-suave:  #f7efdc;
+  --sombra:       0 1px 2px rgba(23,37,38,.06), 0 8px 24px -12px rgba(23,37,38,.14);
+  --ancho:        1180px;
+  --r:            10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel:        #0f1a1b;
+    --superficie:   #162324;
+    --tinta:        #e8efee;
+    --tinta-media:  #a2b4b3;
+    --tinta-suave:  #7b8d8c;
+    --linea:        #27383a;
+    --teal:         #63c7bb;
+    --teal-suave:   #14312e;
+    --granate:      #e0897d;
+    --granate-suave:#33201d;
+    --ambar:        #d9b262;
+    --ambar-suave:  #2e2618;
+    --sombra:       0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  --papel:        #0f1a1b;
+  --superficie:   #162324;
+  --tinta:        #e8efee;
+  --tinta-media:  #a2b4b3;
+  --tinta-suave:  #7b8d8c;
+  --linea:        #27383a;
+  --teal:         #63c7bb;
+  --teal-suave:   #14312e;
+  --granate:      #e0897d;
+  --granate-suave:#33201d;
+  --ambar:        #d9b262;
+  --ambar-suave:  #2e2618;
+  --sombra:       0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.6);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 16.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+/* El padding inferior es solo del cuerpo: si lo pusiera en .envoltura, la barra
+   sticky lo heredaria y mediria 165px en vez de 69, tapando los diagramas. */
+.envoltura { max-width: var(--ancho); margin: 0 auto; padding: 0 24px; }
+.envoltura.cuerpo { padding-bottom: 96px; }
+
+header.principal {
+  border-bottom: 1px solid var(--linea);
+  background: var(--superficie);
+  margin-bottom: 40px;
+}
+header.principal .envoltura { padding-top: 40px; padding-bottom: 32px; }
+.eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--teal); margin: 0 0 12px;
+}
+h1 {
+  font-family: Archivo, system-ui, sans-serif;
+  font-weight: 700; font-size: clamp(30px, 4.4vw, 46px);
+  line-height: 1.06; letter-spacing: -.022em; margin: 0 0 6px;
+  text-wrap: balance;
+}
+.regla { width: 96px; height: 4px; background: var(--granate); margin: 14px 0 18px; border-radius: 2px; }
+.bajada { max-width: 62ch; color: var(--tinta-media); margin: 0; }
+.bajada strong { color: var(--tinta); font-weight: 600; }
+
+.cifras { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 26px; }
+.cifra { display: flex; flex-direction: column; gap: 1px; }
+.cifra b {
+  font-family: Archivo, system-ui, sans-serif; font-weight: 600; font-size: 25px;
+  line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.cifra span {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--tinta-suave);
+}
+
+.controles {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--papel) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+  padding: 12px 0; margin-bottom: 36px;
+}
+.controles .envoltura { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+input[type="search"] {
+  flex: 1 1 260px; min-width: 200px;
+  font: inherit; font-size: 15px;
+  padding: 9px 13px; color: var(--tinta);
+  background: var(--superficie);
+  border: 1px solid var(--linea); border-radius: var(--r);
+}
+input[type="search"]:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; border-color: var(--teal); }
+.filtros { display: flex; flex-wrap: wrap; gap: 6px; }
+button.f {
+  font-family: "JetBrains Mono", monospace; font-size: 11.5px; letter-spacing: .04em;
+  padding: 7px 12px; cursor: pointer; color: var(--tinta-media);
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: 999px; transition: background .13s, color .13s, border-color .13s;
+}
+button.f:hover { border-color: var(--teal); color: var(--teal); }
+button.f[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
+:root[data-theme="dark"] button.f[aria-pressed="true"] { color: #0f1a1b; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) button.f[aria-pressed="true"] { color: #0f1a1b; }
+}
+button.f:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+#vacio { display: none; color: var(--tinta-media); padding: 40px 0; }
+
+.tema { margin: 0 0 8px; }
+.tema > h2 {
+  font-family: Archivo, system-ui, sans-serif; font-weight: 600;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--tinta-suave); margin: 44px 0 4px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--linea);
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+}
+.tema > h2 em { font-style: normal; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--tinta-suave); }
+
+article.nota {
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+  border-left: 3px solid var(--teal);
+  border-radius: var(--r);
+  padding: 20px 22px 22px;
+  margin: 20px 0 0;
+  box-shadow: var(--sombra);
+}
+article.nota[data-clase="complemento"] { border-left-color: var(--granate); }
+article.nota[data-clase="propio"] { border-left-color: var(--ambar); }
+.cab { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; margin-bottom: 4px; }
+.cab h3 {
+  font-family: Archivo, system-ui, sans-serif; font-weight: 600;
+  font-size: 20px; line-height: 1.25; letter-spacing: -.012em; margin: 0;
+  text-wrap: balance;
+}
+.chip {
+  font-family: "JetBrains Mono", monospace; font-size: 10.5px; letter-spacing: .07em;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  background: var(--teal-suave); color: var(--teal); cursor: help;
+}
+.chip.complemento { background: var(--granate-suave); color: var(--granate); }
+.chip.propio { background: var(--ambar-suave); color: var(--ambar); }
+.ruta { font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--tinta-suave); }
+.fuente { font-size: 13.5px; color: var(--tinta-media); margin: 6px 0 0; max-width: 78ch; }
+
+/* Las hojas se quedan BLANCAS en los dos temas, como un juego de planos: los
+   diagramas traen sus propios colores claros y sobre fondo oscuro serian
+   ilegibles. Por eso estos colores son literales y no tokens. */
+.hojas { display: grid; gap: 16px; margin-top: 18px; }
+figure.hoja {
+  margin: 0; border: 1px solid var(--linea); border-radius: 8px;
+  background: var(--hoja); overflow: hidden;
+}
+figure.hoja > figcaption {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 7px 12px; border-bottom: 1px solid #e8eceb;
+  background: #fbfcfc;
+  font-family: "JetBrains Mono", monospace; font-size: 11px;
+  color: #6b7d7c;
+}
+figure.hoja > figcaption b { font-weight: 500; color: #40514f; }
+.lienzo { padding: 18px 14px; overflow-x: auto; text-align: center; }
+.lienzo pre.mermaid { margin: 0; background: none; }
+.lienzo svg { max-width: 100%; height: auto; }
+
+footer.pie {
+  border-top: 1px solid var(--linea); margin-top: 64px; padding-top: 22px;
+  color: var(--tinta-suave); font-size: 13.5px;
+}
+footer.pie code { font-family: "JetBrains Mono", monospace; font-size: 12.5px; color: var(--tinta-media); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media (max-width: 640px) {
+  .envoltura { padding-left: 16px; padding-right: 16px; }
+  article.nota { padding: 16px 15px 18px; }
+}
+</style>
+
+<header class="principal">
+  <div class="envoltura">
+    <p class="eyebrow">Análisis y Diseño de Sistemas II &nbsp;·&nbsp; curso 785 &nbsp;·&nbsp; ECYS-USAC</p>
+    <h1>Atlas de Diagramas</h1>
+    <div class="regla"></div>
+    <p class="bajada">Los <strong>106 diagramas</strong> de la bóveda, renderizados y agrupados por tema.
+    Cada hoja indica la nota de la que sale y su posición dentro de ella, así que lo que
+    encontrás acá se puede abrir en Obsidian sin buscar. El borde izquierdo de cada tarjeta
+    dice de dónde viene la teoría: <strong>teal</strong> si es de clase, <strong>granate</strong>
+    si es complemento.</p>
+    <div class="cifras">
+      <div class="cifra"><b>106</b><span>diagramas</span></div>
+      <div class="cifra"><b>45</b><span>notas</span></div>
+      <div class="cifra"><b>11</b><span>temas</span></div>
+      <div class="cifra"><b>76</b><span>de clase</span></div>
+      <div class="cifra"><b>15</b><span>complemento</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="controles">
+  <div class="envoltura">
+    <input type="search" id="q" placeholder="Filtrar por nota, tema o contenido del diagrama…" aria-label="Filtrar diagramas">
+    <div class="filtros" role="group" aria-label="Filtrar por procedencia">
+      <button class="f" data-clase="todo" aria-pressed="true">Todo</button>
+      <button class="f" data-clase="nucleo" aria-pressed="false">Solo de clase</button>
+      <button class="f" data-clase="complemento" aria-pressed="false">Solo complemento</button>
+    </div>
+  </div>
+</div>
+
+<div class="envoltura cuerpo">
+<p id="vacio">Nada coincide con ese filtro. Probá con otra palabra, o volvé a <b>Todo</b>.</p>
+<section class="tema" data-tema="Arquitectura de software">
+  <h2 id="arquitectura-de-software">Arquitectura de software<em>17 notas · 31 diagramas</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="arquitecto de software arquitectura de software arquitectura de software.pdf flowchart lr
+    cl[&quot;cliente&quot;] --&gt;|requisitos| ar[&quot;arquitecto&quot;]
+    ar --&gt;|diseño de arquitectura| dev[&quot;desarrolladores&quot;]
+    ar --&gt;|documento de descripción&lt;br/&gt;de arquitectura| doc[&quot;artefactos&quot;]
+    ar --&gt;|integra| nfr[&quot;requerimientos&lt;br/&gt;no funcionales (nrfs)&quot;]
+    nfr --&gt; sis[&quot;sistema&quot;]
+    dev --&gt; sis según sun sl-425">
+    <div class="cab">
+      <h3>Arquitecto de software</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Arquitecto de software#mermaid-1</b></span><span>Según SUN SL-425</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    CL[&quot;Cliente&quot;] --&gt;|requisitos| AR[&quot;Arquitecto&quot;]
+    AR --&gt;|diseño de arquitectura| DEV[&quot;Desarrolladores&quot;]
+    AR --&gt;|documento de descripción&lt;br/&gt;de arquitectura| DOC[&quot;Artefactos&quot;]
+    AR --&gt;|integra| NFR[&quot;Requerimientos&lt;br/&gt;no funcionales (NRFs)&quot;]
+    NFR --&gt; SIS[&quot;Sistema&quot;]
+    DEV --&gt; SIS</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="arquitectura de software arquitectura de software arquitectura de software.pdf / arquitectura de software (1).pdf flowchart td
+    a[&quot;arquitectura de software&quot;] --&gt; b[&quot;componentes / elementos&lt;br/&gt;(las piezas)&quot;]
+    a --&gt; c[&quot;relaciones&lt;br/&gt;(entre piezas y con el ambiente)&quot;]
+    a --&gt; d[&quot;principios de diseño&lt;br/&gt;y evolución&quot;]
+    b --&gt; e[&quot;propiedades externamente&lt;br/&gt;visibles de cada componente&quot;] flowchart lr
+    e[&quot;escala&quot;] --&gt; r[&quot;riesgos&quot;]
+    c[&quot;complejidad&quot;] --&gt; r
+    d[&quot;distribución&quot;] --&gt; r
+    r --&gt; a[&quot;la arquitectura&lt;br/&gt;se vuelve crítica&quot;] definiciones formales por qué la arquitectura pesa cada vez más">
+    <div class="cab">
+      <h3>Arquitectura de software</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf / Arquitectura de Software (1).pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Arquitectura de software#mermaid-1</b></span><span>Definiciones formales</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    A[&quot;Arquitectura de software&quot;] --&gt; B[&quot;Componentes / elementos&lt;br/&gt;(las piezas)&quot;]
+    A --&gt; C[&quot;Relaciones&lt;br/&gt;(entre piezas y con el ambiente)&quot;]
+    A --&gt; D[&quot;Principios de diseño&lt;br/&gt;y evolución&quot;]
+    B --&gt; E[&quot;Propiedades externamente&lt;br/&gt;visibles de cada componente&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Arquitectura de software#mermaid-2</b></span><span>Por qué la arquitectura pesa cada vez más</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    E[&quot;Escala&quot;] --&gt; R[&quot;Riesgos&quot;]
+    C[&quot;Complejidad&quot;] --&gt; R
+    D[&quot;Distribución&quot;] --&gt; R
+    R --&gt; A[&quot;La arquitectura&lt;br/&gt;se vuelve crítica&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="arquitectura en el ciclo de vida del software arquitectura de software arquitectura de software.pdf / arquitectura de software (1).pdf flowchart lr
+    rf[&quot;requisitos&lt;br/&gt;funcionales&quot;] --&gt; eq{&quot;equilibrio&quot;}
+    rc[&quot;requisitos de calidad&lt;br/&gt;(no funcionales)&quot;] --&gt; eq
+    org[&quot;organización&quot;] --&gt; eq
+    ent[&quot;entorno&quot;] --&gt; eq
+    exp[&quot;experiencia&quot;] --&gt; eq
+    eq --&gt; a[&quot;arquitectura&lt;br/&gt;(abstracción del sistema)&quot;]
+    a -.-&gt;|iteración| rf
+    a -.-&gt;|iteración| rc lo que hay que sacar de acá">
+    <div class="cab">
+      <h3>Arquitectura en el ciclo de vida del software</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf / Arquitectura de Software (1).pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Arquitectura en el ciclo de vida del software#mermaid-1</b></span><span>Lo que hay que sacar de acá</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    RF[&quot;Requisitos&lt;br/&gt;funcionales&quot;] --&gt; EQ{&quot;Equilibrio&quot;}
+    RC[&quot;Requisitos de calidad&lt;br/&gt;(no funcionales)&quot;] --&gt; EQ
+    ORG[&quot;Organización&quot;] --&gt; EQ
+    ENT[&quot;Entorno&quot;] --&gt; EQ
+    EXP[&quot;Experiencia&quot;] --&gt; EQ
+    EQ --&gt; A[&quot;Arquitectura&lt;br/&gt;(abstracción del sistema)&quot;]
+    A -.-&gt;|iteración| RF
+    A -.-&gt;|iteración| RC</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="beneficios de la arquitectura de software arquitectura de software arquitectura de software (1).pdf / arquitectura de software.pdf flowchart td
+    d[&quot;director de la organización&lt;br/&gt;de desarrollo&quot;] --&gt;|&quot;bajos costos,&lt;br/&gt;mantener la gente empleada&quot;| ar((&quot;arquitecto&quot;))
+    m[&quot;mercadeo&quot;] --&gt;|&quot;características o rasgos,&lt;br/&gt;corto tiempo para el mercadeo,&lt;br/&gt;bajos costos&quot;| ar
+    u[&quot;usuario final&quot;] --&gt;|&quot;comportamiento, rendimiento,&lt;br/&gt;seguridad, confiabilidad,&lt;br/&gt;usabilidad&quot;| ar
+    o[&quot;organización del&lt;br/&gt;mantenimiento&quot;] --&gt;|&quot;modificabilidad&quot;| ar
+    c[&quot;cliente&quot;] --&gt;|&quot;bajos costos, tiempo de entrega,&lt;br/&gt;pocos cambios en corto tiempo&quot;| ar 1. proporciona la comunicación entre stakeholders">
+    <div class="cab">
+      <h3>Beneficios de la arquitectura de software</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software (1).pdf / Arquitectura de Software.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Beneficios de la arquitectura de software#mermaid-1</b></span><span>1. Proporciona la comunicación entre stakeholders</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    D[&quot;Director de la organización&lt;br/&gt;de desarrollo&quot;] --&gt;|&quot;Bajos costos,&lt;br/&gt;mantener la gente empleada&quot;| AR((&quot;Arquitecto&quot;))
+    M[&quot;Mercadeo&quot;] --&gt;|&quot;Características o rasgos,&lt;br/&gt;corto tiempo para el mercadeo,&lt;br/&gt;bajos costos&quot;| AR
+    U[&quot;Usuario Final&quot;] --&gt;|&quot;Comportamiento, rendimiento,&lt;br/&gt;seguridad, confiabilidad,&lt;br/&gt;usabilidad&quot;| AR
+    O[&quot;Organización del&lt;br/&gt;Mantenimiento&quot;] --&gt;|&quot;Modificabilidad&quot;| AR
+    C[&quot;Cliente&quot;] --&gt;|&quot;Bajos costos, tiempo de entrega,&lt;br/&gt;pocos cambios en corto tiempo&quot;| AR</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="categorías de estructuras arquitectura de software presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán). núcleo. flowchart td
+    e[&quot;estructuras&lt;br/&gt;arquitectónicas&quot;] --&gt; m[&quot;&lt;b&gt;módulos&lt;/b&gt;&lt;br/&gt;&lt;i&gt;unidades de código o datos&lt;/i&gt;&lt;br/&gt;que se construyen o adquieren&quot;]
+    e --&gt; cc[&quot;&lt;b&gt;componentes y conectores&lt;/b&gt;&lt;br/&gt;&lt;i&gt;comportamiento en tiempo&lt;br/&gt;de ejecución + interacciones&lt;/i&gt;&quot;]
+    e --&gt; a[&quot;&lt;b&gt;asignación&lt;/b&gt;&lt;br/&gt;&lt;i&gt;relación con lo que no es&lt;br/&gt;software en el entorno&lt;/i&gt;&quot;]
+    m --&gt; m1[&quot;¿cómo se parte el código?&quot;]
+    cc --&gt; c1[&quot;¿qué pasa cuando corre?&quot;]
+    a --&gt; a1[&quot;¿dónde vive y quién lo hace?&quot;] 2. la tabla que hay que memorizar">
+    <div class="cab">
+      <h3>Categorías de estructuras</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán). NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Categorías de estructuras#mermaid-1</b></span><span>2. La tabla que hay que memorizar</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    E[&quot;ESTRUCTURAS&lt;br/&gt;arquitectónicas&quot;] --&gt; M[&quot;&lt;b&gt;MÓDULOS&lt;/b&gt;&lt;br/&gt;&lt;i&gt;unidades de código o datos&lt;/i&gt;&lt;br/&gt;que se construyen o adquieren&quot;]
+    E --&gt; CC[&quot;&lt;b&gt;COMPONENTES Y CONECTORES&lt;/b&gt;&lt;br/&gt;&lt;i&gt;comportamiento en tiempo&lt;br/&gt;de ejecución + interacciones&lt;/i&gt;&quot;]
+    E --&gt; A[&quot;&lt;b&gt;ASIGNACIÓN&lt;/b&gt;&lt;br/&gt;&lt;i&gt;relación con lo que NO es&lt;br/&gt;software en el entorno&lt;/i&gt;&quot;]
+    M --&gt; M1[&quot;¿cómo se PARTE el código?&quot;]
+    CC --&gt; C1[&quot;¿qué pasa cuando CORRE?&quot;]
+    A --&gt; A1[&quot;¿dónde VIVE y quién lo HACE?&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="ciclo de influencias en la arquitectura arquitectura de software arquitectura de software (1).pdf flowchart lr
+    subgraph inf[&quot;influencias en la arquitectura&quot;]
+        sh[&quot;stakeholders&quot;]
+        od[&quot;organizaciones&lt;br/&gt;de desarrollo&quot;]
+        at[&quot;ambiente técnico&quot;]
+        ea[&quot;experiencia&lt;br/&gt;del arquitecto&quot;]
+    end
+    sh --&gt; rc[&quot;requisitos&lt;br/&gt;de calidad&quot;]
+    od --&gt; rc
+    rc --&gt; arq((&quot;arquitecto&quot;))
+    at --&gt; arq
+    ea --&gt; arq
+    arq --&gt; a[&quot;arquitectura&quot;]
+    a --&gt; s[&quot;sistema&quot;]
+    s -.-&gt;|retroalimenta| inf el ciclo">
+    <div class="cab">
+      <h3>Ciclo de influencias en la arquitectura</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software (1).pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Ciclo de influencias en la arquitectura#mermaid-1</b></span><span>El ciclo</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph INF[&quot;Influencias en la arquitectura&quot;]
+        SH[&quot;Stakeholders&quot;]
+        OD[&quot;Organizaciones&lt;br/&gt;de desarrollo&quot;]
+        AT[&quot;Ambiente técnico&quot;]
+        EA[&quot;Experiencia&lt;br/&gt;del arquitecto&quot;]
+    end
+    SH --&gt; RC[&quot;Requisitos&lt;br/&gt;de calidad&quot;]
+    OD --&gt; RC
+    RC --&gt; ARQ((&quot;Arquitecto&quot;))
+    AT --&gt; ARQ
+    EA --&gt; ARQ
+    ARQ --&gt; A[&quot;Arquitectura&quot;]
+    A --&gt; S[&quot;Sistema&quot;]
+    S -.-&gt;|retroalimenta| INF</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="diagrama de despliegue arquitectura de software arquitectura de software.pdf (núcleo) + saip 4ª ed. y reynoso (complemento) flowchart td
+    e[&quot;estructuras arquitectónicas&quot;] --&gt; m[&quot;de módulos&lt;br/&gt;unidades de implementación&quot;]
+    e --&gt; cc[&quot;de componente y conector (c&amp;c)&lt;br/&gt;elementos en ejecución&quot;]
+    e --&gt; a[&quot;de asignación&lt;br/&gt;software sobre lo no-software&quot;]
+    m --&gt; m1[&quot;descomposición · usos · capas&lt;br/&gt;clases · modelo de datos&quot;]
+    cc --&gt; c1[&quot;servicios · concurrencia&quot;]
+    a --&gt; a1[&quot;&lt;b&gt;despliegue&lt;/b&gt; · implementación&lt;br/&gt;asignación de trabajo&quot;] flowchart lr
+    subgraph pc[&quot;internet user pc (*)&quot;]
+        nav[&quot;navegador&quot;]
+    end
+    subgraph app[&quot;«win server» application server&quot;]
+        subgraph ws[&quot;«execution environment» :websphere&quot;]
+            ear[&quot;«artifact»&lt;br/&gt;enterprisewebapp.ear&quot;]
+        end
+    end
+    subgraph db[&quot;«linux server» database server&quot;]
+        bd[(&quot;base de datos&quot;)]
+    end
+    pc ---|&quot;«internet»&quot;| app
+    app ---|&quot;«intranet»&quot;| db 3. dónde encaja: las tres categorías de estructuras *(complemento — saip cap. 1)* aproximación en mermaid">
+    <div class="cab">
+      <h3>Diagrama de despliegue</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf (núcleo) + SAIP 4ª ed. y Reynoso (complemento)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de despliegue#mermaid-1</b></span><span>3. Dónde encaja: las tres categorías de estructuras *(complemento — SAIP cap. 1)*</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    E[&quot;Estructuras arquitectónicas&quot;] --&gt; M[&quot;De módulos&lt;br/&gt;unidades de implementación&quot;]
+    E --&gt; CC[&quot;De componente y conector (C&amp;C)&lt;br/&gt;elementos en ejecución&quot;]
+    E --&gt; A[&quot;De asignación&lt;br/&gt;software sobre lo NO-software&quot;]
+    M --&gt; M1[&quot;descomposición · usos · capas&lt;br/&gt;clases · modelo de datos&quot;]
+    CC --&gt; C1[&quot;servicios · concurrencia&quot;]
+    A --&gt; A1[&quot;&lt;b&gt;despliegue&lt;/b&gt; · implementación&lt;br/&gt;asignación de trabajo&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de despliegue#mermaid-2</b></span><span>Aproximación en Mermaid</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph PC[&quot;Internet user PC (*)&quot;]
+        NAV[&quot;Navegador&quot;]
+    end
+    subgraph APP[&quot;«Win server» Application server&quot;]
+        subgraph WS[&quot;«execution environment» :WebSphere&quot;]
+            EAR[&quot;«artifact»&lt;br/&gt;EnterpriseWebApp.ear&quot;]
+        end
+    end
+    subgraph DB[&quot;«Linux server» Database server&quot;]
+        BD[(&quot;Base de datos&quot;)]
+    end
+    PC ---|&quot;«internet»&quot;| APP
+    APP ---|&quot;«intranet»&quot;| DB</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="drivers arquitectónicos arquitectura de software presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán). núcleo. flowchart td
+    d[&quot;drivers arquitectónicos&lt;br/&gt;&lt;i&gt;los factores críticos que&lt;br/&gt;guían el diseño&lt;/i&gt;&quot;]
+    d --&gt; rf[&quot;&lt;b&gt;rf&lt;/b&gt; — requisitos funcionales&lt;br/&gt;&lt;i&gt;funcionalidades específicas&lt;br/&gt;que moldean la estructura&lt;/i&gt;&lt;br/&gt;el qué hace&quot;]
+    d --&gt; ca[&quot;&lt;b&gt;de calidad&lt;/b&gt;&lt;br/&gt;&lt;i&gt;definen cómo debe&lt;br/&gt;comportarse el sistema&lt;/i&gt;&quot;]
+    d --&gt; re[&quot;&lt;b&gt;de restricción&lt;/b&gt;&lt;br/&gt;&lt;i&gt;condiciones impuestas&lt;br/&gt;externamente que limitan&lt;br/&gt;las decisiones&lt;/i&gt;&quot;] flowchart td
+    q[&quot;un enunciado del caso&quot;] --&gt; q1{&quot;¿dice qué&lt;br/&gt;hace el sistema?&quot;}
+    q1 --&gt;|sí| rf[&quot;driver &lt;b&gt;rf&lt;/b&gt;&lt;br/&gt;&lt;i&gt;y se modela con&lt;br/&gt;cdu expandido&lt;/i&gt;&quot;]
+    q1 --&gt;|no| q2{&quot;¿dice cómo se&lt;br/&gt;debe comportar,&lt;br/&gt;con una medida?&quot;}
+    q2 --&gt;|sí| ca[&quot;driver de &lt;b&gt;calidad&lt;/b&gt;&lt;br/&gt;&lt;i&gt;y se escribe como&lt;br/&gt;escenario&lt;/i&gt;&quot;]
+    q2 --&gt;|no| q3{&quot;¿es una condición&lt;br/&gt;impuesta desde afuera&lt;br/&gt;que quita alternativas?&quot;}
+    q3 --&gt;|sí| re[&quot;driver de &lt;b&gt;restricción&lt;/b&gt;&quot;]
+    q3 --&gt;|no| no[&quot;no es driver:&lt;br/&gt;&lt;i&gt;no afecta la estructura&lt;/i&gt;&quot;] 2. los tres tipos 6. cómo se diferencian, en la práctica">
+    <div class="cab">
+      <h3>Drivers arquitectónicos</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán). NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Drivers arquitectónicos#mermaid-1</b></span><span>2. Los tres tipos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    D[&quot;DRIVERS ARQUITECTÓNICOS&lt;br/&gt;&lt;i&gt;los factores críticos que&lt;br/&gt;guían el diseño&lt;/i&gt;&quot;]
+    D --&gt; RF[&quot;&lt;b&gt;RF&lt;/b&gt; — Requisitos Funcionales&lt;br/&gt;&lt;i&gt;funcionalidades específicas&lt;br/&gt;que MOLDEAN la estructura&lt;/i&gt;&lt;br/&gt;el QUÉ hace&quot;]
+    D --&gt; CA[&quot;&lt;b&gt;De Calidad&lt;/b&gt;&lt;br/&gt;&lt;i&gt;definen CÓMO debe&lt;br/&gt;comportarse el sistema&lt;/i&gt;&quot;]
+    D --&gt; RE[&quot;&lt;b&gt;De Restricción&lt;/b&gt;&lt;br/&gt;&lt;i&gt;condiciones impuestas&lt;br/&gt;EXTERNAMENTE que limitan&lt;br/&gt;las decisiones&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Drivers arquitectónicos#mermaid-2</b></span><span>6. Cómo se diferencian, en la práctica</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    Q[&quot;Un enunciado del caso&quot;] --&gt; Q1{&quot;¿Dice QUÉ&lt;br/&gt;hace el sistema?&quot;}
+    Q1 --&gt;|sí| RF[&quot;Driver &lt;b&gt;RF&lt;/b&gt;&lt;br/&gt;&lt;i&gt;y se modela con&lt;br/&gt;CDU expandido&lt;/i&gt;&quot;]
+    Q1 --&gt;|no| Q2{&quot;¿Dice CÓMO se&lt;br/&gt;debe comportar,&lt;br/&gt;con una medida?&quot;}
+    Q2 --&gt;|sí| CA[&quot;Driver de &lt;b&gt;calidad&lt;/b&gt;&lt;br/&gt;&lt;i&gt;y se escribe como&lt;br/&gt;escenario&lt;/i&gt;&quot;]
+    Q2 --&gt;|no| Q3{&quot;¿Es una condición&lt;br/&gt;impuesta DESDE AFUERA&lt;br/&gt;que quita alternativas?&quot;}
+    Q3 --&gt;|sí| RE[&quot;Driver de &lt;b&gt;restricción&lt;/b&gt;&quot;]
+    Q3 --&gt;|no| NO[&quot;No es driver:&lt;br/&gt;&lt;i&gt;no afecta la estructura&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="equilibrio de restricciones del proyecto arquitectura de software arquitectura de software (1).pdf / arquitectura de software.pdf flowchart td
+    c[&quot;cost / resources&lt;br/&gt;(costo, recursos)&quot;] --- s[&quot;scope&lt;br/&gt;(alcance)&quot;]
+    s --- t[&quot;time / schedule&lt;br/&gt;(tiempo, agenda)&quot;]
+    t --- c 1. el triángulo del proyecto">
+    <div class="cab">
+      <h3>Equilibrio de restricciones del proyecto</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software (1).pdf / Arquitectura de Software.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Equilibrio de restricciones del proyecto#mermaid-1</b></span><span>1. El triángulo del proyecto</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    C[&quot;Cost / Resources&lt;br/&gt;(costo, recursos)&quot;] --- S[&quot;Scope&lt;br/&gt;(alcance)&quot;]
+    S --- T[&quot;Time / Schedule&lt;br/&gt;(tiempo, agenda)&quot;]
+    T --- C</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="complemento" data-buscable="estilos arquitectónicos arquitectura de software complemento — reynoso (introducción a la as) + saip 4ª ed. + guía de estudio. no hay material de clase todavía flowchart lr
+    e[&quot;estilo&lt;br/&gt;arquitectónico&quot;] --&gt; c[&quot;componentes&lt;br/&gt;las piezas&quot;]
+    e --&gt; k[&quot;conectores&lt;br/&gt;cómo se hablan&quot;]
+    e --&gt; g[&quot;configuraciones&lt;br/&gt;cómo se arman&quot;]
+    e --&gt; r[&quot;restricciones&lt;br/&gt;qué no se permite&quot;] flowchart td
+    s[&quot;un sistema real&quot;] --&gt; a[&quot;microservicios&lt;br/&gt;&lt;i&gt;cliente-servidor&lt;/i&gt;&quot;]
+    s --&gt; b[&quot;bus de eventos&lt;br/&gt;&lt;i&gt;invocación implícita&lt;/i&gt;&quot;]
+    s --&gt; c[&quot;cada servicio&lt;br/&gt;internamente en &lt;i&gt;capas&lt;/i&gt;&quot;]
+    s --&gt; d[&quot;corre en contenedor&lt;br/&gt;&lt;i&gt;intérprete / vm&lt;/i&gt;&quot;]
+    s --&gt; f[&quot;estado en base de datos&lt;br/&gt;&lt;i&gt;centrado en datos&lt;/i&gt;&quot;]
+    s --&gt; g[&quot;se despliega por pipeline&lt;br/&gt;&lt;i&gt;batch secuencial&lt;/i&gt;&quot;] flowchart lr
+    f([&quot;fuente&quot;]) --&gt;|pipe| f1[&quot;filtro 1&lt;br/&gt;transforma&quot;] --&gt;|pipe| f2[&quot;filtro 2&lt;br/&gt;transforma&quot;] --&gt;|pipe| f3[&quot;filtro 3&lt;br/&gt;transforma&quot;] --&gt;|pipe| s([&quot;sumidero&quot;]) flowchart td
+    a1[&quot;accesor a&quot;] --- r[(&quot;repositorio&lt;br/&gt;estructura de datos central&quot;)]
+    a2[&quot;accesor b&quot;] --- r
+    a3[&quot;accesor c&quot;] --- r
+    r -.-&gt;|&quot;solo en la variante pizarra:&lt;br/&gt;notifica los cambios&quot;| a1 flowchart td
+    l1[&quot;presentación / ui&quot;] --&gt; l2[&quot;lógica de negocio&quot;]
+    l2 --&gt; l3[&quot;acceso a datos&quot;]
+    l3 --&gt; l4[&quot;sistema operativo / red&quot;] flowchart lr
+    p1[&quot;publicador 1&quot;] --&gt;|publica evento| bus[&quot;event bus&lt;br/&gt;gestiona suscripciones&lt;br/&gt;y despacho&quot;]
+    p2[&quot;publicador 2&quot;] --&gt;|publica evento| bus
+    bus --&gt;|notifica| s1[&quot;suscriptor a&quot;]
+    bus --&gt;|notifica| s2[&quot;suscriptor b&quot;]
+    bus --&gt;|notifica| s3[&quot;suscriptor c&quot;] flowchart lr
+    c1[&quot;cliente 1&quot;] --&gt;|&quot;petición&quot;| s[&quot;servidor&quot;]
+    c2[&quot;cliente 2&quot;] --&gt;|&quot;petición&quot;| s
+    c3[&quot;cliente *&quot;] --&gt;|&quot;petición&quot;| s
+    s -.-&gt;|&quot;respuesta&quot;| c1 1. qué es un estilo 3. los estilos se componen — el rasgo más importante del catálogo centrada en el flujo de datos: tubería y filtro centrada en datos: repositorio y pizarra en o por capas basada en eventos: publish-subscribe cliente-servidor">
+    <div class="cab">
+      <h3>Estilos arquitectónicos</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — Reynoso (Introducción a la AS) + SAIP 4ª ed. + Guía de estudio. NO hay material de clase todavía</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-1</b></span><span>1. Qué es un estilo</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    E[&quot;Estilo&lt;br/&gt;arquitectónico&quot;] --&gt; C[&quot;Componentes&lt;br/&gt;las piezas&quot;]
+    E --&gt; K[&quot;Conectores&lt;br/&gt;cómo se hablan&quot;]
+    E --&gt; G[&quot;Configuraciones&lt;br/&gt;cómo se arman&quot;]
+    E --&gt; R[&quot;Restricciones&lt;br/&gt;qué NO se permite&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-2</b></span><span>3. Los estilos se componen — el rasgo más importante del catálogo</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    S[&quot;Un sistema real&quot;] --&gt; A[&quot;Microservicios&lt;br/&gt;&lt;i&gt;cliente-servidor&lt;/i&gt;&quot;]
+    S --&gt; B[&quot;Bus de eventos&lt;br/&gt;&lt;i&gt;invocación implícita&lt;/i&gt;&quot;]
+    S --&gt; C[&quot;Cada servicio&lt;br/&gt;internamente en &lt;i&gt;capas&lt;/i&gt;&quot;]
+    S --&gt; D[&quot;Corre en contenedor&lt;br/&gt;&lt;i&gt;intérprete / VM&lt;/i&gt;&quot;]
+    S --&gt; F[&quot;Estado en base de datos&lt;br/&gt;&lt;i&gt;centrado en datos&lt;/i&gt;&quot;]
+    S --&gt; G[&quot;Se despliega por pipeline&lt;br/&gt;&lt;i&gt;batch secuencial&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-3</b></span><span>Centrada en el flujo de datos: tubería y filtro</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    F([&quot;fuente&quot;]) --&gt;|pipe| F1[&quot;Filtro 1&lt;br/&gt;transforma&quot;] --&gt;|pipe| F2[&quot;Filtro 2&lt;br/&gt;transforma&quot;] --&gt;|pipe| F3[&quot;Filtro 3&lt;br/&gt;transforma&quot;] --&gt;|pipe| S([&quot;sumidero&quot;])</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-4</b></span><span>Centrada en datos: repositorio y pizarra</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    A1[&quot;Accesor A&quot;] --- R[(&quot;REPOSITORIO&lt;br/&gt;estructura de datos central&quot;)]
+    A2[&quot;Accesor B&quot;] --- R
+    A3[&quot;Accesor C&quot;] --- R
+    R -.-&gt;|&quot;solo en la variante PIZARRA:&lt;br/&gt;notifica los cambios&quot;| A1</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-5</b></span><span>En o por capas</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    L1[&quot;Presentación / UI&quot;] --&gt; L2[&quot;Lógica de negocio&quot;]
+    L2 --&gt; L3[&quot;Acceso a datos&quot;]
+    L3 --&gt; L4[&quot;Sistema operativo / red&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-6</b></span><span>Basada en eventos: publish-subscribe</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    P1[&quot;Publicador 1&quot;] --&gt;|publica evento| BUS[&quot;EVENT BUS&lt;br/&gt;gestiona suscripciones&lt;br/&gt;y despacho&quot;]
+    P2[&quot;Publicador 2&quot;] --&gt;|publica evento| BUS
+    BUS --&gt;|notifica| S1[&quot;Suscriptor A&quot;]
+    BUS --&gt;|notifica| S2[&quot;Suscriptor B&quot;]
+    BUS --&gt;|notifica| S3[&quot;Suscriptor C&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Estilos arquitectónicos#mermaid-7</b></span><span>Cliente-servidor</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C1[&quot;Cliente 1&quot;] --&gt;|&quot;petición&quot;| S[&quot;Servidor&quot;]
+    C2[&quot;Cliente 2&quot;] --&gt;|&quot;petición&quot;| S
+    C3[&quot;Cliente *&quot;] --&gt;|&quot;petición&quot;| S
+    S -.-&gt;|&quot;respuesta&quot;| C1</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="estructuras y vistas arquitectónicas arquitectura de software arquitectura de software.pdf flowchart lr
+    ar((&quot;arquitecto&quot;)) --&gt;|diseña| e[&quot;estructura&lt;br/&gt;(los elementos en sí,&lt;br/&gt;en software o hardware)&quot;]
+    ar --&gt;|documenta| v[&quot;vista&lt;br/&gt;(representación de la estructura,&lt;br/&gt;en una notación, con una plantilla)&quot;]
+    e --&gt;|se representa como| v
+    v --&gt;|es escrita y leída por| st[&quot;partes interesadas&lt;br/&gt;(stakeholders)&quot;] la distinción">
+    <div class="cab">
+      <h3>Estructuras y vistas arquitectónicas</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Estructuras y vistas arquitectónicas#mermaid-1</b></span><span>La distinción</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    AR((&quot;Arquitecto&quot;)) --&gt;|diseña| E[&quot;Estructura&lt;br/&gt;(los elementos en sí,&lt;br/&gt;en software o hardware)&quot;]
+    AR --&gt;|documenta| V[&quot;Vista&lt;br/&gt;(representación de la estructura,&lt;br/&gt;en una notación, con una plantilla)&quot;]
+    E --&gt;|se representa como| V
+    V --&gt;|es escrita y leída por| ST[&quot;Partes interesadas&lt;br/&gt;(stakeholders)&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="método de diseño centrado en la arquitectura arquitectura de software presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán), figura 2-8. núcleo. flowchart td
+    ini((&quot;inicio&quot;)) --&gt; e1[&quot;&lt;b&gt;1.&lt;/b&gt; identificación de&lt;br/&gt;&lt;i&gt;drivers arquitectónicos&lt;/i&gt;&quot;]
+    e1 --&gt; e2[&quot;&lt;b&gt;2.&lt;/b&gt; especificación del&lt;br/&gt;alcance del proyecto&quot;]
+    e2 -.-&gt;|&quot;refinar&quot;| e1
+    e2 --&gt; e3[&quot;&lt;b&gt;3.&lt;/b&gt; creación o refinamiento&lt;br/&gt;de la arquitectura&quot;]
+    e3 --&gt; e4[&quot;&lt;b&gt;4.&lt;/b&gt; revisión de&lt;br/&gt;la arquitectura&quot;]
+    e4 --&gt; e5{&quot;&lt;b&gt;5.&lt;/b&gt; decisión de llevar o no&lt;br/&gt;la arquitectura a producción&quot;}
+    e5 --&gt;|&quot;no llevar&quot;| e6[&quot;&lt;b&gt;6.&lt;/b&gt; experimentación&quot;]
+    e6 -.-&gt;|&quot;refinar&quot;| e3
+    e5 --&gt;|&quot;sí llevar&quot;| e7[&quot;&lt;b&gt;7.&lt;/b&gt; planeación de&lt;br/&gt;la implementación&quot;]
+    e6 --&gt; e7
+    e7 --&gt; e8[&quot;&lt;b&gt;8.&lt;/b&gt; implementación&quot;]
+    e8 --&gt; fin((&quot;fin&quot;)) 2. las ocho etapas y sus cuatro fases">
+    <div class="cab">
+      <h3>Método de diseño centrado en la arquitectura</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán), Figura 2-8. NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Método de diseño centrado en la arquitectura#mermaid-1</b></span><span>2. Las ocho etapas y sus cuatro fases</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    INI((&quot;inicio&quot;)) --&gt; E1[&quot;&lt;b&gt;1.&lt;/b&gt; Identificación de&lt;br/&gt;&lt;i&gt;drivers arquitectónicos&lt;/i&gt;&quot;]
+    E1 --&gt; E2[&quot;&lt;b&gt;2.&lt;/b&gt; Especificación del&lt;br/&gt;alcance del proyecto&quot;]
+    E2 -.-&gt;|&quot;Refinar&quot;| E1
+    E2 --&gt; E3[&quot;&lt;b&gt;3.&lt;/b&gt; Creación o refinamiento&lt;br/&gt;de la arquitectura&quot;]
+    E3 --&gt; E4[&quot;&lt;b&gt;4.&lt;/b&gt; Revisión de&lt;br/&gt;la arquitectura&quot;]
+    E4 --&gt; E5{&quot;&lt;b&gt;5.&lt;/b&gt; Decisión de llevar o no&lt;br/&gt;la arquitectura a producción&quot;}
+    E5 --&gt;|&quot;No llevar&quot;| E6[&quot;&lt;b&gt;6.&lt;/b&gt; Experimentación&quot;]
+    E6 -.-&gt;|&quot;Refinar&quot;| E3
+    E5 --&gt;|&quot;Sí llevar&quot;| E7[&quot;&lt;b&gt;7.&lt;/b&gt; Planeación de&lt;br/&gt;la implementación&quot;]
+    E6 --&gt; E7
+    E7 --&gt; E8[&quot;&lt;b&gt;8.&lt;/b&gt; Implementación&quot;]
+    E8 --&gt; FIN((&quot;fin&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="modelo 4+1 vistas arquitectura de software arquitectura de software.pdf flowchart td
+    e[&quot;+1&lt;br/&gt;vista de escenarios&lt;br/&gt;(casos de uso)&quot;]
+    l[&quot;vista lógica&lt;br/&gt;clases, paquetes&quot;]
+    p[&quot;vista de procesos&lt;br/&gt;actividad&quot;]
+    d[&quot;vista de despliegue&lt;br/&gt;componentes, paquetes&quot;]
+    f[&quot;vista física&lt;br/&gt;deployment&quot;]
+    e --- l
+    e --- p
+    e --- d
+    e --- f
+    l -.-&gt;|&quot;los elementos lógicos&lt;br/&gt;se mapean a sw/hw&quot;| f las cinco vistas de un golpe">
+    <div class="cab">
+      <h3>Modelo 4+1 vistas</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Modelo 4+1 vistas#mermaid-1</b></span><span>Las cinco vistas de un golpe</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    E[&quot;+1&lt;br/&gt;Vista de Escenarios&lt;br/&gt;(casos de uso)&quot;]
+    L[&quot;Vista Lógica&lt;br/&gt;clases, paquetes&quot;]
+    P[&quot;Vista de Procesos&lt;br/&gt;actividad&quot;]
+    D[&quot;Vista de Despliegue&lt;br/&gt;componentes, paquetes&quot;]
+    F[&quot;Vista Física&lt;br/&gt;deployment&quot;]
+    E --- L
+    E --- P
+    E --- D
+    E --- F
+    L -.-&gt;|&quot;los elementos lógicos&lt;br/&gt;se mapean a sw/hw&quot;| F</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="proceso de diseño arquitectónico arquitectura de software arquitectura de software.pdf / arquitectura de software (1).pdf + capturas de clase del 19/08/2026. todo núcleo. flowchart td
+    p1[&quot;1. diseño de los datos&quot;] --&gt; p2[&quot;2. representaciones de la&lt;br/&gt;estructura arquitectónica&quot;]
+    p2 --&gt; p3[&quot;3. análisis de alternativas:&lt;br/&gt;estilos o patrones arquitectónicos&quot;]
+    p3 --&gt; p4[&quot;4. elaboración de la arquitectura&lt;br/&gt;con un método de diseño&quot;]
+    p4 --&gt; pf[&quot;producto final:&lt;br/&gt;modelo de arquitectura&quot;] flowchart td
+    r[&quot;requerimientos&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;] --&gt;|&quot;«precede»&quot;| d[&quot;diseño&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    d --&gt;|&quot;«precede»&quot;| doc[&quot;documentación&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    doc --&gt;|&quot;«precede»&quot;| e[&quot;evaluación&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    e --&gt;|&quot;«precede»&quot;| i[&quot;implementación&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    i -.-&gt;|&quot;«precede»&lt;br/&gt;vuelve a empezar&quot;| r flowchart td
+    ini((&quot;inicio&quot;)) --&gt; f[&quot; &quot;]
+    f --&gt; a1[&quot;define architectural&lt;br/&gt;requirements&quot;]
+    f --&gt; dec{&quot;[initial effort]&quot;}
+    f --&gt; a3[&quot;define reference&lt;br/&gt;architecture&quot;]
+    f --&gt; a4[&quot;support project&lt;br/&gt;teams&quot;]
+    dec --&gt;|&quot;sí&quot;| a2[&quot;define candidate&lt;br/&gt;architecture&quot;]
+    a2 --&gt; a5[&quot;refine enterprise&lt;br/&gt;architecture&quot;]
+    dec --&gt;|&quot;no&quot;| a5
+    a1 --&gt; j[&quot; &quot;]
+    a5 --&gt; j
+    a3 --&gt; j
+    a4 --&gt; j
+    j --&gt; fin((&quot;fin&quot;)) ¿cuáles son los pasos? y es un ciclo, no una lista el flujo de definición: las actividades son concurrentes">
+    <div class="cab">
+      <h3>Proceso de diseño arquitectónico</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software.pdf / Arquitectura de Software (1).pdf + capturas de clase del 19/08/2026. Todo NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Proceso de diseño arquitectónico#mermaid-1</b></span><span>¿Cuáles son los pasos?</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    P1[&quot;1. Diseño de los datos&quot;] --&gt; P2[&quot;2. Representaciones de la&lt;br/&gt;estructura arquitectónica&quot;]
+    P2 --&gt; P3[&quot;3. Análisis de alternativas:&lt;br/&gt;estilos o patrones arquitectónicos&quot;]
+    P3 --&gt; P4[&quot;4. Elaboración de la arquitectura&lt;br/&gt;con un método de diseño&quot;]
+    P4 --&gt; PF[&quot;Producto final:&lt;br/&gt;modelo de arquitectura&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Proceso de diseño arquitectónico#mermaid-2</b></span><span>Y es un ciclo, no una lista</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    R[&quot;REQUERIMIENTOS&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;] --&gt;|&quot;«precede»&quot;| D[&quot;DISEÑO&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    D --&gt;|&quot;«precede»&quot;| DOC[&quot;DOCUMENTACIÓN&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    DOC --&gt;|&quot;«precede»&quot;| E[&quot;EVALUACIÓN&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    E --&gt;|&quot;«precede»&quot;| I[&quot;IMPLEMENTACIÓN&lt;br/&gt;&lt;i&gt;(de la arquitectura)&lt;/i&gt;&quot;]
+    I -.-&gt;|&quot;«precede»&lt;br/&gt;vuelve a empezar&quot;| R</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Proceso de diseño arquitectónico#mermaid-3</b></span><span>El flujo de definición: las actividades son CONCURRENTES</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    INI((&quot;inicio&quot;)) --&gt; F[&quot; &quot;]
+    F --&gt; A1[&quot;Define Architectural&lt;br/&gt;Requirements&quot;]
+    F --&gt; DEC{&quot;[initial effort]&quot;}
+    F --&gt; A3[&quot;Define Reference&lt;br/&gt;Architecture&quot;]
+    F --&gt; A4[&quot;Support Project&lt;br/&gt;Teams&quot;]
+    DEC --&gt;|&quot;sí&quot;| A2[&quot;Define Candidate&lt;br/&gt;Architecture&quot;]
+    A2 --&gt; A5[&quot;Refine Enterprise&lt;br/&gt;Architecture&quot;]
+    DEC --&gt;|&quot;no&quot;| A5
+    A1 --&gt; J[&quot; &quot;]
+    A5 --&gt; J
+    A3 --&gt; J
+    A4 --&gt; J
+    J --&gt; FIN((&quot;fin&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="relaciones y dependencias en uml arquitectura de software tabla *resumen de los tipos de relaciones en uml* (diapositiva de clase) + docs.staruml.io, garland &amp; anthony cap. 5 y reynoso (complemento) + verificación propia del render mermaid flowchart td
+    f[&quot;una flecha uml&quot;] --&gt; p[&quot;la punta&lt;br/&gt;qué tipo de relación&quot;]
+    f --&gt; t[&quot;el trazo&lt;br/&gt;qué tan fuerte es el vínculo&quot;]
+    p --&gt; p1[&quot;triángulo → es-un&quot;]
+    p --&gt; p2[&quot;punta abierta → usa / apunta a&quot;]
+    p --&gt; p3[&quot;rombo → es-parte-de&quot;]
+    t --&gt; t1[&quot;llena → estructural,&lt;br/&gt;permanente&quot;]
+    t --&gt; t2[&quot;punteada → débil,&lt;br/&gt;solo en tiempo de uso&quot;] flowchart lr
+    a[&quot;rf-02&lt;br/&gt;registrar devolución&quot;] -.-&gt;|&quot;«depends on»&quot;| b[&quot;rf-01&lt;br/&gt;registrar préstamo&quot;] 1. la regla que ordena todo 4. el puente con la matriz de dependencias">
+    <div class="cab">
+      <h3>Relaciones y dependencias en UML</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Tabla *Resumen de los Tipos de Relaciones en UML* (diapositiva de clase) + docs.staruml.io, Garland &amp; Anthony cap. 5 y Reynoso (complemento) + verificación propia del render Mermaid</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Relaciones y dependencias en UML#mermaid-1</b></span><span>1. La regla que ordena todo</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    F[&quot;Una flecha UML&quot;] --&gt; P[&quot;LA PUNTA&lt;br/&gt;qué tipo de relación&quot;]
+    F --&gt; T[&quot;EL TRAZO&lt;br/&gt;qué tan fuerte es el vínculo&quot;]
+    P --&gt; P1[&quot;triángulo → es-un&quot;]
+    P --&gt; P2[&quot;punta abierta → usa / apunta a&quot;]
+    P --&gt; P3[&quot;rombo → es-parte-de&quot;]
+    T --&gt; T1[&quot;llena → estructural,&lt;br/&gt;permanente&quot;]
+    T --&gt; T2[&quot;punteada → débil,&lt;br/&gt;solo en tiempo de uso&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Relaciones y dependencias en UML#mermaid-2</b></span><span>4. El puente con la matriz de dependencias</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A[&quot;RF-02&lt;br/&gt;Registrar devolución&quot;] -.-&gt;|&quot;«depends on»&quot;| B[&quot;RF-01&lt;br/&gt;Registrar préstamo&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="stakeholders arquitectura de software arquitectura de software (1).pdf (núcleo) + iso/iec/ieee 42010, saip y garland &amp; anthony (complemento) flowchart lr
+    s([&quot;stakeholder&quot;]) --&gt;|tiene| c[&quot;concern&lt;br/&gt;&lt;i&gt;performance, seguridad,&lt;br/&gt;mantenibilidad…&lt;/i&gt;&quot;]
+    c --&gt;|se enmarca en| vp[&quot;viewpoint&lt;br/&gt;&lt;i&gt;la plantilla&lt;/i&gt;&quot;]
+    vp --&gt;|se instancia como| v[&quot;vista&quot;]
+    v --&gt;|forma parte de| ad[&quot;descripción&lt;br/&gt;arquitectónica&quot;] flowchart td
+    stk[&quot;stakeholder&lt;br/&gt;tiene un interés&quot;] --&gt; p1{&quot;¿interactúa con&lt;br/&gt;el negocio?&quot;}
+    p1 --&gt;|no| solo[&quot;solo stakeholder&lt;br/&gt;&lt;i&gt;ej.: el inversionista&lt;/i&gt;&quot;]
+    p1 --&gt;|sí| p2{&quot;¿está fuera&lt;br/&gt;del negocio?&quot;}
+    p2 --&gt;|sí| act([&quot;actor del negocio&quot;])
+    p2 --&gt;|no| tra[&quot;trabajador del negocio&quot;] 2. la definición formal *(complemento — iso/iec/ieee 42010)* 6. stakeholder, actor y trabajador: no son lo mismo">
+    <div class="cab">
+      <h3>Stakeholders</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Arquitectura de Software (1).pdf (núcleo) + ISO/IEC/IEEE 42010, SAIP y Garland &amp; Anthony (complemento)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Stakeholders#mermaid-1</b></span><span>2. La definición formal *(complemento — ISO/IEC/IEEE 42010)*</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    S([&quot;Stakeholder&quot;]) --&gt;|tiene| C[&quot;Concern&lt;br/&gt;&lt;i&gt;performance, seguridad,&lt;br/&gt;mantenibilidad…&lt;/i&gt;&quot;]
+    C --&gt;|se enmarca en| VP[&quot;Viewpoint&lt;br/&gt;&lt;i&gt;la plantilla&lt;/i&gt;&quot;]
+    VP --&gt;|se instancia como| V[&quot;Vista&quot;]
+    V --&gt;|forma parte de| AD[&quot;Descripción&lt;br/&gt;arquitectónica&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Stakeholders#mermaid-2</b></span><span>6. Stakeholder, actor y trabajador: no son lo mismo</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    STK[&quot;STAKEHOLDER&lt;br/&gt;tiene un interés&quot;] --&gt; P1{&quot;¿interactúa con&lt;br/&gt;el negocio?&quot;}
+    P1 --&gt;|no| SOLO[&quot;Solo stakeholder&lt;br/&gt;&lt;i&gt;ej.: el inversionista&lt;/i&gt;&quot;]
+    P1 --&gt;|sí| P2{&quot;¿está fuera&lt;br/&gt;del negocio?&quot;}
+    P2 --&gt;|sí| ACT([&quot;ACTOR del negocio&quot;])
+    P2 --&gt;|no| TRA[&quot;TRABAJADOR del negocio&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="complemento" data-buscable="tácticas y patrones arquitectónicos arquitectura de software complemento — saip 4ª ed. vía la guía de estudio flowchart lr
+    t1[&quot;táctica a&quot;] --&gt; p[&quot;patrón&lt;br/&gt;arquitectónico&quot;]
+    t2[&quot;táctica b&quot;] --&gt; p
+    t3[&quot;táctica c&quot;] --&gt; p
+    p --&gt; tr[&quot;tradeoffs entre&lt;br/&gt;varios atributos&quot;]
+    t1 --&gt; u1[&quot;una respuesta&lt;br/&gt;de un atributo&quot;] flowchart lr
+    rnf[&quot;requerimiento&lt;br/&gt;no funcional&quot;] --&gt; ac[&quot;atributo&lt;br/&gt;de calidad&quot;]
+    ac --&gt; tac[&quot;táctica&lt;br/&gt;&lt;i&gt;una respuesta,&lt;br/&gt;un atributo&lt;/i&gt;&quot;]
+    tac --&gt; dec[&quot;decisión de diseño&lt;br/&gt;&lt;i&gt;patrón o estilo&lt;/i&gt;&quot;]
+    dec --&gt; vis[&quot;vista donde&lt;br/&gt;se documenta&quot;]
+    vis --&gt; eva[&quot;evaluación&quot;]
+    eva -.-&gt;|&quot;¿se cumplió?&quot;| rnf 1. las dos definiciones 6. dónde encaja en la cadena">
+    <div class="cab">
+      <h3>Tácticas y patrones arquitectónicos</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — SAIP 4ª ed. vía la Guía de estudio</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Tácticas y patrones arquitectónicos#mermaid-1</b></span><span>1. Las dos definiciones</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    T1[&quot;Táctica A&quot;] --&gt; P[&quot;PATRÓN&lt;br/&gt;arquitectónico&quot;]
+    T2[&quot;Táctica B&quot;] --&gt; P
+    T3[&quot;Táctica C&quot;] --&gt; P
+    P --&gt; TR[&quot;Tradeoffs entre&lt;br/&gt;VARIOS atributos&quot;]
+    T1 --&gt; U1[&quot;Una respuesta&lt;br/&gt;de UN atributo&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Tácticas y patrones arquitectónicos#mermaid-2</b></span><span>6. Dónde encaja en la cadena</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    RNF[&quot;Requerimiento&lt;br/&gt;no funcional&quot;] --&gt; AC[&quot;Atributo&lt;br/&gt;de calidad&quot;]
+    AC --&gt; TAC[&quot;TÁCTICA&lt;br/&gt;&lt;i&gt;una respuesta,&lt;br/&gt;un atributo&lt;/i&gt;&quot;]
+    TAC --&gt; DEC[&quot;Decisión de diseño&lt;br/&gt;&lt;i&gt;patrón o estilo&lt;/i&gt;&quot;]
+    DEC --&gt; VIS[&quot;Vista donde&lt;br/&gt;se documenta&quot;]
+    VIS --&gt; EVA[&quot;Evaluación&quot;]
+    EVA -.-&gt;|&quot;¿se cumplió?&quot;| RNF</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Casos de uso del negocio">
+  <h2 id="casos-de-uso-del-negocio">Casos de uso del negocio<em>12 notas · 27 diagramas</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="actor del negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart td
+    e[&quot;la empresa&lt;br/&gt;&lt;i&gt;tienda x&lt;/i&gt;&quot;] --&gt; ca[&quot;el campo de acción&lt;br/&gt;&lt;i&gt;ventas online&lt;/i&gt;&lt;br/&gt;← esta es la frontera&quot;]
+    ca --&gt; dentro[&quot;&lt;b&gt;adentro&lt;/b&gt; → trabajadores&lt;br/&gt;&lt;i&gt;quien ejecuta el proceso&lt;/i&gt;&quot;]
+    ca --&gt; fuera[&quot;&lt;b&gt;afuera&lt;/b&gt; → actores&lt;br/&gt;&lt;i&gt;incluye otras áreas&lt;br/&gt;de la misma empresa&lt;/i&gt;&quot;]
+    e --&gt; otras[&quot;otras áreas: contabilidad,&lt;br/&gt;almacén, ventas&quot;]
+    otras -.-&gt;|&quot;están fuera del&lt;br/&gt;campo de acción&quot;| fuera flowchart td
+    g([&quot;actor genérico&lt;br/&gt;(rol compartido)&quot;]) --- cun((&quot;cun común&quot;))
+    a1([&quot;actor específico 1&quot;]) --&gt;|hereda| g
+    a2([&quot;actor específico 2&quot;]) --&gt;|hereda| g
+    a1 --- cu1((&quot;otro cun&lt;br/&gt;propio de a1&quot;)) la frontera es el campo de acción, no la empresa generalización entre actores">
+    <div class="cab">
+      <h3>Actor del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Actor del negocio#mermaid-1</b></span><span>La frontera es el campo de acción, no la empresa</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    E[&quot;LA EMPRESA&lt;br/&gt;&lt;i&gt;Tienda X&lt;/i&gt;&quot;] --&gt; CA[&quot;EL CAMPO DE ACCIÓN&lt;br/&gt;&lt;i&gt;Ventas online&lt;/i&gt;&lt;br/&gt;← esta es la frontera&quot;]
+    CA --&gt; DENTRO[&quot;&lt;b&gt;Adentro&lt;/b&gt; → trabajadores&lt;br/&gt;&lt;i&gt;quien ejecuta el proceso&lt;/i&gt;&quot;]
+    CA --&gt; FUERA[&quot;&lt;b&gt;Afuera&lt;/b&gt; → actores&lt;br/&gt;&lt;i&gt;incluye otras áreas&lt;br/&gt;de la misma empresa&lt;/i&gt;&quot;]
+    E --&gt; OTRAS[&quot;Otras áreas: Contabilidad,&lt;br/&gt;Almacén, Ventas&quot;]
+    OTRAS -.-&gt;|&quot;están fuera del&lt;br/&gt;campo de acción&quot;| FUERA</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Actor del negocio#mermaid-2</b></span><span>Generalización entre actores</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    G([&quot;Actor genérico&lt;br/&gt;(rol compartido)&quot;]) --- CUN((&quot;CUN común&quot;))
+    A1([&quot;Actor específico 1&quot;]) --&gt;|hereda| G
+    A2([&quot;Actor específico 2&quot;]) --&gt;|hereda| G
+    A1 --- CU1((&quot;Otro CUN&lt;br/&gt;propio de A1&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="caso de uso del negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    c([&quot;cliente&quot;]) ---|asociación| vp((&quot;vender&lt;br/&gt;pasaje&quot;))
+    vp --&gt;|produce| r[&quot;resultado de valor&lt;br/&gt;observable para el actor&quot;] la equivalencia central">
+    <div class="cab">
+      <h3>Caso de uso del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Caso de uso del negocio#mermaid-1</b></span><span>La equivalencia central</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C([&quot;Cliente&quot;]) ---|asociación| VP((&quot;Vender&lt;br/&gt;Pasaje&quot;))
+    VP --&gt;|produce| R[&quot;Resultado de valor&lt;br/&gt;observable para el actor&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="convenios del diagrama de cun casos de uso del negocio presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán). núcleo. flowchart td
+    r[&quot;regla: todo cu tiene&lt;br/&gt;al menos un actor&quot;] --&gt; e1{&quot;¿este cu no&lt;br/&gt;tiene actor?&quot;}
+    e1 --&gt;|&quot;es un cu hijo y el padre&lt;br/&gt;describe la comunicación&quot;| ok[&quot;está bien&quot;]
+    e1 --&gt;|&quot;es un cu de apoyo&lt;br/&gt;incluido por otro&quot;| ok2[&quot;está bien&lt;br/&gt;&lt;i&gt;(ver §5)&lt;/i&gt;&quot;]
+    e1 --&gt;|&quot;cualquier otro caso&quot;| mal[&quot;&lt;b&gt;error en el modelo&lt;/b&gt;&quot;] flowchart lr
+    a1[&quot;actor&quot;] --&gt;|&quot;inicia el actor&quot;| c1((&quot;cun&quot;))
+    c2((&quot;cun&quot;)) --&gt;|&quot;inicia el cun&quot;| a2[&quot;actor&quot;]
+    a3[&quot;actor&quot;] ---|&quot;en los dos sentidos:&lt;br/&gt;&lt;b&gt;sin punta de flecha&lt;/b&gt;&quot;| c3((&quot;cun&quot;)) flowchart td
+    q{&quot;¿quién inicia&lt;br/&gt;esta relación?&quot;}
+    q --&gt;|&quot;el actor&quot;| a[&quot;flecha &lt;b&gt;actor → cun&lt;/b&gt;&lt;br/&gt;&lt;i&gt;obligatoria, siempre se dibuja&lt;/i&gt;&quot;]
+    q --&gt;|&quot;el cun, y el actor&lt;br/&gt;también lo inicia&quot;| b[&quot;&lt;b&gt;solo&lt;/b&gt; la flecha actor → cun&lt;br/&gt;&lt;i&gt;la otra no se dibuja&lt;/i&gt;&quot;]
+    q --&gt;|&quot;solo el cun&quot;| c[&quot;flecha cun → actor&lt;br/&gt;&lt;i&gt;opcional: se dibuja si aclara&lt;/i&gt;&quot;] flowchart lr
+    p[&quot;pasajero&quot;] --&gt; ci((&quot;check-in&lt;br/&gt;individual&quot;))
+    g[&quot;guía de turismo&quot;] --&gt; cg((&quot;check-in&lt;br/&gt;de grupo&quot;))
+    ci -.-&gt;|&quot;«include»&quot;| me((&quot;manipular&lt;br/&gt;equipaje&quot;))
+    cg -.-&gt;|&quot;«include»&quot;| me flowchart lr
+    c[&quot;cliente&quot;] --&gt; vp((&quot;venta de&lt;br/&gt;producto&quot;))
+    vp -.-&gt;|&quot;«include»&quot;| vd((&quot;verificar política&lt;br/&gt;de descuento&lt;br/&gt;&lt;i&gt;cu de apoyo,&lt;br/&gt;sin actores&lt;/i&gt;&quot;)) 2. cuántos actores por caso de uso 3. navegabilidad: quién inicia 4. los convenios que se van a usar reutilizar particionar">
+    <div class="cab">
+      <h3>Convenios del diagrama de CUN</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán). NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Convenios del diagrama de CUN#mermaid-1</b></span><span>2. Cuántos actores por caso de uso</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    R[&quot;Regla: todo CU tiene&lt;br/&gt;al menos UN actor&quot;] --&gt; E1{&quot;¿Este CU no&lt;br/&gt;tiene actor?&quot;}
+    E1 --&gt;|&quot;es un CU hijo y el padre&lt;br/&gt;describe la comunicación&quot;| OK[&quot;Está bien&quot;]
+    E1 --&gt;|&quot;es un CU de apoyo&lt;br/&gt;incluido por otro&quot;| OK2[&quot;Está bien&lt;br/&gt;&lt;i&gt;(ver §5)&lt;/i&gt;&quot;]
+    E1 --&gt;|&quot;cualquier otro caso&quot;| MAL[&quot;&lt;b&gt;ERROR EN EL MODELO&lt;/b&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Convenios del diagrama de CUN#mermaid-2</b></span><span>3. Navegabilidad: quién inicia</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A1[&quot;Actor&quot;] --&gt;|&quot;inicia el ACTOR&quot;| C1((&quot;CUN&quot;))
+    C2((&quot;CUN&quot;)) --&gt;|&quot;inicia el CUN&quot;| A2[&quot;Actor&quot;]
+    A3[&quot;Actor&quot;] ---|&quot;en los dos sentidos:&lt;br/&gt;&lt;b&gt;sin punta de flecha&lt;/b&gt;&quot;| C3((&quot;CUN&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Convenios del diagrama de CUN#mermaid-3</b></span><span>4. Los convenios que se van a usar</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    Q{&quot;¿Quién inicia&lt;br/&gt;esta relación?&quot;}
+    Q --&gt;|&quot;el actor&quot;| A[&quot;Flecha &lt;b&gt;actor → CUN&lt;/b&gt;&lt;br/&gt;&lt;i&gt;obligatoria, siempre se dibuja&lt;/i&gt;&quot;]
+    Q --&gt;|&quot;el CUN, y el actor&lt;br/&gt;también lo inicia&quot;| B[&quot;&lt;b&gt;Solo&lt;/b&gt; la flecha actor → CUN&lt;br/&gt;&lt;i&gt;la otra no se dibuja&lt;/i&gt;&quot;]
+    Q --&gt;|&quot;solo el CUN&quot;| C[&quot;Flecha CUN → actor&lt;br/&gt;&lt;i&gt;opcional: se dibuja si aclara&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Convenios del diagrama de CUN#mermaid-4</b></span><span>REUTILIZAR</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    P[&quot;Pasajero&quot;] --&gt; CI((&quot;Check-In&lt;br/&gt;Individual&quot;))
+    G[&quot;Guía de turismo&quot;] --&gt; CG((&quot;Check-In&lt;br/&gt;de Grupo&quot;))
+    CI -.-&gt;|&quot;«include»&quot;| ME((&quot;Manipular&lt;br/&gt;Equipaje&quot;))
+    CG -.-&gt;|&quot;«include»&quot;| ME</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Convenios del diagrama de CUN#mermaid-5</b></span><span>PARTICIONAR</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C[&quot;Cliente&quot;] --&gt; VP((&quot;Venta de&lt;br/&gt;producto&quot;))
+    VP -.-&gt;|&quot;«include»&quot;| VD((&quot;Verificar política&lt;br/&gt;de descuento&lt;br/&gt;&lt;i&gt;CU de apoyo,&lt;br/&gt;sin actores&lt;/i&gt;&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="descripción textual de casos de uso casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    c([&quot;cliente&quot;]) --- ap((&quot;atender&lt;br/&gt;pedido&quot;)) el ejemplo completo: atender pedido">
+    <div class="cab">
+      <h3>Descripción textual de casos de uso</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Descripción textual de casos de uso#mermaid-1</b></span><span>El ejemplo completo: Atender pedido</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C([&quot;Cliente&quot;]) --- AP((&quot;Atender&lt;br/&gt;pedido&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="diagrama de contexto casos de uso del negocio presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán). núcleo. flowchart lr
+    e1[&quot;entidad o agente&lt;br/&gt;&lt;i&gt;rectángulo&lt;/i&gt;&quot;] --&gt;|&quot;streamline&lt;br/&gt;(flujo con nombre)&quot;| p((&quot;el producto&lt;br/&gt;&lt;i&gt;elipse&lt;/i&gt;&quot;))
+    p --&gt;|&quot;streamline&quot;| e2[&quot;entidad o agente&quot;] flowchart lr
+    l[&quot;lector&quot;] --&gt;|&quot;lista de préstamos&quot;| s((&quot;sistema de préstamos&lt;br/&gt;y devoluciones&lt;br/&gt;de la biblioteca&quot;))
+    l --&gt;|&quot;devolución de libros&quot;| s
+    p[&quot;proveedor de libros&quot;] --&gt;|&quot;información de inventario&quot;| s
+    s --&gt;|&quot;pedido de compra&quot;| p
+    b[&quot;bibliotecario&quot;] --&gt;|&quot;mantenimiento de información&quot;| s flowchart td
+    dp[&quot;departamento&lt;br/&gt;de producción&quot;] --&gt;|&quot;plan de producción&quot;| s
+    s --&gt;|&quot;programa de producción&quot;| dp
+    pr[&quot;proveedor&quot;] --&gt;|&quot;información de suministro&quot;| s
+    s --&gt;|&quot;pedido de compra&quot;| pr
+    s((&quot;planificación de&lt;br/&gt;producción y gestión&lt;br/&gt;de materiales&quot;))
+    s --&gt;|&quot;gestión de inventario&quot;| al[&quot;almacén&quot;]
+    al --&gt;|&quot;información de inventario&quot;| s
+    dv[&quot;departamento&lt;br/&gt;de ventas&quot;] --&gt;|&quot;demanda de mercado&quot;| s
+    dv --&gt;|&quot;pedido de venta&quot;| s flowchart lr
+    ctx[&quot;&lt;b&gt;diagrama de contexto&lt;/b&gt;&lt;br/&gt;&lt;i&gt;fija el límite:&lt;br/&gt;qué es el producto y&lt;br/&gt;qué es externo&lt;/i&gt;&quot;] --&gt; core[&quot;cdu de alto nivel&lt;br/&gt;&lt;i&gt;el core del negocio&lt;/i&gt;&quot;]
+    core --&gt; desc[&quot;primera descomposición&quot;]
+    ctx --&gt; stk[&quot;stakeholders&lt;br/&gt;&lt;i&gt;las entidades son&lt;br/&gt;candidatos&lt;/i&gt;&quot;]
+    desc --&gt; rf[&quot;drivers rf&quot;]
+    ctx --&gt; rf 1. la notación: tres símbolos y nada más 2. ejemplo resuelto en clase — la biblioteca 3. segundo ejemplo — gestión de materiales 4. por qué este diagrama va primero">
+    <div class="cab">
+      <h3>Diagrama de contexto</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán). NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de contexto#mermaid-1</b></span><span>1. La notación: tres símbolos y nada más</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    E1[&quot;Entidad o agente&lt;br/&gt;&lt;i&gt;rectángulo&lt;/i&gt;&quot;] --&gt;|&quot;streamline&lt;br/&gt;(flujo con nombre)&quot;| P((&quot;EL PRODUCTO&lt;br/&gt;&lt;i&gt;elipse&lt;/i&gt;&quot;))
+    P --&gt;|&quot;streamline&quot;| E2[&quot;Entidad o agente&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de contexto#mermaid-2</b></span><span>2. Ejemplo resuelto en clase — la biblioteca</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    L[&quot;lector&quot;] --&gt;|&quot;Lista de préstamos&quot;| S((&quot;Sistema de préstamos&lt;br/&gt;y devoluciones&lt;br/&gt;de la biblioteca&quot;))
+    L --&gt;|&quot;Devolución de libros&quot;| S
+    P[&quot;proveedor de libros&quot;] --&gt;|&quot;Información de inventario&quot;| S
+    S --&gt;|&quot;pedido de compra&quot;| P
+    B[&quot;Bibliotecario&quot;] --&gt;|&quot;Mantenimiento de información&quot;| S</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de contexto#mermaid-3</b></span><span>3. Segundo ejemplo — gestión de materiales</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    DP[&quot;Departamento&lt;br/&gt;de Producción&quot;] --&gt;|&quot;Plan de producción&quot;| S
+    S --&gt;|&quot;Programa de producción&quot;| DP
+    PR[&quot;proveedor&quot;] --&gt;|&quot;Información de suministro&quot;| S
+    S --&gt;|&quot;pedido de compra&quot;| PR
+    S((&quot;Planificación de&lt;br/&gt;producción y gestión&lt;br/&gt;de materiales&quot;))
+    S --&gt;|&quot;Gestión de inventario&quot;| AL[&quot;almacén&quot;]
+    AL --&gt;|&quot;Información de inventario&quot;| S
+    DV[&quot;Departamento&lt;br/&gt;de Ventas&quot;] --&gt;|&quot;Demanda de mercado&quot;| S
+    DV --&gt;|&quot;pedido de venta&quot;| S</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Diagrama de contexto#mermaid-4</b></span><span>4. Por qué este diagrama va primero</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    CTX[&quot;&lt;b&gt;Diagrama de contexto&lt;/b&gt;&lt;br/&gt;&lt;i&gt;fija el LÍMITE:&lt;br/&gt;qué es el producto y&lt;br/&gt;qué es externo&lt;/i&gt;&quot;] --&gt; CORE[&quot;CDU de alto nivel&lt;br/&gt;&lt;i&gt;el core del negocio&lt;/i&gt;&quot;]
+    CORE --&gt; DESC[&quot;Primera descomposición&quot;]
+    CTX --&gt; STK[&quot;Stakeholders&lt;br/&gt;&lt;i&gt;las entidades son&lt;br/&gt;candidatos&lt;/i&gt;&quot;]
+    DESC --&gt; RF[&quot;Drivers RF&quot;]
+    CTX --&gt; RF</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="generalización y especialización en casos de uso casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart td
+    jz([&quot;jefe zonal&quot;]) --- rv((&quot;realizar&lt;br/&gt;visitas&quot;))
+    rvp((&quot;realizar visitas a&lt;br/&gt;clientes potenciales&quot;)) --&gt;|generalización| rv
+    rvr((&quot;realizar visitas a&lt;br/&gt;clientes registrados&quot;)) --&gt;|generalización| rv el ejemplo: vendedores ambulantes">
+    <div class="cab">
+      <h3>Generalización y especialización en casos de uso</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Generalización y especialización en casos de uso#mermaid-1</b></span><span>El ejemplo: vendedores ambulantes</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    JZ([&quot;Jefe zonal&quot;]) --- RV((&quot;Realizar&lt;br/&gt;visitas&quot;))
+    RVP((&quot;Realizar visitas a&lt;br/&gt;clientes potenciales&quot;)) --&gt;|generalización| RV
+    RVR((&quot;Realizar visitas a&lt;br/&gt;clientes registrados&quot;)) --&gt;|generalización| RV</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="identificación de procesos del negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    subgraph nu[&quot;núcleo&quot;]
+        cl([&quot;cliente&quot;]) --- sc((&quot;servicio&lt;br/&gt;de comida&quot;))
+    end
+    subgraph so[&quot;soporte&quot;]
+        cs((&quot;comprar&lt;br/&gt;suministros&quot;)) --- pr([&quot;proveedor&quot;])
+    end
+    subgraph ge[&quot;gerenciales&quot;]
+        cp([&quot;cliente&lt;br/&gt;potencial&quot;]) --- mk((&quot;marketing&quot;))
+        mk --- er([&quot;experto en&lt;br/&gt;relaciones públicas&quot;])
+    end flowchart td
+    f1[&quot;función:&lt;br/&gt;distribución&quot;] --&gt; p1((&quot;recepción&quot;))
+    f1 --&gt; p2((&quot;embarque&quot;))
+    f2[&quot;función:&lt;br/&gt;compras&quot;] --&gt; p3((&quot;elección de&lt;br/&gt;proveedores&quot;))
+    f2 --&gt; p4((&quot;pago a&lt;br/&gt;proveedores&quot;))
+    f3[&quot;función:&lt;br/&gt;personal&quot;] --&gt; p5((&quot;cubrimiento&lt;br/&gt;de plantilla&quot;))
+    f3 --&gt; p6((&quot;capacitación&quot;)) flowchart lr
+    oe[&quot;objetivos&lt;br/&gt;estratégicos&quot;] --&gt; so1[&quot;subobjetivo 1&quot;]
+    oe --&gt; son[&quot;subobjetivo n&quot;]
+    so1 --&gt; pn[&quot;procesos&lt;br/&gt;de negocio&quot;]
+    son --&gt; pn flowchart lr
+    c([&quot;cliente&quot;]) --- ap((&quot;atender&lt;br/&gt;pedido&quot;))
+    p([&quot;proveedor&quot;]) --- cs((&quot;comprar&lt;br/&gt;suministros&quot;)) 1. clasificación 2. agrupamiento de actividades 3. objetivos 3. objetivos">
+    <div class="cab">
+      <h3>Identificación de procesos del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Identificación de procesos del negocio#mermaid-1</b></span><span>1. Clasificación</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph NU[&quot;Núcleo&quot;]
+        CL([&quot;Cliente&quot;]) --- SC((&quot;Servicio&lt;br/&gt;de comida&quot;))
+    end
+    subgraph SO[&quot;Soporte&quot;]
+        CS((&quot;Comprar&lt;br/&gt;suministros&quot;)) --- PR([&quot;Proveedor&quot;])
+    end
+    subgraph GE[&quot;Gerenciales&quot;]
+        CP([&quot;Cliente&lt;br/&gt;potencial&quot;]) --- MK((&quot;Marketing&quot;))
+        MK --- ER([&quot;Experto en&lt;br/&gt;relaciones públicas&quot;])
+    end</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Identificación de procesos del negocio#mermaid-2</b></span><span>2. Agrupamiento de actividades</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    F1[&quot;Función:&lt;br/&gt;Distribución&quot;] --&gt; P1((&quot;Recepción&quot;))
+    F1 --&gt; P2((&quot;Embarque&quot;))
+    F2[&quot;Función:&lt;br/&gt;Compras&quot;] --&gt; P3((&quot;Elección de&lt;br/&gt;proveedores&quot;))
+    F2 --&gt; P4((&quot;Pago a&lt;br/&gt;proveedores&quot;))
+    F3[&quot;Función:&lt;br/&gt;Personal&quot;] --&gt; P5((&quot;Cubrimiento&lt;br/&gt;de plantilla&quot;))
+    F3 --&gt; P6((&quot;Capacitación&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Identificación de procesos del negocio#mermaid-3</b></span><span>3. Objetivos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    OE[&quot;Objetivos&lt;br/&gt;estratégicos&quot;] --&gt; SO1[&quot;SubObjetivo 1&quot;]
+    OE --&gt; SOn[&quot;SubObjetivo n&quot;]
+    SO1 --&gt; PN[&quot;Procesos&lt;br/&gt;de negocio&quot;]
+    SOn --&gt; PN</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Identificación de procesos del negocio#mermaid-4</b></span><span>3. Objetivos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C([&quot;Cliente&quot;]) --- AP((&quot;Atender&lt;br/&gt;pedido&quot;))
+    P([&quot;Proveedor&quot;]) --- CS((&quot;Comprar&lt;br/&gt;suministros&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="modelo de casos de uso del negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    c([&quot;cliente&quot;]) ---|&quot;asociación&lt;br/&gt;(envía y/o recibe mensajes)&quot;| vp((&quot;vender&lt;br/&gt;pasaje&quot;)) flowchart td
+    p1[&quot;1. identificar los procesos&lt;br/&gt;del negocio&quot;] --&gt; p2[&quot;2. identificar los actores&lt;br/&gt;del negocio&quot;]
+    p2 --&gt; p3[&quot;3. asociar actores con cun&quot;]
+    p3 --&gt; p4[&quot;4. expandir con relaciones:&lt;br/&gt;include, extend, generalización&quot;]
+    p4 --&gt; p5[&quot;5. documentar realizaciones&lt;br/&gt;y descripción textual&quot;] los dos estereotipos cómo se construye">
+    <div class="cab">
+      <h3>Modelo de casos de uso del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Modelo de casos de uso del negocio#mermaid-1</b></span><span>Los dos estereotipos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C([&quot;Cliente&quot;]) ---|&quot;asociación&lt;br/&gt;(envía y/o recibe mensajes)&quot;| VP((&quot;Vender&lt;br/&gt;Pasaje&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Modelo de casos de uso del negocio#mermaid-2</b></span><span>Cómo se construye</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    P1[&quot;1. Identificar los procesos&lt;br/&gt;del negocio&quot;] --&gt; P2[&quot;2. Identificar los actores&lt;br/&gt;del negocio&quot;]
+    P2 --&gt; P3[&quot;3. Asociar actores con CUN&quot;]
+    P3 --&gt; P4[&quot;4. Expandir con relaciones:&lt;br/&gt;include, extend, generalización&quot;]
+    P4 --&gt; P5[&quot;5. Documentar realizaciones&lt;br/&gt;y descripción textual&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="proceso de negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    t1[&quot;tarea 1&quot;] --&gt; t2[&quot;tarea 2&quot;] --&gt; t3[&quot;tarea 3&quot;]
+    r[&quot;recursos de la&lt;br/&gt;organización&quot;] -.-&gt;|se emplean| t2
+    t3 --&gt; res[&quot;resultado en apoyo a&lt;br/&gt;los objetivos del negocio&quot;]
+    subgraph pn[&quot;proceso de negocio = 1 cun&quot;]
+        t1
+        t2
+        t3
+    end la consecuencia para el modelado">
+    <div class="cab">
+      <h3>Proceso de negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Proceso de negocio#mermaid-1</b></span><span>La consecuencia para el modelado</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    T1[&quot;Tarea 1&quot;] --&gt; T2[&quot;Tarea 2&quot;] --&gt; T3[&quot;Tarea 3&quot;]
+    R[&quot;Recursos de la&lt;br/&gt;organización&quot;] -.-&gt;|se emplean| T2
+    T3 --&gt; RES[&quot;Resultado en apoyo a&lt;br/&gt;los objetivos del negocio&quot;]
+    subgraph PN[&quot;Proceso de negocio = 1 CUN&quot;]
+        T1
+        T2
+        T3
+    end</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="realizaciones de casos de uso del negocio casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart td
+    cun((&quot;cun&quot;)) --&gt; r[&quot;realización del cun&quot;]
+    r --&gt; da[&quot;diagrama de actividad&lt;br/&gt;(el flujo paso a paso)&quot;]
+    r --&gt; dt[&quot;descripción textual&lt;br/&gt;(el flujo en prosa)&quot;]
+    r --&gt; dc[&quot;diagrama de clases&lt;br/&gt;(entidades de negocio)&quot;]
+    r --&gt; ds[&quot;diagrama de secuencia&lt;br/&gt;(interacción en el tiempo)&quot;] con qué se documentan">
+    <div class="cab">
+      <h3>Realizaciones de casos de uso del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Realizaciones de casos de uso del negocio#mermaid-1</b></span><span>Con qué se documentan</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    CUN((&quot;CUN&quot;)) --&gt; R[&quot;Realización del CUN&quot;]
+    R --&gt; DA[&quot;Diagrama de actividad&lt;br/&gt;(el flujo paso a paso)&quot;]
+    R --&gt; DT[&quot;Descripción textual&lt;br/&gt;(el flujo en prosa)&quot;]
+    R --&gt; DC[&quot;Diagrama de clases&lt;br/&gt;(entidades de negocio)&quot;]
+    R --&gt; DS[&quot;Diagrama de secuencia&lt;br/&gt;(interacción en el tiempo)&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="relación de extensión extend casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    a([&quot;actor&quot;]) --- b((&quot;cu base&quot;))
+    e((&quot;cu de extensión&quot;)) -.-&gt;|&quot;«extend»&quot;| b flowchart td
+    b((&quot;cu base:&lt;br/&gt;flujo normal&quot;))
+    e1((&quot;subflujo raro o&lt;br/&gt;bajo condición&quot;)) -.-&gt;|&quot;«extend»&quot;| b
+    e2((&quot;flujo según&lt;br/&gt;selección del actor&quot;)) -.-&gt;|&quot;«extend»&quot;| b flowchart lr
+    b((&quot;caso de uso &lt;b&gt;base&lt;/b&gt;&lt;br/&gt;&lt;i&gt;declara puntos&lt;br/&gt;de extensión&lt;/i&gt;&quot;)) 
+    e((&quot;caso de uso &lt;b&gt;extendido&lt;/b&gt;&lt;br/&gt;&lt;i&gt;solo puede alterar&lt;br/&gt;los puntos marcados&lt;/i&gt;&quot;))
+    e -.-&gt;|&quot;«extends»&quot;| b de dónde sale ¿cuándo tiene sentido definir un nuevo cu? el mecanismo formal: los puntos de extensión">
+    <div class="cab">
+      <h3>Relación de extensión extend</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Relación de extensión extend#mermaid-1</b></span><span>De dónde sale</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A([&quot;Actor&quot;]) --- B((&quot;CU base&quot;))
+    E((&quot;CU de extensión&quot;)) -.-&gt;|&quot;«extend»&quot;| B</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Relación de extensión extend#mermaid-2</b></span><span>¿Cuándo tiene sentido definir un nuevo CU?</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    B((&quot;CU base:&lt;br/&gt;flujo normal&quot;))
+    E1((&quot;Subflujo raro o&lt;br/&gt;bajo condición&quot;)) -.-&gt;|&quot;«extend»&quot;| B
+    E2((&quot;Flujo según&lt;br/&gt;selección del actor&quot;)) -.-&gt;|&quot;«extend»&quot;| B</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Relación de extensión extend#mermaid-3</b></span><span>El mecanismo formal: los puntos de extensión</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    B((&quot;Caso de uso &lt;b&gt;BASE&lt;/b&gt;&lt;br/&gt;&lt;i&gt;declara puntos&lt;br/&gt;de extensión&lt;/i&gt;&quot;)) 
+    E((&quot;Caso de uso &lt;b&gt;EXTENDIDO&lt;/b&gt;&lt;br/&gt;&lt;i&gt;solo puede alterar&lt;br/&gt;los puntos marcados&lt;/i&gt;&quot;))
+    E -.-&gt;|&quot;«extends»&quot;| B</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="relación de inclusión include casos de uso del negocio cdu negocio - modelado de drivers rf.pdf flowchart lr
+    a([&quot;actor&quot;]) --- b((&quot;cu base&quot;))
+    b -.-&gt;|&quot;«include»&quot;| i((&quot;cu incluido&quot;)) flowchart td
+    b1((&quot;cun 1&quot;)) -.-&gt;|&quot;«include»&quot;| c((&quot;comportamiento&lt;br/&gt;común&quot;))
+    b2((&quot;cun 2&quot;)) -.-&gt;|&quot;«include»&quot;| c
+    b3((&quot;cun 3&quot;)) -.-&gt;|&quot;«include»&quot;| c definición ¿cuándo se justifica?">
+    <div class="cab">
+      <h3>Relación de inclusión include</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Relación de inclusión include#mermaid-1</b></span><span>Definición</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A([&quot;Actor&quot;]) --- B((&quot;CU base&quot;))
+    B -.-&gt;|&quot;«include»&quot;| I((&quot;CU incluido&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Relación de inclusión include#mermaid-2</b></span><span>¿Cuándo se justifica?</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    B1((&quot;CUN 1&quot;)) -.-&gt;|&quot;«include»&quot;| C((&quot;Comportamiento&lt;br/&gt;común&quot;))
+    B2((&quot;CUN 2&quot;)) -.-&gt;|&quot;«include»&quot;| C
+    B3((&quot;CUN 3&quot;)) -.-&gt;|&quot;«include»&quot;| C</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Guía de entregable">
+  <h2 id="guia-de-entregable">Guía de entregable<em>5 notas · 20 diagramas</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="ejemplos resueltos de casos de negocio guía de entregable presentación de clase — capturas del 19/08/2026 (mba. msc. claudia rojas de morán). núcleo. flowchart lr
+    pa[&quot;paciente&quot;] --- sh((&quot;sistema&lt;br/&gt;hospitalario&quot;))
+    sh --- en[&quot;encamamiento&quot;]
+    sh --- fa[&quot;farmacia&quot;] flowchart td
+    ace[&quot;administrador&lt;br/&gt;consulta externa&quot;] --&gt;|&quot;hereda&quot;| cl[&quot;cliente&quot;]
+    ah[&quot;administrador&lt;br/&gt;hospitalización&quot;] --&gt;|&quot;hereda&quot;| cl
+    cl --- dm((&quot;despachar medicamentos&lt;br/&gt;en farmacia&quot;))
+    ace --- ac((&quot;asignar citas&quot;))
+    ah --- aca((&quot;asignar camas&quot;)) 4. hospital — el que más se parece a tu caso generalización entre actores">
+    <div class="cab">
+      <h3>Ejemplos resueltos de casos de negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Presentación de clase — capturas del 19/08/2026 (MBA. MSc. Claudia Rojas de Morán). NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Ejemplos resueltos de casos de negocio#mermaid-1</b></span><span>4. Hospital — el que más se parece a tu caso</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    PA[&quot;Paciente&quot;] --- SH((&quot;Sistema&lt;br/&gt;Hospitalario&quot;))
+    SH --- EN[&quot;Encamamiento&quot;]
+    SH --- FA[&quot;Farmacia&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Ejemplos resueltos de casos de negocio#mermaid-2</b></span><span>Generalización entre actores</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    ACE[&quot;Administrador&lt;br/&gt;Consulta Externa&quot;] --&gt;|&quot;hereda&quot;| CL[&quot;Cliente&quot;]
+    AH[&quot;Administrador&lt;br/&gt;Hospitalización&quot;] --&gt;|&quot;hereda&quot;| CL
+    CL --- DM((&quot;Despachar medicamentos&lt;br/&gt;en farmacia&quot;))
+    ACE --- AC((&quot;Asignar citas&quot;))
+    AH --- ACA((&quot;Asignar camas&quot;))</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="guía - caso de negocio guía de entregable rúbrica del caso 1 + nt identificación de cdu de negocio (a. hernández, 2005) + deck cdu negocio + garland &amp; anthony, large-scale software architecture (cap. 6) flowchart lr
+    subgraph cn[&quot;caso de negocio&quot;]
+        d1[&quot;1. contexto&quot;] --&gt; d2[&quot;2. core&quot;] --&gt; d3[&quot;3. primera&lt;br/&gt;descomposición&quot;]
+    end
+    d3 --&gt; exp[&quot;4. cdu expandidos&lt;br/&gt;(drivers rf)&quot;]
+    exp --&gt; mat[&quot;5. matriz de trazabilidad&lt;br/&gt;1 o 2 según el enunciado&quot;] flowchart lr
+    cl[&quot;cliente&quot;] --&gt;|&quot;pedido&quot;| n((&quot;sistema de gestión&lt;br/&gt;del restaurante x&quot;))
+    n --&gt;|&quot;servicio de comida&quot;| cl
+    pr[&quot;proveedor&quot;] --&gt;|&quot;suministros&quot;| n
+    n --&gt;|&quot;orden de compra&quot;| pr
+    cp[&quot;cliente potencial&quot;] --&gt;|&quot;consulta&quot;| n
+    n --&gt;|&quot;promoción&quot;| cp flowchart lr
+    a1[&quot;actor 1&quot;] --- n((&quot;el negocio&lt;br/&gt;completo&quot;))
+    a2[&quot;actor 2&quot;] --- n
+    a3[&quot;actor 3&quot;] --- n
+    a4[&quot;actor n&quot;] --- n flowchart lr
+    co[&quot;contabilidad&quot;] --- s((&quot;sistema de&lt;br/&gt;ventas on line&lt;br/&gt;tienda x&quot;))
+    v[&quot;ventas&quot;] --- s
+    cl[&quot;cliente&quot;] --- s
+    al[&quot;almacén&quot;] --- s
+    tr[&quot;transporte&quot;] --- s
+    ba[&quot;banco&quot;] --- s flowchart lr
+    subgraph nuc[&quot;núcleo&quot;]
+        cl([&quot;cliente&quot;]) --- sc((&quot;servicio&lt;br/&gt;de comida&quot;))
+    end
+    subgraph sop[&quot;soporte&quot;]
+        cs((&quot;comprar&lt;br/&gt;suministros&quot;)) --- pr([&quot;proveedor&quot;])
+    end
+    subgraph ger[&quot;gerenciales&quot;]
+        cp([&quot;cliente&lt;br/&gt;potencial&quot;]) --- mk((&quot;marketing&quot;))
+        mk --- er([&quot;experto en&lt;br/&gt;relaciones públicas&quot;])
+    end flowchart lr
+    pe((&quot;pedido&quot;)) -.-&gt;|&quot;«includes»&quot;| cs((&quot;comprobar&lt;br/&gt;saldo&quot;))
+    pe -.-&gt;|&quot;«includes»&quot;| mp((&quot;mostrar&lt;br/&gt;productos&quot;))
+    pe -.-&gt;|&quot;«includes»&quot;| sp((&quot;seleccionar&lt;br/&gt;productos&quot;))
+    pe -.-&gt;|&quot;«includes»&quot;| fp((&quot;finalizar&lt;br/&gt;pedido&quot;))
+    mp -.-&gt;|&quot;«includes»&quot;| vs((&quot;verificar&lt;br/&gt;stock&quot;))
+    pc((&quot;pedido&lt;br/&gt;compuesto&quot;)) -.-&gt;|&quot;«extends»&quot;| pe
+    pc -.-&gt;|&quot;«includes»&quot;| ap((&quot;agrupar&lt;br/&gt;pedido&quot;)) flowchart lr
+    p([&quot;pasajero&quot;]) --- ci((&quot;check-in&lt;br/&gt;individual&quot;))
+    g([&quot;guía de&lt;br/&gt;turismo&quot;]) --- cg((&quot;check-in&lt;br/&gt;de grupo&quot;))
+    ci -.-&gt;|&quot;«include»&quot;| me((&quot;manipular&lt;br/&gt;equipaje&quot;))
+    cg -.-&gt;|&quot;«include»&quot;| me flowchart lr
+    c([&quot;cliente&quot;]) --- vp((&quot;venta de&lt;br/&gt;producto&quot;))
+    vp -.-&gt;|&quot;«include»&quot;| vd((&quot;verificar política&lt;br/&gt;de descuento&quot;)) flowchart lr
+    p([&quot;pasajero&quot;]) --- ci((&quot;check-in&lt;br/&gt;individual&quot;))
+    me((&quot;manejo especial&lt;br/&gt;de equipaje&quot;)) -.-&gt;|&quot;«extend»&quot;| ci  la definición formal (garland &amp; anthony, cap. 6) — complemento diagrama 2 — core diagrama 2 — core diagrama 3 — primera descomposición entregable 4 — casos de uso expandidos inclusión por reutilización inclusión por particionamiento extensión">
+    <div class="cab">
+      <h3>Guía - Caso de negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Rúbrica del Caso 1 + NT Identificación de CDU de Negocio (A. Hernández, 2005) + deck CDU Negocio + Garland &amp; Anthony, Large-Scale Software Architecture (cap. 6)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-1</b></span><span>—</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph CN[&quot;CASO DE NEGOCIO&quot;]
+        D1[&quot;1. Contexto&quot;] --&gt; D2[&quot;2. Core&quot;] --&gt; D3[&quot;3. Primera&lt;br/&gt;descomposición&quot;]
+    end
+    D3 --&gt; EXP[&quot;4. CDU expandidos&lt;br/&gt;(drivers RF)&quot;]
+    EXP --&gt; MAT[&quot;5. Matriz de trazabilidad&lt;br/&gt;1 o 2 según el enunciado&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-2</b></span><span>La definición formal (Garland &amp; Anthony, cap. 6) — complemento</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    CL[&quot;Cliente&quot;] --&gt;|&quot;pedido&quot;| N((&quot;Sistema de gestión&lt;br/&gt;del Restaurante X&quot;))
+    N --&gt;|&quot;servicio de comida&quot;| CL
+    PR[&quot;Proveedor&quot;] --&gt;|&quot;suministros&quot;| N
+    N --&gt;|&quot;orden de compra&quot;| PR
+    CP[&quot;Cliente potencial&quot;] --&gt;|&quot;consulta&quot;| N
+    N --&gt;|&quot;promoción&quot;| CP</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-3</b></span><span>Diagrama 2 — Core</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A1[&quot;Actor 1&quot;] --- N((&quot;EL NEGOCIO&lt;br/&gt;completo&quot;))
+    A2[&quot;Actor 2&quot;] --- N
+    A3[&quot;Actor 3&quot;] --- N
+    A4[&quot;Actor n&quot;] --- N</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-4</b></span><span>Diagrama 2 — Core</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    CO[&quot;Contabilidad&quot;] --- S((&quot;Sistema de&lt;br/&gt;Ventas on line&lt;br/&gt;Tienda X&quot;))
+    V[&quot;Ventas&quot;] --- S
+    CL[&quot;Cliente&quot;] --- S
+    AL[&quot;Almacén&quot;] --- S
+    TR[&quot;Transporte&quot;] --- S
+    BA[&quot;Banco&quot;] --- S</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-5</b></span><span>Diagrama 3 — Primera descomposición</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph NUC[&quot;Núcleo&quot;]
+        CL([&quot;Cliente&quot;]) --- SC((&quot;Servicio&lt;br/&gt;de comida&quot;))
+    end
+    subgraph SOP[&quot;Soporte&quot;]
+        CS((&quot;Comprar&lt;br/&gt;suministros&quot;)) --- PR([&quot;Proveedor&quot;])
+    end
+    subgraph GER[&quot;Gerenciales&quot;]
+        CP([&quot;Cliente&lt;br/&gt;potencial&quot;]) --- MK((&quot;Marketing&quot;))
+        MK --- ER([&quot;Experto en&lt;br/&gt;relaciones públicas&quot;])
+    end</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-6</b></span><span>Entregable 4 — Casos de uso expandidos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    PE((&quot;Pedido&quot;)) -.-&gt;|&quot;«includes»&quot;| CS((&quot;Comprobar&lt;br/&gt;saldo&quot;))
+    PE -.-&gt;|&quot;«includes»&quot;| MP((&quot;Mostrar&lt;br/&gt;productos&quot;))
+    PE -.-&gt;|&quot;«includes»&quot;| SP((&quot;Seleccionar&lt;br/&gt;productos&quot;))
+    PE -.-&gt;|&quot;«includes»&quot;| FP((&quot;Finalizar&lt;br/&gt;pedido&quot;))
+    MP -.-&gt;|&quot;«includes»&quot;| VS((&quot;Verificar&lt;br/&gt;stock&quot;))
+    PC((&quot;Pedido&lt;br/&gt;compuesto&quot;)) -.-&gt;|&quot;«extends»&quot;| PE
+    PC -.-&gt;|&quot;«includes»&quot;| AP((&quot;Agrupar&lt;br/&gt;pedido&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-7</b></span><span>Inclusión por reutilización</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    P([&quot;Pasajero&quot;]) --- CI((&quot;Check-in&lt;br/&gt;Individual&quot;))
+    G([&quot;Guía de&lt;br/&gt;turismo&quot;]) --- CG((&quot;Check-in&lt;br/&gt;de Grupo&quot;))
+    CI -.-&gt;|&quot;«include»&quot;| ME((&quot;Manipular&lt;br/&gt;Equipaje&quot;))
+    CG -.-&gt;|&quot;«include»&quot;| ME</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-8</b></span><span>Inclusión por particionamiento</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    C([&quot;Cliente&quot;]) --- VP((&quot;Venta de&lt;br/&gt;producto&quot;))
+    VP -.-&gt;|&quot;«include»&quot;| VD((&quot;Verificar política&lt;br/&gt;de descuento&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Caso de negocio#mermaid-9</b></span><span>Extensión</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    P([&quot;Pasajero&quot;]) --- CI((&quot;Check-in&lt;br/&gt;Individual&quot;))
+    ME((&quot;Manejo Especial&lt;br/&gt;de Equipaje&quot;)) -.-&gt;|&quot;«extend»&quot;| CI</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="guía - diagrama de casos de uso del negocio guía de entregable teoría de cdu negocio - modelado de drivers rf.pdf (núcleo) flowchart lr
+    oe[&quot;objetivo estratégico&lt;br/&gt;'facilitar el acceso a la lectura&lt;br/&gt;a los vecinos'&quot;]
+    oe --&gt; s1[&quot;subobjetivo 1&lt;br/&gt;que el vecino consiga&lt;br/&gt;el libro que busca&quot;]
+    oe --&gt; s2[&quot;subobjetivo 2&lt;br/&gt;mantener el acervo&lt;br/&gt;actualizado&quot;]
+    oe --&gt; s3[&quot;subobjetivo 3&lt;br/&gt;que la gente sepa&lt;br/&gt;que la biblioteca existe&quot;]
+    s1 --&gt; p1[&quot;prestar libro&quot;]
+    s1 --&gt; p2[&quot;devolver libro&quot;]
+    s2 --&gt; p3[&quot;adquirir material&quot;]
+    s3 --&gt; p4[&quot;difundir actividades&quot;] flowchart lr
+    subgraph afuera[&quot;afuera del negocio → son actores&quot;]
+        a1([&quot;vecino&quot;])
+        a2([&quot;editorial&quot;])
+        a3([&quot;municipalidad&quot;])
+        a4([&quot;sistema nacional&lt;br/&gt;de bibliotecas&quot;])
+    end
+    subgraph adentro[&quot;adentro del negocio → no son actores&quot;]
+        t1[&quot;bibliotecario&quot;]
+        t2[&quot;encargado&lt;br/&gt;de compras&quot;]
+    end flowchart lr
+    v([&quot;vecino&quot;]) --- p1((&quot;prestar&lt;br/&gt;libro&quot;))
+    v --- p2((&quot;devolver&lt;br/&gt;libro&quot;))
+    e([&quot;editorial&quot;]) --- p3((&quot;adquirir&lt;br/&gt;material&quot;))
+    cp([&quot;vecino&lt;br/&gt;potencial&quot;]) --- p4((&quot;difundir&lt;br/&gt;actividades&quot;))
+    m([&quot;municipalidad&quot;]) --- p3 flowchart td
+    q1{&quot;¿este comportamiento&lt;br/&gt;ocurre siempre&lt;br/&gt;dentro del cun base?&quot;}
+    q1 --&gt;|sí| q2{&quot;¿se reusa en otros cun&lt;br/&gt;o simplifica el base?&quot;}
+    q2 --&gt;|sí| inc[&quot;«include»&lt;br/&gt;flecha: base → incluido&quot;]
+    q2 --&gt;|no| nada[&quot;no lo separes.&lt;br/&gt;dejalo dentro del flujo.&quot;]
+    q1 --&gt;|&quot;no, es opcional&lt;br/&gt;o condicional&quot;| ext[&quot;«extend»&lt;br/&gt;flecha: extensión → base&quot;]
+    q1 --&gt;|&quot;son tipos del&lt;br/&gt;mismo proceso&quot;| q3{&quot;¿comportamiento similar&lt;br/&gt;pero con diferencias&lt;br/&gt;sustanciales?&quot;}
+    q3 --&gt;|sí| gen[&quot;generalización&lt;br/&gt;flecha: hijo → padre&quot;]
+    q3 --&gt;|no| uno[&quot;es un solo cun.&lt;br/&gt;no lo partas.&quot;] flowchart tb
+    v([&quot;vecino&quot;]) --- p1((&quot;prestar libro&quot;))
+    v --- p2((&quot;devolver libro&quot;))
+    p1 -.-&gt;|&quot;«include»&quot;| vc((&quot;verificar&lt;br/&gt;credencial&quot;))
+    p2 -.-&gt;|&quot;«include»&quot;| vc
+    res((&quot;reservar&lt;br/&gt;ejemplar&quot;)) -.-&gt;|&quot;«extend»&quot;| p1
+    e([&quot;editorial&quot;]) --- am((&quot;adquirir material&quot;))
+    ac((&quot;adquirir&lt;br/&gt;por compra&quot;)) --&gt;|generalización| am
+    ad((&quot;adquirir&lt;br/&gt;por donación&quot;)) --&gt;|generalización| am flowchart lr
+    b([&quot;bibliotecario&quot;]) --- g((&quot;gestión de&lt;br/&gt;préstamos&quot;))
+    b --- bc((&quot;buscar en&lt;br/&gt;el catálogo&quot;))
+    g -.-&gt;|&quot;«extend»&quot;| bc paso 1 — del objetivo a los procesos de negocio paso 3 — identificar los actores paso 4 — el diagrama base paso 5 — expandir, solo si hace falta paso 5 — expandir, solo si hace falta cómo se ve mal">
+    <div class="cab">
+      <h3>Guía - Diagrama de casos de uso del negocio</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Teoría de CDU Negocio - Modelado de Drivers RF.pdf (núcleo)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-1</b></span><span>Paso 1 — Del objetivo a los procesos de negocio</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    OE[&quot;Objetivo estratégico&lt;br/&gt;'facilitar el acceso a la lectura&lt;br/&gt;a los vecinos'&quot;]
+    OE --&gt; S1[&quot;Subobjetivo 1&lt;br/&gt;que el vecino consiga&lt;br/&gt;el libro que busca&quot;]
+    OE --&gt; S2[&quot;Subobjetivo 2&lt;br/&gt;mantener el acervo&lt;br/&gt;actualizado&quot;]
+    OE --&gt; S3[&quot;Subobjetivo 3&lt;br/&gt;que la gente sepa&lt;br/&gt;que la biblioteca existe&quot;]
+    S1 --&gt; P1[&quot;Prestar libro&quot;]
+    S1 --&gt; P2[&quot;Devolver libro&quot;]
+    S2 --&gt; P3[&quot;Adquirir material&quot;]
+    S3 --&gt; P4[&quot;Difundir actividades&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-2</b></span><span>Paso 3 — Identificar los actores</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph AFUERA[&quot;Afuera del negocio → son actores&quot;]
+        A1([&quot;Vecino&quot;])
+        A2([&quot;Editorial&quot;])
+        A3([&quot;Municipalidad&quot;])
+        A4([&quot;Sistema nacional&lt;br/&gt;de bibliotecas&quot;])
+    end
+    subgraph ADENTRO[&quot;Adentro del negocio → NO son actores&quot;]
+        T1[&quot;Bibliotecario&quot;]
+        T2[&quot;Encargado&lt;br/&gt;de compras&quot;]
+    end</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-3</b></span><span>Paso 4 — El diagrama base</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    V([&quot;Vecino&quot;]) --- P1((&quot;Prestar&lt;br/&gt;libro&quot;))
+    V --- P2((&quot;Devolver&lt;br/&gt;libro&quot;))
+    E([&quot;Editorial&quot;]) --- P3((&quot;Adquirir&lt;br/&gt;material&quot;))
+    CP([&quot;Vecino&lt;br/&gt;potencial&quot;]) --- P4((&quot;Difundir&lt;br/&gt;actividades&quot;))
+    M([&quot;Municipalidad&quot;]) --- P3</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-4</b></span><span>Paso 5 — Expandir, solo si hace falta</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    Q1{&quot;¿Este comportamiento&lt;br/&gt;OCURRE SIEMPRE&lt;br/&gt;dentro del CUN base?&quot;}
+    Q1 --&gt;|sí| Q2{&quot;¿Se reusa en otros CUN&lt;br/&gt;o simplifica el base?&quot;}
+    Q2 --&gt;|sí| INC[&quot;«include»&lt;br/&gt;flecha: base → incluido&quot;]
+    Q2 --&gt;|no| NADA[&quot;No lo separes.&lt;br/&gt;Dejalo dentro del flujo.&quot;]
+    Q1 --&gt;|&quot;no, es opcional&lt;br/&gt;o condicional&quot;| EXT[&quot;«extend»&lt;br/&gt;flecha: extensión → base&quot;]
+    Q1 --&gt;|&quot;son TIPOS del&lt;br/&gt;mismo proceso&quot;| Q3{&quot;¿Comportamiento similar&lt;br/&gt;PERO con diferencias&lt;br/&gt;sustanciales?&quot;}
+    Q3 --&gt;|sí| GEN[&quot;Generalización&lt;br/&gt;flecha: hijo → padre&quot;]
+    Q3 --&gt;|no| UNO[&quot;Es un solo CUN.&lt;br/&gt;No lo partas.&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-5</b></span><span>Paso 5 — Expandir, solo si hace falta</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TB
+    V([&quot;Vecino&quot;]) --- P1((&quot;Prestar libro&quot;))
+    V --- P2((&quot;Devolver libro&quot;))
+    P1 -.-&gt;|&quot;«include»&quot;| VC((&quot;Verificar&lt;br/&gt;credencial&quot;))
+    P2 -.-&gt;|&quot;«include»&quot;| VC
+    RES((&quot;Reservar&lt;br/&gt;ejemplar&quot;)) -.-&gt;|&quot;«extend»&quot;| P1
+    E([&quot;Editorial&quot;]) --- AM((&quot;Adquirir material&quot;))
+    AC((&quot;Adquirir&lt;br/&gt;por compra&quot;)) --&gt;|generalización| AM
+    AD((&quot;Adquirir&lt;br/&gt;por donación&quot;)) --&gt;|generalización| AM</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Diagrama de casos de uso del negocio#mermaid-6</b></span><span>Cómo se ve mal</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    B([&quot;Bibliotecario&quot;]) --- G((&quot;Gestión de&lt;br/&gt;préstamos&quot;))
+    B --- BC((&quot;Buscar en&lt;br/&gt;el catálogo&quot;))
+    G -.-&gt;|&quot;«extend»&quot;| BC</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="guía - drivers de calidad y restricción guía de entregable rúbrica del caso 1 + **diapositivas de clase de drivers arquitectónicos** (capturas 19/08/2026) — núcleo. complemento: saip 4ª ed. cap. 20 (add 3.0), bibliografía oficial. flowchart td
+    d[&quot;driver arquitectónico&lt;br/&gt;&lt;i&gt;lo que conduce el diseño&lt;/i&gt;&quot;]
+    d --&gt; rf[&quot;driver rf&lt;br/&gt;funcionalidad primaria&lt;br/&gt;&lt;b&gt;cdu expandidos&lt;/b&gt;&quot;]
+    d --&gt; ac[&quot;driver de atributo&lt;br/&gt;de calidad&lt;br/&gt;&lt;b&gt;escenarios de 6 partes&lt;/b&gt;&quot;]
+    d --&gt; re[&quot;driver de restricción&lt;br/&gt;decisión ya tomada&lt;br/&gt;&lt;b&gt;el 'no se puede'&lt;/b&gt;&quot;]
+    d --&gt; co[&quot;&lt;i&gt;concerns&lt;/i&gt; y propósito&lt;br/&gt;del diseño&lt;br/&gt;&lt;i&gt;(add; la rúbrica no los pide)&lt;/i&gt;&quot;] flowchart td
+    p1[&quot;1. presentación de&lt;br/&gt;negocio / misión&quot;] --&gt; p2[&quot;2. presentación del plan&lt;br/&gt;arquitectónico actual&quot;]
+    p2 --&gt; p3[&quot;3. identificar drivers&lt;br/&gt;arquitectónicos (consenso)&quot;]
+    p3 --&gt; p4[&quot;4. brainstorming de escenarios&lt;br/&gt;uno por stakeholder, con estímulo&lt;br/&gt;y respuesta explícitos&quot;]
+    p4 --&gt; p5[&quot;5. consolidación&lt;br/&gt;fusionar los similares&quot;]
+    p5 --&gt; p6[&quot;6. priorización&lt;br/&gt;votos = 30% del nº de escenarios&quot;]
+    p6 --&gt; p7[&quot;7. refinamiento a la&lt;br/&gt;forma de 6 partes&quot;] ¿un driver es un rf? 3.1 el método: quality attribute workshop (qaw)">
+    <div class="cab">
+      <h3>Guía - Drivers de calidad y restricción</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Rúbrica del Caso 1 + diapositivas de clase de Drivers Arquitectónicos (capturas 19/08/2026) — NÚCLEO. Complemento: SAIP 4ª ed. cap. 20 (ADD 3.0), bibliografía oficial.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Drivers de calidad y restricción#mermaid-1</b></span><span>¿Un driver es un RF?</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    D[&quot;DRIVER ARQUITECTÓNICO&lt;br/&gt;&lt;i&gt;lo que conduce el diseño&lt;/i&gt;&quot;]
+    D --&gt; RF[&quot;Driver RF&lt;br/&gt;funcionalidad primaria&lt;br/&gt;&lt;b&gt;CDU expandidos&lt;/b&gt;&quot;]
+    D --&gt; AC[&quot;Driver de atributo&lt;br/&gt;de calidad&lt;br/&gt;&lt;b&gt;escenarios de 6 partes&lt;/b&gt;&quot;]
+    D --&gt; RE[&quot;Driver de restricción&lt;br/&gt;decisión ya tomada&lt;br/&gt;&lt;b&gt;el 'no se puede'&lt;/b&gt;&quot;]
+    D --&gt; CO[&quot;&lt;i&gt;Concerns&lt;/i&gt; y propósito&lt;br/&gt;del diseño&lt;br/&gt;&lt;i&gt;(ADD; la rúbrica no los pide)&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Drivers de calidad y restricción#mermaid-2</b></span><span>3.1 El método: Quality Attribute Workshop (QAW)</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    P1[&quot;1. Presentación de&lt;br/&gt;negocio / misión&quot;] --&gt; P2[&quot;2. Presentación del plan&lt;br/&gt;arquitectónico actual&quot;]
+    P2 --&gt; P3[&quot;3. Identificar drivers&lt;br/&gt;arquitectónicos (consenso)&quot;]
+    P3 --&gt; P4[&quot;4. Brainstorming de escenarios&lt;br/&gt;uno por stakeholder, con estímulo&lt;br/&gt;y respuesta explícitos&quot;]
+    P4 --&gt; P5[&quot;5. Consolidación&lt;br/&gt;fusionar los similares&quot;]
+    P5 --&gt; P6[&quot;6. Priorización&lt;br/&gt;votos = 30% del nº de escenarios&quot;]
+    P6 --&gt; P7[&quot;7. Refinamiento a la&lt;br/&gt;forma de 6 partes&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="guía - matrices de trazabilidad guía de entregable rúbrica del caso farmahosp + **nt1. trazabilidad de requerimientos** (nota técnica de clase — montoya-suárez, monsalve-gómez y sepúlveda-castaño, *lámpsakos* n° 13, 2015). ambas son núcleo. flowchart lr
+    stk([&quot;stakeholder&lt;br/&gt;stk-nn&quot;]) --&gt;|&quot;matriz 1&quot;| cdu((&quot;cdu-nn&quot;))
+    cdu --&gt;|&quot;matriz 3&quot;| rf[&quot;driver rf&lt;br/&gt;rf-nn&quot;]
+    rf --&gt;|&quot;matriz 2&quot;| rf2[&quot;otros rf&lt;br/&gt;dependencias&quot;] las tres juntas: la cadena completa">
+    <div class="cab">
+      <h3>Guía - Matrices de trazabilidad</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Rúbrica del Caso FarmaHosp + NT1. Trazabilidad de Requerimientos (nota técnica de clase — Montoya-Suárez, Monsalve-Gómez y Sepúlveda-Castaño, *Lámpsakos* n° 13, 2015). Ambas son NÚCLEO.</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Guía - Matrices de trazabilidad#mermaid-1</b></span><span>Las tres juntas: la cadena completa</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    STK([&quot;Stakeholder&lt;br/&gt;STK-nn&quot;]) --&gt;|&quot;Matriz 1&quot;| CDU((&quot;CDU-nn&quot;))
+    CDU --&gt;|&quot;Matriz 3&quot;| RF[&quot;Driver RF&lt;br/&gt;RF-nn&quot;]
+    RF --&gt;|&quot;Matriz 2&quot;| RF2[&quot;otros RF&lt;br/&gt;dependencias&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Arquitectura en el ciclo de vida">
+  <h2 id="arquitectura-en-el-ciclo-de-vida">Arquitectura en el ciclo de vida<em>3 notas · 4 diagramas</em></h2>
+  <article class="nota" data-clase="complemento" data-buscable="arquitectura y proceso de desarrollo arquitectura en el ciclo de vida complemento — garland &amp; anthony, large-scale software architecture (cap. 3) + reynoso flowchart lr
+    i[&quot;inception&lt;br/&gt;visión, caso de negocio,&lt;br/&gt;alcance&quot;] --&gt; e[&quot;elaboration&quot;]
+    e --&gt; c[&quot;construction&quot;]
+    c --&gt; t[&quot;transition&quot;] 2. el enfoque predictivo: las fases de rup">
+    <div class="cab">
+      <h3>Arquitectura y proceso de desarrollo</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — Garland &amp; Anthony, Large-Scale Software Architecture (cap. 3) + Reynoso</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Arquitectura y proceso de desarrollo#mermaid-1</b></span><span>2. El enfoque predictivo: las fases de RUP</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    I[&quot;INCEPTION&lt;br/&gt;visión, caso de negocio,&lt;br/&gt;alcance&quot;] --&gt; E[&quot;ELABORATION&quot;]
+    E --&gt; C[&quot;CONSTRUCTION&quot;]
+    C --&gt; T[&quot;TRANSITION&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="complemento" data-buscable="el ciclo del architecting arquitectura en el ciclo de vida complemento — saip 4ª ed. vía la guía de estudio + iso/iec/ieee 42010 flowchart lr
+    p1[&quot;1. entender el contexto&lt;br/&gt;metas de negocio (palm), alcance,&lt;br/&gt;restricciones, sistemas vecinos&quot;] --&gt; p2[&quot;2. elicitar los asrs&lt;br/&gt;escenarios de 6 partes, qaw,&lt;br/&gt;utility tree (valor, riesgo)&quot;]
+    p2 --&gt; p3[&quot;3. diseñar&lt;br/&gt;add: elegir e instanciar conceptos&lt;br/&gt;(tácticas, patrones, referencias)&quot;]
+    p3 --&gt; p4[&quot;4. documentar&lt;br/&gt;vistas + comportamiento + rationale&lt;br/&gt;(la ad de iso 42010)&quot;]
+    p4 --&gt; p5[&quot;5. evaluar&lt;br/&gt;atam: riesgos, sensibilidades,&lt;br/&gt;tradeoffs&quot;]
+    p5 --&gt; p6[&quot;6. realizar y sostener&lt;br/&gt;conformidad, incrementos,&lt;br/&gt;deuda arquitectónica, refactoring&quot;]
+    p6 -.-&gt;|&quot;el cambio sucede:&lt;br/&gt;los asrs se mueven&quot;| p1 1. los seis pasos">
+    <div class="cab">
+      <h3>El ciclo del architecting</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — SAIP 4ª ed. vía la Guía de estudio + ISO/IEC/IEEE 42010</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>El ciclo del architecting#mermaid-1</b></span><span>1. Los seis pasos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    P1[&quot;1. ENTENDER EL CONTEXTO&lt;br/&gt;metas de negocio (PALM), alcance,&lt;br/&gt;restricciones, sistemas vecinos&quot;] --&gt; P2[&quot;2. ELICITAR LOS ASRs&lt;br/&gt;escenarios de 6 partes, QAW,&lt;br/&gt;utility tree (valor, riesgo)&quot;]
+    P2 --&gt; P3[&quot;3. DISEÑAR&lt;br/&gt;ADD: elegir e instanciar conceptos&lt;br/&gt;(tácticas, patrones, referencias)&quot;]
+    P3 --&gt; P4[&quot;4. DOCUMENTAR&lt;br/&gt;vistas + comportamiento + rationale&lt;br/&gt;(la AD de ISO 42010)&quot;]
+    P4 --&gt; P5[&quot;5. EVALUAR&lt;br/&gt;ATAM: riesgos, sensibilidades,&lt;br/&gt;tradeoffs&quot;]
+    P5 --&gt; P6[&quot;6. REALIZAR Y SOSTENER&lt;br/&gt;conformidad, incrementos,&lt;br/&gt;deuda arquitectónica, refactoring&quot;]
+    P6 -.-&gt;|&quot;el cambio sucede:&lt;br/&gt;los ASRs se mueven&quot;| P1</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="complemento" data-buscable="evaluación de la arquitectura arquitectura en el ciclo de vida complemento — saip 4ª ed. vía la guía de estudio flowchart td
+    a1[&quot;1. entender el estado actual&lt;br/&gt;de la arquitectura&lt;br/&gt;&lt;i&gt;documentación o presentación&lt;br/&gt;del arquitecto&lt;/i&gt;&quot;] --&gt; a2[&quot;2. determinar los drivers&lt;br/&gt;que guían la revisión&lt;br/&gt;&lt;i&gt;los escenarios de calidad de&lt;br/&gt;mayor prioridad&lt;/i&gt;&quot;]
+    a2 --&gt; a3[&quot;3. por cada escenario, decidir&lt;br/&gt;si se satisface&lt;br/&gt;&lt;i&gt;el arquitecto 'camina' la arquitectura&lt;/i&gt;&quot;]
+    a3 --&gt; a4[&quot;4. capturar los problemas&lt;br/&gt;potenciales&lt;br/&gt;&lt;i&gt;arreglar, o aceptar el riesgo&lt;br/&gt;explícitamente&lt;/i&gt;&quot;] flowchart lr
+    d[&quot;decisión:&lt;br/&gt;frecuencia del heartbeat&quot;] --&gt;|&quot;↑ frecuencia&quot;| a[&quot;disponibilidad&lt;br/&gt;&lt;i&gt;mejora&lt;/i&gt;&quot;]
+    d --&gt;|&quot;↑ frecuencia&quot;| p[&quot;performance&lt;br/&gt;&lt;i&gt;empeora&lt;/i&gt;&quot;] 2. las cuatro actividades esenciales 5. las cuatro salidas del análisis">
+    <div class="cab">
+      <h3>Evaluación de la arquitectura</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — SAIP 4ª ed. vía la Guía de estudio</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Evaluación de la arquitectura#mermaid-1</b></span><span>2. Las cuatro actividades esenciales</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    A1[&quot;1. Entender el estado actual&lt;br/&gt;de la arquitectura&lt;br/&gt;&lt;i&gt;documentación o presentación&lt;br/&gt;del arquitecto&lt;/i&gt;&quot;] --&gt; A2[&quot;2. Determinar los DRIVERS&lt;br/&gt;que guían la revisión&lt;br/&gt;&lt;i&gt;los escenarios de calidad de&lt;br/&gt;mayor prioridad&lt;/i&gt;&quot;]
+    A2 --&gt; A3[&quot;3. Por cada escenario, decidir&lt;br/&gt;si se satisface&lt;br/&gt;&lt;i&gt;el arquitecto 'camina' la arquitectura&lt;/i&gt;&quot;]
+    A3 --&gt; A4[&quot;4. Capturar los problemas&lt;br/&gt;potenciales&lt;br/&gt;&lt;i&gt;arreglar, o aceptar el riesgo&lt;br/&gt;explícitamente&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Evaluación de la arquitectura#mermaid-2</b></span><span>5. Las cuatro salidas del análisis</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    D[&quot;Decisión:&lt;br/&gt;frecuencia del heartbeat&quot;] --&gt;|&quot;↑ frecuencia&quot;| A[&quot;Disponibilidad&lt;br/&gt;&lt;i&gt;mejora&lt;/i&gt;&quot;]
+    D --&gt;|&quot;↑ frecuencia&quot;| P[&quot;Performance&lt;br/&gt;&lt;i&gt;empeora&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Casos de uso">
+  <h2 id="casos-de-uso">Casos de uso<em>2 notas · 4 diagramas</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="caso de uso casos de uso cdu negocio - modelado de drivers rf.pdf flowchart lr
+    subgraph ent[&quot;entorno&quot;]
+        a1[&quot;actor 1&quot;]
+        a2[&quot;actor 2&quot;]
+    end
+    subgraph sis[&quot;límite del sistema&quot;]
+        cu1((&quot;caso de uso a&quot;))
+        cu2((&quot;caso de uso b&quot;))
+    end
+    a1 --- cu1
+    a1 --- cu2
+    a2 --- cu2 flowchart lr
+    bm[&quot;modelamiento&lt;br/&gt;del negocio&quot;] --&gt; cun[&quot;casos de uso&lt;br/&gt;del negocio (cun)&quot;]
+    cr[&quot;captura de&lt;br/&gt;requisitos&quot;] --&gt; cus[&quot;casos de uso&lt;br/&gt;del sistema&quot;]
+    cun --&gt; cr flowchart lr
+    n[&quot;negocio&quot;] --&gt;|&quot;1. proporciona&quot;| r[&quot;requisitos&quot;]
+    r --&gt;|&quot;2. conciben&quot;| s[&quot;sistemas it&quot;]
+    s -.-&gt;|&quot;3. reflejan&quot;| n qué logran ¿en qué momento se usan? por qué existen los casos de uso: las motivaciones">
+    <div class="cab">
+      <h3>Caso de uso</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Caso de uso#mermaid-1</b></span><span>Qué logran</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph ENT[&quot;Entorno&quot;]
+        A1[&quot;Actor 1&quot;]
+        A2[&quot;Actor 2&quot;]
+    end
+    subgraph SIS[&quot;Límite del sistema&quot;]
+        CU1((&quot;Caso de uso A&quot;))
+        CU2((&quot;Caso de uso B&quot;))
+    end
+    A1 --- CU1
+    A1 --- CU2
+    A2 --- CU2</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Caso de uso#mermaid-2</b></span><span>¿En qué momento se usan?</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    BM[&quot;Modelamiento&lt;br/&gt;del negocio&quot;] --&gt; CUN[&quot;Casos de uso&lt;br/&gt;del negocio (CUN)&quot;]
+    CR[&quot;Captura de&lt;br/&gt;requisitos&quot;] --&gt; CUS[&quot;Casos de uso&lt;br/&gt;del sistema&quot;]
+    CUN --&gt; CR</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Caso de uso#mermaid-3</b></span><span>Por qué existen los casos de uso: las motivaciones</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    N[&quot;NEGOCIO&quot;] --&gt;|&quot;1. Proporciona&quot;| R[&quot;REQUISITOS&quot;]
+    R --&gt;|&quot;2. Conciben&quot;| S[&quot;SISTEMAS IT&quot;]
+    S -.-&gt;|&quot;3. Reflejan&quot;| N</pre></div>
+      </figure>
+    </div>
+  </article>
+  <article class="nota" data-clase="nucleo" data-buscable="casos de uso vs dfd casos de uso cdu negocio - modelado de drivers rf.pdf flowchart lr
+    subgraph cu[&quot;caso de uso — visión externa&quot;]
+        a[&quot;actor&quot;] &lt;--&gt;|&quot;interacción&lt;br/&gt;(acciones y reacciones)&quot;| s((&quot;sistema&quot;))
+    end
+    subgraph dfd[&quot;proceso de dfd — transformación&quot;]
+        e[&quot;flujo de&lt;br/&gt;entrada&quot;] --&gt; p[&quot;proceso&quot;] --&gt; sa[&quot;flujo de&lt;br/&gt;salida&quot;]
+    end las dos diferencias">
+    <div class="cab">
+      <h3>Casos de uso vs DFD</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">CDU Negocio - Modelado de Drivers RF.pdf</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Casos de uso vs DFD#mermaid-1</b></span><span>Las dos diferencias</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph CU[&quot;Caso de uso — visión externa&quot;]
+        A[&quot;Actor&quot;] &lt;--&gt;|&quot;interacción&lt;br/&gt;(acciones y reacciones)&quot;| S((&quot;Sistema&quot;))
+    end
+    subgraph DFD[&quot;Proceso de DFD — transformación&quot;]
+        E[&quot;Flujo de&lt;br/&gt;entrada&quot;] --&gt; P[&quot;Proceso&quot;] --&gt; SA[&quot;Flujo de&lt;br/&gt;salida&quot;]
+    end</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Calidad del software">
+  <h2 id="calidad-del-software">Calidad del software<em>1 nota · 2 diagramas</em></h2>
+  <article class="nota" data-clase="complemento" data-buscable="atributos de calidad calidad del software complemento — saip 4ª ed. vía la guía de estudio + el contenido temático de la unidad 2 del programa flowchart td
+    qa[&quot;atributos de calidad&quot;] --&gt; ej[&quot;en ejecución&lt;br/&gt;&lt;i&gt;se miden corriendo&lt;/i&gt;&quot;]
+    qa --&gt; des[&quot;del desarrollo&lt;br/&gt;&lt;i&gt;se miden al cambiar&lt;/i&gt;&quot;]
+    ej --&gt; e1[&quot;disponibilidad · performance&lt;br/&gt;usabilidad · seguridad&lt;br/&gt;safety · energía&quot;]
+    des --&gt; d1[&quot;modificabilidad · testabilidad&lt;br/&gt;deployabilidad · integrabilidad&quot;] flowchart lr
+    f[&quot;1. fuente&lt;br/&gt;del estímulo&lt;br/&gt;&lt;i&gt;humano, sistema, actor&lt;/i&gt;&quot;] --&gt; e[&quot;2. estímulo&lt;br/&gt;&lt;i&gt;evento, ataque,&lt;br/&gt;pedido de cambio&lt;/i&gt;&quot;]
+    e --&gt; a[&quot;3. artefacto&lt;br/&gt;&lt;i&gt;el sistema completo&lt;br/&gt;o una parte&lt;/i&gt;&quot;]
+    a --&gt; en[&quot;4. entorno&lt;br/&gt;&lt;i&gt;normal, sobrecarga,&lt;br/&gt;arranque, degradado&lt;/i&gt;&quot;]
+    en --&gt; r[&quot;5. respuesta&lt;br/&gt;&lt;i&gt;actividad resultante&lt;/i&gt;&quot;]
+    r --&gt; m[&quot;6. medida de la respuesta&lt;br/&gt;&lt;i&gt;latencia, horas-persona,&lt;br/&gt;% disponibilidad&lt;/i&gt;&quot;] 4. las dos categorías 7. el escenario de atributo de calidad: seis partes">
+    <div class="cab">
+      <h3>Atributos de calidad</h3>
+      <span class="chip complemento" title="Sale de libros o normas; la clase manda si difiere">Complemento</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">COMPLEMENTO — SAIP 4ª ed. vía la Guía de estudio + el contenido temático de la unidad 2 del programa</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Atributos de calidad#mermaid-1</b></span><span>4. Las dos categorías</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    QA[&quot;Atributos de calidad&quot;] --&gt; EJ[&quot;En ejecución&lt;br/&gt;&lt;i&gt;se miden corriendo&lt;/i&gt;&quot;]
+    QA --&gt; DES[&quot;Del desarrollo&lt;br/&gt;&lt;i&gt;se miden al cambiar&lt;/i&gt;&quot;]
+    EJ --&gt; E1[&quot;disponibilidad · performance&lt;br/&gt;usabilidad · seguridad&lt;br/&gt;safety · energía&quot;]
+    DES --&gt; D1[&quot;modificabilidad · testabilidad&lt;br/&gt;deployabilidad · integrabilidad&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Atributos de calidad#mermaid-2</b></span><span>7. El escenario de atributo de calidad: seis partes</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    F[&quot;1. FUENTE&lt;br/&gt;del estímulo&lt;br/&gt;&lt;i&gt;humano, sistema, actor&lt;/i&gt;&quot;] --&gt; E[&quot;2. ESTÍMULO&lt;br/&gt;&lt;i&gt;evento, ataque,&lt;br/&gt;pedido de cambio&lt;/i&gt;&quot;]
+    E --&gt; A[&quot;3. ARTEFACTO&lt;br/&gt;&lt;i&gt;el sistema completo&lt;br/&gt;o una parte&lt;/i&gt;&quot;]
+    A --&gt; EN[&quot;4. ENTORNO&lt;br/&gt;&lt;i&gt;normal, sobrecarga,&lt;br/&gt;arranque, degradado&lt;/i&gt;&quot;]
+    EN --&gt; R[&quot;5. RESPUESTA&lt;br/&gt;&lt;i&gt;actividad resultante&lt;/i&gt;&quot;]
+    R --&gt; M[&quot;6. MEDIDA de la respuesta&lt;br/&gt;&lt;i&gt;latencia, horas-persona,&lt;br/&gt;% disponibilidad&lt;/i&gt;&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Herramientas — de la teoría al diagrama">
+  <h2 id="herramientas-de-la-teoria-al-diagrama">Herramientas — de la teoría al diagrama<em>1 nota · 9 diagramas</em></h2>
+  <article class="nota" data-clase="propio" data-buscable="de la teoría al diagrama herramientas — de la teoría al diagrama notas de 01-notas/ + docs.staruml.io + docs.excalidraw.com flowchart lr
+    a([&quot;cliente&quot;]) --- cu1((&quot;vender&lt;br/&gt;pasaje&quot;))
+    a --- cu2((&quot;devolver&lt;br/&gt;pasaje&quot;))
+    p([&quot;proveedor&quot;]) --- cu3((&quot;comprar&lt;br/&gt;suministros&quot;)) flowchart tb
+    a([&quot;cliente&quot;]) --- b((&quot;vender pasaje&quot;))
+    b -.-&gt;|&quot;«include»&quot;| i((&quot;verificar&lt;br/&gt;identidad&quot;))
+    e((&quot;contratar&lt;br/&gt;seguro&quot;)) -.-&gt;|&quot;«extend»&quot;| b
+    h1((&quot;vender pasaje&lt;br/&gt;nacional&quot;)) --&gt;|generalización| b
+    h2((&quot;vender pasaje&lt;br/&gt;internacional&quot;)) --&gt;|generalización| b classdiagram
+    class pedido {
+        -int numero
+        -date fecha
+        +calculartotal() float
+        +aceptar() void
+    }
+    class cliente {
+        -string nombre
+        +hacerpedido() pedido
+    }
+    class lineapedido {
+        -int cantidad
+    }
+    cliente &quot;1&quot; --&gt; &quot;*&quot; pedido : realiza
+    pedido &quot;1&quot; *-- &quot;1..*&quot; lineapedido : contiene
+    pedido &lt;|-- pedidourgente sequencediagram
+    autonumber
+    actor c as cliente
+    participant co as comercial
+    participant jt as jefe técnico
+    c-&gt;&gt;co: envía orden de pedido
+    co-&gt;&gt;jt: revisa y envía el pedido
+    jt-&gt;&gt;jt: analiza viabilidad
+    alt producto en catálogo
+        jt--&gt;&gt;co: acepta fabricación
+    else no está en catálogo
+        jt--&gt;&gt;co: rechaza
+    end
+    co--&gt;&gt;c: informa resultado statediagram-v2
+    [*] --&gt; pendiente
+    pendiente --&gt; enanalisis : recibir pedido
+    enanalisis --&gt; aceptado : viable
+    enanalisis --&gt; rechazado : no viable
+    aceptado --&gt; enproduccion : lanzar orden
+    enproduccion --&gt; entregado
+    rechazado --&gt; [*]
+    entregado --&gt; [*] erdiagram
+    cliente ||--o{ pedido : realiza
+    pedido ||--|{ linea_pedido : contiene
+    producto ||--o{ linea_pedido : figura_en
+    cliente {
+        int id pk
+        string nombre
+        string email
+    }
+    pedido {
+        int numero pk
+        date fecha
+        int cliente_id fk
+    } flowchart td
+    i([inicio]) --&gt; r[recibir pedido]
+    r --&gt; a[analizar viabilidad]
+    a --&gt; d{¿en catálogo?}
+    d --&gt;|sí| ot[crear orden de trabajo]
+    d --&gt;|no| re[registrar rechazo]
+    ot --&gt; p[planificar producción]
+    p --&gt; f([fin])
+    re --&gt; n[informar al cliente] --&gt; f flowchart lr
+    subgraph mac[&quot;macbook m5&quot;]
+        cl[&quot;claude desktop&quot;]
+        sv[&quot;tutor-ayds&lt;br/&gt;proceso node&quot;]
+        su[&quot;staruml v7&quot;]
+    end
+    subgraph disco[&quot;sistema de archivos&quot;]
+        bv[(&quot;bóveda obsidian&quot;)]
+    end
+    cl --- sv
+    cl --- su
+    sv --&gt; bv flowchart td
+    q1{&quot;¿el tipo tiene&lt;br/&gt;sintaxis mermaid propia?&lt;br/&gt;(clases, secuencia, estados, er)&quot;}
+    q1 --&gt;|sí| usar[&quot;usá esa sintaxis.&lt;br/&gt;entra a staruml como uml real.&quot;]
+    q1 --&gt;|no| q2{&quot;¿necesito el diagrama&lt;br/&gt;formal para entregar?&quot;}
+    q2 --&gt;|no| flow[&quot;flowchart alcanza.&lt;br/&gt;queda bien en la nota y en excalidraw.&quot;]
+    q2 --&gt;|sí| dib[&quot;escribí el flowchart como guion&lt;br/&gt;y dibujalo en staruml a mano.&quot;] casos de uso del negocio las tres relaciones de cun expandidos diagrama de clases diagrama de secuencia diagrama de estados modelo entidad-relación los que no se pueden importar los que no se pueden importar regla práctica para elegir cómo escribir un diagrama">
+    <div class="cab">
+      <h3>De la teoría al diagrama</h3>
+      <span class="chip propio" title="Construido para la bóveda sobre la teoría de clase">Propio</span>
+      <span class="ruta">07-Referencias/</span>
+    </div>
+    <p class="fuente">Notas de 01-Notas/ + docs.staruml.io + docs.excalidraw.com</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-1</b></span><span>Casos de uso del negocio</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    A([&quot;Cliente&quot;]) --- CU1((&quot;Vender&lt;br/&gt;pasaje&quot;))
+    A --- CU2((&quot;Devolver&lt;br/&gt;pasaje&quot;))
+    P([&quot;Proveedor&quot;]) --- CU3((&quot;Comprar&lt;br/&gt;suministros&quot;))</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-2</b></span><span>Las tres relaciones de CUN expandidos</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TB
+    A([&quot;Cliente&quot;]) --- B((&quot;Vender pasaje&quot;))
+    B -.-&gt;|&quot;«include»&quot;| I((&quot;Verificar&lt;br/&gt;identidad&quot;))
+    E((&quot;Contratar&lt;br/&gt;seguro&quot;)) -.-&gt;|&quot;«extend»&quot;| B
+    H1((&quot;Vender pasaje&lt;br/&gt;nacional&quot;)) --&gt;|generalización| B
+    H2((&quot;Vender pasaje&lt;br/&gt;internacional&quot;)) --&gt;|generalización| B</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-3</b></span><span>Diagrama de clases</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">classDiagram
+    class Pedido {
+        -int numero
+        -Date fecha
+        +calcularTotal() float
+        +aceptar() void
+    }
+    class Cliente {
+        -String nombre
+        +hacerPedido() Pedido
+    }
+    class LineaPedido {
+        -int cantidad
+    }
+    Cliente &quot;1&quot; --&gt; &quot;*&quot; Pedido : realiza
+    Pedido &quot;1&quot; *-- &quot;1..*&quot; LineaPedido : contiene
+    Pedido &lt;|-- PedidoUrgente</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-4</b></span><span>Diagrama de secuencia</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">sequenceDiagram
+    autonumber
+    actor C as Cliente
+    participant CO as Comercial
+    participant JT as Jefe Técnico
+    C-&gt;&gt;CO: envía orden de pedido
+    CO-&gt;&gt;JT: revisa y envía el pedido
+    JT-&gt;&gt;JT: analiza viabilidad
+    alt producto en catálogo
+        JT--&gt;&gt;CO: acepta fabricación
+    else no está en catálogo
+        JT--&gt;&gt;CO: rechaza
+    end
+    CO--&gt;&gt;C: informa resultado</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-5</b></span><span>Diagrama de estados</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">stateDiagram-v2
+    [*] --&gt; Pendiente
+    Pendiente --&gt; EnAnalisis : recibir pedido
+    EnAnalisis --&gt; Aceptado : viable
+    EnAnalisis --&gt; Rechazado : no viable
+    Aceptado --&gt; EnProduccion : lanzar orden
+    EnProduccion --&gt; Entregado
+    Rechazado --&gt; [*]
+    Entregado --&gt; [*]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-6</b></span><span>Modelo entidad-relación</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">erDiagram
+    CLIENTE ||--o{ PEDIDO : realiza
+    PEDIDO ||--|{ LINEA_PEDIDO : contiene
+    PRODUCTO ||--o{ LINEA_PEDIDO : figura_en
+    CLIENTE {
+        int id PK
+        string nombre
+        string email
+    }
+    PEDIDO {
+        int numero PK
+        date fecha
+        int cliente_id FK
+    }</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-7</b></span><span>Los que NO se pueden importar</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    I([Inicio]) --&gt; R[Recibir pedido]
+    R --&gt; A[Analizar viabilidad]
+    A --&gt; D{¿En catálogo?}
+    D --&gt;|sí| OT[Crear orden de trabajo]
+    D --&gt;|no| RE[Registrar rechazo]
+    OT --&gt; P[Planificar producción]
+    P --&gt; F([Fin])
+    RE --&gt; N[Informar al cliente] --&gt; F</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-8</b></span><span>Los que NO se pueden importar</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph MAC[&quot;MacBook M5&quot;]
+        CL[&quot;Claude Desktop&quot;]
+        SV[&quot;tutor-ayds&lt;br/&gt;proceso node&quot;]
+        SU[&quot;StarUML v7&quot;]
+    end
+    subgraph DISCO[&quot;Sistema de archivos&quot;]
+        BV[(&quot;Bóveda Obsidian&quot;)]
+    end
+    CL --- SV
+    CL --- SU
+    SV --&gt; BV</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>De la teoría al diagrama#mermaid-9</b></span><span>Regla práctica para elegir cómo escribir un diagrama</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    Q1{&quot;¿El tipo tiene&lt;br/&gt;sintaxis Mermaid propia?&lt;br/&gt;(clases, secuencia, estados, ER)&quot;}
+    Q1 --&gt;|sí| USAR[&quot;Usá esa sintaxis.&lt;br/&gt;Entra a StarUML como UML real.&quot;]
+    Q1 --&gt;|no| Q2{&quot;¿Necesito el diagrama&lt;br/&gt;FORMAL para entregar?&quot;}
+    Q2 --&gt;|no| FLOW[&quot;flowchart alcanza.&lt;br/&gt;Queda bien en la nota y en Excalidraw.&quot;]
+    Q2 --&gt;|sí| DIB[&quot;Escribí el flowchart como guion&lt;br/&gt;y dibujalo en StarUML a mano.&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Método de trabajo">
+  <h2 id="metodo-de-trabajo">Método de trabajo<em>1 nota · 1 diagrama</em></h2>
+  <article class="nota" data-clase="propio" data-buscable="_método para resolver una tarea método de trabajo método propio, construido sobre la teoría de las presentaciones flowchart td
+    e[&quot;0. enunciado&lt;br/&gt;el punto de inicio&quot;] --&gt; d[&quot;1. desarmar el enunciado&lt;br/&gt;lista de entregables&quot;]
+    d --&gt; t[&quot;2. anclar cada entregable&lt;br/&gt;a la teoría de clase&quot;]
+    t --&gt; c[&quot;3. armar la checklist&lt;br/&gt;de rigor&quot;]
+    c --&gt; b[&quot;4. construir, entregable&lt;br/&gt;por entregable&quot;]
+    b --&gt; v[&quot;5. verificar contra&lt;br/&gt;la checklist&quot;]
+    v --&gt; r{&quot;¿pasa todo?&quot;}
+    r --&gt;|no| b
+    r --&gt;|sí| f[&quot;6. revisión final&lt;br/&gt;de forma&quot;] el punto de inicio: siempre el enunciado, nunca el diagrama">
+    <div class="cab">
+      <h3>_Método para resolver una tarea</h3>
+      <span class="chip propio" title="Construido para la bóveda sobre la teoría de clase">Propio</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Método propio, construido sobre la teoría de las presentaciones</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>_Método para resolver una tarea#mermaid-1</b></span><span>El punto de inicio: siempre el enunciado, nunca el diagrama</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    E[&quot;0. ENUNCIADO&lt;br/&gt;el punto de inicio&quot;] --&gt; D[&quot;1. Desarmar el enunciado&lt;br/&gt;lista de entregables&quot;]
+    D --&gt; T[&quot;2. Anclar cada entregable&lt;br/&gt;a la teoría de clase&quot;]
+    T --&gt; C[&quot;3. Armar la checklist&lt;br/&gt;de rigor&quot;]
+    C --&gt; B[&quot;4. Construir, entregable&lt;br/&gt;por entregable&quot;]
+    B --&gt; V[&quot;5. Verificar contra&lt;br/&gt;la checklist&quot;]
+    V --&gt; R{&quot;¿pasa todo?&quot;}
+    R --&gt;|no| B
+    R --&gt;|sí| F[&quot;6. Revisión final&lt;br/&gt;de forma&quot;]</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Plan de tarea">
+  <h2 id="plan-de-tarea">Plan de tarea<em>1 nota · 1 diagrama</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="plan - caso 1 farmahosp plan de tarea caso farmahosp.pdf — enunciado y rúbrica textuales flowchart td
+    s[&quot;1. stakeholders&lt;br/&gt;criterio 2 — 25 pts&quot;] --&gt; ctx[&quot;2. diagrama de contexto&lt;br/&gt;criterio 1&quot;]
+    ctx --&gt; alto[&quot;3. cdu de alto nivel&lt;br/&gt;core del negocio&quot;]
+    alto --&gt; desc[&quot;4. primera descomposición&lt;br/&gt;cdu de procesos de negocio&quot;]
+    desc --&gt; rf[&quot;5. drivers rf&lt;br/&gt;cdu expandidos&quot;]
+    s --&gt; ac[&quot;6. drivers de atributos&lt;br/&gt;de calidad&quot;]
+    s --&gt; res[&quot;7. drivers de&lt;br/&gt;restricción&quot;]
+    rf --&gt; prio[&quot;8. priorizar los 5&lt;br/&gt;más críticos&quot;]
+    ac --&gt; prio
+    res --&gt; prio
+    rf --&gt; mat[&quot;9. las 3 matrices&lt;br/&gt;criterio 4 — 20 pts&quot;]
+    s --&gt; mat
+    prio --&gt; mat orden de trabajo sugerido">
+    <div class="cab">
+      <h3>Plan - Caso 1 FarmaHosp</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">08-Tareas/</span>
+    </div>
+    <p class="fuente">Caso FarmaHosp.pdf — enunciado y rúbrica textuales</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Plan - Caso 1 FarmaHosp#mermaid-1</b></span><span>Orden de trabajo sugerido</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TD
+    S[&quot;1. Stakeholders&lt;br/&gt;criterio 2 — 25 pts&quot;] --&gt; CTX[&quot;2. Diagrama de contexto&lt;br/&gt;criterio 1&quot;]
+    CTX --&gt; ALTO[&quot;3. CDU de alto nivel&lt;br/&gt;core del negocio&quot;]
+    ALTO --&gt; DESC[&quot;4. Primera descomposición&lt;br/&gt;CDU de procesos de negocio&quot;]
+    DESC --&gt; RF[&quot;5. Drivers RF&lt;br/&gt;CDU expandidos&quot;]
+    S --&gt; AC[&quot;6. Drivers de atributos&lt;br/&gt;de calidad&quot;]
+    S --&gt; RES[&quot;7. Drivers de&lt;br/&gt;restricción&quot;]
+    RF --&gt; PRIO[&quot;8. Priorizar los 5&lt;br/&gt;más críticos&quot;]
+    AC --&gt; PRIO
+    RES --&gt; PRIO
+    RF --&gt; MAT[&quot;9. Las 3 matrices&lt;br/&gt;criterio 4 — 20 pts&quot;]
+    S --&gt; MAT
+    PRIO --&gt; MAT</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Proyecto MCP — tutor-ayds">
+  <h2 id="proyecto-mcp-tutor-ayds">Proyecto MCP — tutor-ayds<em>1 nota · 5 diagramas</em></h2>
+  <article class="nota" data-clase="propio" data-buscable="diseño proyecto mcp — tutor-ayds diseño propio (proyecto práctico de la materia) flowchart tb
+    est([&quot;estudiante&quot;])
+
+    subgraph host[&quot;host / cliente mcp — claude desktop o claude code&quot;]
+        orq[&quot;orquestador&lt;br/&gt;decide qué herramienta llamar,&lt;br/&gt;en qué orden, y encadena resultados&quot;]
+        llm[&quot;modelo&lt;br/&gt;razona, arma quizzes,&lt;br/&gt;explica, corrige&quot;]
+    end
+
+    subgraph mcp1[&quot;tutor-ayds — fuente de conocimiento&quot;]
+        t1[&quot;9 herramientas&lt;br/&gt;notas · glosario · diagramas&lt;br/&gt;flashcards · progreso&quot;]
+    end
+
+    subgraph mcp2[&quot;staruml-mcp-server — manos (uml formal)&quot;]
+        t2[&quot;crea diagramas&lt;br/&gt;dentro de staruml&quot;]
+    end
+
+    subgraph mcp3[&quot;mcp / skill excalidraw — manos (boceto)&quot;]
+        t3[&quot;dibuja en lienzo&lt;br/&gt;y exporta .excalidraw&quot;]
+    end
+
+    vault[(&quot;bóveda obsidian&lt;br/&gt;01-notas · 02-diagramas&lt;br/&gt;03-glosario · 04-flashcards&lt;br/&gt;05-quizzes&quot;)]
+    su[(&quot;staruml&lt;br/&gt;archivo .mdj&quot;)]
+    ex[(&quot;lienzo excalidraw&lt;br/&gt;archivo .excalidraw&quot;)]
+
+    est &lt;--&gt;|lenguaje natural| host
+    orq &lt;--&gt;|&quot;mcp / json-rpc&lt;br/&gt;sobre stdio&quot;| mcp1
+    orq &lt;--&gt;|mcp| mcp2
+    orq &lt;--&gt;|mcp| mcp3
+
+    mcp1 --&gt;|&quot;lee&quot;| vault
+    mcp1 -.-&gt;|&quot;escribe solo&lt;br/&gt;05-quizzes/progreso.md&quot;| vault
+    mcp2 --&gt; su
+    mcp3 --&gt; ex
+
+    mcp1 x-.-x mcp2
+    mcp2 x-.-x mcp3 flowchart lr
+    n[&quot;bloque mermaid&lt;br/&gt;dentro de una nota&quot;] --&gt; ta[&quot;tutor-ayds&lt;br/&gt;lo devuelve tal cual&quot;]
+    ta --&gt; h[&quot;host&quot;]
+    h --&gt; su[&quot;staruml mcp&lt;br/&gt;acepta mermaid&quot;]
+    h --&gt; ex[&quot;excalidraw mcp&lt;br/&gt;acepta mermaid&quot;] flowchart lr
+    est([&quot;estudiante&lt;br/&gt;(actor indirecto)&quot;])
+    host([&quot;host / cliente mcp&lt;br/&gt;(actor principal)&quot;])
+    fs([&quot;sistema de archivos&lt;br/&gt;(actor secundario)&quot;])
+
+    subgraph sis[&quot;límite del sistema: tutor-ayds&quot;]
+        direction tb
+        cu1((&quot;consultar&lt;br/&gt;temas y notas&quot;))
+        cu2((&quot;buscar en&lt;br/&gt;la bóveda&quot;))
+        cu3((&quot;consultar&lt;br/&gt;glosario&quot;))
+        cu4((&quot;obtener&lt;br/&gt;diagramas&quot;))
+        cu5((&quot;obtener&lt;br/&gt;flashcards&quot;))
+        cu6((&quot;registrar&lt;br/&gt;resultado&quot;))
+        cu7((&quot;consultar&lt;br/&gt;progreso&quot;))
+        val((&quot;validar ruta&lt;br/&gt;dentro de la bóveda&quot;))
+    end
+
+    est --- host
+    host --- cu1
+    host --- cu2
+    host --- cu3
+    host --- cu4
+    host --- cu5
+    host --- cu6
+    host --- cu7
+
+    cu1 -.-&gt;|&quot;«include»&quot;| val
+    cu2 -.-&gt;|&quot;«include»&quot;| val
+    cu3 -.-&gt;|&quot;«include»&quot;| val
+    cu4 -.-&gt;|&quot;«include»&quot;| val
+    cu5 -.-&gt;|&quot;«include»&quot;| val
+    cu6 -.-&gt;|&quot;«include»&quot;| val
+    cu7 -.-&gt;|&quot;«include»&quot;| val
+
+    cu1 --- fs
+    cu6 --- fs sequencediagram
+    autonumber
+    actor est as estudiante
+    participant host as host (claude)
+    participant ta as tutor-ayds
+    participant fs as bóveda (archivos)
+    participant su as staruml-mcp-server
+    participant app as staruml
+
+    note over host,su: sesión ya iniciada: handshake mcp hecho&lt;br/&gt;y lista de herramientas conocida
+
+    est-&gt;&gt;host: &quot;pasá a staruml el diagrama&lt;br/&gt;de la nota modelo 4+1 vistas&quot;
+
+    rect rgb(235, 245, 255)
+    note over host,fs: paso 1 — conseguir la fuente (tutor-ayds)
+    host-&gt;&gt;ta: listar_diagramas()
+    ta-&gt;&gt;fs: lee 02-diagramas/ y los bloques mermaid de 01-notas/
+    fs--&gt;&gt;ta: rutas + bloques
+    ta--&gt;&gt;host: inventario con nota de origen y tipo
+    host-&gt;&gt;ta: obtener_diagrama(&quot;modelo 4+1 vistas#35;mermaid-1&quot;)
+    ta-&gt;&gt;ta: valida que la ruta cae dentro de vault_path
+    ta-&gt;&gt;fs: lee la nota
+    fs--&gt;&gt;ta: contenido
+    ta--&gt;&gt;host: { tipo: &quot;flowchart&quot;, fuente: &quot;flowchart td\n...&quot;, origen: &quot;01-notas/modelo 4+1 vistas.md&quot; }
+    end
+
+    rect rgb(255, 245, 235)
+    note over host,app: paso 2 — dibujar (staruml-mcp-server)
+    host-&gt;&gt;host: el modelo decide el tipo uml de destino&lt;br/&gt;a partir de &quot;tipo&quot; y del contenido
+    host-&gt;&gt;su: generate_diagram(code: &quot;flowchart td\n...&quot;)
+    su-&gt;&gt;app: construye los elementos uml
+    app--&gt;&gt;su: diagrama creado
+    su--&gt;&gt;host: ok + ubicación en el .mdj
+    end
+
+    host--&gt;&gt;est: &quot;listo: creado en staruml desde la nota modelo 4+1 vistas&quot;
+
+    note over ta,su: tutor-ayds y staruml-mcp-server nunca se comunican.&lt;br/&gt;el texto mermaid viaja ta → host → su.&lt;br/&gt;el host es el integrador. los servidores no se conocen entre sí. sequencediagram
+    autonumber
+    actor est as estudiante
+    participant host as host (claude)
+    participant ta as tutor-ayds
+    participant fs as bóveda
+
+    est-&gt;&gt;host: &quot;tomame un quiz de casos de uso&quot;
+    host-&gt;&gt;ta: obtener_flashcards(&quot;casos de uso del negocio&quot;, 8)
+    ta-&gt;&gt;fs: lee 04-flashcards/
+    fs--&gt;&gt;ta: pares de pregunta y respuesta
+    ta--&gt;&gt;host: 8 flashcards
+    host-&gt;&gt;host: el modelo arma el quiz&lt;br/&gt;(tutor-ayds no arma quizzes)
+    host--&gt;&gt;est: preguntas
+    est-&gt;&gt;host: respuestas
+    host-&gt;&gt;host: el modelo corrige
+    host--&gt;&gt;est: nota + explicación
+    host-&gt;&gt;est: ¿registro el resultado?
+    est--&gt;&gt;host: sí
+    host-&gt;&gt;ta: registrar_resultado(&quot;casos de uso&quot;, 7, &quot;flojo en include vs extend&quot;)
+    ta-&gt;&gt;ta: valida: única ruta escribible
+    ta-&gt;&gt;fs: append a 05-quizzes/progreso.md
+    fs--&gt;&gt;ta: ok
+    ta--&gt;&gt;host: línea registrada 2. diagrama de contexto / componentes del ecosistema 2.2 por qué mermaid es la moneda de cambio 3. diagrama de casos de uso de `tutor-ayds` 4. diagrama de secuencia — el flujo cruzado 4.2 el flujo que sí escribe, para contrastar">
+    <div class="cab">
+      <h3>diseño</h3>
+      <span class="chip propio" title="Construido para la bóveda sobre la teoría de clase">Propio</span>
+      <span class="ruta">06-Proyecto-MCP/</span>
+    </div>
+    <p class="fuente">Diseño propio (proyecto práctico de la materia)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>diseño#mermaid-1</b></span><span>2. Diagrama de contexto / componentes del ecosistema</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart TB
+    EST([&quot;Estudiante&quot;])
+
+    subgraph HOST[&quot;Host / Cliente MCP — Claude Desktop o Claude Code&quot;]
+        ORQ[&quot;Orquestador&lt;br/&gt;decide qué herramienta llamar,&lt;br/&gt;en qué orden, y encadena resultados&quot;]
+        LLM[&quot;Modelo&lt;br/&gt;razona, arma quizzes,&lt;br/&gt;explica, corrige&quot;]
+    end
+
+    subgraph MCP1[&quot;tutor-ayds — FUENTE DE CONOCIMIENTO&quot;]
+        T1[&quot;9 herramientas&lt;br/&gt;notas · glosario · diagramas&lt;br/&gt;flashcards · progreso&quot;]
+    end
+
+    subgraph MCP2[&quot;staruml-mcp-server — MANOS (UML formal)&quot;]
+        T2[&quot;crea diagramas&lt;br/&gt;dentro de StarUML&quot;]
+    end
+
+    subgraph MCP3[&quot;MCP / skill Excalidraw — MANOS (boceto)&quot;]
+        T3[&quot;dibuja en lienzo&lt;br/&gt;y exporta .excalidraw&quot;]
+    end
+
+    VAULT[(&quot;Bóveda Obsidian&lt;br/&gt;01-Notas · 02-Diagramas&lt;br/&gt;03-Glosario · 04-Flashcards&lt;br/&gt;05-Quizzes&quot;)]
+    SU[(&quot;StarUML&lt;br/&gt;archivo .mdj&quot;)]
+    EX[(&quot;Lienzo Excalidraw&lt;br/&gt;archivo .excalidraw&quot;)]
+
+    EST &lt;--&gt;|lenguaje natural| HOST
+    ORQ &lt;--&gt;|&quot;MCP / JSON-RPC&lt;br/&gt;sobre stdio&quot;| MCP1
+    ORQ &lt;--&gt;|MCP| MCP2
+    ORQ &lt;--&gt;|MCP| MCP3
+
+    MCP1 --&gt;|&quot;lee&quot;| VAULT
+    MCP1 -.-&gt;|&quot;escribe SOLO&lt;br/&gt;05-Quizzes/progreso.md&quot;| VAULT
+    MCP2 --&gt; SU
+    MCP3 --&gt; EX
+
+    MCP1 x-.-x MCP2
+    MCP2 x-.-x MCP3</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>diseño#mermaid-2</b></span><span>2.2 Por qué Mermaid es la moneda de cambio</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    N[&quot;Bloque mermaid&lt;br/&gt;dentro de una nota&quot;] --&gt; TA[&quot;tutor-ayds&lt;br/&gt;lo devuelve TAL CUAL&quot;]
+    TA --&gt; H[&quot;Host&quot;]
+    H --&gt; SU[&quot;StarUML MCP&lt;br/&gt;acepta Mermaid&quot;]
+    H --&gt; EX[&quot;Excalidraw MCP&lt;br/&gt;acepta Mermaid&quot;]</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>diseño#mermaid-3</b></span><span>3. Diagrama de casos de uso de `tutor-ayds`</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    EST([&quot;Estudiante&lt;br/&gt;(actor indirecto)&quot;])
+    HOST([&quot;Host / Cliente MCP&lt;br/&gt;(actor principal)&quot;])
+    FS([&quot;Sistema de archivos&lt;br/&gt;(actor secundario)&quot;])
+
+    subgraph SIS[&quot;Límite del sistema: tutor-ayds&quot;]
+        direction TB
+        CU1((&quot;Consultar&lt;br/&gt;temas y notas&quot;))
+        CU2((&quot;Buscar en&lt;br/&gt;la bóveda&quot;))
+        CU3((&quot;Consultar&lt;br/&gt;glosario&quot;))
+        CU4((&quot;Obtener&lt;br/&gt;diagramas&quot;))
+        CU5((&quot;Obtener&lt;br/&gt;flashcards&quot;))
+        CU6((&quot;Registrar&lt;br/&gt;resultado&quot;))
+        CU7((&quot;Consultar&lt;br/&gt;progreso&quot;))
+        VAL((&quot;Validar ruta&lt;br/&gt;dentro de la bóveda&quot;))
+    end
+
+    EST --- HOST
+    HOST --- CU1
+    HOST --- CU2
+    HOST --- CU3
+    HOST --- CU4
+    HOST --- CU5
+    HOST --- CU6
+    HOST --- CU7
+
+    CU1 -.-&gt;|&quot;«include»&quot;| VAL
+    CU2 -.-&gt;|&quot;«include»&quot;| VAL
+    CU3 -.-&gt;|&quot;«include»&quot;| VAL
+    CU4 -.-&gt;|&quot;«include»&quot;| VAL
+    CU5 -.-&gt;|&quot;«include»&quot;| VAL
+    CU6 -.-&gt;|&quot;«include»&quot;| VAL
+    CU7 -.-&gt;|&quot;«include»&quot;| VAL
+
+    CU1 --- FS
+    CU6 --- FS</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>diseño#mermaid-4</b></span><span>4. Diagrama de secuencia — el flujo cruzado</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">sequenceDiagram
+    autonumber
+    actor EST as Estudiante
+    participant HOST as Host (Claude)
+    participant TA as tutor-ayds
+    participant FS as Bóveda (archivos)
+    participant SU as staruml-mcp-server
+    participant APP as StarUML
+
+    Note over HOST,SU: Sesión ya iniciada: handshake MCP hecho&lt;br/&gt;y lista de herramientas conocida
+
+    EST-&gt;&gt;HOST: &quot;pasá a StarUML el diagrama&lt;br/&gt;de la nota Modelo 4+1 vistas&quot;
+
+    rect rgb(235, 245, 255)
+    Note over HOST,FS: Paso 1 — CONSEGUIR la fuente (tutor-ayds)
+    HOST-&gt;&gt;TA: listar_diagramas()
+    TA-&gt;&gt;FS: lee 02-Diagramas/ y los bloques mermaid de 01-Notas/
+    FS--&gt;&gt;TA: rutas + bloques
+    TA--&gt;&gt;HOST: inventario con nota de origen y tipo
+    HOST-&gt;&gt;TA: obtener_diagrama(&quot;Modelo 4+1 vistas#35;mermaid-1&quot;)
+    TA-&gt;&gt;TA: valida que la ruta cae dentro de VAULT_PATH
+    TA-&gt;&gt;FS: lee la nota
+    FS--&gt;&gt;TA: contenido
+    TA--&gt;&gt;HOST: { tipo: &quot;flowchart&quot;, fuente: &quot;flowchart TD\n...&quot;, origen: &quot;01-Notas/Modelo 4+1 vistas.md&quot; }
+    end
+
+    rect rgb(255, 245, 235)
+    Note over HOST,APP: Paso 2 — DIBUJAR (staruml-mcp-server)
+    HOST-&gt;&gt;HOST: el modelo decide el tipo UML de destino&lt;br/&gt;a partir de &quot;tipo&quot; y del contenido
+    HOST-&gt;&gt;SU: generate_diagram(code: &quot;flowchart TD\n...&quot;)
+    SU-&gt;&gt;APP: construye los elementos UML
+    APP--&gt;&gt;SU: diagrama creado
+    SU--&gt;&gt;HOST: ok + ubicación en el .mdj
+    end
+
+    HOST--&gt;&gt;EST: &quot;Listo: creado en StarUML desde la nota Modelo 4+1 vistas&quot;
+
+    Note over TA,SU: tutor-ayds y staruml-mcp-server NUNCA se comunican.&lt;br/&gt;El texto Mermaid viaja TA → HOST → SU.&lt;br/&gt;El host es el integrador. Los servidores no se conocen entre sí.</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>diseño#mermaid-5</b></span><span>4.2 El flujo que sí escribe, para contrastar</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">sequenceDiagram
+    autonumber
+    actor EST as Estudiante
+    participant HOST as Host (Claude)
+    participant TA as tutor-ayds
+    participant FS as Bóveda
+
+    EST-&gt;&gt;HOST: &quot;tomame un quiz de casos de uso&quot;
+    HOST-&gt;&gt;TA: obtener_flashcards(&quot;Casos de uso del negocio&quot;, 8)
+    TA-&gt;&gt;FS: lee 04-Flashcards/
+    FS--&gt;&gt;TA: pares de pregunta y respuesta
+    TA--&gt;&gt;HOST: 8 flashcards
+    HOST-&gt;&gt;HOST: el modelo ARMA el quiz&lt;br/&gt;(tutor-ayds no arma quizzes)
+    HOST--&gt;&gt;EST: preguntas
+    EST-&gt;&gt;HOST: respuestas
+    HOST-&gt;&gt;HOST: el modelo CORRIGE
+    HOST--&gt;&gt;EST: nota + explicación
+    HOST-&gt;&gt;EST: ¿registro el resultado?
+    EST--&gt;&gt;HOST: sí
+    HOST-&gt;&gt;TA: registrar_resultado(&quot;Casos de uso&quot;, 7, &quot;flojo en include vs extend&quot;)
+    TA-&gt;&gt;TA: valida: única ruta escribible
+    TA-&gt;&gt;FS: append a 05-Quizzes/progreso.md
+    FS--&gt;&gt;TA: ok
+    TA--&gt;&gt;HOST: línea registrada</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+<section class="tema" data-tema="Trazabilidad de requisitos">
+  <h2 id="trazabilidad-de-requisitos">Trazabilidad de requisitos<em>1 nota · 2 diagramas</em></h2>
+  <article class="nota" data-clase="nucleo" data-buscable="matriz de trazabilidad de requisitos trazabilidad de requisitos **nt1. trazabilidad de requerimientos.pdf** — nota técnica de clase (montoya-suárez, monsalve-gómez, sepúlveda-castaño, *lámpsakos* n° 13, 2015) + iso 29148 y gotel &amp; finkelstein (complemento) flowchart lr
+    rnf[&quot;requerimiento&lt;br/&gt;no funcional&quot;] --&gt; ac[&quot;atributo&lt;br/&gt;de calidad&quot;]
+    ac --&gt; tac[&quot;táctica&lt;br/&gt;arquitectónica&quot;]
+    tac --&gt; dec[&quot;decisión de diseño&lt;br/&gt;estilo, patrón&quot;]
+    dec --&gt; vis[&quot;vista donde se&lt;br/&gt;documenta&quot;]
+    vis --&gt; eva[&quot;evaluación de la&lt;br/&gt;arquitectura&quot;]
+    eva -.-&gt;|&quot;¿se cumplió?&quot;| rnf flowchart lr
+    subgraph pre[&quot;pre-rs — el origen&quot;]
+        st([&quot;stakeholders&quot;])
+        rn[&quot;reglas de negocio&quot;]
+        doc[&quot;documentos previos&lt;br/&gt;normativa, contratos&quot;]
+    end
+    srs[&quot;especificación de&lt;br/&gt;requisitos&quot;]
+    subgraph post[&quot;post-rs — la construcción&quot;]
+        dis[&quot;diseño&quot;]
+        cod[&quot;código&quot;]
+        pru[&quot;pruebas&quot;]
+    end
+    st --&gt; srs
+    rn --&gt; srs
+    doc --&gt; srs
+    srs --&gt; dis
+    dis --&gt; cod
+    cod --&gt; pru
+    pru -.-&gt;|verifica| srs 2. por qué es &quot;de vital importancia&quot; en un curso de arquitectura 3. los dos grandes tramos: pre-rs y post-rs">
+    <div class="cab">
+      <h3>Matriz de trazabilidad de requisitos</h3>
+      <span class="chip nucleo" title="Sale de una presentación, captura o nota técnica de clase">Núcleo</span>
+      <span class="ruta">01-Notas/</span>
+    </div>
+    <p class="fuente">NT1. Trazabilidad de Requerimientos.pdf — nota técnica de clase (Montoya-Suárez, Monsalve-Gómez, Sepúlveda-Castaño, *Lámpsakos* n° 13, 2015) + ISO 29148 y Gotel &amp; Finkelstein (complemento)</p>
+    <div class="hojas">
+      <figure class="hoja">
+        <figcaption><span><b>Matriz de trazabilidad de requisitos#mermaid-1</b></span><span>2. Por qué es &quot;de vital importancia&quot; en un curso de arquitectura</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    RNF[&quot;Requerimiento&lt;br/&gt;no funcional&quot;] --&gt; AC[&quot;Atributo&lt;br/&gt;de calidad&quot;]
+    AC --&gt; TAC[&quot;Táctica&lt;br/&gt;arquitectónica&quot;]
+    TAC --&gt; DEC[&quot;Decisión de diseño&lt;br/&gt;estilo, patrón&quot;]
+    DEC --&gt; VIS[&quot;Vista donde se&lt;br/&gt;documenta&quot;]
+    VIS --&gt; EVA[&quot;Evaluación de la&lt;br/&gt;arquitectura&quot;]
+    EVA -.-&gt;|&quot;¿se cumplió?&quot;| RNF</pre></div>
+      </figure>
+      <figure class="hoja">
+        <figcaption><span><b>Matriz de trazabilidad de requisitos#mermaid-2</b></span><span>3. Los dos grandes tramos: pre-RS y post-RS</span></figcaption>
+        <div class="lienzo"><pre class="mermaid">flowchart LR
+    subgraph PRE[&quot;Pre-RS — el origen&quot;]
+        ST([&quot;Stakeholders&quot;])
+        RN[&quot;Reglas de negocio&quot;]
+        DOC[&quot;Documentos previos&lt;br/&gt;normativa, contratos&quot;]
+    end
+    SRS[&quot;Especificación de&lt;br/&gt;requisitos&quot;]
+    subgraph POST[&quot;Post-RS — la construcción&quot;]
+        DIS[&quot;Diseño&quot;]
+        COD[&quot;Código&quot;]
+        PRU[&quot;Pruebas&quot;]
+    end
+    ST --&gt; SRS
+    RN --&gt; SRS
+    DOC --&gt; SRS
+    SRS --&gt; DIS
+    DIS --&gt; COD
+    COD --&gt; PRU
+    PRU -.-&gt;|verifica| SRS</pre></div>
+      </figure>
+    </div>
+  </article>
+</section>
+
+<footer class="pie">
+  <p>Generado desde la bóveda con <code>herramientas/atlas.mjs</code> el 20 de agosto de 2026. Los identificadores
+  (<code>Nota#mermaid-N</code>) son los mismos que devuelve la herramienta
+  <code>obtener_diagrama</code> del servidor MCP <code>tutor-ayds</code>, así que sirven para pedir
+  el código fuente de cualquiera de estas hojas.</p>
+  <p>Las hojas se mantienen en blanco en los dos temas, como un juego de planos: los diagramas
+  traen sus propios colores y sobre fondo oscuro se volverían ilegibles.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  var q = document.getElementById("q");
+  var vacio = document.getElementById("vacio");
+  var botones = Array.prototype.slice.call(document.querySelectorAll("button.f"));
+  var notas = Array.prototype.slice.call(document.querySelectorAll("article.nota"));
+  var secciones = Array.prototype.slice.call(document.querySelectorAll("section.tema"));
+  var clase = "todo";
+
+  // Insensible a acentos: buscar "descomposicion" tiene que encontrar
+  // "descomposición".
+  function normalizar(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function aplicar() {
+    var texto = normalizar(q.value.trim());
+    var visibles = 0;
+    notas.forEach(function (n) {
+      var okClase = clase === "todo" || n.dataset.clase === clase;
+      var okTexto = texto === "" || normalizar(n.dataset.buscable).indexOf(texto) !== -1;
+      var ver = okClase && okTexto;
+      n.hidden = !ver;
+      if (ver) visibles++;
+    });
+    // Un tema sin notas visibles se esconde entero, encabezado incluido.
+    secciones.forEach(function (s) {
+      s.hidden = !s.querySelector("article.nota:not([hidden])");
+    });
+    vacio.style.display = visibles === 0 ? "block" : "none";
+  }
+
+  q.addEventListener("input", aplicar);
+  botones.forEach(function (b) {
+    b.addEventListener("click", function () {
+      clase = b.dataset.clase;
+      botones.forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      aplicar();
+    });
+  });
+})();
+</script>

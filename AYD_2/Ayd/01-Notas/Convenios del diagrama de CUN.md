@@ -61,6 +61,30 @@ interactúe con ningún actor"* — el caso típico es el CU incluido por partic
 >
 > En FarmaHosp, revisá **cada** CUN de tu primera descomposición contra esta regla antes de entregar.
 
+### Y la regla espejo: tampoco puede haber un actor sin CU
+
+La otra mitad, de la diapositiva de consideraciones sobre actores:
+
+> Cada actor **se involucra con al menos un caso de uso**.
+
+Así que hay que revisar el diagrama en **las dos direcciones**:
+
+| Qué se busca | Veredicto |
+|---|---|
+| Un **CU sin actor** | error, salvo CU hijo con el padre describiendo la comunicación, o CU de apoyo |
+| Un **actor sin CU** | error, **sin excepción** |
+
+> [!important] La asimetría es real y conviene notarla
+> Del lado del CU hay **dos excepciones**; del lado del actor, **ninguna**. Y su propio ejemplo lo
+> confirma: en la generalización de actores del hospital, el actor padre *Cliente* **sí** tiene su
+> CU propio (*Despachar medicamentos en farmacia*) — no queda suelto por ser padre.
+>
+> Un actor que dibujaste y no conectaste a nada es señal de una de dos cosas: o le falta un CU que
+> sí existe en el caso, o **no es actor de este campo de acción** (→ [[Actor del negocio]]).
+
+Ver también la checklist de [[Guía - Diagrama de casos de uso del negocio]], que ya verifica las dos
+direcciones.
+
 ## 3. Navegabilidad: quién inicia
 
 Esta es la parte fina, y es lo que la mayoría dibuja mal.
@@ -80,14 +104,32 @@ flowchart LR
 
 ![[adjuntos/capturas-clase/convenios-cun-2-navegabilidad.png]]
 
-> [!important] Dos consecuencias que hay que tener presentes
-> **1. Una línea sin flecha NO significa "no sé".** Significa **"en los dos sentidos"**. Es una
-> afirmación, no una omisión — así que si dibujás todo sin flechas estás diciendo que todas las
-> relaciones son bidireccionales.
+> [!warning] Las dos diapositivas de navegabilidad **no dicen lo mismo** — y hay que saber cuál manda
+> Para el caso *"los dos inician"*, la diapositiva de arriba manda **sin saetas**; la de §4 —la que
+> dice **"los convenios que usaremos serán"**— manda **solo una flecha del actor al CUN**. Es una
+> colisión real del material, no un error de transcripción.
 >
-> **2. No hace falta dibujar la respuesta.** *"Por cada flecha de comunicación se asume un mensaje de
+> | | Notación general *(esta diapositiva)* | **Convenio de la clase** *(§4)* |
+> |---|---|---|
+> | Ambos inician | línea **sin puntas** | **flecha actor → CUN**, y nada más |
+> | Flechas CUN → actor | se dibujan si el CUN inicia | **pueden omitirse** |
+>
+> **Cuál usar:**
+> - **Para dibujar** el Caso 1 y cualquier entregable → **el convenio de §4**. Ella lo titula "los
+>   convenios que *usaremos*": es la norma operativa.
+> - **En un examen** → contestá según la diapositiva que te citen. Si la pregunta es *"¿cómo se
+>   muestra una relación en los dos sentidos?"*, la respuesta es **sin saetas**.
+>
+> **Y la consecuencia que importa al leer un diagrama:** como el convenio permite **omitir** flechas,
+> una línea sin puntas **no es señal fiable de bidireccionalidad** — puede ser una flecha omitida. No
+> se puede inferir la dirección de lo que no está dibujado.
+
+> [!important] Lo que sí es inequívoco
+> **No hace falta dibujar la respuesta.** *"Por cada flecha de comunicación se asume un mensaje de
 > retorno"*: si el Cliente inicia *Procesamiento de Pedidos*, la respuesta al cliente **ya está
 > implícita**. No se dibuja una segunda flecha de vuelta.
+>
+> Esto no choca con nada: las dos diapositivas lo sostienen.
 
 ### El error conceptual que advierte explícitamente
 
@@ -101,7 +143,7 @@ llevan nombre (*streamlines*). En el diagrama de CUN la flecha dice **quién arr
 |---|---|---|
 | Qué significa la flecha | un **flujo de información** | **quién inicia** |
 | Lleva nombre | **sí, siempre** | **no** |
-| Bidireccional | dos flechas, una por flujo | **una línea sin puntas** |
+| Bidireccional | dos flechas, una por flujo | por el convenio de §4: **una flecha actor → CUN** |
 
 ## 4. Los convenios que se van a usar
 
