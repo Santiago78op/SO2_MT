@@ -18,7 +18,7 @@ garantiza que funcionen bien — calidad, disponibilidad, seguridad, entre otros
 
 ## Definiciones formales
 
-Vale la pena tener las cuatro a mano, porque en el examen pueden pedir cualquiera:
+Vale la pena tener las **cinco** a mano, porque en el examen pueden pedir cualquiera:
 
 | Fuente | Definición |
 |---|---|
@@ -26,8 +26,33 @@ Vale la pena tener las cuatro a mano, porque en el examen pueden pedir cualquier
 | **Kazman** — *Software Architecture in Practice* | "La estructura de estructuras de un sistema, la cual abarca componentes de software, propiedades externas visibles de estos componentes y sus relaciones." |
 | **Arlow & Neustadt (2005)** | La arquitectura de software de un programa o sistema de computación es la estructura o estructuras del sistema, las cuales comprometen elementos de software, las propiedades externamente visibles de esos elementos y las relaciones entre ellos. |
 | **Grady Booch** | "Toda la arquitectura es diseño, pero no todo el diseño es arquitectura. La arquitectura representa las decisiones de diseño significativas que le dan forma a un sistema. Donde lo significativo puede ser medido por el costo del cambio." |
+| **La diapositiva "Resumen"** *(la que usó en clase)* | "La arquitectura de software de un sistema es el **conjunto de estructuras necesarias para razonar sobre el sistema**, que comprende **elementos de software**, **relaciones entre ellos** y **propiedades de ambos**." |
 
 La de Booch es la más útil como criterio práctico: **si cambiarlo sale caro, es arquitectura.**
+
+> [!important] La diapositiva "Resumen" define tres cosas, no una
+> Es la definición del **SAIP 4ª edición** — el libro n° 8 de la bibliografía oficial — y la clase la
+> usó textual, junto con las otras dos que la completan:
+>
+> | Término | Definición de la diapositiva |
+> |---|---|
+> | **Arquitectura** | el **conjunto de estructuras** necesarias para **razonar** sobre el sistema: elementos de software, relaciones entre ellos y propiedades de ambos |
+> | **Estructura** | un **conjunto de elementos y las relaciones entre ellos** |
+> | **Vista** | una representación de un conjunto **coherente** de elementos arquitectónicos, según lo **escrito y leído por los interesados**. Una vista es una representación de **una o más estructuras** |
+>
+> ![[adjuntos/capturas-clase/arq-resumen-definicion.png]]
+>
+> Tres cosas que cambian respecto de las definiciones más viejas de la tabla:
+>
+> 1. **"para razonar sobre el sistema"** — la arquitectura tiene una *finalidad*: permitir razonar.
+>    No es un dibujo, es un instrumento de análisis.
+> 2. **"estructuras" en plural, no "la estructura"** — son varias, y por eso hay
+>    [[Categorías de estructuras|tres categorías]].
+> 3. **"propiedades de ambos"** — no solo las propiedades de los elementos, también las de las
+>    **relaciones**. La relación tiene propiedades propias (sincronía, protocolo, latencia).
+>
+> Y la cadena queda cerrada: **elementos → estructura → vista → arquitectura documentada**
+> (→ [[Estructuras y vistas arquitectónicas]]).
 
 Los tres elementos que aparecen en todas las definiciones:
 

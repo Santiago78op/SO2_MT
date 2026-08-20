@@ -6,7 +6,8 @@ fecha: 2026-08-19
 
 # Flashcards — Relaciones y dependencias en UML
 
-Formato `pregunta::respuesta`, compatible con el plugin **Spaced Repetition** de Obsidian.
+Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una línea con la
+pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 Salen de [[Relaciones y dependencias en UML]], que es **complemento**: las presentaciones nombran la
 dependencia como concepto pero no explican su notación.

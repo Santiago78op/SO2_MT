@@ -61,6 +61,30 @@ de entrada en flujos de salida**, y puede ser un pedazo interno del sistema. El 
 negocio es de más alto nivel y se mira desde afuera. La comparación completa está en
 [[Casos de uso vs DFD]].
 
+## Cómo se ve un proceso de negocio modelado en serio
+
+Antes de llegar a los CUN, la clase muestra el proceso de negocio **modelado como flujo**, con el caso
+de estudio de la **Tienda Electrónica**:
+
+![[adjuntos/capturas-clase/proceso-negocio-tienda-electronica-bpmn.png]]
+
+Y el mismo tipo de modelo con **carriles** (*swimlanes*) por rol — CLIENTE, VENDEDOR, ALMACÉN,
+CONTABILIDAD — donde se ve quién hace cada tarea:
+
+![[adjuntos/capturas-clase/proceso-negocio-swimlanes.png]]
+
+> [!important] Por qué muestra esto si después va a pedir CUN
+> Porque son **dos niveles de la misma realidad**, y conviene no confundirlos:
+>
+> | | Modelo de proceso (BPMN) | Diagrama de CUN |
+> |---|---|---|
+> | Qué muestra | el **flujo**: tareas, decisiones, orden | **quién** se beneficia de **qué** proceso |
+> | Detalle | alto — cada tarea y cada compuerta | bajo — una elipse por proceso |
+> | Para qué sirve | entender y mejorar el proceso | acotar el alcance y encontrar drivers |
+>
+> El diagrama de CUN es la **vista comprimida** del modelo de proceso. Un CUN equivale a **un carril
+> completo** de tareas relacionadas. Ver [[Modelo de casos de uso del negocio]].
+
 ## Notas relacionadas
 
 - [[Caso de uso del negocio]]

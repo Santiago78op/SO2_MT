@@ -6,7 +6,8 @@ fecha: 2026-08-19
 
 # Flashcards — Arquitectura y proceso de desarrollo
 
-Formato `pregunta::respuesta`, compatible con el plugin **Spaced Repetition** de Obsidian.
+Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una línea con la
+pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 Salen de [[Arquitectura y proceso de desarrollo]]. **Todas son de complemento**: la unidad 3 todavía
 no tiene presentación, así que si la clase dice algo distinto, manda la clase.

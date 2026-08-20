@@ -56,6 +56,13 @@ Notá que en el diagrama UML el **triángulo vacío** apunta al padre, y el acto
 
 ![[adjuntos/cdu-negocio-modelado-drivers-rf/cdu-p23.png]]
 
+La misma figura en la captura de clase:
+
+![[adjuntos/capturas-clase/generalizacion-especializacion-ejemplo.png]]
+
+Y habilita la excepción de [[Convenios del diagrama de CUN]] §2: **los hijos pueden no tener actor
+propio**, porque el padre ya describe toda la comunicación.
+
 ## También aplica entre actores
 
 La misma relación se usa entre actores: varios actores del negocio pueden jugar el mismo rol en
@@ -70,6 +77,22 @@ desarrollado en [[Actor del negocio]].
 | ¿Los CU son del mismo tipo? | No necesariamente | No | **Sí** — son tipos de un mismo proceso |
 | El actor se asocia a… | el base | el base | el **padre** |
 | Motivo | reutilizar / simplificar | conducta opcional o elección del actor | evitar describir el mismo flujo varias veces |
+
+## La definición formal, en tres líneas
+
+La diapositiva del deck de relaciones la enuncia así:
+
+> - El **caso hijo hereda** el comportamiento y significado del caso de uso **padre**.
+> - El hijo puede **añadir o redefinir** el comportamiento del padre.
+> - El **Caso de Uso Especializado hereda la especificación** del Caso de Uso Base o General.
+
+> [!important] "Añadir **o redefinir**" es lo que la distingue de `«extend»`
+> `«extend»` solo **agrega** comportamiento en puntos marcados, y el base **no se entera**.
+> La generalización permite **redefinir** — el hijo puede cambiar lo que hace el padre, no solo
+> sumarle.
+>
+> Por eso la generalización es la relación **más fuerte** de las tres: hereda la especificación
+> completa y puede sobrescribirla. Ver [[Relación de extensión extend]].
 
 ## Notas relacionadas
 

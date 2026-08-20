@@ -6,7 +6,8 @@ fecha: 2026-08-19
 
 # Flashcards — Stakeholders, tácticas y evaluación
 
-Formato `pregunta::respuesta`, compatible con el plugin **Spaced Repetition** de Obsidian.
+Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una línea con la
+pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 Salen de [[Stakeholders]], [[Tácticas y patrones arquitectónicos]], [[El ciclo del architecting]] y
 [[Evaluación de la arquitectura]]. Solo la primera tarjeta es **de clase**; el resto es complemento.

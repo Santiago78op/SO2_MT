@@ -96,6 +96,35 @@ deployabilidad, integrabilidad —: no se pueden medir corriendo el sistema, se 
 > decí bajo qué característica lo estás poniendo y por qué. Eso demuestra que entendiste la
 > taxonomía en vez de improvisar una.
 
+## 3 ter. Las TRES taxonomías en juego, y cuál usar
+
+Apareció una tercera, y **es la que manda para el Caso 1**: la de la diapositiva
+*"Drivers Arquitectónicos: De Calidad"* (→ [[Drivers arquitectónicos]] §4).
+
+| Atributo | Programa (ISO 9126) | NT1 (FURPS) | **Drivers de calidad** |
+|---|---|---|---|
+| Funcionalidad | ✅ | ✅ | ❌ *(se fue a los drivers RF)* |
+| Fiabilidad | ✅ | ✅ confiabilidad | ✅ |
+| Usabilidad | ✅ | ✅ facilidad de uso | ✅ |
+| Eficiencia / Rendimiento | ✅ eficiencia | ✅ rendimiento | ✅ **Rendimiento** |
+| Mantenibilidad | ✅ | ~ capacidad de soporte | ✅ |
+| Portabilidad | ✅ | ~ adaptabilidad | ❌ |
+| **Escalabilidad** | ❌ | ❌ | ✅ |
+| **Disponibilidad** | dentro de fiabilidad | dentro de confiabilidad | ✅ **primer nivel** |
+| **Seguridad** | dentro de funcionalidad | dentro de funcionalidad | ✅ **primer nivel** |
+| **Total** | **6** | **5** | **7** |
+
+> [!important] Regla para no equivocarse
+> | Para qué | Qué lista usás |
+> |---|---|
+> | **Clasificar drivers de calidad en el Caso 1** | las **siete** de la diapositiva de drivers |
+> | **Responder el parcial de la unidad 2** | los **seis** del programa (ISO 9126) |
+> | Entender de dónde salen las taxonomías | la comparación de arriba |
+>
+> No es contradicción: son **dos usos distintos**. La unidad 2 enseña la **norma de calidad de
+> producto**; el criterio 3 pide **drivers**, que es un modelo de diseño. Lo único grave sería
+> mezclar las listas sin declarar cuál usás.
+
 ## 3 bis. Una segunda taxonomía que también es de clase: FURPS
 
 `NT1. Trazabilidad de Requerimientos.pdf` trae, en su **Tabla 1 — "Clasificación de los requisitos

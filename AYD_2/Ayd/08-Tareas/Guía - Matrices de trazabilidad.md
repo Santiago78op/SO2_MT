@@ -22,6 +22,14 @@ Cómo se construyen las **tres** matrices que pide la rúbrica, y cómo se leen 
 > La teoría de fondo está en [[Matriz de trazabilidad de requisitos]]. Esta guía es el "cómo se
 > hace".
 
+> [!important] La plantilla OBLIGATORIA
+> No es "la sugerida": es **la que hay que usar**. Está confirmado con una captura de clase
+> apuntando a esta misma figura:
+>
+> ![[adjuntos/capturas-clase/plantilla-matriz-OBLIGATORIA-nt1-fig1.png]]
+>
+> Es la **Fig. 1, página 91** de `NT1. Trazabilidad de Requerimientos.pdf`.
+
 > [!important] La plantilla oficial
 > Esta es la plantilla que hay que usar. Está en
 > `adjuntos/plantillas/plantilla-matriz-dependencias.jpeg` y viene de *"Un Caso de Estudio para la

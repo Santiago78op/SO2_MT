@@ -6,7 +6,8 @@ fecha: 2026-08-19
 
 # Flashcards — Atributos de calidad y drivers
 
-Formato `pregunta::respuesta`, compatible con el plugin **Spaced Repetition** de Obsidian.
+Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una línea con la
+pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 > [!warning] Complemento
 > Salen de [[Atributos de calidad]] y [[Guía - Drivers de calidad y restricción]]. La unidad 2 del

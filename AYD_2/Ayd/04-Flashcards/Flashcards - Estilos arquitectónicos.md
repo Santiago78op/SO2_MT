@@ -6,7 +6,8 @@ fecha: 2026-08-19
 
 # Flashcards — Estilos arquitectónicos (punto 1.9)
 
-Formato `pregunta::respuesta`, compatible con el plugin **Spaced Repetition** de Obsidian.
+Compatible con el plugin **Spaced Repetition** de Obsidian: cada tarjeta es una línea con la
+pregunta, el separador de dos signos de dos puntos, y la respuesta.
 
 > [!warning] Todo esto es complemento
 > Salen de [[Estilos arquitectónicos]], que **no tiene núcleo de clase**: las presentaciones no

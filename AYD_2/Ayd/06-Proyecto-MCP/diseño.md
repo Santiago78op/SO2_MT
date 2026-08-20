@@ -42,7 +42,7 @@ Cada RF es una herramienta MCP. La columna *escribe* es la que importa para la s
 | RF-04 | `glosario(termino?)` | Definición de un término, o el glosario completo | `03-Glosario.md` | — |
 | RF-05 | `listar_diagramas()` | Los `.excalidraw` y `.svg` de `02-Diagramas/` **más** los bloques `mermaid` dentro de las notas, con nota de origen y tipo | `02-Diagramas/`, `01-Notas/` | — |
 | RF-06 | `obtener_diagrama(nombre)` | La **fuente** del diagrama (bloque Mermaid tal cual, o JSON del `.excalidraw`) con su tipo | `02-Diagramas/`, `01-Notas/` | — |
-| RF-07 | `obtener_flashcards(tema, cantidad?)` | Flashcards `pregunta::respuesta` de un tema | `04-Flashcards/*.md` | — |
+| RF-07 | `obtener_flashcards(tema, cantidad?)` | Flashcards `pregunta / respuesta` de un tema | `04-Flashcards/*.md` | — |
 | RF-08 | `registrar_resultado(tema, puntaje, comentarios?)` | Agrega una línea con fecha al registro de progreso | — | `05-Quizzes/progreso.md` |
 | RF-09 | `progreso()` | Resumen del progreso: temas evaluados, puntajes, pendientes | `05-Quizzes/progreso.md`, `01-Notas/` | — |
 | RF-10 | `referencia(herramienta?)` | El manual condensado de StarUML y Excalidraw, y el puente de la teoría al diagrama | `07-Referencias/` | — |
@@ -319,7 +319,7 @@ sequenceDiagram
     EST->>HOST: "tomame un quiz de casos de uso"
     HOST->>TA: obtener_flashcards("Casos de uso del negocio", 8)
     TA->>FS: lee 04-Flashcards/
-    FS-->>TA: pares pregunta::respuesta
+    FS-->>TA: pares de pregunta y respuesta
     TA-->>HOST: 8 flashcards
     HOST->>HOST: el modelo ARMA el quiz<br/>(tutor-ayds no arma quizzes)
     HOST-->>EST: preguntas

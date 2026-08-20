@@ -122,6 +122,14 @@ flowchart LR
 
 ---
 
+> [!tip] Los tres casos resueltos por ella, en paralelo
+> Antes de dibujar nada, mirá [[Ejemplos resueltos de casos de negocio]]: tiene los **tres**
+> encadenamientos completos que resolvió en clase (Tienda Electrónica, Fábrica de Materiales y
+> **Hospital**) puestos lado a lado, con la checklist para comparar tu entrega contra ellos.
+>
+> El del **hospital** te resuelve la decisión de actor vs. trabajador: en su ejemplo *Farmacia* y
+> *Encamamiento* son **actores** del *Sistema Hospitalario*.
+
 ## Diagrama 2 — Core
 
 **Qué responde:** *¿cuál es el corazón del negocio?*
@@ -147,9 +155,41 @@ flowchart LR
 > Si tu diagrama "core" tiene ocho CDU, no es core: ya es la descomposición. El core son los
 > servicios básicos que el cliente recibe. En el ejemplo de la nota técnica es **uno**.
 
+> [!important] El ejemplo resuelto por ella: Tienda Electrónica
+> Hay una diapositiva titulada **"Ejemplo Diagrama Core Tienda Electrónica"**, y es el molde exacto:
+>
+> ![[adjuntos/capturas-clase/cun-ejemplo-core-tienda-electronica.png]]
+
+```mermaid
+flowchart LR
+    CO["Contabilidad"] --- S(("Sistema de<br/>Ventas on line<br/>Tienda X"))
+    V["Ventas"] --- S
+    CL["Cliente"] --- S
+    AL["Almacén"] --- S
+    TR["Transporte"] --- S
+    BA["Banco"] --- S
+```
+
+Lo que hay que copiar:
+
+| Detalle | Cómo lo hace ella |
+|---|---|
+| Cuántos CUN | **UNO**. Una sola elipse |
+| Qué nombra esa elipse | **el negocio completo**: *"Sistema de Ventas on line Tienda X"* |
+| Cuántos actores | **seis**, todos alrededor — Contabilidad, Ventas, Cliente, Almacén, Transporte, Banco |
+| Disposición | el CUN al **centro**, los actores en **círculo** |
+| Flechas | **líneas sin punta** — relación en los dos sentidos (→ [[Convenios del diagrama de CUN]]) |
+| Notación | actores y CUN con la **barra diagonal** del estereotipo de negocio |
+
+Y fijate que los actores **no son solo el cliente**: hay áreas internas (Contabilidad, Ventas,
+Almacén) y externas (Banco, Transporte). Todas son **actores del negocio** porque están fuera del
+*proceso* que el CUN modela.
+
 > [!tip] Tu turno
-> Respondé la pregunta del núcleo con tu caso. Si te salen más de tres o cuatro, revisá si algunos
-> son de soporte.
+> Respondé la pregunta del núcleo con tu caso. Con el molde de la Tienda Electrónica, lo más
+> probable es que te salga **un solo CUN** — algo como *"Gestión de medicamentos de alto costo"* —
+> rodeado de todos los actores. Si te salen más de tres o cuatro CUN, revisá si ya te fuiste a la
+> descomposición.
 
 ---
 
@@ -193,12 +233,67 @@ Y una advertencia de la nota técnica que suele pasarse por alto:
 O sea: el mismo proceso puede ser soporte en un modelo y núcleo en otro, según dónde pusiste la
 frontera en el diagrama 1. Por eso los tres diagramas tienen que ser **consistentes entre sí**.
 
+> [!important] El ejemplo resuelto por ella — y resuelve una duda del plan
+> La diapositiva **"Ejemplo Primera Descomposición del Core Tienda Electrónica"** contesta lo que
+> estaba abierto: **es UN solo diagrama** con todos los procesos, no uno por proceso.
+>
+> ![[adjuntos/capturas-clase/cun-ejemplo-primera-descomposicion-tienda-electronica.png]]
+
+Las asociaciones, verificadas con zoom sobre la captura:
+
+| CUN | Actores con los que se asocia |
+|---|---|
+| Procesamiento de Pedidos | **Cliente** · Almacén |
+| Gestión de Inventario | Almacén |
+| Pagos | **Cliente** · Banco · Contabilidad |
+| Envío | Transporte |
+| Soporte al Cliente | **Cliente** · Ventas |
+
+Es **la misma topología** que la Fábrica de Materiales: el actor principal toca **tres** de los cinco
+procesos, y cada proceso tiene su contraparte externa. Ella reusó la plantilla — lo que refuerza que
+ese es *el* molde. Ver [[Ejemplos resueltos de casos de negocio]].
+
+> [!warning] Estas asociaciones se verificaron con zoom; la imagen es la fuente de la verdad
+> **No re-dibujes sus diagramas en Mermaid.** Es exactamente el tipo de tarea donde se cuela un error
+> de una arista, y ya pasó: la primera versión de esta tabla, hecha como diagrama Mermaid a partir de
+> la hoja de contactos, tenía **asociaciones inventadas**.
+>
+> Mermaid sirve para el **patrón conceptual**. Para *su* diagrama concreto: la imagen, y una tabla
+> leída una por una.
+
+El patrón, comparado con el core:
+
+| | Core | Primera descomposición |
+|---|---|---|
+| CUN | **1** — el negocio completo | **5** — los procesos |
+| Actores | los **mismos seis** | los **mismos seis** |
+| Disposición | CUN al centro, actores en círculo | CUN en **columna al centro**, actores a los **lados** |
+
+**La descomposición abre la única elipse del core en N procesos, conservando el mismo juego de
+actores.** Eso es lo que la vuelve verificable: si en la descomposición aparece un actor que no
+estaba en el core, o desaparece uno que sí estaba, hay una inconsistencia.
+
+Los cinco procesos de su ejemplo: **Procesamiento de Pedidos**, **Gestión de Inventario**,
+**Pagos**, **Envío**, **Soporte al Cliente**.
+
 > [!important] Regla de nombres (nota técnica)
 > El nombre de un CDU debe expresar **qué sucede** cuando el caso de uso se ejecuta, y va en forma
 > **activa**: en **gerundio** (*chequeo de equipaje*, *compra de suministros*) **o con un verbo**
 > (*chequear equipaje*, *comprar suministros*).
 >
-> "Préstamos" o "Gestión de inventario" no cumplen: no dicen qué sucede.
+> **Ojo con cómo hay que leer "gerundio" acá.** Los propios ejemplos de la nota técnica — *chequeo*,
+> *compra* — no son gerundios gramaticales: son **sustantivos derivados de un verbo**. Y eso es
+> exactamente lo que usa ella en la Tienda Electrónica: **Procesamiento** de Pedidos, **Gestión** de
+> Inventario, **Envío**.
+>
+> | Forma | Ejemplos | ¿Sirve? |
+> |---|---|---|
+> | Sustantivo **derivado de verbo** + complemento | *chequeo de equipaje*, *procesamiento de pedidos*, *gestión de inventario* | **sí** |
+> | **Verbo** + complemento | *chequear equipaje*, *comprar suministros* | **sí** |
+> | Sustantivo **de cosa**, sin acción | *Préstamos*, *Inventario*, *Facturas* | **no** — no dicen qué sucede |
+>
+> La prueba: **¿se puede convertir en verbo sin cambiar el sentido?** *Gestión de inventario* →
+> *gestionar el inventario* ✅. *Inventario* → no hay verbo ❌.
 
 ---
 
@@ -206,6 +301,44 @@ frontera en el diagrama 1. Por eso los tres diagramas tienen que ser **consisten
 
 Los **drivers RF**. Acá se aplican las tres relaciones, y la nota técnica agrega precisión que el
 deck no tiene: la inclusión tiene **dos justificaciones distintas**.
+
+> [!important] La clase confirma esta distinción, con las mismas palabras en rojo
+> Ya no es solo de la nota técnica: hay **dos diapositivas** tituladas *"Relación de inclusión
+> «include»"*, una marcada **REUTILIZAR** y la otra **PARTICIONAR**, con exactamente estos mismos
+> ejemplos (aduana y empresa de servicios). Y la de particionar agrega la anotación clave:
+> ***"es un CU de apoyo que no se relaciona con actores"***.
+>
+> Ver [[Convenios del diagrama de CUN]] §5.
+
+> [!important] El ejemplo resuelto por ella: CUN *Procesamiento de Pedido*
+> Es la continuación directa de la Tienda Electrónica: toma **uno** de los cinco procesos de la
+> primera descomposición y lo expande.
+>
+> ![[adjuntos/capturas-clase/cu-expandido-procesamiento-de-pedido.png]]
+
+```mermaid
+flowchart LR
+    PE(("Pedido")) -.->|"«includes»"| CS(("Comprobar<br/>saldo"))
+    PE -.->|"«includes»"| MP(("Mostrar<br/>productos"))
+    PE -.->|"«includes»"| SP(("Seleccionar<br/>productos"))
+    PE -.->|"«includes»"| FP(("Finalizar<br/>pedido"))
+    MP -.->|"«includes»"| VS(("Verificar<br/>stock"))
+    PC(("Pedido<br/>compuesto")) -.->|"«extends»"| PE
+    PC -.->|"«includes»"| AP(("Agrupar<br/>pedido"))
+```
+
+Cuatro cosas que se aprenden de este ejemplo, y las cuatro son criterios de corrección:
+
+| Observación | Por qué importa |
+|---|---|
+| El CUN base se llama **"Pedido"**, no "Procesamiento de Pedido" | al expandir, el CUN se convierte en el CU base y **puede cambiar de nombre** |
+| Hay **inclusión en cadena**: *Mostrar productos* incluye *Verificar stock* | un CU incluido puede a su vez incluir otro. **La inclusión anida** |
+| *Pedido compuesto* `«extends»` *Pedido* — la flecha va **hacia** el base | es la dirección de `«extend»`, al revés de `«include»` |
+| *Pedido compuesto* además `«includes»` *Agrupar pedido* | un CU **extensor también puede incluir**. Las relaciones se combinan |
+
+Y notá la escala: **un** proceso de la descomposición produce **siete** casos de uso expandidos. En
+FarmaHosp, con seis etapas del ciclo del medicamento, eso significa varias decenas. Por eso el
+criterio 3 pide *"completitud"* y vale 30 puntos.
 
 ### Inclusión por reutilización
 

@@ -49,6 +49,52 @@ flowchart TD
 
 ![[adjuntos/cdu-negocio-modelado-drivers-rf/cdu-p20.png]]
 
+## El mecanismo formal: los puntos de extensión
+
+La definición del deck de relaciones agrega la pieza que falta para entender **cómo** funciona:
+
+> Es un **estereotipo de dependencia**. Ofrece una forma de extensión **más controlada** que la
+> relación de generalización. El caso de uso base **declara un conjunto de puntos de extensión**. El
+> caso de uso especializado **sólo puede alterar el comportamiento de los puntos de extensión
+> marcados**.
+>
+> Se usa esta relación cuando se tiene un caso de uso que es **similar a otro, pero que hace un poco
+> más**.
+
+```mermaid
+flowchart LR
+    B(("Caso de uso <b>BASE</b><br/><i>declara puntos<br/>de extensión</i>")) 
+    E(("Caso de uso <b>EXTENDIDO</b><br/><i>solo puede alterar<br/>los puntos marcados</i>"))
+    E -.->|"«extends»"| B
+```
+
+> [!important] Esto resuelve dos confusiones de un golpe
+> **1. Por qué la flecha va del extendido al base.** El base **no sabe quién** lo extiende, pero sí
+> declara **dónde** se lo puede extender. Los puntos son parte del base; quien los usa es el
+> extendido, y por eso la dependencia apunta hacia el base.
+>
+> **2. Por qué es "más controlada" que la generalización.** El extendido **solo puede tocar los puntos
+> marcados**; el hijo de una generalización puede **redefinir** cualquier cosa del padre
+> (→ [[Generalización y especialización en casos de uso]]).
+>
+> De ahí la escala de "fuerza" de las tres relaciones:
+> **`«include»`** (el base manda, siempre pasa) → **`«extend»`** (el base autoriza puntos, a veces pasa)
+> → **generalización** (el hijo hereda todo y puede redefinir).
+
+> [!tip] La consecuencia práctica para tu entrega
+> Si dibujás un `«extend»`, tené lista la respuesta a **"¿en qué punto del caso base se engancha?"**.
+> En el ejemplo de aduana el punto es *el momento del check-in en que se revisa el equipaje*; en el de
+> la tienda, *el paso en que se evalúa el pedido*.
+>
+> Una extensión sin punto de enganche identificable no es una extensión: es un caso de uso suelto.
+
+### Un ejemplo mínimo del deck
+
+![[adjuntos/capturas-clase/ejemplo-completo-expandido-maquina.png]]
+
+Y el más corto de todos: **GIRO** ←`«extend»`— **GIRO POR INTERNET**. El giro por internet *"es
+similar al giro, pero hace un poco más"*: el mismo trámite con un canal adicional.
+
 ## `include` vs `extend`, en una tabla
 
 | | `<include>` | `<extend>` |

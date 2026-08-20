@@ -13,12 +13,17 @@
     "demo": "node dist/pruebas/demo.js",
     "verificar": "node dist/pruebas/verificaciones.js",
     "auditoria": "node dist/pruebas/auditoria.js",
-    "auditar-boveda": "node pruebas/auditar-boveda.mjs"
+    "auditar-boveda": "node pruebas/auditar-boveda.mjs",
+    "cobertura": "node pruebas/cobertura.mjs"
   },
   "engines": {
     "node": ">=20"
   },
-  "keywords": ["mcp", "obsidian", "tutor"],
+  "keywords": [
+    "mcp",
+    "obsidian",
+    "tutor"
+  ],
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",

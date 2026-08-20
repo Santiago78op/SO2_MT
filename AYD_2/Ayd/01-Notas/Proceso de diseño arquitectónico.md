@@ -1,6 +1,6 @@
 ---
 tema: Arquitectura de software
-fuente: "Arquitectura de Software.pdf / Arquitectura de Software (1).pdf"
+fuente: "Arquitectura de Software.pdf / Arquitectura de Software (1).pdf + capturas de clase del 19/08/2026. Todo NÚCLEO."
 fecha: 2026-08-19
 ---
 
@@ -33,6 +33,110 @@ creando la arquitectura de los datos, y con el arquitecto del sistema eligiendo 
 arquitectónico a partir de los requerimientos obtenidos durante el análisis de los datos.
 
 ![[adjuntos/arquitectura-de-software/arq-p21.png]]
+
+## Los siete pasos, según la diapositiva "Pasos para la definición"
+
+Además de los cuatro de arriba, la clase da una **lista de siete actividades** con el título
+*"Pasos para la definición de una Arquitectura de software"*:
+
+| # | Paso | Dónde está en la bóveda |
+|---|---|---|
+| 1 | **Creación del caso de negocio** para el sistema | [[Guía - Caso de negocio]] |
+| 2 | **Entendimiento de los requisitos** | [[Drivers arquitectónicos]], [[Caso de uso del negocio]] |
+| 3 | **Creación y selección** de la arquitectura | [[Estilos arquitectónicos]], [[Tácticas y patrones arquitectónicos]] |
+| 4 | **Documentación y comunicación** de la arquitectura | [[Estructuras y vistas arquitectónicas]], [[Modelo 4+1 vistas]] |
+| 5 | **Análisis o evaluación** de la arquitectura | [[Evaluación de la arquitectura]] |
+| 6 | **Implementación** del sistema basado en la arquitectura | [[Arquitectura y proceso de desarrollo]] |
+| 7 | **Aseguramiento** de que la implementación esté acorde a la arquitectura | ídem §3 |
+
+![[adjuntos/capturas-clase/pasos-definicion-lista-7.png]]
+
+> [!important] El paso 7 no es un adorno
+> *"Aseguramiento de que la implementación esté **acorde** a la arquitectura"* es una actividad
+> aparte de implementar. Es la **conformidad**: verificar que lo que se construyó sea lo que se
+> diseñó. Sin ese paso, la arquitectura documentada y el sistema real se separan — y ahí empieza la
+> deuda arquitectónica (→ [[Tácticas y patrones arquitectónicos]] §7).
+
+### Y es un ciclo, no una lista
+
+La otra diapositiva del mismo título lo dibuja como diagrama de actividad, con **`«precede»`** entre
+etapas y una **flecha de retorno** desde implementación hasta requerimientos:
+
+```mermaid
+flowchart TD
+    R["REQUERIMIENTOS<br/><i>(de la arquitectura)</i>"] -->|"«precede»"| D["DISEÑO<br/><i>(de la arquitectura)</i>"]
+    D -->|"«precede»"| DOC["DOCUMENTACIÓN<br/><i>(de la arquitectura)</i>"]
+    DOC -->|"«precede»"| E["EVALUACIÓN<br/><i>(de la arquitectura)</i>"]
+    E -->|"«precede»"| I["IMPLEMENTACIÓN<br/><i>(de la arquitectura)</i>"]
+    I -.->|"«precede»<br/>vuelve a empezar"| R
+```
+
+![[adjuntos/capturas-clase/pasos-definicion-ciclo-precede.png]]
+
+**Cinco etapas y un lazo.** Eso confirma con fuente de clase lo que
+[[Arquitectura en el ciclo de vida del software]] dice en palabras: *"es un proceso iterativo"*. Y se
+corresponde casi uno a uno con el ciclo del SAIP que está en [[El ciclo del architecting]]:
+
+| Clase (5 etapas) | SAIP (6 pasos) |
+|---|---|
+| **Requerimientos** | 1. entender el contexto + 2. elicitar los ASRs |
+| **Diseño** | 3. diseñar (ADD) |
+| **Documentación** | 4. documentar |
+| **Evaluación** | 5. evaluar (ATAM) |
+| **Implementación** | 6. realizar y sostener |
+
+> [!tip] Ojo con el estereotipo
+> Usó **`«precede»`**, no `«include»` ni `«extend»`. Es un estereotipo de **precedencia
+> temporal**: "esto va antes que aquello". No confundirlo con las relaciones de casos de uso
+> (→ [[Relaciones y dependencias en UML]]).
+
+## El flujo de definición: las actividades son CONCURRENTES
+
+La diapositiva *"Arquitectura del Software — Flujo de Definición"* (diagrama de actividad de
+**Scott W. Ambler**, 2004-2005) muestra algo distinto y complementario: un **fork/join** — las
+barras gruesas — con cuatro ramas **en paralelo**.
+
+```mermaid
+flowchart TD
+    INI(("inicio")) --> F[" "]
+    F --> A1["Define Architectural<br/>Requirements"]
+    F --> DEC{"[initial effort]"}
+    F --> A3["Define Reference<br/>Architecture"]
+    F --> A4["Support Project<br/>Teams"]
+    DEC -->|"sí"| A2["Define Candidate<br/>Architecture"]
+    A2 --> A5["Refine Enterprise<br/>Architecture"]
+    DEC -->|"no"| A5
+    A1 --> J[" "]
+    A5 --> J
+    A3 --> J
+    A4 --> J
+    J --> FIN(("fin"))
+```
+
+![[adjuntos/capturas-clase/arq-flujo-de-definicion-ambler.png]]
+
+Tres lecturas que importan:
+
+**1. Las actividades no son una fila.** Definir requisitos, definir la arquitectura de referencia y
+**dar soporte a los equipos de proyecto** ocurren **al mismo tiempo**. El arquitecto no "termina" de
+diseñar y después acompaña: hace las dos cosas en paralelo.
+
+**2. La guarda `[initial effort]` es la clave del diagrama.** Solo en el **esfuerzo inicial** se
+define una **arquitectura candidata**; en las vueltas siguientes se va directo a **refinar la
+arquitectura empresarial**. O sea: la arquitectura candidata es un artefacto **de arranque**, no de
+cada iteración.
+
+**3. Aparecen dos términos del punto 1.9 del programa**, y por fin con fuente:
+
+| Término de la diapositiva | Qué es |
+|---|---|
+| **Define Candidate Architecture** — *arquitectura candidata* | la primera propuesta, la que se produce en el esfuerzo inicial y todavía hay que validar |
+| **Define Reference Architecture** — *arquitectura de referencia* | la que sirve de patrón para varios proyectos, más estable y transversal |
+| **Refine Enterprise Architecture** | la arquitectura de **toda la organización**, que cada proyecto refina |
+| **Support Project Teams** | el arquitecto **acompaña** a los equipos, en paralelo con todo lo demás |
+
+Eso da tres niveles de alcance: **candidata** (este proyecto, primera vuelta) → **de referencia**
+(reutilizable entre proyectos) → **empresarial** (la organización entera).
 
 ## ¿Cuál es el producto final?
 

@@ -1,6 +1,6 @@
 ---
 tema: Guía de entregable
-fuente: "Rúbrica del Caso 1 (núcleo) + *Software Architecture in Practice* 4ª ed. — Bass, Clements, Kazman (**bibliografía oficial del programa**, cap. 20: ADD 3.0)"
+fuente: "Rúbrica del Caso 1 + **diapositivas de clase de Drivers Arquitectónicos** (capturas 19/08/2026) — NÚCLEO. Complemento: SAIP 4ª ed. cap. 20 (ADD 3.0), bibliografía oficial."
 fecha: 2026-08-19
 entregable: Drivers de atributos de calidad y de restricción
 alias: "drivers, drivers de calidad, drivers de atributos de calidad, drivers de restriccion, atributos de calidad, priorizar drivers, criterio 3"
@@ -21,7 +21,23 @@ Cómo se obtienen, se especifican, se clasifican y se priorizan. Es el **criteri
 > Los drivers RF están en [[Guía - Diagrama de casos de uso del negocio]]. Esta guía cubre los otros
 > tres.
 
-La teoría de fondo está en [[Atributos de calidad]]. Acá va el "cómo se hace".
+> [!important] Ya hay diapositivas de clase para este criterio — y son NÚCLEO
+> Cuando escribí esta guía, los drivers de calidad y de restricción no tenían diapositiva y tenía
+> que apoyarme en el libro. **Ya no.** Hay cuatro diapositivas: la definición de driver, los drivers
+> RF, los de calidad y los de restricción — con la taxonomía y los ejemplos de ella.
+>
+> **La teoría de clase está en [[Drivers arquitectónicos]]. Leé esa nota primero.** Esta guía es el
+> "cómo se hace"; el libro queda como respaldo del método, no como fuente de la definición.
+>
+> Dos cosas que cambian respecto de lo que decía antes:
+>
+> | Antes (complemento) | Ahora (clase) |
+> |---|---|
+> | Clasificar por los **seis** atributos de ISO 9126 | Clasificar por las **siete** de la diapositiva de drivers de calidad: rendimiento, escalabilidad, disponibilidad, seguridad, mantenibilidad, usabilidad, fiabilidad |
+> | Las restricciones, sin categorías | **Seis categorías**: tecnológicas, regulatorias/legales, de negocio/presupuesto, organizacionales, ambientales/físicas, de integración |
+
+La teoría de fondo está en [[Drivers arquitectónicos]] (clase) y [[Atributos de calidad]]
+(las taxonomías). Acá va el "cómo se hace".
 
 ---
 

@@ -209,6 +209,34 @@ con UML — `edge-pattern-solid` para generalización, asociación, agregación 
 - **Verificación propia**: render de las seis relaciones con Mermaid 11 e inspección de los
   marcadores y patrones de trazo del SVG.
 
+## La tabla resumen de la clase
+
+Hay una diapositiva titulada **"Resumen de los Tipos de Relaciones en UML"** que pone las cuatro en
+una sola tabla, con su función y su notación. Vale tenerla a mano porque es la respuesta directa si
+la piden enumeradas:
+
+| Relación | Función | Notación |
+|---|---|---|
+| **Asociación** | camino de comunicación entre un actor y un caso de uso en el que participa | línea llena |
+| **Extiende** | inserción de comportamiento **adicional** en un caso de uso base, *sin que éste tenga conocimiento* | punteada con `«extiende»` |
+| **Generalización** | relación entre un caso de uso **general** y otro más **específico** que hereda características y añade otras | **línea llena** con **triángulo hueco** |
+| **Incluye** | inserción de comportamiento adicional dentro de un caso de uso que **explícitamente describe la inserción** | punteada con `«incluye»` |
+
+![[adjuntos/capturas-clase/resumen-tipos-de-relaciones-uml.png]]
+
+> [!warning] Ojo con la notación de la generalización
+> Es **línea llena** con triángulo hueco — **no punteada**. Las otras dos (*extiende*, *incluye*) sí
+> son punteadas, porque son **dependencias**; la generalización no es una dependencia, es herencia.
+>
+> Esa es la regla general de UML y sirve para no dudar: **dependencia = punteada**, **herencia =
+> llena**.
+
+> [!important] La frase que distingue extiende de incluye, en una línea
+> **Extiende:** *"sin que éste tenga conocimiento"* — el base **no sabe** que lo extienden.
+> **Incluye:** *"que explícitamente describe la inserción"* — el base **sí sabe** y decide dónde.
+>
+> Esa es la diferencia conceptual, y explica por qué la flecha va al revés en cada una.
+
 ## Notas relacionadas
 
 - [[Relación de inclusión include]] · [[Relación de extensión extend]] — dependencias estereotipadas

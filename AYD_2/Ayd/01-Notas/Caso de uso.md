@@ -66,6 +66,15 @@ tipos** de casos de uso y por qué se confunden tanto.
 
 ![[adjuntos/cdu-negocio-modelado-drivers-rf/cdu-p06.png]]
 
+En la captura de clase se ve el diagrama de esfuerzo completo, con los dos flujos marcados:
+
+![[adjuntos/capturas-clase/cu-en-que-momento-rup.png]]
+
+Y confirma el dato de la escala: esos dos flujos **tienen su pico en *inception* y *elaboration*** y
+caen después. Los casos de uso son una herramienta **del principio** del proyecto — lo que encaja
+con que el caso de negocio sea el **paso 0** del método
+(→ [[Método de diseño centrado en la arquitectura]]).
+
 ## Los dos tipos
 
 | | Caso de uso del negocio (CUN) | Caso de uso del sistema |
@@ -81,6 +90,54 @@ Este deck desarrolla a fondo el lado del negocio → [[Modelo de casos de uso de
 > El título de la presentación dice "Diagramas de Casos de Uso **del Negocio y del Sistema**",
 > pero las diapositivas solo desarrollan los **del negocio**. Los casos de uso del **sistema**
 > quedan mencionados y no explicados. Falta una nota sobre ellos cuando aparezca el material.
+
+## Por qué existen los casos de uso: las motivaciones
+
+La clase abre el tema con una diapositiva de **Motivaciones**, y son problemas concretos:
+
+- **Dificultades de comunicación** entre stakeholders e ingenieros de requisitos, por usar distintos
+  lenguajes y puntos de vista.
+- Stakeholders que solo tienen una **visión parcial** del negocio, lo que impide a los ingenieros
+  tener una visión clara y dificulta la elicitación.
+- Ingenieros centrados en especificar requisitos con casos de uso, *goals* o historias de usuario, que
+  **obvian parte de la información de las relaciones entre requisitos** o de éstos con el entorno.
+
+Y la cadena que dibuja:
+
+```mermaid
+flowchart LR
+    N["NEGOCIO"] -->|"1. Proporciona"| R["REQUISITOS"]
+    R -->|"2. Conciben"| S["SISTEMAS IT"]
+    S -.->|"3. Reflejan"| N
+```
+
+![[adjuntos/capturas-clase/motivaciones-negocio-requisitos-sistemas.png]]
+
+> [!important] Las tres flechas son el curso entero en miniatura
+> El **negocio proporciona** los requisitos, los requisitos **conciben** los sistemas, y los sistemas
+> **reflejan** el negocio. Si el paso 1 sale mal, los otros dos heredan el error — y por eso el criterio
+> 1 del Caso 1 empieza por el **caso de negocio** y no por el sistema.
+
+## Conceptos básicos: los tres elementos y cómo se llaman
+
+Una diapositiva del deck de relaciones nombra los elementos, y dos de esos nombres conviene tenerlos:
+
+> Los *casos de uso* son **descripciones narrativas en lenguaje natural** de los procesos del dominio
+> **en un formato estructurado de prosa**. Describen una **secuencia de acciones**.
+
+| Elemento | Cómo se dibuja |
+|---|---|
+| **Caso de uso** | elipse dentro del recuadro del sistema |
+| **Actor** | monigote, fuera del recuadro |
+| ***Arco de comunicación*** | la línea que une actor y caso de uso |
+
+> [!tip] "Arco de comunicación" es el nombre formal de la asociación
+> Es la misma línea que en el diagrama de CUN lleva la navegabilidad
+> (→ [[Convenios del diagrama de CUN]] §3). Saber el término sirve si lo usa en un examen.
+>
+> Y guardate la definición de arriba: **"formato estructurado de prosa"** es exactamente lo que
+> justifica la ficha textual de [[Descripción textual de casos de uso]] — no es prosa libre, tiene
+> estructura.
 
 ## Notas relacionadas
 

@@ -199,7 +199,7 @@ ventana: salí de la app del todo).
 | `glosario(termino?)` | Definición de un término, o el glosario completo | No |
 | `listar_diagramas()` | Archivos de `02-Diagramas/` **más** los bloques mermaid de las notas | No |
 | `obtener_diagrama(nombre)` | La fuente cruda del diagrama, con su tipo | No |
-| `obtener_flashcards(tema, cantidad?)` | Pares `pregunta::respuesta` | No |
+| `obtener_flashcards(tema, cantidad?)` | Tarjetas de repaso, ya separadas en P / R | No |
 | `registrar_resultado(tema, puntaje, comentarios?)` | Agrega una línea a `05-Quizzes/progreso.md` | **Sí** |
 | `progreso()` | Temas evaluados, puntajes y temas pendientes | No |
 | `referencia(herramienta?)` | El manual de StarUML/Excalidraw y el puente de la teoría al diagrama | No |
@@ -366,7 +366,8 @@ ayds-mcp/                    (fuera de la bóveda: node_modules son decenas de
     ├── demo.ts              Cliente MCP real: handshake + llamadas
     ├── verificaciones.ts    33 pruebas de seguridad, Unicode y escritura
     ├── auditoria.ts         Auditoría: las 12 herramientas por el protocolo MCP real
-    └── auditar-boveda.mjs   Auditoría: contenido de la bóveda y coherencia de la documentación
+    ├── auditar-boveda.mjs   Auditoría: contenido de la bóveda y coherencia de la documentación
+    └── cobertura.mjs        Sonda: 34 consultas reales contra el MCP, ¿encuentran su nota?
 ```
 
 Para entender el código, el orden que conviene: **`boveda.ts` → `index.ts` → el resto**.

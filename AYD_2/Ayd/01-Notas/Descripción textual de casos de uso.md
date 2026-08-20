@@ -37,6 +37,120 @@ Las dos variantes del flujo:
 
 ![[adjuntos/cdu-negocio-modelado-drivers-rf/cdu-p26.png]]
 
+![[adjuntos/capturas-clase/descripcion-textual-campos.png]]
+
+## La estructura real: el ejemplo lleno de *Atender pedido*
+
+Además de la lista de campos, ella muestra la ficha **completa y llena**. Y trae detalles de
+estructura que la lista no dice.
+
+![[adjuntos/capturas-clase/descripcion-textual-atender-pedido-1.png]]
+
+### El encabezado
+
+| Campo | Contenido del ejemplo |
+|---|---|
+| **Nombre** | Atender pedido |
+| **Actores** | CLIENTE *(en mayúsculas)* |
+| **Propósito** | Analizar viabilidad del Pedido del Cliente y ordenar su producción |
+| **Resumen** | *"El caso de uso **se inicia cuando** el Cliente envía una orden de pedido de productos. El proceso da curso al pedido, analizando la posibilidad de satisfacerlo. El caso de uso **finaliza cuando** se le comunica al cliente el resultado final del análisis de su pedido."* |
+
+> [!tip] El resumen tiene una fórmula
+> **"se inicia cuando … / \[qué hace\] / finaliza cuando …"**. Tres piezas, un párrafo. Copá esa
+> estructura y el resumen sale solo.
+
+### El curso normal va en DOS columnas
+
+Esto es lo que la lista de campos no dice y es lo más importante:
+
+| **Acción del actor** | **Respuesta del proceso de negocio** |
+|---|---|
+| 1. El Cliente envía una orden de pedido que incluye fecha de solicitud, datos del cliente y productos solicitados. | 2. El Comercial recibe el pedido del cliente por teléfono o correo ordinario de la empresa.<br/>3. El Comercial revisa el pedido, comienza su procesamiento, y lo envía al Jefe Técnico.<br/>4. El Jefe Técnico analiza la viabilidad de cada producto pedido por separado:<br/> *Si el producto pedido está en Catálogo, se acepta su fabricación.*<br/>5. El Jefe Técnico informa al Comercial la aceptación o rechazo de cada producto.<br/> *Si el pedido o parte de éste es aceptado pasar a 6*<br/> *Si el pedido es rechazado pasar a 8*<br/>6. El Jefe Técnico crea una orden de trabajo para cada producto…<br/>7. El Jefe de Producción planifica la producción de las órdenes de trabajo recibidas.<br/>8. El Comercial informa al cliente. |
+| 9. El Cliente recibe la comunicación del resultado final del análisis del pedido. | |
+
+> [!important] Tres reglas que se leen de esa tabla
+> **1. La numeración es única y se intercala entre las dos columnas.** El paso 1 está a la izquierda,
+> los pasos 2 a 8 a la derecha, y el 9 vuelve a la izquierda. **No** son dos secuencias paralelas: es
+> **una sola secuencia** repartida según quién actúa.
+>
+> **2. Los saltos se escriben dentro del paso**: *"Si el pedido es rechazado **pasar a 8**"*. Así la
+> bifurcación queda en el texto, sin necesidad de dibujar nada.
+>
+> **3. La columna derecha se llama "Respuesta del **proceso de negocio**"**, no "del sistema" — y ahí
+> aparecen los **trabajadores del negocio**: el Comercial, el Jefe Técnico, el Jefe de Producción.
+> Ninguno de ellos es actor; todos están **adentro**. Es la distinción de
+> [[Realizaciones de casos de uso del negocio]] puesta en práctica.
+
+### El cierre: cursos alternos, prioridad, mejoras y secciones
+
+![[adjuntos/capturas-clase/descripcion-textual-atender-pedido-2.png]]
+
+| Bloque | Cómo lo llena |
+|---|---|
+| **CURSOS ALTERNOS** | se indexa por **"En la línea N"** — en el ejemplo, *"En la línea 4"*, y describe la variante con sus dos salidas, cada una remitiendo a una sección |
+| **Prioridad** | un valor simple: **"Alta"** |
+| **Mejoras** | viñetas con oportunidades detectadas (*"establecer la comunicación con el usuario por correo e Internet"*) |
+| **Otras secciones** | cada una es una **Sección** con nombre (*Aceptar Producto Especial*, *Rechazar Producto Especial*) y sus propios pasos numerados desde 1 |
+
+> [!important] El curso alterno se ancla a un número de línea
+> No se escribe suelto: dice **"En la línea 4"** y engancha con el paso 4 del curso normal. Eso hace
+> que la ficha sea **navegable** — y es gratis de hacer bien.
+>
+> Y cuando la variante es larga, no se cuenta ahí: se manda a una **sección aparte**
+> (*"Ver Sección Aceptar Producto Especial"*). Es el mismo principio que
+> [[Relación de extensión extend]] pero dentro del texto.
+
+> [!warning] Hay DOS plantillas en el material de clase — usá esta
+> | Plantilla | Campos | ¿Cuándo la mostró? |
+> |---|---|---|
+> | **Esta** (*Atender pedido*) | Nombre, Actores, Propósito, Resumen, Curso normal **en dos columnas**, Cursos alternos, Prioridad, Mejoras, Otras secciones | **con ejemplo lleno**, y coincide con la lista de campos del deck |
+> | La otra (§siguiente) | Identificador, Descripción, Secuencia Normal, Excepciones, Rendimiento, Frecuencia, Importancia, Urgencia, Comentarios | solo la **plantilla vacía** |
+>
+> **Usá la de *Atender pedido***: es la que coincide con la lista de campos que dictó y la única que
+> mostró resuelta. La otra sirve para **sacarle campos extra** si te piden más rigor — sobre todo
+> *Rendimiento*, *Frecuencia*, *Importancia* y *Urgencia*, que son los que enganchan con los drivers
+> de calidad.
+
+## La plantilla alternativa, campo por campo
+
+Además del formato de arriba, la clase da una **plantilla completa** con los campos y el texto que va
+en cada uno. Esta es la que conviene usar cuando se pide rigor:
+
+![[adjuntos/capturas-clase/plantilla-descripcion-textual-cu.png]]
+
+| Campo | Qué va, según la plantilla |
+|---|---|
+| **`<Identificador>`** · **`<nombre descriptivo>`** | el ID y el nombre, en la fila de encabezado |
+| **Descripción** | *"El sistema deberá permitir a [lista actores] en [instante en el que se puede realizar el caso de uso] [funcionalidad que define el caso de uso] según se describe en el siguiente caso de uso"* |
+| **Secuencia Normal** | tabla de **Paso / Acción**. Cada paso: *"{<acción a realizar>, realizar el caso de uso [caso de uso]}"* |
+| — *sub-pasos* | un paso puede abrirse en **2a, 2b, …**: *"Si [situación que produce una alternativa] el sistema deberá {…}"* |
+| **Excepciones** | tabla de **Paso / Acción**: *"En el caso de que [situación que provoca la excepción] el sistema deberá {…}"* |
+| **Rendimiento** | *"El sistema deberá realizar la/s acción/es descrita/s en {los pasos [primero] al [último], el paso [número]} en un máximo de [cota de tiempo]"* |
+| **Frecuencia** | *"Este caso de uso se espera que se lleve a cabo una media de [número de veces] al [unidad temporal]"* |
+| **Importancia** | uno de: **{vital, importante, quedaría bien}** |
+| **Urgencia** | uno de: **{inmediatamente, hay presión, puede esperar}** |
+| **Comentarios** | *"otras consideraciones en formato libre"* |
+
+> [!important] Los cuatro campos del final son los que enganchan con la arquitectura
+> **Rendimiento**, **Frecuencia**, **Importancia** y **Urgencia** no describen *qué* hace el caso de
+> uso: describen **cómo de bien** y **cuánto pesa**.
+>
+> - **Rendimiento** con su *cota de tiempo* es, literalmente, un **driver de calidad** metido en la
+>   ficha del caso de uso.
+> - **Frecuencia** es el dato de volumen que después sostiene los escenarios de carga.
+> - **Importancia** y **Urgencia** son los ejes con que se **prioriza**.
+>
+> O sea: esta plantilla es el puente entre el criterio 3 (drivers) y la priorización de los cinco más
+> críticos. Ver [[Drivers arquitectónicos]] y [[Guía - Drivers de calidad y restricción]].
+
+> [!tip] Y las dos escalas son cerradas
+> No se inventa el valor: **Importancia** es *vital / importante / quedaría bien* y **Urgencia** es
+> *inmediatamente / hay presión / puede esperar*. Usar esas palabras exactas es gratis y demuestra
+> que seguías la plantilla.
+>
+> Ojo con no confundirlas: **importancia** es cuánto vale, **urgencia** es cuándo se necesita. Algo
+> puede ser *vital* y *puede esperar*.
+
 ## El ejemplo completo: Atender pedido
 
 Es el CUN que salió de identificar procesos por objetivos en

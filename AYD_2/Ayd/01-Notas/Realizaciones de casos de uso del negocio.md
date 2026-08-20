@@ -56,6 +56,17 @@ misma idea del [[Modelo 4+1 vistas]] y de
 [[Estructuras y vistas arquitectónicas]]: **un modelo, varias vistas, cada una para una
 audiencia y una pregunta**. Acá el objeto es un proceso de negocio; allá es el sistema completo.
 
+## La diapositiva, con un énfasis que conviene notar
+
+![[adjuntos/capturas-clase/realizaciones-de-cun.png]]
+
+De los cuatro artefactos, ella **circula en rojo la descripción textual**. No es casual: es el único
+de los cuatro que **no requiere dibujar**, y por eso es el que se pide con más frecuencia. Los otros
+tres (actividad, clases, secuencia) son diagramas y aparecen en fases posteriores del proyecto.
+
+Para el Caso 1 alcanza con la descripción textual — ver
+[[Descripción textual de casos de uso]] para la plantilla llena.
+
 ## Notas relacionadas
 
 - [[Caso de uso del negocio]]
