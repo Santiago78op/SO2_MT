@@ -97,15 +97,21 @@ Nada cubierto todavía:
 
 | Tema | Estado |
 |---|---|
-| Arquitectura en las metodologías: enfoque predictivo y ágil (SCRUM) | ❌ |
-| Integrando con la arquitectura de la información | ❌ |
-| Documentando la arquitectura de software | 🟡 — algo en [[Estructuras y vistas arquitectónicas]] |
-| Implementación y pruebas | ❌ |
-| Evaluación de la arquitectura | ❌ |
+| Arquitectura en las metodologías: enfoque predictivo y ágil (SCRUM) | 🟡 — [[Arquitectura y proceso de desarrollo]] (complemento) |
+| Integrando con la arquitectura de la información | ❌ — **sin material en ninguna fuente local** |
+| Documentando la arquitectura de software | 🟡 — [[Estructuras y vistas arquitectónicas]] + [[El ciclo del architecting]] §4 |
+| Implementación y pruebas | 🟡 — [[Arquitectura y proceso de desarrollo]] §3 (complemento) |
+| Evaluación de la arquitectura | 🟡 — [[Evaluación de la arquitectura]] (complemento: ATAM completo) |
 
-Lo que sí tengo es [[Arquitectura en el ciclo de vida del software]], que corresponde a la
+Lo que sí es **de clase** es [[Arquitectura en el ciclo de vida del software]], que corresponde a la
 diapositiva "¿Dónde debe colocarse la arquitectura en el ciclo de vida?" — es una parte, no la
-unidad completa.
+unidad completa. Todo lo demás de esta unidad es **complemento** y hay que validarlo contra la
+presentación cuando llegue.
+
+> [!warning] El único punto del programa sin ninguna fuente
+> **"Integrando con la arquitectura de la información"** no aparece en la guía de estudio, ni en
+> Reynoso, ni en Garland & Anthony — lo busqué en los tres y da **cero menciones**. No lo voy a
+> inventar: hay que **pedirlo en clase**.
 
 ### Unidad 4 — Arquitectura y Negocios ❌
 
@@ -137,6 +143,31 @@ Las presentaciones que tengo cubren bien **1.1–1.6**. Para el resto necesito m
 - *Software Architecture Patterns*, 2ª ed. — Mark Richards
 - *Software Quality Engineering* — Jeff Tian
 - *Software Architecture in Practice* — Bass, Clements, **Kazman**
+
+### Qué nota se apoya en qué libro
+
+Revisión honesta de si el complemento de la bóveda cae **dentro** de la bibliografía oficial:
+
+| Fuente usada | ¿Está en la bibliografía? | Qué sostiene |
+|---|---|---|
+| *Software Architecture in Practice* 4ª ed. | ✅ **sí** (n° 8) | [[Atributos de calidad]], [[Tácticas y patrones arquitectónicos]], [[Evaluación de la arquitectura]], [[El ciclo del architecting]], [[Stakeholders]], [[Guía - Drivers de calidad y restricción]] |
+| Reynoso, *Introducción a la Arquitectura de Software* | ❌ no | [[Estilos arquitectónicos]], parte de [[Arquitectura y proceso de desarrollo]] §7 |
+| Garland & Anthony, *Large-Scale Software Architecture* | ❌ no | [[Arquitectura y proceso de desarrollo]] §1–6, [[Modelo 4+1 vistas]] |
+| ISO/IEC/IEEE 42010, 29148 | ❌ no (son normas, no libros) | [[Estructuras y vistas arquitectónicas]], [[Matriz de trazabilidad de requisitos]] |
+
+> [!tip] Lo que esto cambia al escribir una entrega
+> Cuando haya que justificar una clasificación, **citá primero el SAIP**: es el único complemento que
+> está en la bibliografía oficial, así que es el más defendible. Reynoso y Garland son buenos para
+> entender, pero no son autoridad en este curso.
+
+> [!warning] Tres libros de la bibliografía que faltan en disco y conviene tener
+> - **Rozanski & Woods**, *Software Systems Architecture: working with stakeholders using viewpoints
+>   and perspectives* — es **el** libro de stakeholders y de *perspectivas*. Ataca directo el
+>   criterio 2 del Caso 1 (25 pts) y aporta las clases de stakeholder que hoy salen del SAIP.
+> - **Fairbanks**, *Just Enough Software Architecture* — diseño guiado por riesgo; es el origen de
+>   "cuánta arquitectura es suficiente".
+> - **Mark Richards**, *Software Architecture Patterns* 2ª ed. — catálogo de estilos, para validar
+>   [[Estilos arquitectónicos]] contra una fuente oficial en vez de Reynoso.
 
 > [!note] Dos de estos ya aparecen en clase
 > **Bass/Clements/Kazman** es la fuente de la definición de arquitectura que está en

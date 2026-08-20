@@ -44,10 +44,18 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Diagrama de despliegue]] — punto 1.7: la vista física, la estructura de despliegue y la notación UML
 - [[Estilos arquitectónicos]] — punto 1.9: el catálogo de estilos, sus canjes de atributos y las trampas típicas
 - [[Relaciones y dependencias en UML]] — qué significa cada flecha, hacia dónde apunta, y el puente con la matriz de dependencias
+- [[Stakeholders]] — los cinco de la clase, ISO 42010, PALM, y la diferencia con actor y trabajador
+- [[Tácticas y patrones arquitectónicos]] — el eslabón entre un atributo de calidad y una decisión
 
 ### Calidad del software
 
 - [[Atributos de calidad]] — unidad 2: definición, los seis del programa, escenarios de 6 partes, tradeoffs e ISO
+
+### Arquitectura en el ciclo de vida
+
+- [[El ciclo del architecting]] — los seis pasos, los cinco rasgos, y qué es la descripción arquitectónica
+- [[Evaluación de la arquitectura]] — ATAM: fases, nueve pasos, riesgos, sensibilidades y tradeoffs
+- [[Arquitectura y proceso de desarrollo]] — predictivo (RUP) vs ágil (SCRUM), el rol del arquitecto en cada flujo, implementación y pruebas
 
 ### Requisitos
 
@@ -77,6 +85,8 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Flashcards - Estilos arquitectónicos]] (24 tarjetas)
 - [[Flashcards - Relaciones y dependencias en UML]] (22 tarjetas)
 - [[Flashcards - Atributos de calidad]] (23 tarjetas)
+- [[Flashcards - Stakeholders, tácticas y evaluación]] (26 tarjetas)
+- [[Flashcards - Arquitectura y proceso de desarrollo]] (28 tarjetas)
 
 ## Tareas
 
@@ -84,6 +94,7 @@ Nota de entrada de la bóveda. Desde acá navego todo.
 - [[Plan - Caso 1 FarmaHosp]] — la rúbrica desarmada: 4 criterios, 100 puntos, y las ambigüedades a preguntar
 - [[Guía - Caso de negocio]] — la secuencia canónica: contexto → core → primera descomposición → CDU expandidos → matriz
 - [[Guía - Diagrama de casos de uso del negocio]] — paso a paso con ejemplo visual incremental
+- [[Guía - Identificación de stakeholders]] — criterio 2 (25 pts): las tres checklists, la necesidad oculta y los conflictos
 - [[Guía - Drivers de calidad y restricción]] — criterio 3 (30 pts): escenarios, restricciones y la priorización de los 5
 - [[Guía - Matrices de trazabilidad]] — las tres matrices que pide la rúbrica (20 pts)
 
@@ -120,11 +131,11 @@ El detalle punto por punto está en [[Programa oficial del curso]].
 
 ### Unidad 3 — Arquitectura en el Ciclo de Vida
 
-- [ ] Arquitectura en las metodologías: predictivo y ágil (SCRUM)
-- [ ] Integrando con la arquitectura de la información
-- [ ] Documentando la arquitectura de software
-- [ ] Implementación y pruebas
-- [ ] Evaluación de la arquitectura
+- [x] Arquitectura en las metodologías: predictivo y ágil (SCRUM) — [[Arquitectura y proceso de desarrollo]] §2–5 (**complemento**)
+- [ ] Integrando con la arquitectura de la información — **cero material en las fuentes locales**, hay que pedirlo en clase
+- [x] Documentando la arquitectura de software — [[El ciclo del architecting]] §4 (**complemento**)
+- [x] Implementación y pruebas — [[Arquitectura y proceso de desarrollo]] §3, el rol del arquitecto por flujo (**complemento**)
+- [x] **Evaluación de la arquitectura** — [[Evaluación de la arquitectura]] (**complemento**: ATAM completo)
 - [x] Dónde se coloca en el ciclo de vida — [[Arquitectura en el ciclo de vida del software]]
 
 ### Unidad 4 — Arquitectura y Negocios
@@ -141,14 +152,15 @@ Lo que **falta material** para poder escribir la nota, ordenado por urgencia:
 | **Alta** | **Arquitectura candidata**, **arquitectura de referencia** y **on premise vs cloud** — el material local casi no los cubre | Parte de 1.9 |
 | Media | 1.8 Categorías de Estructuras | Segundo parcial |
 | **Alta** | Presentación de la **unidad 2** para validar [[Atributos de calidad]], que hoy es todo complemento | Se da del 25 de agosto al 7 de septiembre |
-| Baja | Unidades 3 y 4 | Septiembre y octubre |
+| **Alta** | **"Integrando con la arquitectura de la información"** (unidad 3): lo busqué en la guía de estudio, en Reynoso y en Garland — **cero menciones** en todas | Es el único punto del programa sin **ninguna** fuente |
+| Baja | Unidad 3 (validar contra la presentación) y unidad 4 completa | Septiembre y octubre |
 
 Y lo que falta por otras razones:
 
 - **Casos de uso del sistema.** El deck dice "del Negocio **y del Sistema**" pero solo desarrolla los del negocio.
 - **DFD.** Aparece solo como término de comparación en [[Casos de uso vs DFD]].
 - **Diagramas UML individuales.** [[Modelo 4+1 vistas]] dice qué diagrama va en cada vista, pero ninguno está explicado.
-- **Trazabilidad de requisitos.** Ya tiene nota, pero de **fuente externa**: no está en las presentaciones ni en el programa oficial. Conviene confirmar el enfoque con la catedrática.
+- ~~**Trazabilidad de requisitos** de fuente externa~~ — **RESUELTO**: apareció `NT1. Trazabilidad de Requerimientos.pdf`, nota técnica de clase, que es **la fuente de la plantilla** (su fig. 1, p. 91). El tema es núcleo, no complemento. Ver [[Matriz de trazabilidad de requisitos]].
 
 ## Presentaciones procesadas
 

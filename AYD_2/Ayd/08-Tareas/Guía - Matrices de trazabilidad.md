@@ -1,6 +1,6 @@
 ---
 tema: Guía de entregable
-fuente: "Rúbrica del Caso FarmaHosp (núcleo) + teoría de trazabilidad (complemento)"
+fuente: "Rúbrica del Caso FarmaHosp + **NT1. Trazabilidad de Requerimientos** (nota técnica de clase — Montoya-Suárez, Monsalve-Gómez y Sepúlveda-Castaño, *Lámpsakos* n° 13, 2015). Ambas son NÚCLEO."
 fecha: 2026-08-19
 entregable: Matrices de trazabilidad de requerimientos
 alias: "matriz de trazabilidad, matrices, trazabilidad, matriz de dependencias, stakeholders vs cdu, cdu vs drivers"
@@ -33,6 +33,45 @@ Cómo se construyen las **tres** matrices que pide la rúbrica, y cómo se leen 
 >
 > Y ojo con la cantidad: lo habitual son **1 o 2 matrices**; el Caso 1 pide **tres**. Manda el
 > enunciado — ver [[Guía - Caso de negocio]].
+
+> [!important] La teoría de este entregable **sí es de clase**
+> La plantilla y la teoría salen del **mismo documento**: la nota técnica
+> **`NT1. Trazabilidad de Requerimientos.pdf`**, que es el artículo *"Un Caso de Estudio para la
+> Adopción de un Modelo de Trazabilidad de Requisitos en el Sector Energético"* (Montoya-Suárez,
+> Monsalve-Gómez y Sepúlveda-Castaño — *Lámpsakos* n° 13, 2015, pp. 88-100).
+>
+> Es de la misma serie **"NT"** que `NT Identificación de CDU de Negocio.pdf`: **material que ella
+> reparte**. Así que la trazabilidad **no es complemento** — y la plantilla de
+> `adjuntos/plantillas/` es literalmente su **Figura 1, página 91**.
+>
+> Consecuencia: en la entrega **citá la NT**, no un libro externo.
+
+### Las diez matrices que define la NT
+
+El caso de estudio de la nota técnica define estas, y conviene verlas porque **tres de ellas son
+las del Caso 1**:
+
+| # | Matriz de la NT | ¿Es del Caso 1? |
+|---|---|---|
+| 1 | Necesidades vs. **stakeholders** | ≈ la matriz 1 |
+| 2 | Necesidades vs. requisitos | |
+| 3 | Necesidades vs. procesos | |
+| 4 | Casos de uso vs. validaciones y mensajes del sistema | |
+| 5 | Casos de uso vs. regla de negocio | |
+| 6 | **Casos de uso vs. requisitos funcionales** | ✅ **la matriz 3, exacta** |
+| 7 | Casos de uso vs. requisitos no funcionales | |
+| 8 | Casos de uso vs. diagrama de actividades | |
+| 9 | Requisito no funcional vs. requisitos funcionales generales | |
+| 10 | Requisitos vs. interfaces generales | |
+
+Y aparte, la **familia "hacia atrás / hacia adelante"**, que es otro tipo de matriz de dependencias:
+*requisitos vs. especificación · especificación vs. caso de prueba · especificación vs. diseño ·
+diseño vs. código*. Ver [[Matriz de trazabilidad de requisitos]].
+
+> [!tip] Para qué sirve saber que hay diez
+> Porque la rúbrica eligió **tres de esta lista**. Si en el documento mostrás que sabés de dónde
+> salieron y por qué esas tres cubren la cadena *stakeholder → CDU → RF*, dejás de estar llenando
+> tablas y pasás a estar aplicando un modelo.
 
 ## La plantilla, elemento por elemento
 
@@ -97,6 +136,28 @@ Antes de la primera matriz hace falta:
 | Drivers de atributo de calidad | `RNF-nn` o `AC-nn` | Los acuerdos de calidad del enunciado |
 | Drivers de restricción | `RES-nn` | El "lo que NO debe hacer el sistema" |
 
+> [!important] La convención que usa la NT de clase — conviene copiarla
+> Los prefijos de arriba los propuse yo. **Estos son los que usa la nota técnica**, y se ven en sus
+> figuras:
+>
+> | Prefijo | Qué numera | Ejemplo textual de la NT |
+> |---|---|---|
+> | **`AC-0nn`** | actor | *AC-002: Analista de transacciones del mercado LAC* |
+> | **`NEC-0nn`** | necesidad | *NEC-008: Calcular índice trimestral de discontinuidad* |
+> | **`CU-0nn`** | caso de uso | *CU-011: Administrar perfiles del sistema* |
+> | **`RFG-0nn`** | requisito funcional **general** | *RFG-001 … RFG-029* |
+>
+> Dos detalles que valen puntos:
+>
+> 1. **Tres dígitos**, no dos: `CU-002`, no `CU-2`.
+> 2. Los casos de uso van **prefijados por su paquete**: `Administración::CU-011: Administrar
+>    perfiles del sistema`, `Carga de Información::CU-002: Descargar información mensual del SUI`.
+>    Eso hace que la matriz se lea agrupada por subsistema en vez de ser una lista plana.
+>
+> Si usás **su** convención, la matriz se parece a la de la NT y eso juega a favor. Lo único que la
+> NT no numera son las **restricciones** y los **atributos de calidad**, así que para esos dos
+> proponé el prefijo y **declaralo**.
+
 **Regla que no se rompe:** un ID **nunca** se reutiliza ni se renumera. Si eliminás un requisito, su
 ID queda muerto. Renumerar rompe las tres matrices a la vez.
 
@@ -156,18 +217,26 @@ Esta es la menos obvia de las tres y la que más se hace mal.
 **Qué pregunta responde:** *¿cómo se relacionan los requisitos entre sí?* Es una matriz
 **cuadrada**: los mismos drivers en filas y en columnas.
 
-> [!warning] Antes de armarla, definí QUÉ relación cruzás
-> "Drivers RF vs. Drivers RF" no dice qué relación se marca, y hay al menos tres posibles:
+> [!important] RESUELTO por la nota técnica de clase
+> Ya no hay que adivinar la relación. La **NT1** dice, textual, qué es y cómo se lee:
 >
-> | Relación | Significa | Se lee |
-> |---|---|---|
-> | **Dependencia** | RF-A necesita que RF-B exista o esté hecho antes | "A depende de B" |
-> | **Conflicto** | RF-A y RF-B no se pueden satisfacer plenamente a la vez | "A choca con B" |
-> | **Precedencia** | RF-A se implementa antes que RF-B | "A va antes que B" |
+> > *"La siguiente matriz se utiliza para relacionar requisitos. Es una **matriz de dependencias**...
+> > En este caso, los **requisitos X** representan los requisitos que **originan** las dependencias y
+> > los **requisitos Y** serían los requisitos que **dependen** de otros requisitos, de los requisitos
+> > X."*
 >
-> **La plantilla oficial dice "Matriz de dependencias"**, así que la relación es **dependencia**.
-> Declarala igual en el documento: una matriz con la relación declarada vale más que una matriz
-> "correcta" sin explicar qué marca.
+> Y da el ejemplo de lectura: *"los requisitos Y 1, 4 y 7 **dependen** del requisito X 2"*.
+>
+> | Eje | Quién va ahí |
+> |---|---|
+> | **Columnas = X** | los que **originan** la dependencia (de los que se depende) |
+> | **Filas = Y** | los que **dependen** |
+>
+> Se lee **fila depende de columna**. Y el propósito también es textual: *"de esta forma se puede ver
+> de qué manera se relacionan los requisitos, para **analizar mejor el impacto de los cambios**"*.
+>
+> La plantilla que hay que usar **es la Figura 1 de esa misma NT**, página 91 — la misma imagen que
+> está en `adjuntos/plantillas/`. Teoría y plantilla salen del mismo documento.
 
 ### Cómo se arma (con dependencia)
 
@@ -206,6 +275,29 @@ implementa y se prueba primero.
 ---
 
 ## Matriz 3 — CDU vs. Drivers RF
+
+> [!important] Esta matriz existe tal cual en la NT: es su **Anexo 1**
+> No hay que inventar el formato. La nota técnica trae una matriz real, llena, titulada
+> *"Anexo 1: Matriz de Trazabilidad Casos de Uso vs Requisitos Funcionales"*:
+>
+> ![[adjuntos/nt1-trazabilidad/nt1-p10-anexo1-cu-vs-requisitos-funcionales.png]]
+>
+> Lo que se copia de ahí:
+>
+> | Elemento | Cómo lo hace la NT |
+> |---|---|
+> | **Filas** | los casos de uso, con paquete: `Administración::CU-011: Administrar perfiles del sistema` |
+> | **Columnas** | los requisitos funcionales por ID solo: `RFG-001 … RFG-029` |
+> | **Celdas** | una `X`, nada más |
+> | **Orientación** | apaisada, porque hay muchas más columnas que filas |
+>
+> Y el propósito, textual: *"de esta forma se puede ver de qué manera se relacionan los casos de usos
+> con los requisitos funcionales y así **analizar mejor el impacto de los cambios**"*.
+>
+> Ojo con una diferencia de vocabulario: la NT dice *"requisitos funcionales **generales**"* (RFG); la
+> rúbrica dice *"drivers RF"*. Es lo mismo — y decir en el documento que usás la nomenclatura de la
+> NT despeja cualquier duda.
+
 
 **Qué pregunta responde:** *¿qué caso de uso realiza cada requisito funcional, y hay requisitos
 huérfanos?*

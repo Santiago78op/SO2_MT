@@ -1,6 +1,6 @@
 ---
 tema: Guía de entregable
-fuente: "Rúbrica del Caso 1 (núcleo) + SAIP vía la Guía de estudio: ADD 3.0, escenarios de QA y QAW (complemento)"
+fuente: "Rúbrica del Caso 1 (núcleo) + *Software Architecture in Practice* 4ª ed. — Bass, Clements, Kazman (**bibliografía oficial del programa**, cap. 20: ADD 3.0)"
 fecha: 2026-08-19
 entregable: Drivers de atributos de calidad y de restricción
 alias: "drivers, drivers de calidad, drivers de atributos de calidad, drivers de restriccion, atributos de calidad, priorizar drivers, criterio 3"
@@ -31,18 +31,52 @@ Un **driver arquitectónico** es un requisito que **impacta en la estructura** d
 enunciado del Caso 1 lo dice: los escenarios de calidad *"deberán ser tratados como drivers
 arquitectónicos"*.
 
-La definición formal viene de **ADD 3.0** (*Attribute-Driven Design*), el método del SAIP:
+La definición formal viene de **ADD 3.0** (*Attribute-Driven Design*), capítulo 20 de
+*Software Architecture in Practice* — que es el **libro número 8 de la bibliografía oficial del
+programa**. Cita textual:
 
-> Los drivers son los **ASRs** (requisitos arquitectónicamente significativos) más la **funcionalidad
-> primaria**, las **restricciones**, los ***concerns*** y el **propósito del diseño**.
+> *"En el diseño arquitectónico convertimos decisiones sobre **architectural drivers** en
+> estructuras. Los architectural drivers comprenden los requisitos arquitectónicamente significativos
+> (ASRs), pero también incluyen **funcionalidad, restricciones, concerns arquitectónicos y propósito
+> del diseño**."*
 
-Y de ahí sale el mapeo con la rúbrica:
+Y más adelante, la lista operativa — los insumos que deben estar listos **antes** de empezar una
+ronda de diseño:
 
-| Driver de ADD | Criterio de la rúbrica |
-|---|---|
-| Funcionalidad primaria | Drivers **RF** (CDU expandidos) |
-| ASRs — requisitos de calidad | Drivers de **atributos de calidad** |
-| Restricciones | Drivers de **restricción** |
+> *"Antes de empezar una ronda de diseño hay que asegurarse de que los architectural drivers (los
+> insumos del proceso de diseño) estén disponibles y sean correctos. Estos incluyen:*
+> - *el propósito de la ronda de diseño*
+> - ***los requisitos funcionales primarios***
+> - ***los escenarios primarios de atributos de calidad (QA)***
+> - ***cualquier restricción***
+> - *cualquier concern"*
+
+> [!important] Esa lista **es** el criterio 3, viñeta por viñeta
+> | Driver de ADD (SAIP cap. 20) | Viñeta de la rúbrica |
+> |---|---|
+> | *primary functional requirements* | Completitud de los drivers **RF** (CDU expandidos) |
+> | *primary quality attribute (QA) scenarios* | Drivers **Atributos de Calidad** |
+> | *any constraints* | Drivers de **Restricción** |
+> | — *"getting their **priority** right is crucial"* | **Priorizar los 5** más críticos |
+>
+> Los 30 puntos del criterio 3 son **la lista de insumos de ADD**, reordenada. Y la palabra "driver"
+> sale de la frase del libro: *"estos insumos realmente **conducen** (drive) el diseño, así que
+> tenerlos bien y tener bien su prioridad es crucial"*. Sigue: *"el diseño de arquitectura es un
+> proceso de **basura-entra-basura-sale**; los resultados de ADD no pueden ser buenos si los insumos
+> están mal formados."*
+>
+> **Por qué importa:** el vocabulario de la rúbrica no sale de ninguna diapositiva — sale del libro
+> que el programa lista. Citarlo en el documento no es adorno: es la defensa de la clasificación.
+
+> [!warning] Hallazgo honesto sobre el deck
+> El deck se llama **"CDU Negocio - Modelado de Drivers RF"**, pero revisé sus **27 diapositivas una
+> por una**: la palabra *"driver"* **no aparece ni una vez**, y tampoco "restricción" ni "atributo de
+> calidad". El deck cubre CDU del negocio de punta a punta y termina en la descripción textual del
+> caso de uso expandido.
+>
+> O sea: **los drivers RF sí están en el deck** (son los CDU expandidos, aunque no se los llame así),
+> pero **"Drivers Atributos de Calidad" y "Drivers de Restricción" no tienen diapositiva**. Su
+> respaldo es el **libro oficial**, y es legítimo: está en la bibliografía del programa.
 
 > [!tip] Un dato de ADD que ordena la entrega completa
 > ADD dice que **antes de empezar** hay que establecer el alcance del sistema: *"qué queda
@@ -51,6 +85,45 @@ Y de ahí sale el mapeo con la rúbrica:
 > O sea: el diagrama de contexto del criterio 1 **no es un trámite previo**, es la **precondición
 > formal** de ADD para poder identificar drivers. Los dos criterios están encadenados, y decirlo en
 > el documento demuestra que entendiste el método.
+
+### ¿Un driver es un RF?
+
+Es la confusión más fácil de tener, y la rúbrica misma la resuelve. **Un RF es *un tipo* de
+driver, no el driver.** La rúbrica escribe tres veces la palabra y **las tres veces la califica**:
+
+- drivers **RF**
+- drivers **Atributos de Calidad**
+- drivers **de Restricción**
+
+Si "driver" significara "RF", entonces *"drivers RF"* sería redundante y *"drivers de restricción"*
+sería una contradicción. El calificativo está ahí justamente porque **driver es el género y RF es
+una de las especies**.
+
+```mermaid
+flowchart TD
+    D["DRIVER ARQUITECTÓNICO<br/><i>lo que conduce el diseño</i>"]
+    D --> RF["Driver RF<br/>funcionalidad primaria<br/><b>CDU expandidos</b>"]
+    D --> AC["Driver de atributo<br/>de calidad<br/><b>escenarios de 6 partes</b>"]
+    D --> RE["Driver de restricción<br/>decisión ya tomada<br/><b>el 'no se puede'</b>"]
+    D --> CO["<i>Concerns</i> y propósito<br/>del diseño<br/><i>(ADD; la rúbrica no los pide)</i>"]
+```
+
+Y el libro dice lo mismo: los drivers **incluyen** *"los requisitos funcionales primarios"* junto con
+los escenarios de QA, las restricciones y los concerns. O sea:
+
+| Afirmación | ¿Correcta? |
+|---|---|
+| "Un RF es un driver" | **Sí** — si es de la funcionalidad **primaria** |
+| "Todo driver es un RF" | **No** — los de calidad y restricción no son RF |
+| "Todo RF es un driver" | **No** — solo la funcionalidad **primaria**; el libro dice *primary* |
+
+> [!important] La trampa que sí importa para el criterio 3
+> Si entendés "driver = RF", entregás **solo los CDU expandidos** y perdés las otras dos viñetas.
+> Con 30 puntos en juego, esa lectura cuesta caro.
+>
+> Y al revés: **no metas todos los RF** en los drivers RF. El filtro es *primary functionality* — la
+> funcionalidad que la arquitectura tiene que soportar estructuralmente. En FarmaHosp, *dispensar con
+> asignación de lote* es primaria; *cambiar el logo del reporte* no.
 
 ### La regla que decide si algo es driver
 

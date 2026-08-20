@@ -61,6 +61,29 @@ Y el programa agrega una línea que conviene no pasar por alto: **"otros atribut
 observables vía ejecución"**. Son los del desarrollo — modificabilidad, testabilidad,
 deployabilidad, integrabilidad —: no se pueden medir corriendo el sistema, se miden al **cambiarlo**.
 
+> [!note] Cómo se llama eso en el libro oficial
+> El SAIP les dice ***developmental qualities*** o ***development-time qualities***, y la distinción
+> la ancla en el **estímulo** y la **respuesta** del escenario:
+>
+> > *"El estímulo puede ser un evento para la comunidad de performance, una operación de usuario para
+> > la de usabilidad, o un ataque para la de seguridad. Usamos el mismo término para describir una
+> > **acción motivadora de las calidades del desarrollo**: así, un estímulo para modificabilidad es
+> > **una solicitud de modificación**; un estímulo para testabilidad es **la finalización de una
+> > unidad de desarrollo**."*
+>
+> Y la respuesta cambia de sujeto: *"consiste en las responsabilidades que **el sistema** (para las
+> calidades en ejecución) o **los desarrolladores** (para las calidades del desarrollo) deben
+> ejecutar"*.
+>
+> Regla práctica para escribir el escenario: si el que responde es **el sistema**, es de ejecución;
+> si el que responde es **el equipo**, es del desarrollo. Ver §7.
+>
+> El libro también explica **por qué** el programa las separa: *"muchos concerns que conducen una
+> arquitectura no se manifiestan en absoluto como observables en el sistema... las calidades del
+> desarrollo también quedan fuera de alcance: rara vez verás un documento de requisitos que describa
+> supuestos de organización de equipos"*. O sea: **no están en el documento de requisitos, y por eso
+> hay que salir a buscarlas.**
+
 > [!important] Dónde cae la seguridad
 > En la lista del programa **no aparece "seguridad" como atributo propio**, y eso no es un olvido: en
 > **ISO 9126** la seguridad es una **subcaracterística de funcionalidad**.
@@ -72,6 +95,37 @@ deployabilidad, integrabilidad —: no se pueden medir corriendo el sistema, se 
 > Para clasificar en esta materia, usá **los seis del programa** — y si un requisito es de seguridad,
 > decí bajo qué característica lo estás poniendo y por qué. Eso demuestra que entendiste la
 > taxonomía en vez de improvisar una.
+
+## 3 bis. Una segunda taxonomía que también es de clase: FURPS
+
+`NT1. Trazabilidad de Requerimientos.pdf` trae, en su **Tabla 1 — "Clasificación de los requisitos
+de software"**, una taxonomía **distinta** de la del programa. Es **FURPS**:
+
+| Factor de calidad | Atributos que lista |
+|---|---|
+| **Funcionalidad** | característica y capacidades del programa · generalidad de las funciones · **seguridad del sistema** |
+| **Facilidad de uso** | factores humanos · factores estéticos · consistencia de la interfaz · documentación |
+| **Confiabilidad** | frecuencia y severidad de las fallas · exactitud de las salidas · tiempo medio de fallos · capacidad de recuperación · capacidad de predicción |
+| **Rendimiento** | velocidad de procesamiento · tiempo de respuesta · consumo de recursos · rendimiento · eficacia |
+| **Capacidad de soporte** | extensibilidad · adaptabilidad · capacidad de prueba · capacidad de configuración · compatibilidad · requisitos de instalación |
+
+> [!warning] Hay DOS taxonomías de clase y no coinciden — elegí una y declarala
+> | | Programa (unidad 2) | NT1, Tabla 1 |
+> |---|---|---|
+> | Modelo | **ISO 9126** | **FURPS** |
+> | Cuántos factores | 6 | 5 |
+> | Mantenibilidad | sí | **no** — se reparte en *capacidad de soporte* |
+> | Portabilidad | sí | **no** — cae en *adaptabilidad* / *requisitos de instalación* |
+> | Seguridad | subcaracterística de funcionalidad | igual: dentro de **funcionalidad** |
+>
+> Las dos coinciden en lo importante para esta materia: **la seguridad va dentro de funcionalidad**,
+> no como factor aparte.
+>
+> **Qué hacer en la entrega:** usá **los seis del programa** — es el contenido temático evaluable — y
+> si un atributo te queda incómodo, mencioná que FURPS lo pone en otro lado. Lo que **no** se puede
+> es mezclar las dos listas sin decir cuál usás: ahí la clasificación queda indefendible.
+
+![[adjuntos/nt1-trazabilidad/nt1-p03-tabla-clasificacion-y-matriz-dependencias.png]]
 
 ## 4. Las dos categorías
 

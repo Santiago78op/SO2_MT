@@ -165,14 +165,23 @@ El método dice: si algo es ambiguo, se **pregunta**, no se resuelve por cuenta 
 
 | # | Duda | Por qué importa |
 |---|---|---|
-| 1 | El criterio 1 lista **tres** sub-entregables pero la tabla del PDF muestra **cuatro** líneas de 5 puntos. ¿Falta un sub-entregable? | Son 5 puntos y un entregable posiblemente no identificado |
+| ~~1~~ | ~~El criterio 1 lista **tres** sub-entregables pero la tabla del PDF muestra **cuatro** líneas de 5 puntos~~ | **RESUELTA** — era un artefacto de la extracción de texto: rendí la página 8 del PDF como imagen y las cuatro líneas de "5 puntos" son la columna **NECESITA MEJORAR** de los cuatro criterios. El criterio 1 tiene **exactamente tres** sub-entregables. Suma: 25+25+30+20 = **100** |
 | 2 | ¿"Diagrama de Contexto" se refiere al **diagrama de contexto del sistema** (sistema + entidades externas) o al **contexto de negocio**? | Cambia el nivel de abstracción y qué notación usar |
 | 3 | ¿La "primera descomposición" se entrega como **un** diagrama de CDU o **uno por proceso**? | Cambia el alcance del entregable |
 | 4 | ¿Qué significa exactamente **"según el contexto guatemalteco"** al priorizar los 5 drivers? ¿Se espera citar las regulaciones locales, el presupuesto, la disponibilidad de personal? | Es un criterio de evaluación explícito y no está definido |
 | 5 | ¿Formato y modalidad de entrega (herramienta de diagramas, PDF, individual o grupo)? | El programa dice que hay proyecto en grupo y que **no se aceptan entregas fuera de fecha** |
-| 6 | La matriz **"Drivers RF vs. Drivers RF"**: ¿qué relación se cruza — dependencia, conflicto, precedencia? | Sin saberlo, la matriz puede estar bien armada y mal interpretada |
+| ~~6~~ | ~~La matriz **"Drivers RF vs. Drivers RF"**: ¿qué relación se cruza?~~ | **RESUELTA** por `NT1. Trazabilidad de Requerimientos.pdf`: es una **matriz de dependencias**. Columnas (X) = los que **originan** la dependencia; filas (Y) = los que **dependen**. Se lee *"fila depende de columna"* y sirve para **analizar el impacto de los cambios**. Ver [[Guía - Matrices de trazabilidad]] |
 
 ---
+
+> [!important] De dónde sale el vocabulario de la rúbrica
+> El criterio 3 (30 pts) **no sale de ninguna diapositiva**: sus cuatro viñetas son la lista de
+> *architectural drivers* de **ADD 3.0**, capítulo 20 de *Software Architecture in Practice* — el
+> libro **número 8 de la bibliografía oficial** del programa. El deck "CDU Negocio - Modelado de
+> Drivers RF" nunca dice "driver" en sus 27 diapositivas.
+>
+> Consecuencia práctica: **citá el libro** al clasificar los drivers. Ver
+> [[Guía - Drivers de calidad y restricción]] §Paso 0.
 
 ## Checklist de rigor específica de este caso
 

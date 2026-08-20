@@ -1,25 +1,78 @@
 ---
 tema: Trazabilidad de requisitos
-fuente: FUENTE EXTERNA — no está en las presentaciones ni en el programa oficial (ver Fuentes)
+fuente: "**NT1. Trazabilidad de Requerimientos.pdf** — nota técnica de clase (Montoya-Suárez, Monsalve-Gómez, Sepúlveda-Castaño, *Lámpsakos* n° 13, 2015) + ISO 29148 y Gotel & Finkelstein (complemento)"
 fecha: 2026-08-19
 encaja_en: "Unidad 1.6 — Arquitectura y Requerimientos (CDU de negocio)"
 ---
 
 # Matriz de trazabilidad de requisitos
 
-> [!warning] De dónde sale esta nota, y de dónde no
-> Verifiqué el **programa oficial** de tu curso (AYD2, código **785**, Escuela de Ciencias y
-> Sistemas, sección A, 2do semestre 2026, MBA. MSc. Ing. Claudia Rojas de Morán) y la palabra
-> **"trazabilidad" no aparece en ningún punto del contenido temático**. Tampoco está en los tres
-> PDF que me diste.
+> [!important] CORREGIDO — esto **sí** es material de clase
+> Esta nota decía "fuente externa". **Era un error mío**, y lo corrijo: el tema tiene una **nota
+> técnica de clase**, `NT1. Trazabilidad de Requerimientos.pdf`, de la misma serie **"NT"** que
+> `NT Identificación de CDU de Negocio.pdf`. Es el artículo *"Un Caso de Estudio para la Adopción de
+> un Modelo de Trazabilidad de Requisitos en el Sector Energético"* (Montoya-Suárez,
+> Monsalve-Gómez y Sepúlveda-Castaño — *Lámpsakos* n° 13, 2015, pp. 88-100), y la **plantilla de la
+> matriz que hay que usar es su Figura 1, página 91**.
 >
-> Entonces: todo el contenido de esta nota es de **fuentes externas** (listadas al final). Lo digo
-> explícito porque la terminología de tu catedrática puede diferir en algún matiz, y porque los
-> quizzes que salgan de acá no se apoyan en material de clase.
+> Eso explica por qué el tema es "de vital importancia" aunque **la palabra "trazabilidad" no
+> aparezca en el contenido temático del programa**: entra por la nota técnica, no por el programa.
 >
-> **Dónde encaja igual:** es el contenido natural del punto **1.6 "Arquitectura y Requerimientos
-> (CDU de negocio)"** del programa. Ese punto es literalmente el puente entre requerimientos y
-> arquitectura, y la matriz de trazabilidad es la herramienta con la que ese puente se documenta.
+> **Dónde encaja:** en el punto **1.6 "Arquitectura y Requerimientos (CDU de negocio)"**, el puente
+> entre requerimientos y arquitectura.
+>
+> Lo que sigue siendo complemento: **ISO/IEC/IEEE 29148**, **Gotel & Finkelstein** (pre-RS / post-RS) y
+> el vocabulario de trazabilidad bidireccional. La NT no los usa; los usé para dar el marco.
+
+## 0. Lo que dice la nota técnica, textual
+
+Cuatro cosas de la NT que conviene poder citar:
+
+**1. Qué es un requisito trazable.**
+
+> *"Los requisitos deben ser trazables, es decir, 'rastreables'. Se podría decir que un requisito es
+> trazable si se pueden **identificar todas las partes del producto existente relacionadas con ese
+> requisito**. Todos los requisitos deberían ser trazables para mantener **consistencia** entre los
+> distintos documentos de un proyecto."*
+
+**2. Los cuatro aspectos que hay que conocer de cada requisito.**
+
+> - *Su **origen** (quién lo propuso).*
+> - ***Necesidad** (por qué existe).*
+> - ***Relación con otros requisitos** (dependencias).*
+> - ***Relación con otros elementos** (dependencias).*
+
+Los dos primeros son la trazabilidad **pre-RS**; los dos últimos son lo que la matriz de
+dependencias registra. Ver §2.
+
+**3. Cómo se llena, de arriba hacia abajo.**
+
+> *"En la matriz se irán registrando los **requisitos de negocio**. Por cada requisito de negocio se
+> identificarán los **requisitos de usuario** correspondientes. De cada requisito de usuario se
+> identificarán cuáles son los **requisitos de sistema** asociados a cada uno de ellos. Y así
+> sucesivamente."*
+
+O sea: la trazabilidad tiene **niveles** — negocio → usuario → sistema — y la matriz encadena un
+nivel con el siguiente.
+
+**4. Para qué sirve más allá de registrar.**
+
+> *"La construcción de estas matrices trae beneficios más allá de un simple registro de la
+> correlación o dependencia... es posible **analizar o inferir información** acerca del nivel de
+> especificación de los requisitos, el nivel de participación de los usuarios, el **costo asociado a
+> cada fase**, **la arquitectura requerida**, el plan de pruebas."*
+
+> [!important] "La arquitectura requerida" — ahí está el puente
+> Esa frase es la razón de que este tema esté en un curso de **arquitectura** y no en uno de
+> requisitos: de la matriz **se infiere la arquitectura que hace falta**. No es papeleo de gestión,
+> es un insumo de diseño.
+
+Y una definición de conflicto que sirve para el criterio 3:
+
+> *"Dos requisitos están **en conflicto** si no pueden implementarse juntos, es decir, si la solución
+> a un requisito **impide** la implementación de otro."*
+
+Eso es el **tradeoff** de [[Atributos de calidad]] visto desde los requisitos.
 
 La idea en una línea: **la trazabilidad es la capacidad de seguirle la vida a un requisito** —de
 dónde salió y en qué terminó—. La **matriz** es la tabla donde eso queda registrado.
