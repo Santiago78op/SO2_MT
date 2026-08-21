@@ -1,0 +1,2392 @@
+{
+  "_type": "Project",
+  "_id": "proj",
+  "name": "FarmaHosp - Caso de negocio",
+  "ownedElements": [
+    {
+      "_type": "FCFlowchart",
+      "_id": "fc0001",
+      "_parent": {
+        "$ref": "proj"
+      },
+      "name": "Contexto FarmaHosp",
+      "ownedElements": [
+        {
+          "_type": "FCFlowchartDiagram",
+          "_id": "d0002",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Diagrama de contexto - FarmaHosp",
+          "ownedViews": [
+            {
+              "_type": "FCConnectorView",
+              "_id": "v0004",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0003"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 420,
+              "top": 400,
+              "width": 400,
+              "height": 220,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0005",
+                  "_parent": {
+                    "$ref": "v0004"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 430,
+                  "top": 497,
+                  "width": 380,
+                  "height": 26,
+                  "text": "Sistema Integral de Gestion de MAC - FarmaHosp",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0005"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0007",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0006"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 30,
+              "top": 200,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0008",
+                  "_parent": {
+                    "$ref": "v0007"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 40,
+                  "top": 219,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Medico tratante",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0008"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0010",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0009"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0007"
+              },
+              "lineStyle": 3,
+              "points": "240:220.0;420:420",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0011",
+                  "_parent": {
+                    "$ref": "v0010"
+                  },
+                  "model": {
+                    "$ref": "f0009"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 178.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0010"
+                  },
+                  "edgePosition": 1,
+                  "text": "Prescripcion medica"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0011"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0013",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0012"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0007"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "420:420;240:244.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0014",
+                  "_parent": {
+                    "$ref": "v0013"
+                  },
+                  "model": {
+                    "$ref": "f0012"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 262.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0013"
+                  },
+                  "edgePosition": 1,
+                  "text": "Alertas de interaccion y disponibilidad"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0014"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0016",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0015"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 30,
+              "top": 330,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0017",
+                  "_parent": {
+                    "$ref": "v0016"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 40,
+                  "top": 349,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Farmaceutico clinico",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0017"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0019",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0018"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0016"
+              },
+              "lineStyle": 3,
+              "points": "240:350.0;420:420",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0020",
+                  "_parent": {
+                    "$ref": "v0019"
+                  },
+                  "model": {
+                    "$ref": "f0018"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 308.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0019"
+                  },
+                  "edgePosition": 1,
+                  "text": "Confirmacion de dispensacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0020"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0022",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0021"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0016"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "420:420;240:374.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0023",
+                  "_parent": {
+                    "$ref": "v0022"
+                  },
+                  "model": {
+                    "$ref": "f0021"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 392.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0022"
+                  },
+                  "edgePosition": 1,
+                  "text": "Orden de dispensacion y etiqueta QR"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0023"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0025",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0024"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 30,
+              "top": 460,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0026",
+                  "_parent": {
+                    "$ref": "v0025"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 40,
+                  "top": 479,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Enfermero de piso",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0026"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0028",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0027"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0025"
+              },
+              "lineStyle": 3,
+              "points": "240:480.0;420:480.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0029",
+                  "_parent": {
+                    "$ref": "v0028"
+                  },
+                  "model": {
+                    "$ref": "f0027"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 438.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0028"
+                  },
+                  "edgePosition": 1,
+                  "text": "Registro de administracion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0029"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0031",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0030"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0025"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "420:504.0;240:504.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0032",
+                  "_parent": {
+                    "$ref": "v0031"
+                  },
+                  "model": {
+                    "$ref": "f0030"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 522.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0031"
+                  },
+                  "edgePosition": 1,
+                  "text": "Validacion paciente-medicamento"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0032"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0034",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0033"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 30,
+              "top": 590,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0035",
+                  "_parent": {
+                    "$ref": "v0034"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 40,
+                  "top": 609,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Paciente",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0035"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0037",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0036"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0034"
+              },
+              "lineStyle": 3,
+              "points": "240:610.0;420:600",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0038",
+                  "_parent": {
+                    "$ref": "v0037"
+                  },
+                  "model": {
+                    "$ref": "f0036"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 568.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0037"
+                  },
+                  "edgePosition": 1,
+                  "text": "Consulta de trazabilidad QR"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0038"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0040",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0039"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0034"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "420:600;240:634.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0041",
+                  "_parent": {
+                    "$ref": "v0040"
+                  },
+                  "model": {
+                    "$ref": "f0039"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 254,
+                  "top": 652.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0040"
+                  },
+                  "edgePosition": 1,
+                  "text": "Recordatorio de proxima dosis"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0041"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0043",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0042"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 1010,
+              "top": 200,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0044",
+                  "_parent": {
+                    "$ref": "v0043"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 1020,
+                  "top": 219,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Director Administrativo",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0044"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0046",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0045"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0043"
+              },
+              "lineStyle": 3,
+              "points": "1010:220.0;820:420",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0047",
+                  "_parent": {
+                    "$ref": "v0046"
+                  },
+                  "model": {
+                    "$ref": "f0045"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 178.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0046"
+                  },
+                  "edgePosition": 1,
+                  "text": "Autorizacion de orden de compra"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0047"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0049",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0048"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0043"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "820:420;1010:244.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0050",
+                  "_parent": {
+                    "$ref": "v0049"
+                  },
+                  "model": {
+                    "$ref": "f0048"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 262.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0049"
+                  },
+                  "edgePosition": 1,
+                  "text": "Tablero de costos y desperdicio"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0050"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0052",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0051"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 1010,
+              "top": 330,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0053",
+                  "_parent": {
+                    "$ref": "v0052"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 1020,
+                  "top": 349,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Jefe de Farmacovigilancia",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0053"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0055",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0054"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0052"
+              },
+              "lineStyle": 3,
+              "points": "1010:350.0;820:420",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0056",
+                  "_parent": {
+                    "$ref": "v0055"
+                  },
+                  "model": {
+                    "$ref": "f0054"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 308.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0055"
+                  },
+                  "edgePosition": 1,
+                  "text": "Dictamen de causalidad"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0056"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0058",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0057"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0052"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "820:420;1010:374.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0059",
+                  "_parent": {
+                    "$ref": "v0058"
+                  },
+                  "model": {
+                    "$ref": "f0057"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 392.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0058"
+                  },
+                  "edgePosition": 1,
+                  "text": "Alerta de patron de efectos adversos"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0059"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0061",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0060"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 1010,
+              "top": 460,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0062",
+                  "_parent": {
+                    "$ref": "v0061"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 1020,
+                  "top": 479,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Proveedor de MAC",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0062"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0064",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0063"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0061"
+              },
+              "lineStyle": 3,
+              "points": "1010:480.0;820:480.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0065",
+                  "_parent": {
+                    "$ref": "v0064"
+                  },
+                  "model": {
+                    "$ref": "f0063"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 438.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0064"
+                  },
+                  "edgePosition": 1,
+                  "text": "Lote, vencimiento y factura"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0065"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0067",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0066"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0061"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "820:504.0;1010:504.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0068",
+                  "_parent": {
+                    "$ref": "v0067"
+                  },
+                  "model": {
+                    "$ref": "f0066"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 522.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0067"
+                  },
+                  "edgePosition": 1,
+                  "text": "Orden de compra"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0068"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0070",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0069"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 1010,
+              "top": 590,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0071",
+                  "_parent": {
+                    "$ref": "v0070"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 1020,
+                  "top": 609,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Contraloria General de Cuentas",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0071"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0073",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0072"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0070"
+              },
+              "lineStyle": 3,
+              "points": "1010:610.0;820:600",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0074",
+                  "_parent": {
+                    "$ref": "v0073"
+                  },
+                  "model": {
+                    "$ref": "f0072"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 568.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0073"
+                  },
+                  "edgePosition": 1,
+                  "text": "Solicitud de auditoria de lote"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0074"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0076",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0075"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0070"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "820:600;1010:634.0",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0077",
+                  "_parent": {
+                    "$ref": "v0076"
+                  },
+                  "model": {
+                    "$ref": "f0075"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 806,
+                  "top": 652.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0076"
+                  },
+                  "edgePosition": 1,
+                  "text": "Informe forense de trazabilidad"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0077"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0079",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0078"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 300,
+              "top": 20,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0080",
+                  "_parent": {
+                    "$ref": "v0079"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 310,
+                  "top": 39,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Sensores IoT de camaras",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0080"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0082",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0081"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0079"
+              },
+              "lineStyle": 3,
+              "points": "393.0:84;440:400",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0083",
+                  "_parent": {
+                    "$ref": "v0082"
+                  },
+                  "model": {
+                    "$ref": "f0081"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 310.0,
+                  "top": 242.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0082"
+                  },
+                  "edgePosition": 1,
+                  "text": "Lecturas de temperatura y humedad"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0083"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0085",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0084"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 560,
+              "top": 20,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0086",
+                  "_parent": {
+                    "$ref": "v0085"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 570,
+                  "top": 39,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Sistema legacy de admisiones",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0086"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0088",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0087"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0085"
+              },
+              "lineStyle": 3,
+              "points": "653.0:84;653.0:400",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0089",
+                  "_parent": {
+                    "$ref": "v0088"
+                  },
+                  "model": {
+                    "$ref": "f0087"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 570.0,
+                  "top": 242.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0088"
+                  },
+                  "edgePosition": 1,
+                  "text": "Datos demograficos del paciente"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0089"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0091",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0090"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0085"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "677.0:400;677.0:84",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0092",
+                  "_parent": {
+                    "$ref": "v0091"
+                  },
+                  "model": {
+                    "$ref": "f0090"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 570.0,
+                  "top": 276.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0091"
+                  },
+                  "edgePosition": 1,
+                  "text": "Consulta de identificacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0092"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0094",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0093"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 820,
+              "top": 20,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0095",
+                  "_parent": {
+                    "$ref": "v0094"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 830,
+                  "top": 39,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Directorio activo LDAP",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0095"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0097",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0096"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0094"
+              },
+              "lineStyle": 3,
+              "points": "913.0:84;800:400",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0098",
+                  "_parent": {
+                    "$ref": "v0097"
+                  },
+                  "model": {
+                    "$ref": "f0096"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 830.0,
+                  "top": 242.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0097"
+                  },
+                  "edgePosition": 1,
+                  "text": "Credenciales validadas"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0098"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0100",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0099"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0094"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "800:400;937.0:84",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0101",
+                  "_parent": {
+                    "$ref": "v0100"
+                  },
+                  "model": {
+                    "$ref": "f0099"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 830.0,
+                  "top": 276.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0100"
+                  },
+                  "edgePosition": 1,
+                  "text": "Solicitud de autenticacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0101"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0103",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0102"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 300,
+              "top": 880,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0104",
+                  "_parent": {
+                    "$ref": "v0103"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 310,
+                  "top": 899,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Sistema nacional de farmacovigilancia",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0104"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0106",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0105"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0103"
+              },
+              "lineStyle": 3,
+              "points": "393.0:880;440:620",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0107",
+                  "_parent": {
+                    "$ref": "v0106"
+                  },
+                  "model": {
+                    "$ref": "f0105"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 310.0,
+                  "top": 716.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0106"
+                  },
+                  "edgePosition": 1,
+                  "text": "Alerta nacional de retiro de lote"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0107"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0109",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0108"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0103"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "440:620;417.0:880",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0110",
+                  "_parent": {
+                    "$ref": "v0109"
+                  },
+                  "model": {
+                    "$ref": "f0108"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 310.0,
+                  "top": 750.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0109"
+                  },
+                  "edgePosition": 1,
+                  "text": "Reporte de efecto adverso XML/DTD"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0110"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0112",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0111"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 560,
+              "top": 880,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0113",
+                  "_parent": {
+                    "$ref": "v0112"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 570,
+                  "top": 899,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Pasarela SMS / WhatsApp",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0113"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0115",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0114"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0112"
+              },
+              "lineStyle": 3,
+              "points": "653.0:880;653.0:620",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0116",
+                  "_parent": {
+                    "$ref": "v0115"
+                  },
+                  "model": {
+                    "$ref": "f0114"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 570.0,
+                  "top": 716.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0115"
+                  },
+                  "edgePosition": 1,
+                  "text": "Acuse de entrega del mensaje"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0116"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0118",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0117"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0112"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "677.0:620;677.0:880",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0119",
+                  "_parent": {
+                    "$ref": "v0118"
+                  },
+                  "model": {
+                    "$ref": "f0117"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 570.0,
+                  "top": 750.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0118"
+                  },
+                  "edgePosition": 1,
+                  "text": "Mensaje de notificacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0119"
+              }
+            },
+            {
+              "_type": "FCProcessView",
+              "_id": "v0121",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "m0120"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "left": 820,
+              "top": 880,
+              "width": 210,
+              "height": 64,
+              "subViews": [
+                {
+                  "_type": "LabelView",
+                  "_id": "l0122",
+                  "_parent": {
+                    "$ref": "v0121"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": true,
+                  "left": 830,
+                  "top": 899,
+                  "width": 190,
+                  "height": 26,
+                  "text": "Operaciones de TI / data center",
+                  "wordWrap": true
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0122"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0124",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0123"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0004"
+              },
+              "tail": {
+                "$ref": "v0121"
+              },
+              "lineStyle": 3,
+              "points": "913.0:880;800:620",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0125",
+                  "_parent": {
+                    "$ref": "v0124"
+                  },
+                  "model": {
+                    "$ref": "f0123"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 830.0,
+                  "top": 716.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0124"
+                  },
+                  "edgePosition": 1,
+                  "text": "Parametros de operacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0125"
+              }
+            },
+            {
+              "_type": "FCFlowView",
+              "_id": "v0127",
+              "_parent": {
+                "$ref": "d0002"
+              },
+              "model": {
+                "$ref": "f0126"
+              },
+              "font": "Arial;13;0",
+              "parentStyle": false,
+              "head": {
+                "$ref": "v0121"
+              },
+              "tail": {
+                "$ref": "v0004"
+              },
+              "lineStyle": 3,
+              "points": "800:620;937.0:880",
+              "subViews": [
+                {
+                  "_type": "EdgeLabelView",
+                  "_id": "l0128",
+                  "_parent": {
+                    "$ref": "v0127"
+                  },
+                  "model": {
+                    "$ref": "f0126"
+                  },
+                  "font": "Arial;13;0",
+                  "parentStyle": false,
+                  "left": 830.0,
+                  "top": 750.0,
+                  "width": 190,
+                  "height": 26,
+                  "alpha": 1.5707963267948966,
+                  "distance": 22,
+                  "hostEdge": {
+                    "$ref": "v0127"
+                  },
+                  "edgePosition": 1,
+                  "text": "Metricas y alertas de operacion"
+                }
+              ],
+              "nameLabel": {
+                "$ref": "l0128"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCConnector",
+          "_id": "m0003",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Sistema Integral de Gestion de MAC - FarmaHosp",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0012",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Alertas de interaccion y disponibilidad",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0006"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0021",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Orden de dispensacion y etiqueta QR",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0015"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0030",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Validacion paciente-medicamento",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0024"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0039",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Recordatorio de proxima dosis",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0033"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0048",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Tablero de costos y desperdicio",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0042"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0057",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Alerta de patron de efectos adversos",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0051"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0066",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Orden de compra",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0060"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0075",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Informe forense de trazabilidad",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0069"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0090",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Consulta de identificacion",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0084"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0099",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Solicitud de autenticacion",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0093"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0108",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Reporte de efecto adverso XML/DTD",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0102"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0117",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Mensaje de notificacion",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0111"
+              }
+            },
+            {
+              "_type": "FCFlow",
+              "_id": "f0126",
+              "_parent": {
+                "$ref": "m0003"
+              },
+              "name": "Metricas y alertas de operacion",
+              "source": {
+                "$ref": "m0003"
+              },
+              "target": {
+                "$ref": "m0120"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0006",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Medico tratante",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0009",
+              "_parent": {
+                "$ref": "m0006"
+              },
+              "name": "Prescripcion medica",
+              "source": {
+                "$ref": "m0006"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0015",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Farmaceutico clinico",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0018",
+              "_parent": {
+                "$ref": "m0015"
+              },
+              "name": "Confirmacion de dispensacion",
+              "source": {
+                "$ref": "m0015"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0024",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Enfermero de piso",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0027",
+              "_parent": {
+                "$ref": "m0024"
+              },
+              "name": "Registro de administracion",
+              "source": {
+                "$ref": "m0024"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0033",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Paciente",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0036",
+              "_parent": {
+                "$ref": "m0033"
+              },
+              "name": "Consulta de trazabilidad QR",
+              "source": {
+                "$ref": "m0033"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0042",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Director Administrativo",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0045",
+              "_parent": {
+                "$ref": "m0042"
+              },
+              "name": "Autorizacion de orden de compra",
+              "source": {
+                "$ref": "m0042"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0051",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Jefe de Farmacovigilancia",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0054",
+              "_parent": {
+                "$ref": "m0051"
+              },
+              "name": "Dictamen de causalidad",
+              "source": {
+                "$ref": "m0051"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0060",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Proveedor de MAC",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0063",
+              "_parent": {
+                "$ref": "m0060"
+              },
+              "name": "Lote, vencimiento y factura",
+              "source": {
+                "$ref": "m0060"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0069",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Contraloria General de Cuentas",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0072",
+              "_parent": {
+                "$ref": "m0069"
+              },
+              "name": "Solicitud de auditoria de lote",
+              "source": {
+                "$ref": "m0069"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0078",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Sensores IoT de camaras",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0081",
+              "_parent": {
+                "$ref": "m0078"
+              },
+              "name": "Lecturas de temperatura y humedad",
+              "source": {
+                "$ref": "m0078"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0084",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Sistema legacy de admisiones",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0087",
+              "_parent": {
+                "$ref": "m0084"
+              },
+              "name": "Datos demograficos del paciente",
+              "source": {
+                "$ref": "m0084"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0093",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Directorio activo LDAP",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0096",
+              "_parent": {
+                "$ref": "m0093"
+              },
+              "name": "Credenciales validadas",
+              "source": {
+                "$ref": "m0093"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0102",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Sistema nacional de farmacovigilancia",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0105",
+              "_parent": {
+                "$ref": "m0102"
+              },
+              "name": "Alerta nacional de retiro de lote",
+              "source": {
+                "$ref": "m0102"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0111",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Pasarela SMS / WhatsApp",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0114",
+              "_parent": {
+                "$ref": "m0111"
+              },
+              "name": "Acuse de entrega del mensaje",
+              "source": {
+                "$ref": "m0111"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "FCProcess",
+          "_id": "m0120",
+          "_parent": {
+            "$ref": "fc0001"
+          },
+          "name": "Operaciones de TI / data center",
+          "ownedElements": [
+            {
+              "_type": "FCFlow",
+              "_id": "f0123",
+              "_parent": {
+                "$ref": "m0120"
+              },
+              "name": "Parametros de operacion",
+              "source": {
+                "$ref": "m0120"
+              },
+              "target": {
+                "$ref": "m0003"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "documentVersion": 2
+}

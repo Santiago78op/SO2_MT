@@ -29,7 +29,7 @@ Antes de las reglas, la restricción real. Verificado contra [[StarUML]] y [[Exc
 | Semántica UML correcta (actores, elipses, estereotipos) | **sí, nativa** | no: son formas dibujadas |
 | Importar Mermaid | 7 tipos | 5 tipos, el resto entra como **imagen no editable** |
 | Casos de uso por Mermaid | **NO** — un `flowchart` entra como Flowchart | entra como flowchart editable, sin semántica UML |
-| **Fijar coordenadas por API** | **NO** — el MCP tiene 4 herramientas y ninguna posiciona | **sí**: el `.excalidraw` es JSON con `x`/`y` por elemento |
+| **Fijar coordenadas por API** | **NO** — el MCP tiene 4 herramientas y ninguna posiciona. Sí escribiendo el **`.mdj`** (§5 ter) | **sí**: el `.excalidraw` es JSON con `x`/`y` por elemento |
 | Auto-layout | sí, dentro de la app (acción manual) | no lo necesita si se fijan coordenadas |
 | Exportar sin marca de agua | **NO** sin licencia — SVG incluido (§6, verificado) | **sí**, es gratis |
 
@@ -308,6 +308,9 @@ declaración y de la dirección**. O sea que sí se controla, indirectamente:
 
 ### Palanca 2 — El auto-layout de StarUML, después corregido a mano
 
+Y si el diagrama tiene que quedar **dentro de StarUML** con layout controlado, la vía es
+escribir el `.mdj` — §5 ter.
+
 `Format → Auto Layout`, y después arreglar lo que rompió: jerarquías desalineadas, orden de líneas
 de vida, y actores que se fueron al centro. Es una acción **manual** dentro de la app: no hay API.
 
@@ -387,6 +390,67 @@ el diccionario `DIAGRAMAS`.
 > triángulo hueco hacia el padre y el padre arriba. Hizo falta **una iteración**: los actores
 > hermanos estaban en la misma fila y la asociación del lejano pasaba raspando el nombre del
 > cercano. Se resolvió poniendo a los actores **en escalera**, una fila por hijo.
+
+---
+
+## 5 ter. Dibujar bien DENTRO de StarUML: el `.mdj`
+
+Medido el 2026-08-21 contra el API Server, con el diagrama de contexto de FarmaHosp
+(14 entidades, 27 flujos):
+
+| Vía | Resultado | Veredicto |
+|---|---|---|
+| `generate_diagram` con `flowchart LR` | 432 × 1504 px — una columna vertical, 27 líneas en un haz, etiquetas encimadas | **falla el checklist** |
+| `generate_diagram` con `flowchart TD` | 1920 × 398 px — forma correcta (hub con entidades arriba) pero las 27 etiquetas apiladas en dos bandas, ilegibles | **falla el checklist** |
+| `generate_diagram` con `flowchart RL` | 420 × 1490 px — igual que LR | **falla** |
+| **Escribir el `.mdj` con coordenadas** | layout controlado, 27 etiquetas legibles | **pasa** |
+
+> [!important] La dirección del Mermaid sí cambia el layout, pero no alcanza
+> `LR` y `TD` dan resultados completamente distintos, así que la Palanca 1 existe también
+> para StarUML. Lo que no resuelve es la **topología**: con 27 aristas convergiendo en un
+> solo nodo, ningún auto-layout coloca 27 etiquetas sin pisarlas. Para un diagrama de
+> contexto —que es un hub por definición— hay que fijar coordenadas.
+
+### El generador de `.mdj`
+
+`06-Proyecto-MCP/generar-mdj.py` escribe el proyecto nativo de StarUML. El `.mdj` es JSON y
+cada vista lleva `left / top / width / height`; cada arista, sus `points`. Se abre con doble
+clic y el diagrama aparece ya acomodado.
+
+```bash
+cd 06-Proyecto-MCP
+python generar-mdj.py contexto-farmahosp
+```
+
+**El esquema, verificado contra un `.mdj` real de StarUML v7:**
+
+```
+Project
+└── FCFlowchart                    (el contenedor del modelo)
+    ├── FCFlowchartDiagram         ownedViews: las vistas con coordenadas
+    │   ├── FCProcessView          una entidad: left/top/width/height + LabelView
+    │   ├── FCConnectorView        el producto (se dibuja como óvalo)
+    │   └── FCFlowView             head/tail a las VISTAS, points, EdgeLabelView
+    ├── FCProcess / FCConnector    los elementos del modelo
+    └──   └── FCFlow               vive dentro de su elemento ORIGEN
+```
+
+Detalles que hay que respetar o el archivo no abre bien:
+
+| Regla | Por qué |
+|---|---|
+| Cada `FCFlow` va en `ownedElements` **del elemento origen** | Es donde lo pone StarUML; suelto en el diagrama no se asocia |
+| `head` y `tail` del `FCFlowView` apuntan a **las vistas**, no a los elementos | Son referencias de la capa gráfica |
+| `points` es una cadena `"x1:y1;x2:y2"` | Sin puntos, la arista se dibuja donde el auto-layout quiera |
+| Cada `$ref` tiene que resolver a un `_id` existente | El generador lo valida antes de escribir: 374 referencias, 0 huérfanas |
+| Las etiquetas se **envuelven** a dos líneas si no caben | Reservar 26 px de alto, no 13, o los pares se pisan |
+
+### Cómo se verifica antes de abrirlo
+
+El `.mdj` no se puede renderizar desde acá —no hay endpoint que abra un archivo—, así que la
+verificación del §7 paso 4 se hace **sobre las coordenadas del propio archivo**: se leen las
+vistas y se dibuja un SVG de control. Si ese SVG pasa el checklist, el `.mdj` lleva la misma
+geometría. La confirmación final es abrirlo en StarUML, que es un doble clic.
 
 ---
 
