@@ -763,8 +763,161 @@ los vuelve opcionales**: siguen siendo drivers y entran a las matrices.
 
 ## 4. Matrices de trazabilidad  ·  criterio 4 — 20 pts
 
+**No son diagramas: son tablas**, y su regla común es una sola — *una matriz solo sirve si se lee en
+los dos sentidos*. Las celdas marcadas son el inventario; **el hallazgo son los huecos**, y todo
+hueco queda comentado. Los ids son los mismos de las secciones anteriores, sin renumerar:
+`STK-01..13`, `CDU-01..07`, `RF-01..37`. Plantillas y reglas de lectura: [[07-Trazabilidad]].
+
 ### 4.1 Stakeholders vs. CDU
 
-### 4.2 Drivers RF vs. Drivers RF
+**Celda:** `X` = participa directamente en el proceso · `i` = tiene interés en su resultado sin
+participar.
 
-### 4.3 CDU vs. Drivers RF
+| | `CDU-01` Adquis. | `CDU-02` Almac. | `CDU-03` Prescr. | `CDU-04` Dispen. | `CDU-05` Admin. | `CDU-06` Seguim. | `CDU-07` Control |
+|---|---|---|---|---|---|---|---|
+| `STK-01` Médico tratante | | | **X** | i | i | **X** | |
+| `STK-02` Farmacéutico | i | **X** | | **X** | i | | |
+| `STK-03` Enfermero | | | | **X** | **X** | i | |
+| `STK-04` Director Admin. | **X** | i | | | | | **X** |
+| `STK-05` Jefe Farmacovig. | | | | | i | **X** | i |
+| `STK-06` Paciente | | | **X** | i | **X** | **X** | |
+| `STK-07` MSPAS | | | | | | **X** | **X** |
+| `STK-08` Equipo interno TI | i | i | i | i | i | i | i |
+| `STK-09` Consultora | i | i | i | i | i | i | i |
+| `STK-10` Junta Directiva | i | | | | | | **X** |
+| `STK-11` Contraloría | i | i | | | | | **X** |
+| `STK-12` Proveedor de MAC | **X** | i | | | | | |
+| `STK-13` Operaciones TI | i | i | i | i | i | i | i |
+
+**Lectura por columna** — *¿para quién es cada proceso?* **Ninguna columna vacía**: todo proceso
+tiene al menos un stakeholder con `X`. El más poblado es `CDU-05` (administración), coherente con que
+sea el acto de valor central.
+
+**Lectura por fila** — *¿dónde aparece cada stakeholder?* **Ninguna fila vacía.** Tres filas son
+enteramente `i` (`STK-08`, `STK-09`, `STK-13`): **no es un hueco, es su naturaleza** — quien
+construye, mantiene y opera tiene interés transversal en todos los procesos sin participar en
+ninguno. Es la demostración en matriz de que *no todo stakeholder es actor*.
+
+### 4.2 Drivers RF vs. Drivers RF — dependencias
+
+**Se lee: «la fila depende de la columna».** Es **asimétrica** y la **diagonal queda excluida**
+(NT1 de la cátedra). Con 37 RF la matriz completa es 37×37 y casi vacía, así que se presenta en dos
+vistas — decisión declarada: primero la **tabla de dependencias completa**, después la **matriz del
+tronco** (los 12 RF que concentran las dependencias).
+
+**Tabla completa de dependencias:**
+
+| RF que depende | Depende de | Razón |
+|---|---|---|
+| `RF-02` recepción de lotes | `RF-01` | no se recibe sin orden de compra |
+| `RF-06` incidente y bloqueo | `RF-05` | sin monitoreo no hay incidente que registrar |
+| `RF-07` alerta de guardia | `RF-06` | alerta lo que el incidente detectó |
+| `RF-08` sobrescribir descarte | `RF-06` | se sobrescribe la decisión que el incidente disparó |
+| `RF-09` proyección de faltantes | `RF-02`, `RF-10` | proyecta sobre inventario y prescripciones programadas |
+| `RF-10` prescribir | `RF-11`, `RF-12`, `RF-13`, `RF-14` | los cuatro `include` obligatorios |
+| `RF-14` consultar inventario | `RF-02` | consulta los lotes registrados |
+| `RF-15` sugerir MAC | `RF-10`, `RF-11` | sugiere sobre protocolo e historial de prescripción |
+| `RF-17` dispensar | `RF-10`, `RF-14`, `RF-02` | dispensa una prescripción, contra inventario real |
+| `RF-18` etiqueta QR | `RF-17` | etiqueta el lote asignado |
+| `RF-19`/`RF-20`/`RF-21` opciones A/B/C | `RF-17` | las tres extienden la dispensación |
+| `RF-22` doble registro INCAP | `RF-17`, `RF-23` | exige coincidencia entre ambos extremos |
+| `RF-23` administrar | `RF-17`, `RF-24` | administra lo dispensado, tras validar |
+| `RF-24` validar paciente-medicamento | `RF-18` | valida contra la etiqueta generada |
+| `RF-25` entrada manual | `RF-24` | es su respaldo |
+| `RF-26` operar offline | `RF-17`, `RF-23` | continúa esas operaciones sin red |
+| `RF-27` reacción por voz | `RF-23` | registra sobre una administración |
+| `RF-28` seguimiento | `RF-23` | sigue lo administrado |
+| `RF-29` reporte nacional | `RF-27`, `RF-28` | reporta lo registrado |
+| `RF-30` patrones por lote | `RF-27`, `RF-02` | cruza reacciones contra lotes |
+| `RF-31` notificar dosis | `RF-10` | notifica la frecuencia prescrita |
+| `RF-32` trazabilidad QR | `RF-18`, `RF-23` | muestra la cadena etiqueta→administración |
+| `RF-33` informe forense | `RF-02`, `RF-05`, `RF-17`, `RF-23` | recorre la cadena completa del lote |
+| `RF-34` tablero financiero | `RF-02`, `RF-17` | agrega costos y desperdicio |
+| `RF-35` auditar autorizaciones | `RF-01`, `RF-08` | audita compras y sobrescrituras |
+| `RF-36` información pública | `RF-34` | publica los agregados anonimizados |
+| `RF-37` HL7 / API nacional | `RF-28`, `RF-29` | expone lo que farmacovigilancia registra |
+
+**La matriz del tronco** (fila depende de columna; `—` = diagonal excluida):
+
+| dep. ↓ / de → | `01` | `02` | `05` | `10` | `14` | `17` | `18` | `23` | `24` | `28` | `29` | `33` |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `RF-01` | — | | | | | | | | | | | |
+| `RF-02` | X | — | | | | | | | | | | |
+| `RF-05` | | | — | | | | | | | | | |
+| `RF-10` | | | | — | X | | | | | | | |
+| `RF-14` | | X | | | — | | | | | | | |
+| `RF-17` | | X | | X | X | — | | | | | | |
+| `RF-18` | | | | | | X | — | | | | | |
+| `RF-23` | | | | | | X | | — | X | | | |
+| `RF-24` | | | | | | | X | | — | | | |
+| `RF-28` | | | | | | | | X | | — | | |
+| `RF-29` | | | | | | | | | | X | — | |
+| `RF-33` | | X | X | | | X | | X | | | | — |
+
+**Lectura por fila** — *¿qué necesito antes de construir esto?* Filas vacías (autónomos, candidatos
+a construirse primero): `RF-01`, `RF-05`, `RF-11/12/13` (los catálogos de validación). Coincide con
+la restricción `RE-18`: **dispensación y almacén primero**.
+
+**Lectura por columna** — *¿si cambio esto, qué se rompe?* Las columnas más pobladas son `RF-02`
+(4 dependientes), `RF-17` (6) y `RF-23` (5): **el registro de lotes, la dispensación y la
+administración son los RF críticos del sistema** — cualquier cambio ahí exige revisar la cadena.
+Hallazgo: la criticidad estructural coincide con el orden del ciclo de vida, lo que valida la
+descomposición. **Sin ciclos**: ningún par depende mutuamente.
+
+### 4.3 CDU vs. Drivers RF — cobertura
+
+**Celda:** X = ese proceso cubre ese driver. Partida en dos por legibilidad (37 columnas):
+
+| | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `CDU-01` | X | X | X | X | | | | | | | | | | | | | | | |
+| `CDU-02` | | | | | X | X | X | X | X | | | | | | | | | | |
+| `CDU-03` | | | | | | | | | | X | X | X | X | **X** | X | X | | | |
+| `CDU-04` | | | | | | | | | | | | | | **X** | | | X | X | X |
+| `CDU-05` | | | | | | | | | | | | | | | | | | | |
+| `CDU-06` | | | | | | | | | | | | | | | | | | | |
+| `CDU-07` | | | | | | | | | | | | | | | | | | | |
+
+| | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 | 36 | 37 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| `CDU-01` | | | | | | | | | | | | | | | | | | |
+| `CDU-02` | | | | | | | | | | | | | | | | | | |
+| `CDU-03` | | | | | | | | | | | | | | | | | | |
+| `CDU-04` | X | X | **X** | | | | | | | | | | | | | | | |
+| `CDU-05` | | | **X** | X | X | X | X | X | | | | | | | | | | |
+| `CDU-06` | | | | | | | | | X | X | X | X | X | | | | | |
+| `CDU-07` | | | | | | | | | | | | | | X | X | X | X | X |
+
+**Lectura por columna** — *¿todo RF tiene quién lo cubra?* **Ninguna columna vacía: los 37 RF están
+cubiertos.** Esa es la prueba de completitud del criterio 3, ahora demostrada en matriz.
+
+**Lectura por fila** — *¿todo proceso justifica su existencia?* **Ninguna fila vacía**, y el reparto
+es parejo (4-7 RF por proceso): ningún CDU está sobrecargado ni sobra.
+
+**El hallazgo fino**: `RF-14` aparece en **dos filas** (`CDU-03` y `CDU-04`) y `RF-22` también
+(`CDU-04` y `CDU-05`). No es un error de la matriz: **es la inclusión por reutilización de §3.1
+hecha visible** — consultar inventario lo comparten prescribir y dispensar; el doble registro INCAP
+exige que dispensación y administración coincidan.
+
+### 4.4 La cadena completa — la prueba de las tres juntas
+
+Las tres matrices se verifican encadenándolas. Un recorrido de ida:
+
+> **`STK-11` Contraloría** → (matriz 1) participa en **`CDU-07`** → (matriz 3) que cubre
+> **`RF-33`** informe forense → (matriz 2) que depende de **`RF-02`, `RF-05`, `RF-17`, `RF-23`** —
+> la cadena completa del lote.
+
+Y la vuelta — *¿si cambia `RF-17` (dispensar), a qué stakeholders les afecta?*: por la matriz 2,
+caen `RF-18`, `RF-19/20/21`, `RF-22`, `RF-23`, `RF-26`, `RF-33`, `RF-34`; por la matriz 3 eso toca
+`CDU-04`, `CDU-05` y `CDU-07`; por la matriz 1, los afectados son **farmacéutico, enfermero,
+paciente, director y Contraloría**. Ese recorrido es el análisis de impacto que la NT1 promete.
+
+### Checklist del criterio 4
+
+- [x] Los ids son los mismos de §1–§3, **sin renumerar**
+- [x] Cada matriz declara qué significa su celda
+- [x] Las tres leídas **por fila y por columna**, con los huecos comentados
+- [x] La de RF vs. RF es de **dependencias**, asimétrica, **diagonal excluida**, sin ciclos
+- [x] Ningún CDU sin stakeholder; ningún RF sin CDU que lo cubra
+- [x] Los «huecos» legítimos justificados (filas `i` transversales; RF compartidos por reutilización)
+- [x] La cadena `STK → CDU → RF → RF` recorrida en los dos sentidos
