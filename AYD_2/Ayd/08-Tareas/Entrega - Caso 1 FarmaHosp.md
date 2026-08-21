@@ -698,6 +698,67 @@ Repartidas por el enunciado fuera de la sección de restricciones; se barren por
 
 ### 3.4 Los 5 drivers más críticos (contexto guatemalteco)
 
+**El método (ADD): dos ejes, no una nota única.** La **importancia para el negocio** la asignan los
+stakeholders; la **dificultad o riesgo técnico**, el arquitecto. Cada driver recibe un par
+(importancia, dificultad) en alto/medio/bajo, y lo que se ataca primero es la intersección **(A, A)**:
+alto valor y alta dificultad, donde una decisión equivocada cuesta más deshacerla.
+
+**Qué se prioriza y qué no:** compiten los drivers de **atributos de calidad** (`AC-nn`) — las
+**restricciones no se priorizan** (todas se cumplen, §3.3) y la funcionalidad tiene su completitud
+en §3.1.
+
+> [!warning] «Según el contexto guatemalteco» — interpretación declarada
+> La rúbrica lo exige y **no lo define** en ningún material de clase (es la ambigüedad #4 del
+> [[Plan - Caso 1 FarmaHosp|plan]]: **pregunta pendiente para la catedrática**). Mientras tanto se
+> declara la interpretación: los **ejes del contexto nacional que el propio enunciado pone sobre la
+> mesa** — marco regulatorio local (MSPAS, Contraloría, Ley de Acceso, INCAP), presupuesto público
+> fijo sin autoescalado ni licencias renovables, infraestructura real (50 Mbps compartidos, Wi-Fi
+> inestable), capital humano (3 personas de TI, alta rotación) y criticidad social (referencia
+> nacional, 1,200 pacientes diarios).
+
+#### La matriz de los dos ejes — los 8 candidatos
+
+| ID | Driver | Importancia (quién la sostiene) | Dificultad (por qué) | Par |
+|---|---|---|---|---|
+| `AC-01` | Validación < 500 ms / < 2 s | **A** — `STK-03`: evita el error fatal del escenario 3 | **A** — el número con red degradada y equipo mixto; el enunciado mismo lo pregunta | **(A, A)** |
+| `AC-02` | Offline ≥ 4 h con reconciliación | **A** — `STK-02`/`STK-03`: sin esto la quimioterapia se detiene | **A** — reconciliar sin duplicar es un problema de consistencia distribuida | **(A, A)** |
+| `AC-03` | Inmutabilidad y trazabilidad total | **A** — `STK-11`: el proyecto nace de auditorías fallidas | **M** — event sourcing / bitácora inmutable es patrón conocido; el reto es no degradar | **(A, M)** |
+| `AC-04` | Confidencialidad ABAC con excepción | **A** — `STK-06`: ley + estigma de VIH/cáncer | **M** — ABAC es patrón establecido; la excepción auditada lo complica poco | **(A, M)** |
+| `AC-05` | Pico de 10x con presupuesto fijo | **A** — `STK-13`: el lunes 8:30 ya colapsó una vez | **A** — sin autoescalado ni hardware nuevo: solo arquitectura (caché, colas, réplicas) | **(A, A)** |
+| `AC-06` | Interoperabilidad legacy + nacional | **A** — `STK-07`: plazo legal de 24 h | **M** — cola local con reintento en ventana es patrón estándar | **(A, M)** |
+| `AC-07` | Mantenibilidad por el equipo interno | **A** — `STK-08`: sin esto el sistema muere a los 12 meses | **M** — la decisión dura es temprana (stack, módulos); después es disciplina | **(A, M)** |
+| `AC-08` | Integridad criptográfica de sensores | **M** — `STK-11`: importante, pero parcialmente subsumido por `AC-03` | **M** — hash encadenado es técnica conocida | **(M, M)** |
+
+Tres quedan en **(A, A)** y cuatro en **(A, M)**: para los dos lugares restantes se desempata **con
+el contexto guatemalteco**, que es exactamente lo que la rúbrica pide.
+
+#### Los 5 seleccionados
+
+| # | ID | Driver | Justificación en el contexto guatemalteco |
+|---|---|---|---|
+| 1 | `AC-02` | Operación offline ≥ 4 h con reconciliación | **Conectividad**: el enunciado da Wi-Fi inestable en el sótano y 50 Mbps compartidos — en el contexto local la intermitencia no es un caso raro, es **el estado normal de la red**. Diseñar asumiendo conexión confiable haría el sistema inútil justo donde opera la farmacia |
+| 2 | `AC-01` | Validación paciente-medicamento < 500 ms / < 2 s | **Dispositivos y red reales**: el número hay que lograrlo en Toughpads Android 9 de 3 GB (gama baja, ya compradas — `RE-14`) y sobre la red degradada. En otro contexto se resuelve con mejor hardware; acá el hardware es un dato, no una variable |
+| 3 | `AC-05` | Pico de 10x con presupuesto fijo | **Presupuesto público**: no hay autoescalado, no hay nube para lo sensible (`RE-02`, `RE-13`) y el presupuesto de un hospital nacional no crece con la demanda. El pico se absorbe **con arquitectura o no se absorbe** — el autoescalado, razonable en otro contexto, acá es inviable |
+| 4 | `AC-07` | Mantenibilidad por el equipo interno | **Capital humano**: 3 personas de TI, rotación alta por contratos de 12 meses, y sin dinero para consultoras permanentes ni licencias (`RE-03`, `RE-17`). En este contexto, un sistema que solo su constructor puede mantener es un sistema **muerto a mediano plazo** — y condiciona la decisión más temprana de todas: el stack |
+| 5 | `AC-03` | Inmutabilidad y trazabilidad total | **Marco regulatorio local**: la Contraloría General de Cuentas audita sin previo aviso y el proyecto **nace** de auditorías fallidas (Q 2.5 M perdidos, registros en papel). En la gestión pública guatemalteca la trazabilidad ante la Contraloría no es un plus: es la supervivencia institucional del proyecto |
+
+**Por qué quedaron fuera los otros (A, M)** — el desempate, dicho: `AC-04` (ABAC) y `AC-06`
+(interoperabilidad) son de importancia alta pero su dificultad es media **porque se resuelven con
+patrones establecidos** (autorización por atributos; cola local con reintento) que condicionan menos
+la estructura temprana que el stack (`AC-07`) o la inmutabilidad transversal (`AC-03`). Y `AC-08`
+queda parcialmente cubierto por la decisión que se tome para `AC-03`. **Quedar fuera del top 5 no
+los vuelve opcionales**: siguen siendo drivers y entran a las matrices.
+
+#### Checklist de la priorización
+
+- [x] **Exactamente 5**, como pide la rúbrica
+- [x] Cada uno con su par **(importancia, dificultad)** — no una nota única
+- [x] La importancia sostenida por un **stakeholder identificado**; la dificultad argumentada
+- [x] **Las restricciones no compitieron** — todas se cumplen
+- [x] La interpretación de «contexto guatemalteco» **declarada** y marcada como pregunta pendiente
+- [x] Cada justificación cita **datos del enunciado**, no generalidades
+- [x] El desempate entre pares iguales está **explicado**, y los no seleccionados no desaparecen
+
 ---
 
 ## 4. Matrices de trazabilidad  ·  criterio 4 — 20 pts

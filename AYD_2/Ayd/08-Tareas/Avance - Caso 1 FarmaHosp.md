@@ -25,7 +25,7 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | **3** Drivers | Drivers RF (CDU expandidos) | 30 | 5 | ✅ **hecho** — 37 RF + 3 expandidos |
 | | Drivers de atributos de calidad | | 6 | ✅ **hecho** — 8 escenarios de 6 partes |
 | | Drivers de restricción | | 7 | ✅ **hecho** — 8 explícitas + 10 implícitas |
-| | Top 5 priorizado (contexto GT) | | 8 | ☐ |
+| | Top 5 priorizado (contexto GT) | | 8 | ✅ **hecho** — criterio 3 completo |
 | **4** Trazabilidad | Stakeholders vs. CDU | 20 | 9 | ☐ |
 | | Drivers RF vs. Drivers RF | | 9 | ☐ |
 | | CDU vs. Drivers RF | | 9 | ☐ |
@@ -46,8 +46,8 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | **5** | Drivers RF (CDU expandidos) | ✅ **hecho** — 37 drivers RF-01..37 trazables a CDU y enunciado; expandidos de Prescripción (lámina), Dispensación y Administración |
 | **6** | Drivers de atributos de calidad | ✅ **hecho** — AC-01..08 en 6 partes, taxonomía de los 6 atributos del programa declarada, seguridad/interoperabilidad bajo funcionalidad con nota ISO 25010 |
 | **7** | Drivers de restricción | ✅ **hecho** — RE-01..18: explícitas textuales + regulatorias, del entorno y organizativas, cada una con «qué decisión bloquea» |
-| **8** | Priorizar los 5 más críticos | 🔄 siguiente |
-| **9** | Las 3 matrices de trazabilidad | ☐ |
+| **8** | Priorizar los 5 más críticos | ✅ **hecho** — dos ejes ADD sobre los 8 AC; top 5: AC-02, AC-01, AC-05, AC-07, AC-03; desempate por contexto guatemalteco declarado. **Criterio 3 completo: 30 pts cubiertos** |
+| **9** | Las 3 matrices de trazabilidad | 🔄 siguiente — lo último |
 
 ---
 
@@ -77,7 +77,7 @@ Se valida al final de cada paso: nada del enunciado puede quedar sin aparecer en
 - [ ] Los **8 acuerdos de calidad** clasificados como drivers
 - [x] Las **8 restricciones** como drivers de restricción (RE-01..08, + 10 implícitas)
 - [ ] Los **6 escenarios críticos** aparecen en algún entregable
-- [ ] Exactamente **5** drivers priorizados con justificación guatemalteca
+- [x] Exactamente **5** drivers priorizados con justificación guatemalteca
 
 ---
 
@@ -88,6 +88,7 @@ Se valida al final de cada paso: nada del enunciado puede quedar sin aparecer en
 | 2026-08-20 | Paso 0: frontera del negocio definida y redactada |
 | 2026-08-20 | Paso 1.1-1.3: barrido completo — de 8 del enunciado a 24 candidatos |
 | 2026-08-20 | Paso 2 **cerrado**: notación + 2 ejemplos en otro dominio + diagrama de FarmaHosp dibujado en 3 capas (14 entidades / 25 streamlines) |
+| 2026-08-21 | Paso 8 **cerrado**: top 5 por los dos ejes de ADD con desempate por contexto guatemalteco declarado. Criterio 3 completo (30 pts). Sigue pendiente preguntar a la catedrática qué espera con «contexto guatemalteco» |
 | 2026-08-21 | Paso 7 **cerrado**: 18 restricciones (8 explícitas textuales + 10 implícitas por los 4 orígenes), sin prioridad, con «qué decisión bloquea» y referencias cruzadas a RF/AC. Los stakeholders recortados en el paso 1 quedaron saldados |
 | 2026-08-21 | Paso 6 **cerrado**: los 8 acuerdos como escenarios de 6 partes con medida numérica, atributo dominante decidido y taxonomía declarada |
 | 2026-08-21 | Paso 5 **cerrado**: 37 drivers RF con doble trazabilidad (CDU + enunciado), convención de IDs declarada, expandido profundo de Prescripción con las dos justificaciones de include, extend condicionado y generalización de médicos |
