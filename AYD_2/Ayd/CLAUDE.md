@@ -36,6 +36,12 @@ asume y se declara la asunción en una línea, en vez de preguntar.
 **La crítica es obligatoria**: las trampas del enunciado, el error opuesto al que acabás de enseñar,
 y los hallazgos flojos de su propia lista, dichos con nombre.
 
+**La teoría se explica al pie** (protocolo §2 bis): ningún término sin definir, la definición formal
+citable, de dónde sale (clase = núcleo, libro = complemento declarado), el «para qué» antes del
+«cómo», tablas en vez de párrafos, la trampa dicha antes de que la cometa, el método **corrido**
+delante suyo y no descrito, y una regla memorizable al cierre. Explicar al pie no es escribir más
+largo: es cerrar huecos.
+
 ## Dos artefactos vivos por tarea
 
 - `08-Tareas/Entrega - <caso>.md` — el entregable, con secciones numeradas según la rúbrica.
@@ -103,9 +109,41 @@ reglas de contenido que se verifican siempre, del §8 de la guía:
 Las tres matrices de trazabilidad **no son diagramas**: son tablas, y viven en `07-Trazabilidad.md`.
 
 
+## Los dos repos tienen que quedar iguales
+
+El material vive espejado. Se trabaja en dos máquinas, así que **cada cambio se espeja y se commitea
+en los dos repos en el mismo movimiento**:
+
+| Repo | Ruta | Qué es |
+|---|---|---|
+| `SO2_MT` | `~/Desktop/SO2/AYD_2/Ayd` | el vault de trabajo |
+| `MCP-AYD` | `~/Desktop/tutor-ayds` (carpeta `boveda/`) | la copia que sirve el MCP |
+
+**Validar siempre con la herramienta, nunca a ojo:**
+
+```bash
+python sincronizar.py            # revisa e informa: faltantes, sobrantes, distintos
+python sincronizar.py --aplicar  # copia del vault hacia la boveda
+```
+
+Informa también el estado git de los dos repos. Sale con código 1 si hay desfases. Las **únicas**
+excepciones legítimas son `.claude/` y `CLAUDE.md`, que son de cada lado.
+
+## Herramientas de la bóveda
+
+| Script | Qué hace |
+|---|---|
+| `sincronizar.py` | valida y repara el espejo entre los dos repos |
+| `06-Proyecto-MCP/generar-excalidraw.py` | de coordenadas explícitas emite el `.excalidraw` editable **y** el `.svg` vectorial sin marca de agua |
+| `06-Proyecto-MCP/generar-mdj.py` | escribe el proyecto nativo `.mdj` de StarUML con el layout ya resuelto |
+
+Los tres se corren con `python <script>` y no necesitan dependencias.
+
 ## Notas de método
 
 - `_Protocolo de tutoría.md` — cómo se acompaña el estudio (leer primero).
 - `08-Tareas/_Método para resolver una tarea.md` — el método que él aplica sobre la tarea.
 - `08-Tareas/Ejemplos resueltos de casos de negocio.md` — los moldes de la catedrática.
-- `06-Proyecto-MCP/estilo-diagramas.md` — reglas de disposición y notación de cada diagrama.
+- `06-Proyecto-MCP/estilo-diagramas.md` — reglas de disposición y notación, checklist, metodología ADD.
+- `07-Trazabilidad.md` — las tres matrices, con plantillas y su regla de lectura.
+- `02-Diagramas/` — lo generado: `.excalidraw` editable, `.svg` para entregar, `.mdj` para StarUML, y los PNG de verificación.
