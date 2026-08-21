@@ -14975,6 +14975,165 @@
 					"name": "Operaciones de TI"
 				}
 			]
+		},
+		{
+			"_type": "UMLModel",
+			"_id": "AAAAAAGgJkeXwCOxUhA=",
+			"_parent": {
+				"$ref": "AAAAAAFF+h6SjaM2Hec="
+			},
+			"name": "RF",
+			"ownedElements": [
+				{
+					"_type": "UMLUseCaseDiagram",
+					"_id": "AAAAAAGgJkeXwCOyaTs=",
+					"_parent": {
+						"$ref": "AAAAAAGgJkeXwCOxUhA="
+					},
+					"name": "RF",
+					"ownedViews": [
+						{
+							"_type": "RectangleView",
+							"_id": "AAAAAAGgJkfCBiPyQ48=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 64,
+							"top": 8,
+							"width": 1056,
+							"height": 1128
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJkf8siP6bKo=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 96,
+							"width": 768,
+							"height": 88,
+							"text": "CDU-01 Adquisición\n- RF-01 Gestionar órdenes de compra\n- RF-02 Registrar recepción de lotes (lote, vencimiento, factura)\n- RF-03 Registrar control de calidad de recepción\n- RF-04 Tramitar compra urgente o reemplazo terapéutico"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJkgvsSQBIEM=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;24;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 32,
+							"width": 528,
+							"height": 51,
+							"text": "Lista de Requerimientos Funcionales"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJkkynyQMiq8=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 192,
+							"width": 768,
+							"height": 100,
+							"text": "CDU-02 Almacenamiento\n- RF-05 Monitorear temperatura/humedad (sensores cada 5 min)\n- RF-06 Registrar incidente de cadena de frío y bloquear lotes\n- RF-07 Alertar al farmacéutico de guardia (SMS/correo)\n- RF-08 Sobrescribir regla de descarte con firma auditada\n- RF-09 Proyectar faltantes a 7 días"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJkrQYSSSTbY=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 296,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-03 Prescripción\n- RF-10 Prescribir MAC\n- RF-11 Validar contra protocolos clínicos\n- RF-12 Verificar interacciones medicamentosas\n- RF-13 Verificar contraindicaciones y alergias\n- RF-14 Consultar inventario en tiempo real\n- RF-15 Sugerir MAC según protocolo y patrón del médico\n- RF-16 Acceder a diagnóstico sensible con justificación (urgencias)"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJkwneySc7LI=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 432,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-04 Dispensación\n- RF-17 Dispensar MAC (verificar orden, asignar lote)\n- RF-18 Generar etiqueta código de barras/QR\n- RF-19 Dispensación inmediata de urgencia\n- RF-20 Préstamo entre pacientes con reposición (opción B)\n- RF-21 Dispensación virtual con validación en 12 h (opción C)\n- RF-22 Doble registro farmacéutico-enfermero, alerta si > 5 min"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJk0TEySo9bo=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 568,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-04 Dispensación\n- RF-17 Dispensar MAC (verificar orden, asignar lote)\n- RF-18 Generar etiqueta código de barras/QR\n- RF-19 Dispensación inmediata de urgencia\n- RF-20 Préstamo entre pacientes con reposición (opción B)\n- RF-21 Dispensación virtual con validación en 12 h (opción C)\n- RF-22 Doble registro farmacéutico-enfermero, alerta si > 5 min"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJk253yflHQY=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 704,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-05 Administración\n- RF-23 Administrar MAC (pulsera + medicamento + biometría)\n- RF-24 Validar paciente-medicamento con alerta\n- RF-25 Ingreso manual de código (respaldo del escáner)\n- RF-26 Operar offline y reconciliar sin duplicar \n- RF-27 Registrar reacción adversa por voz a texto"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJk4xhyfs6pg=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 840,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-06 Seguimiento y farmacovigilancia\n- RF-28 Registrar seguimiento y ajuste de dosis\n- RF-29 Reporte al sistema nacional (XML/DTD, ≤24 h, ventana 8-16) \n- RF-30 Detectar patrones de efectos adversos por lote\n- RF-31 Notificar próxima dosis (SMS/WhatsApp)\n- RF-32 Verificar trazabilidad por QR"
+						},
+						{
+							"_type": "UMLTextBoxView",
+							"_id": "AAAAAAGgJk50OSfzH+s=",
+							"_parent": {
+								"$ref": "AAAAAAGgJkeXwCOyaTs="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 88,
+							"top": 976,
+							"width": 768,
+							"height": 130,
+							"text": "CDU-07 Control y auditoría\n- RF-33 Informe forense de lote < 10 min, inmutable\n- RF-34 Tablero de costos y % desperdicio\n- RF-35 Auditar autorizaciones y bajas\n- RF-36 Responder solicitudes de información pública\n- RF-37 Exportar HL7 FHIR y API para el sistema nacional"
+						}
+					]
+				}
+			]
 		}
 	],
 	"documentVersion": 1

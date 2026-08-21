@@ -635,6 +635,67 @@ convierte el deseo en driver: sin número no se puede diseñar ni verificar.
 
 ### 3.3 Drivers de restricción
 
+Una restricción es **una decisión de diseño que ya está tomada** y que el arquitecto no negocia. Se
+reconoce porque se escribe con *"debe"* o *"no se puede"*, y porque **no tiene medida**: se cumple o
+no se cumple. Por eso **no se priorizan**: todas son obligatorias — la diferencia tajante con los
+atributos de calidad de §3.2.
+
+La columna **"qué decisión bloquea"** es la que convierte la cita en driver: una restricción sirve
+para **descartar alternativas**, y eso se hace visible.
+
+#### Las 8 explícitas del enunciado (textuales, sin parafrasear)
+
+| ID | Restricción (textual) | Tipo | Qué decisión bloquea |
+|---|---|---|---|
+| `RE-01` | *"No se puede usar una base de datos que no soporte transacciones ACID para el módulo de inventario"* | técnica | Descarta NoSQL sin ACID para inventario — el MongoDB de la consultora incluido |
+| `RE-02` | *"No se puede depender de la nube pública para el almacenamiento de datos sensibles… solo… análisis estadístico agregado (datos anonimizados)"* | técnica | Descarta bases y SaaS en la nube para lo clínico; todo en el data center local |
+| `RE-03` | *"No se puede usar una tecnología que requiera licencias de pago anuales… (ej. Oracle Enterprise, SQL Server Enterprise). Se prefiere software open-source"* | negocio | Descarta las bases comerciales — **incluida la Oracle que el equipo interno prefiere** |
+| `RE-04` | *"No se puede obligar a los enfermeros a usar dispositivos personales (BYOD)… el hospital provee los Toughpads"* | negocio | El cliente de enfermería se diseña para las Toughpad, no para «cualquier teléfono» |
+| `RE-05` | *"No se puede diseñar un sistema monolítico, porque el módulo de farmacovigilancia tiene ciclos de entrega diferentes…"* | técnica | Obliga módulos desplegables por separado; descarta el despliegue único |
+| `RE-06` | *"No se pueden almacenar contraseñas ni credenciales en texto plano en ninguna capa"* | técnica | Descarta configuraciones y logs con secretos; obliga hashing y gestión de secretos |
+| `RE-07` | *"No se puede implementar una solución que requiera entrenamiento de más de 2 horas para los enfermeros"* | negocio | Acota la complejidad de la interfaz de enfermería; descarta flujos que exijan curso |
+| `RE-08` | *"No se puede generar un único punto de falla en la autenticación; si… (LDAP) cae, el hospital debe seguir operando con… respaldo (ej. OTP por SMS)"* | técnica | Descarta autenticar solo contra LDAP; obliga el mecanismo de respaldo |
+
+#### Las implícitas — regulatorias, del entorno y organizativas
+
+Repartidas por el enunciado fuera de la sección de restricciones; se barren por origen:
+
+| ID | Restricción | Origen | Qué decisión bloquea / dónde se realiza |
+|---|---|---|---|
+| `RE-09` | Reporte de efectos adversos **≤ 24 h** en **XML con la DTD del MSPAS** | regulatoria — Norma Técnica de Farmacovigilancia | El formato y el plazo no se negocian; se realiza en `RF-29` y `AC-06` |
+| `RE-10` | **Doble registro** farmacéutico-enfermero para oncológicos y opioides; alerta si discrepancia **> 5 min** | regulatoria — INCAP | Obliga la coincidencia en tiempo real; se realiza en `RF-22` |
+| `RE-11` | Responder solicitudes ciudadanas de datos estadísticos (no personales) en **10 días hábiles** | regulatoria — Ley de Acceso a la Información Pública | Obliga la vía de datos anonimizados; se realiza en `RF-36` |
+| `RE-12` | Diagnósticos sensibles visibles **solo** para tratante, farmacéutico y enfermero asignado; el director **solo con orden judicial** | regulatoria — Política de Datos del Hospital | Fija el modelo de autorización; se realiza en `AC-04` y `RF-16` |
+| `RE-13` | Data center fijo: **32 vCPU / 128 GB / SAN 10 TB, sin autoescalado** | técnica del entorno | Descarta resolver el pico con hardware; obliga la mitigación arquitectónica de `AC-05` |
+| `RE-14` | Tablets **Panasonic Toughpad, Android 9, 3 GB RAM** ya compradas | técnica del entorno | El cliente móvil debe correr ahí: descarta frameworks pesados y versiones de Android nuevas |
+| `RE-15` | Escáneres Bluetooth con **5 % de fallo**: la entrada manual del código es obligatoria | técnica del entorno | Obliga el respaldo manual de `RF-25`; descarta flujos solo-escáner |
+| `RE-16` | **Wi-Fi inestable** en el sótano de farmacia; internet de 50 Mbps compartido con priorización de tráfico crítico | técnica del entorno | Descarta diseños que asuman red confiable; empuja `AC-01` degradado y `AC-02` |
+| `RE-17` | El sistema debe poder ser **mantenido exclusivamente por el equipo interno** (3 personas, Java 8 / Oracle PL/SQL / Angular) tras los 12 meses | organizativa | Acota el stack a lo que el interno pueda heredar; es el origen de `AC-07` |
+| `RE-18` | **Entrega en 12 meses**, con evolución **incremental**: dispensación y almacén → prescripción → farmacovigilancia | organizativa | Fija el orden de construcción y refuerza `RE-05` (módulos separados) |
+
+> [!important] La tensión que estas restricciones resuelven juntas
+> `RE-03` (sin licencias: descarta Oracle Enterprise) **choca** con la preferencia del equipo interno
+> (Oracle), y `RE-17` exige que ese mismo equipo mantenga el sistema. Leídas juntas, acotan el stack
+> por las dos puntas: **el lenguaje que el interno domina + una base open source con ACID** (`RE-01`).
+> El conflicto de stacks de la tabla de §1.3 no se resuelve por gusto: lo resuelven las restricciones.
+
+> [!note] Los stakeholders recortados en §1.1, saldados acá
+> INCAP reaparece como `RE-10`; el personal de admisiones como la cara negativa de `RE-12`; la
+> capacitación limitada (RRHH) es `RE-07`. Ninguno se perdió: pagan sus puntos en este criterio, como
+> se declaró al recortarlos.
+
+#### Checklist de las restricciones
+
+- [x] Las **8 explícitas** del enunciado, **textuales** (parafrasear es donde se pierde el requisito)
+- [x] Barridos los **cuatro orígenes**: explícitas, regulatorias, técnicas del entorno, organizativas
+- [x] **Ninguna tiene prioridad**: todas se cumplen
+- [x] **Ninguna tiene medida**: se cumplen o no (lo que tiene medida es un atributo de calidad)
+- [x] Cada una con su columna **"qué decisión bloquea"**
+- [x] Las que se realizan en un RF o AC llevan la **referencia cruzada**
+- [x] IDs `RE-01`…`RE-18` — a las matrices sin renumerar
+
+---
+
 ### 3.4 Los 5 drivers más críticos (contexto guatemalteco)
 
 ---
