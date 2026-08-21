@@ -58,8 +58,30 @@ Markdown de Obsidian: frontmatter con `tema`, `fuente` y `fecha`; una nota por c
 diapositiva; `[[enlaces internos]]`; diagramas en bloques ```mermaid``` con la imagen original debajo
 como `![[ruta]]`; y una sección `## Preguntas de repaso` al cierre. En español, directo.
 
+## Diagramas: regla permanente
+
+**Al crear cualquier diagrama en StarUML —o en Excalidraw, o en Mermaid dentro de una nota— seguí
+`06-Proyecto-MCP/estilo-diagramas.md` y ejecutá su checklist de verificación antes de darlo por
+terminado.** Sin excepciones.
+
+Lo indispensable de esa guía, para que no se pierda si no la abrís:
+
+- **El MCP de StarUML no puede acomodar un diagrama.** Sus 4 herramientas (`generate_diagram`,
+  `get_all_diagrams_info`, `get_current_diagram_info`, `get_diagram_image_by_id`) no mueven
+  elementos ni disparan auto-layout. El layout se controla con el **orden del Mermaid**, con el
+  auto-layout **manual** de la app, o con **coordenadas explícitas en `.excalidraw`** — la única vía
+  programable.
+- **StarUML modela y valida la semántica UML; Excalidraw produce la lámina final.** Casos de uso,
+  componentes, despliegue, actividad, paquetes y DFD **no se importan por Mermaid** a StarUML.
+- **Exportar a SVG, no a PNG.** Para entregas, SVG → PDF o PNG a 2× con fondo blanco explícito.
+- **Retícula de 20 px**, márgenes de 40, separación mínima 40 px horizontal y 30 vertical.
+- **El paso 4 del checklist no se saltea**: tomar una captura, **mirar la imagen** y compararla
+  contra las reglas. Un diagrama con el código perfecto puede verse mal. Nada se declara terminado
+  sin haber visto la imagen.
+
 ## Notas de método
 
 - `_Protocolo de tutoría.md` — cómo se acompaña el estudio (leer primero).
 - `08-Tareas/_Método para resolver una tarea.md` — el método que él aplica sobre la tarea.
 - `08-Tareas/Ejemplos resueltos de casos de negocio.md` — los moldes de la catedrática.
+- `06-Proyecto-MCP/estilo-diagramas.md` — reglas de disposición y notación de cada diagrama.
