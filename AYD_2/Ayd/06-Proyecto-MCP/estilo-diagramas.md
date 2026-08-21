@@ -31,7 +31,7 @@ Antes de las reglas, la restricción real. Verificado contra [[StarUML]] y [[Exc
 | Casos de uso por Mermaid | **NO** — un `flowchart` entra como Flowchart | entra como flowchart editable, sin semántica UML |
 | **Fijar coordenadas por API** | **NO** — el MCP tiene 4 herramientas y ninguna posiciona | **sí**: el `.excalidraw` es JSON con `x`/`y` por elemento |
 | Auto-layout | sí, dentro de la app (acción manual) | no lo necesita si se fijan coordenadas |
-| Exportar sin marca de agua | **a verificar** (§6) | **sí**, es gratis |
+| Exportar sin marca de agua | **NO** sin licencia — SVG incluido (§6, verificado) | **sí**, es gratis |
 
 > [!warning] El MCP de StarUML no puede acomodar un diagrama
 > Sus cuatro herramientas son `generate_diagram`, `get_all_diagrams_info`,
@@ -390,34 +390,64 @@ el diccionario `DIAGRAMAS`.
 
 ---
 
-## 6. Exportación: SVG primero, y el asunto de la marca de agua
+## 6. Exportación: SVG, y por qué la lámina no sale de StarUML
 
 ### La decisión
 
 **Exportar a SVG, no a PNG.** El SVG es vectorial: se ve nítido a cualquier zoom, sirve para pegar
 en las notas de Obsidian, y para las entregas se convierte a PDF o PNG limpio con cualquier visor.
 
-### El árbol de decisión de la marca de agua
+**Y el SVG se genera con `generar-excalidraw.py` o se exporta desde Excalidraw — nunca desde
+StarUML**, por lo que sigue.
 
-StarUML **sin licencia** marca las exportaciones. Antes de armar cualquier lámina hay que resolver
-esto **una sola vez** y anotar el resultado acá:
+### La marca de agua: RESUELTO el 2026-08-21
 
-```
-Exportar un diagrama de prueba desde StarUML a SVG
-        │
-        ├── ¿SIN marca de agua? → StarUML exporta la lámina final. Fin.
-        │
-        └── ¿CON marca de agua? → StarUML queda solo para modelar y validar.
-                                  La lámina final sale de Excalidraw.
-```
+> [!important] StarUML sin licencia marca el SVG igual que el PNG
+> **Verdicto: la lámina final NO sale de StarUML.** Verificado de dos formas independientes.
+>
+> **1. En el código de la aplicación** (`resources/app.asar`, StarUML v7 instalado en la máquina).
+> `exportToSVG` llama a `getSVGImageData`, y esa función dibuja la marca de agua **antes** del
+> diagrama, sobre el mismo lienzo SVG:
+>
+> ```js
+> function getSVGImageData(diagram) {
+>   ...
+>   var canvas = new SVGCanvas(ctx);
+>   const licenseStatus = app.licenseStore.getLicenseStatus();
+>   // Draw watermark if application is not registered
+>   if (licenseStatus.trial) {
+>     diagram.drawWatermark(canvas, w, h, 70, 12, "UNREGISTERED");
+>   } else if (licenseStatus.edition !== "PRO") {
+>     if (isProDiagram(dgmType)) drawWatermark(canvas, w, h, 45, 12, "PRO ONLY");
+>   }
+>   diagram.arrangeDiagram(canvas);
+>   diagram.drawDiagram(canvas);
+>   return ctx.getSerializedSvg(true);
+> }
+> ```
+>
+> Es **el mismo bloque** que en `getImageData`, la que usan PNG y JPEG. Elegir SVG no evita nada:
+> la marca se dibuja en el lienzo, no se agrega al archivo al final.
+>
+> **2. Empíricamente**, pidiéndole una imagen al API Server: el PNG vuelve con `UNREGISTERED`
+> embaldosado cada 70 × 12 px sobre todo el diagrama.
 
-**Resultado de la verificación:** `PENDIENTE` — hay que correr la prueba una vez en StarUML y
-escribirlo acá, con fecha. Hasta entonces se asume el peor caso.
+**Consecuencia adicional que conviene saber:** hay un **segundo** caso de marca de agua que no
+depende de la licencia gratuita. Con una licencia de pago que **no sea PRO**, los diagramas
+marcados como PRO salen con `"PRO ONLY"`. O sea que comprar la licencia estándar tampoco garantiza
+láminas limpias para todo tipo de diagrama.
 
-> [!tip] Para los diagramas generados, la marca de agua es un problema resuelto
-> `generar-excalidraw.py` (§5 bis) emite el **SVG directamente**, sin pasar por StarUML ni por
-> Excalidraw. No hay licencia involucrada y no hay nada que marcar. La verificación de arriba solo
-> importa para los diagramas que se dibujen **a mano dentro de StarUML**.
+#### Qué se hace entonces
+
+| Necesidad | Herramienta |
+|---|---|
+| Modelar y validar la **semántica UML** | **StarUML** — la marca de agua no molesta para verificar |
+| La **lámina final** que se entrega | **`generar-excalidraw.py`** (§5 bis) o Excalidraw |
+| Verificar un diagrama hecho a mano en StarUML | `get_diagram_image_by_id` — devuelve **PNG marcado**, sirve para revisar, no para entregar |
+
+> [!note] El MCP devuelve PNG, no SVG
+> `get_diagram_image_by_id` entrega un PNG en base64. No hay endpoint que devuelva SVG, así que el
+> SVG de StarUML solo se obtiene por la interfaz (*File → Export Diagram*) — y viene marcado.
 
 ### SVG → PNG / PDF, cuando la entrega lo pide
 
@@ -874,7 +904,7 @@ Las tres están desarrolladas, con plantillas y ejemplos, en [[07-Trazabilidad]]
 3. ¿En qué dirección va la flecha de `include`? ¿Y la de `extend`?
 4. ¿Cuáles son las tres palancas para controlar el layout, y cuál es la única programable?
 5. ¿Qué se hace si el auto-layout desalinea una jerarquía de herencia?
-6. ¿Por qué se exporta a SVG y no a PNG?
+6. ¿Por qué se exporta a SVG y no a PNG, y por qué la lámina final no sale de StarUML?
 7. ¿Qué se verifica en el paso 4 del checklist, y por qué no se puede saltear?
 8. ¿Cuál es la diferencia entre el plano de negocio y el plano del sistema, y cómo se nota en el diagrama?
 9. ¿Por qué descomponer un caso de uso en crear/editar/eliminar es un error?
