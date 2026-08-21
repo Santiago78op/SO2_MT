@@ -503,6 +503,136 @@ diagrama propio, salvo `RF-08` que extiende a `RF-06` con condición `[decisión
 
 ### 3.2 Drivers de atributos de calidad
 
+**Un atributo de calidad NO es un caso de uso, y un nombre de atributo NO es un driver.** Como dice
+el SAIP: *los nombres, por sí solos, son casi inútiles; la especificación real son los escenarios.*
+Los 8 «acuerdos de calidad esperados» del enunciado —que él mismo ordena *«clasificar bajo el nombre
+que corresponda y tratar como drivers arquitectónicos»*— van acá como **escenarios de seis partes**:
+fuente, estímulo, artefacto, entorno, respuesta y **medida de respuesta**. La medida es la parte que
+convierte el deseo en driver: sin número no se puede diseñar ni verificar.
+
+> [!important] Taxonomía usada, declarada
+> Se clasifica con **los seis atributos del programa** (ISO 9126): funcionalidad, fiabilidad,
+> usabilidad, eficiencia, mantenibilidad, portabilidad. En esa taxonomía la **seguridad** y la
+> **interoperabilidad** son subcaracterísticas de **funcionalidad** — en su sucesora ISO 25010
+> serían características de primer nivel. Los acuerdos 3, 4, 6 y 8 caen ahí, y se dice
+> explícitamente en cada ficha. Cuando un escenario toca dos atributos, se declara **cuál domina**:
+> un driver con dos categorías sin decidir no orienta ninguna decisión.
+
+#### Resumen
+
+| ID | Acuerdo | Atributo dominante | Otros | Stakeholder detrás |
+|---|---|---|---|---|
+| `AC-01` | Validación paciente-medicamento < 500 ms / < 2 s | **eficiencia** | fiabilidad | `STK-03` enfermero |
+| `AC-02` | Operación offline ≥ 4 h con reconciliación | **fiabilidad** | funcionalidad | `STK-02` / `STK-03` |
+| `AC-03` | Registros inmutables y trazables sin degradar | **funcionalidad** (seguridad: no repudio) | eficiencia | `STK-11` Contraloría |
+| `AC-04` | Autorización contextual ABAC con excepción auditada | **funcionalidad** (seguridad: confidencialidad) | eficiencia | `STK-06` paciente |
+| `AC-05` | Pico de 10x con presupuesto fijo | **eficiencia** | fiabilidad | `STK-13` operaciones |
+| `AC-06` | Integración legacy SOAP + nacional XML/DTD | **funcionalidad** (interoperabilidad) | fiabilidad, eficiencia | `STK-07` MSPAS |
+| `AC-07` | Mantenible por el equipo interno tras la consultora | **mantenibilidad** | — | `STK-08` equipo interno |
+| `AC-08` | Temperaturas inalterables y verificables criptográficamente | **funcionalidad** (seguridad: integridad) | — | `STK-11` Contraloría |
+
+#### Las fichas — los 8 escenarios en seis partes
+
+**`AC-01` — Eficiencia** (comportamiento temporal) · secundario: fiabilidad · *acuerdo 1 + escenario crítico 3*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | El enfermero de piso, desde la Toughpad junto a la cama |
+| Estímulo | Escanea la pulsera del paciente y el código del medicamento para validar |
+| Artefacto | El módulo de administración (validación paciente-medicamento) |
+| Entorno | Operación normal de red; y **condición degradada** (Wi-Fi inestable del piso) |
+| Respuesta | Confirma la correspondencia o dispara la alerta roja de discrepancia |
+| **Medida** | **< 500 ms** (p95) en red normal y **< 2 s** en degradada, con 15,000 pacientes y 800 SKUs en base — la alerta de 4 s del escenario 3 es el contraejemplo |
+
+**`AC-02` — Fiabilidad** (tolerancia a fallos y recuperabilidad) · secundario: funcionalidad (exactitud) · *acuerdo 2 + escenario crítico 5*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | La caída del servidor central (o del enlace) |
+| Estímulo | Los puestos de farmacia y las tablets pierden conectividad |
+| Artefacto | Los módulos de dispensación y administración |
+| Entorno | Hora pico — lunes 8:30, el peor momento posible |
+| Respuesta | Siguen operando con registro local; al reconectar, la trazabilidad se reconcilia automáticamente |
+| **Medida** | Operación offline **≥ 4 horas**; **100 %** de los registros reconciliados, **0 duplicados** |
+
+**`AC-03` — Funcionalidad → seguridad: no repudio** (en ISO 25010 sería de primer nivel) · secundario: eficiencia · *acuerdo 3 + escenario crítico 4*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | Cualquier usuario — **incluido el administrador del sistema** |
+| Estímulo | Intenta modificar o eliminar un registro histórico (inventario, prescripción, dispensación, administración) |
+| Artefacto | El almacén de registros del sistema |
+| Entorno | Operación normal |
+| Respuesta | La modificación se rechaza; todo cambio entra como **evento nuevo** trazado a su usuario |
+| **Medida** | **0** modificaciones históricas posibles; **100 %** de eventos con usuario; el rendimiento de operación no se degrada por el historial (escrituras dentro de `AC-01`) |
+
+**`AC-04` — Funcionalidad → seguridad: confidencialidad** (ISO 25010: primer nivel) · secundario: eficiencia · *acuerdo 4 + política de datos del hospital*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | Un médico de urgencias que **no** es el tratante (y, en el caso negativo, personal de admisión) |
+| Estímulo | Solicita el diagnóstico sensible (VIH, cáncer) de un paciente |
+| Artefacto | El módulo de expedientes y su motor de autorización (ABAC) |
+| Entorno | Emergencia, fuera del horario del tratante |
+| Respuesta | A urgencias: concede **con justificación obligatoria** y registro en el log. A admisión: **niega siempre** — ni el director accede sin orden judicial |
+| **Medida** | **100 %** de accesos de excepción con justificación registrada; **0** accesos de personal no autorizado; decisión de autorización sin volverse cuello de botella (**< 200 ms**) |
+
+**`AC-05` — Eficiencia** (utilización de recursos bajo sobrecarga) · secundario: fiabilidad · *acuerdo 5 + escenario crítico 5*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | Los usuarios concurrentes de todo el hospital |
+| Estímulo | Un pico de **10× el tráfico normal** |
+| Artefacto | El sistema completo, sobre el data center fijo (32 vCPU / 128 GB / SAN 10 TB, **sin autoescalado**) |
+| Entorno | Lunes 8:30 — sobrecarga |
+| Respuesta | Sigue atendiendo priorizando el tráfico crítico (dispensaciones); degrada lo no crítico |
+| **Medida** | **0 colapsos**; las dispensaciones se mantienen dentro de la medida de `AC-01`; **sin hardware adicional** (mitigación arquitectónica: caché, colas, réplicas de lectura) |
+
+**`AC-06` — Funcionalidad → interoperabilidad** (ISO 25010: primer nivel) · secundarios: fiabilidad, eficiencia · *acuerdo 6 + escenario crítico 6*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | El sistema legacy de admisiones (COBOL/SOAP, 3-5 s, 7:00-17:00) y el sistema nacional de farmacovigilancia (XML/DTD, 8:00-16:00) |
+| Estímulo | El sistema necesita identidad del paciente; debe entregar un reporte de efecto adverso |
+| Artefacto | Los adaptadores de integración |
+| Entorno | El incidente ocurre **fuera de la ventana** del sistema externo (la anafilaxia de las 19:30) |
+| Respuesta | Los datos de admisiones se **replican/cachean** para no bloquear la operación; los reportes se **encolan y reintentan** en ventana hábil — el plazo legal lo cumple el registro local |
+| **Medida** | La respuesta al farmacéutico **no espera al legacy** (dentro de `AC-01`); **100 %** de reportes entregados **≤ 24 h** |
+
+**`AC-07` — Mantenibilidad** (cambiabilidad y analizabilidad) · *acuerdo 7 + restricciones del equipo*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | El equipo interno de TI: 3 personas, Java 8 / Spring Boot / Oracle PL/SQL / Angular |
+| Estímulo | Un cambio normativo del MSPAS o una corrección, **después de que la consultora se fue** |
+| Artefacto | El código del sistema y su documentación viva |
+| Entorno | Mantenimiento post-entrega, sin apoyo externo, con rotación de personal alta |
+| Respuesta | El equipo implementa el cambio solo con su experiencia real y la documentación |
+| **Medida** | El cambio afecta **un solo módulo** (cambiar farmacovigilancia sin tocar inventario); resuelto **sin intervención externa**; evolución incremental por módulos posible |
+
+**`AC-08` — Funcionalidad → seguridad: integridad** (ISO 25010: primer nivel) · *acuerdo 8 + escenario crítico 1*
+
+| Parte | Contenido |
+|---|---|
+| Fuente | Un auditor de la Contraloría (o el farmacéutico jefe que evalúa un lote) |
+| Estímulo | Verifica que las lecturas de temperatura que justificaron descartar un lote **no fueron manipuladas** |
+| Artefacto | El registro de lecturas de los sensores IoT |
+| Entorno | Auditoría posterior al descarte (el informe forense del escenario 4) |
+| Respuesta | El sistema **demuestra criptográficamente** la integridad de la serie (hash encadenado o firma de sensores — la técnica se decide en diseño; el driver fija la propiedad) |
+| **Medida** | **100 %** de las lecturas verificables; **cualquier** alteración posterior es detectable |
+
+#### Checklist de los drivers de calidad
+
+- [x] Ninguno dibujado como caso de uso
+- [x] Los **8 acuerdos** del enunciado convertidos, cada uno con **las 6 partes** completas
+- [x] Toda **medida es un número**, no un adjetivo
+- [x] El **entorno** declara normal / degradado / sobrecarga — la parte que más se olvida
+- [x] Taxonomía **declarada**: los 6 atributos del programa; seguridad e interoperabilidad bajo funcionalidad (ISO 9126), con la nota de ISO 25010
+- [x] Cada escenario con **atributo dominante decidido** y stakeholder identificable detrás
+- [x] IDs `AC-01`…`AC-08` — van a las matrices sin renumerarse
+
+---
+
 ### 3.3 Drivers de restricción
 
 ### 3.4 Los 5 drivers más críticos (contexto guatemalteco)

@@ -23,7 +23,7 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | | Primera descomposición | | 4 | ✅ **hecho** — 7 procesos (6 etapas + gerencial), 3 categorías |
 | **2** Stakeholders | Tabla + necesidad oculta + conflictos | 25 | 1 | ✅ **cerrado** — 13 stakeholders |
 | **3** Drivers | Drivers RF (CDU expandidos) | 30 | 5 | ✅ **hecho** — 37 RF + 3 expandidos |
-| | Drivers de atributos de calidad | | 6 | ☐ |
+| | Drivers de atributos de calidad | | 6 | ✅ **hecho** — 8 escenarios de 6 partes |
 | | Drivers de restricción | | 7 | ☐ |
 | | Top 5 priorizado (contexto GT) | | 8 | ☐ |
 | **4** Trazabilidad | Stakeholders vs. CDU | 20 | 9 | ☐ |
@@ -44,8 +44,8 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | **3** | CDU de alto nivel (core del negocio) | ✅ **hecho** — elipse única «Gestión del Ciclo de Vida del MAC», 5 actores, líneas sin punta, exclusiones defendidas |
 | **4** | Primera descomposición | ✅ **hecho** — CDU-01..07 en columna, mismos 5 actores del core, categorías núcleo/soporte/gerencial, excepción de apoyo declarada para Almacenamiento |
 | **5** | Drivers RF (CDU expandidos) | ✅ **hecho** — 37 drivers RF-01..37 trazables a CDU y enunciado; expandidos de Prescripción (lámina), Dispensación y Administración |
-| **6** | Drivers de atributos de calidad | 🔄 siguiente |
-| **7** | Drivers de restricción | ☐ |
+| **6** | Drivers de atributos de calidad | ✅ **hecho** — AC-01..08 en 6 partes, taxonomía de los 6 atributos del programa declarada, seguridad/interoperabilidad bajo funcionalidad con nota ISO 25010 |
+| **7** | Drivers de restricción | 🔄 siguiente |
 | **8** | Priorizar los 5 más críticos | ☐ |
 | **9** | Las 3 matrices de trazabilidad | ☐ |
 
@@ -88,6 +88,7 @@ Se valida al final de cada paso: nada del enunciado puede quedar sin aparecer en
 | 2026-08-20 | Paso 0: frontera del negocio definida y redactada |
 | 2026-08-20 | Paso 1.1-1.3: barrido completo — de 8 del enunciado a 24 candidatos |
 | 2026-08-20 | Paso 2 **cerrado**: notación + 2 ejemplos en otro dominio + diagrama de FarmaHosp dibujado en 3 capas (14 entidades / 25 streamlines) |
+| 2026-08-21 | Paso 6 **cerrado**: los 8 acuerdos como escenarios de 6 partes con medida numérica, atributo dominante decidido y taxonomía declarada |
 | 2026-08-21 | Paso 5 **cerrado**: 37 drivers RF con doble trazabilidad (CDU + enunciado), convención de IDs declarada, expandido profundo de Prescripción con las dos justificaciones de include, extend condicionado y generalización de médicos |
 | 2026-08-21 | Paso 4 **cerrado**: primera descomposición con 7 procesos (las 6 etapas del enunciado + control y auditoría como gerencial), IDs CDU-01..07 listos para las matrices. **Criterio 1 completo: 25 pts cubiertos** |
 | 2026-08-21 | Paso 3 **cerrado** (resolver y explicar): core dibujado y verificado; §2.2 de la Entrega con las exclusiones defendidas. Revisión del contexto de Julián: 1 error (par del médico cruzado), óvalo con descripción en vez de nombre — pendiente su v2 |
