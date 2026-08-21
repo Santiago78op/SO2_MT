@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50 -4 1070 1029" width="1070" height="1029" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="#1e1e1e" stroke-width="1"/></marker><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><polygon points="0,0 10,5 0,10" fill="#1e1e1e"/></marker></defs>
+<rect x="50" y="-4" width="1070" height="1029" fill="#ffffff"/>
+<ellipse cx="600.0" cy="105.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="99.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="118.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Adquisición de MAC</text>
+<line x1="464.0" y1="132.0" x2="490.0" y2="112.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="235.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="220.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="239.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Almacenamiento y</text>
+<text x="600.0" y="257.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">conservación de MAC</text>
+<line x1="464.0" y1="262.0" x2="490.0" y2="242.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="365.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="359.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="378.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Prescripción del tratamiento</text>
+<line x1="464.0" y1="392.0" x2="490.0" y2="372.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="495.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="489.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="508.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Dispensación del MAC</text>
+<line x1="464.0" y1="522.0" x2="490.0" y2="502.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="625.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="610.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="629.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Administración del MAC</text>
+<text x="600.0" y="647.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">al paciente</text>
+<line x1="464.0" y1="652.0" x2="490.0" y2="632.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="755.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="740.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="759.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Seguimiento y</text>
+<text x="600.0" y="777.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">farmacovigilancia</text>
+<line x1="464.0" y1="782.0" x2="490.0" y2="762.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="600.0" cy="885.0" rx="170.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="600.0" y="870.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="600.0" y="889.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Control y auditoría de</text>
+<text x="600.0" y="907.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">la gestión de MAC</text>
+<line x1="464.0" y1="912.0" x2="490.0" y2="892.0" stroke="#1e1e1e" stroke-width="1"/>
+<text x="370.0" y="171.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">SOPORTE</text>
+<text x="370.0" y="501.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">NÚCLEO</text>
+<text x="370.0" y="886.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">GERENCIAL</text>
+<text x="170.0" y="46.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="170.0" cy="74.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="88" x2="170" y2="124" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="146" y1="100" x2="194" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="124" x2="150" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="124" x2="190" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<text x="170.0" y="173.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Proveedor de MAC</text>
+<line x1="132" y1="126" x2="158" y2="104" stroke="#1e1e1e" stroke-width="1"/>
+<text x="170.0" y="456.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="170.0" cy="484.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="498" x2="170" y2="534" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="146" y1="510" x2="194" y2="510" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="534" x2="150" y2="564" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="170" y1="534" x2="190" y2="564" stroke="#1e1e1e" stroke-width="1"/>
+<text x="170.0" y="583.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Paciente</text>
+<line x1="132" y1="536" x2="158" y2="514" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="286.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="1000.0" cy="314.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="328" x2="1000" y2="364" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="976" y1="340" x2="1024" y2="340" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="364" x2="980" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="364" x2="1020" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="413.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Sistema legacy</text>
+<text x="1000.0" y="431.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de admisiones</text>
+<line x1="962" y1="366" x2="988" y2="344" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="676.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="1000.0" cy="704.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="718" x2="1000" y2="754" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="976" y1="730" x2="1024" y2="730" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="754" x2="980" y2="784" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="754" x2="1020" y2="784" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="803.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">MSPAS</text>
+<line x1="962" y1="756" x2="988" y2="734" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="836.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="1000.0" cy="864.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="878" x2="1000" y2="914" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="976" y1="890" x2="1024" y2="890" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="914" x2="980" y2="944" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1000" y1="914" x2="1020" y2="944" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1000.0" y="963.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Contraloría General</text>
+<text x="1000.0" y="981.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de Cuentas</text>
+<line x1="962" y1="916" x2="988" y2="894" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="226" y1="105" x2="432" y2="105" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="226" y1="500" x2="436" y2="380" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="226" y1="515" x2="434" y2="495" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="226" y1="530" x2="434" y2="630" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="226" y1="545" x2="438" y2="755" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="946" y1="345" x2="768" y2="372" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="946" y1="735" x2="772" y2="758" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="946" y1="895" x2="772" y2="895" stroke="#1e1e1e" stroke-width="1"/>
+</svg>

@@ -272,7 +272,85 @@ negocio, líneas sin punta: `02-Diagramas/cdu-core-farmahosp.svg`, editable en
 - [x] Ningún actor suelto sin línea
 - [x] Consistente con la frontera de §0 y con la tabla de stakeholders de §1.2
 
-### 2.3 Primera descomposición
+### 2.3 Primera descomposición — los procesos del negocio
+
+La única elipse del core (§2.2) se abre en **los procesos que la realizan**: **un solo diagrama**,
+los CUN en columna al centro y **el mismo juego de actores del core** a los lados — el molde de la
+Tienda Electrónica y la Fábrica de Materiales. Ver [[Ejemplos resueltos de casos de negocio]].
+
+#### Los procesos, con su clasificación (criterio de la nota técnica)
+
+Los seis primeros son **las 6 etapas del ciclo de vida que el enunciado fija textualmente** — por eso
+son seis y no los 3-5 del patrón observado en clase: el número lo dicta el enunciado, no el patrón.
+El séptimo cubre la categoría **gerencial** de la NT, que las etapas no traen y el enunciado exige a
+gritos (el tablero del Director, la auditoría de la Contraloría).
+
+| ID | Proceso de negocio | Categoría | ¿Por qué esa categoría? |
+|---|---|---|---|
+| `CDU-01` | Adquisición de MAC | **soporte** | No beneficia al paciente directamente: abastece al núcleo |
+| `CDU-02` | Almacenamiento y conservación de MAC | **soporte** | Sostiene al núcleo (cadena de frío, inventario); el paciente no lo ve |
+| `CDU-03` | Prescripción del tratamiento | **núcleo** | Servicio que el cliente (paciente) recibe del negocio |
+| `CDU-04` | Dispensación del MAC | **núcleo** | Ídem: el lote se asigna nominalmente al paciente |
+| `CDU-05` | Administración del MAC al paciente | **núcleo** | El acto de valor central del ciclo |
+| `CDU-06` | Seguimiento y farmacovigilancia | **núcleo** | El paciente recibe el monitoreo posterior; cierra el ciclo |
+| `CDU-07` | Control y auditoría de la gestión de MAC | **gerencial** | Manejo del negocio en su conjunto: transparencia ante la Contraloría y tablero del Director |
+
+*Nombres según la regla de la NT:* **sustantivo derivado de verbo + complemento** (*Adquisición de
+MAC* → *adquirir MAC* ✓), la misma forma que *Procesamiento de Pedidos* y *Gestión de Inventario* en
+los ejemplos de clase.
+
+#### Las asociaciones, una por una
+
+| Proceso | Actor(es) | Razón |
+|---|---|---|
+| `CDU-01` Adquisición | Proveedor de MAC | De él entran lotes, vencimientos y facturas |
+| `CDU-02` Almacenamiento | **ninguno** | Es la **excepción de CU de apoyo** de los convenios de clase: *«es posible que un caso de uso de apoyo no interactúe con ningún actor»*. Ningún externo participa en conservar la cadena de frío; los sensores son equipamiento del proceso, no actores |
+| `CDU-03` Prescripción | Paciente · Sistema legacy de admisiones | El paciente es examinado y recibe la prescripción; el legacy provee su identidad y datos demográficos |
+| `CDU-04` Dispensación | Paciente | El lote se asigna a su nombre y él puede verificarlo por QR |
+| `CDU-05` Administración | Paciente | Recibe el medicamento — el acto de valor |
+| `CDU-06` Seguimiento | Paciente · MSPAS | El paciente reporta reacciones; al MSPAS va el reporte obligatorio de farmacovigilancia |
+| `CDU-07` Control y auditoría | Contraloría General de Cuentas | Exige el informe forense y la trazabilidad completa |
+
+**Verificación de consistencia con el core** (la regla: pueden aparecer actores nuevos, no puede
+desaparecer ninguno): Paciente ✓ (4 procesos — el actor principal toca varios, como en el molde),
+Proveedor ✓, MSPAS ✓, Contraloría ✓, Legacy de admisiones ✓. **Los cinco del core están; no se
+agregó ninguno nuevo.**
+
+**Sin `include` ni `extend`**: la cátedra no los usa en la primera descomposición — aparecen recién
+en los CDU expandidos (§3.1), y solo con criterio explícito.
+
+#### Diagrama
+
+```mermaid
+flowchart LR
+    PR["Proveedor de MAC"] --- C1(("CDU-01<br/>Adquisición de MAC"))
+    C2(("CDU-02<br/>Almacenamiento y<br/>conservación de MAC"))
+    PA["Paciente"] --- C3(("CDU-03<br/>Prescripción del tratamiento"))
+    PA --- C4(("CDU-04<br/>Dispensación del MAC"))
+    PA --- C5(("CDU-05<br/>Administración del MAC"))
+    PA --- C6(("CDU-06<br/>Seguimiento y<br/>farmacovigilancia"))
+    C3 --- LG["Sistema legacy<br/>de admisiones"]
+    C6 --- MS["MSPAS"]
+    C7(("CDU-07<br/>Control y auditoría")) --- CG["Contraloría General<br/>de Cuentas"]
+```
+
+*(Versión con notación de clase — columna de procesos, actores a los lados, diagonales de negocio,
+líneas sin punta y las tres categorías rotuladas: `02-Diagramas/cdu-descomposicion-farmahosp.svg`,
+editable en `.excalidraw`, verificación en `cdu-descomposicion-farmahosp-verificacion.png`.)*
+
+#### Checklist de la primera descomposición
+
+- [x] **Un solo diagrama**, no uno por proceso
+- [x] Estereotipos de negocio en todos los elementos
+- [x] Nombres en sustantivo-de-verbo + complemento (la prueba: todos se convierten en verbo)
+- [x] **Ningún** proceso llamado crear / editar / eliminar / consultar
+- [x] Las **6 etapas del enunciado** cubiertas, una por proceso
+- [x] Las **tres categorías** de la NT presentes y justificadas
+- [x] El mismo juego de actores del core: ninguno desapareció
+- [x] Cada actor con al menos un proceso (regla sin excepción)
+- [x] El único CU sin actor (`CDU-02`) está amparado en la excepción de apoyo, declarada
+- [x] Sin `include`/`extend`: se reservan para los expandidos
+- [x] IDs `CDU-nn` asignados — son los que van a las matrices del criterio 4
 
 ---
 

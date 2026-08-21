@@ -430,11 +430,64 @@ def cdu_core_farmahosp():
     return els
 
 
+# --------------------------------------------------------------------------
+# PASO 4 del Caso 1 — Primera descomposicion: los procesos del negocio
+#
+# Molde de la catedra (Tienda Electronica / Fabrica): UN solo diagrama,
+# los CUN en COLUMNA al centro, los MISMOS actores del core a los lados.
+# Nombres como sustantivo derivado de verbo ("Prescripcion del tratamiento").
+# Los 6 primeros procesos son las 6 etapas del ciclo de vida del enunciado;
+# el 7o es la categoria GERENCIAL de la nota tecnica (control y auditoria).
+# Almacenamiento va sin actor: es la excepcion de CU de apoyo de los convenios.
+# --------------------------------------------------------------------------
+def cdu_descomposicion_farmahosp():
+    els = []
+    EX, EW, EH, PASO = 430, 340, 90, 130
+
+    nombres = [
+        "Adquisición de MAC",
+        "Almacenamiento y\nconservaci\u00f3n de MAC",
+        "Prescripción del tratamiento",
+        "Dispensación del MAC",
+        "Administraci\u00f3n del MAC\nal paciente",
+        "Seguimiento y\nfarmacovigilancia",
+        "Control y auditor\u00eda de\nla gesti\u00f3n de MAC",
+    ]
+    ys = [60 + i * PASO for i in range(7)]
+    for n, y in zip(nombres, ys):
+        els += elipse_negocio(EX, y, EW, EH, n, tam=14)
+
+    # categorias de la NT, como rotulos de zona a la izquierda de la columna
+    els.append(texto("SOPORTE", 330, ys[0] + 100, 80, 12))
+    els.append(texto("NÚCLEO", 330, ys[3] + 40, 80, 12))
+    els.append(texto("GERENCIAL", 320, ys[6] + 35, 100, 12))
+
+    # actores: el mismo juego del core, a los lados
+    els += actor_negocio(120, 60, "Proveedor de MAC")
+    els += actor_negocio(120, 470, "Paciente")
+    els += actor_negocio(950, 300, "Sistema legacy\nde admisiones")
+    els += actor_negocio(950, 690, "MSPAS")
+    els += actor_negocio(950, 850, "Contralor\u00eda General\nde Cuentas")
+
+    # asociaciones SIN punta
+    els += linea(226, 105, 432, 105)          # Proveedor  - Adquisicion
+    els += linea(226, 500, 436, 380)          # Paciente   - Prescripcion
+    els += linea(226, 515, 434, 495)          # Paciente   - Dispensacion
+    els += linea(226, 530, 434, 630)          # Paciente   - Administracion
+    els += linea(226, 545, 438, 755)          # Paciente   - Seguimiento
+    els += linea(946, 345, 768, 372)          # Legacy     - Prescripcion
+    els += linea(946, 735, 772, 758)          # MSPAS      - Seguimiento
+    els += linea(946, 895, 772, 895)          # Contraloria- Control y auditoria
+
+    return els
+
+
 DIAGRAMAS = {
     "cdu-hospital": cdu_hospital,
     "contexto-centro-salud": contexto_centro_salud,
     "cdu-negocio-centro-salud": cdu_negocio_centro_salud,
     "cdu-core-farmahosp": cdu_core_farmahosp,
+    "cdu-descomposicion-farmahosp": cdu_descomposicion_farmahosp,
 }
 
 
