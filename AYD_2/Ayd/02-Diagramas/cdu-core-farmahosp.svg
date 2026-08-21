@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -4 1180 759" width="1180" height="759" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="#1e1e1e" stroke-width="1"/></marker><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><polygon points="0,0 10,5 0,10" fill="#1e1e1e"/></marker></defs>
+<rect x="-10" y="-4" width="1180" height="759" fill="#ffffff"/>
+<ellipse cx="570.0" cy="335.0" rx="190.0" ry="85.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="570.0" y="317.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="570.0" y="338.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Gestión del Ciclo de Vida del</text>
+<text x="570.0" y="358.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Medicamento de Alto Costo (MAC)</text>
+<line x1="418.0" y1="386.0" x2="444.0" y2="366.0" stroke="#1e1e1e" stroke-width="1"/>
+<text x="110.0" y="286.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="110.0" cy="314.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="328" x2="110" y2="364" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="86" y1="340" x2="134" y2="340" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="364" x2="90" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="364" x2="130" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<text x="110.0" y="413.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Paciente</text>
+<line x1="72" y1="366" x2="98" y2="344" stroke="#1e1e1e" stroke-width="1"/>
+<text x="230.0" y="46.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="230.0" cy="74.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="230" y1="88" x2="230" y2="124" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="206" y1="100" x2="254" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="230" y1="124" x2="210" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="230" y1="124" x2="250" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<text x="230.0" y="173.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Proveedor de MAC</text>
+<line x1="192" y1="126" x2="218" y2="104" stroke="#1e1e1e" stroke-width="1"/>
+<text x="930.0" y="46.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="930.0" cy="74.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="930" y1="88" x2="930" y2="124" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="906" y1="100" x2="954" y2="100" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="930" y1="124" x2="910" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="930" y1="124" x2="950" y2="154" stroke="#1e1e1e" stroke-width="1"/>
+<text x="930.0" y="173.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">MSPAS</text>
+<line x1="892" y1="126" x2="918" y2="104" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1050.0" y="286.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="1050.0" cy="314.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="328" x2="1050" y2="364" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1026" y1="340" x2="1074" y2="340" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="364" x2="1030" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="364" x2="1070" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1050.0" y="413.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Contraloría General</text>
+<text x="1050.0" y="431.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de Cuentas</text>
+<line x1="1012" y1="366" x2="1038" y2="344" stroke="#1e1e1e" stroke-width="1"/>
+<text x="560.0" y="566.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="560.0" cy="594.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="560" y1="608" x2="560" y2="644" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="536" y1="620" x2="584" y2="620" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="560" y1="644" x2="540" y2="674" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="560" y1="644" x2="580" y2="674" stroke="#1e1e1e" stroke-width="1"/>
+<text x="560.0" y="693.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Sistema legacy</text>
+<text x="560.0" y="711.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de admisiones</text>
+<line x1="522" y1="646" x2="548" y2="624" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="168" y1="340" x2="384" y2="336" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="268" y1="172" x2="452" y2="280" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="908" y1="172" x2="692" y2="280" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="996" y1="340" x2="756" y2="336" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="562" y1="576" x2="568" y2="422" stroke="#1e1e1e" stroke-width="1"/>
+</svg>

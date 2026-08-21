@@ -393,10 +393,48 @@ def cdu_negocio_centro_salud():
     return els
 
 
+# --------------------------------------------------------------------------
+# PASO 3 del Caso 1 — CDU de alto nivel: el CORE del negocio de FarmaHosp
+#
+# Molde de la catedra, verificado en sus 4 casos (estilo-diagramas.md 8, 1.2):
+#   · UNA sola elipse, que nombra el negocio COMPLETO (la frontera del paso 0)
+#   · todos los actores alrededor, en circulo
+#   · lineas SIN punta (comunicacion en los dos sentidos)
+#   · estereotipos de negocio: las barras diagonales
+#
+# Quien es actor sale de la frontera declarada en la Entrega (seccion 0):
+# el personal clinico es TRABAJADOR (no se dibuja); los actores son quienes
+# interactuan desde afuera del ciclo de vida del MAC.
+# --------------------------------------------------------------------------
+def cdu_core_farmahosp():
+    els = []
+
+    # --- el negocio completo, sin abrir: UNA elipse
+    els += elipse_negocio(380, 250, 380, 170,
+                          "Gestión del Ciclo de Vida del\nMedicamento de Alto Costo (MAC)")
+
+    # --- los actores, en circulo
+    els += actor_negocio(60, 300, "Paciente")
+    els += actor_negocio(180, 60, "Proveedor de MAC")
+    els += actor_negocio(880, 60, "MSPAS")
+    els += actor_negocio(1000, 300, "Contraloría General\nde Cuentas")
+    els += actor_negocio(510, 580, "Sistema legacy\nde admisiones")
+
+    # --- asociaciones SIN punta (los 4 cores de la catedra van asi)
+    els += linea(168, 340, 384, 336)      # Paciente
+    els += linea(268, 172, 452, 280)      # Proveedor de MAC
+    els += linea(908, 172, 692, 280)      # MSPAS
+    els += linea(996, 340, 756, 336)      # Contraloria
+    els += linea(562, 576, 568, 422)      # Legacy de admisiones
+
+    return els
+
+
 DIAGRAMAS = {
     "cdu-hospital": cdu_hospital,
     "contexto-centro-salud": contexto_centro_salud,
     "cdu-negocio-centro-salud": cdu_negocio_centro_salud,
+    "cdu-core-farmahosp": cdu_core_farmahosp,
 }
 
 

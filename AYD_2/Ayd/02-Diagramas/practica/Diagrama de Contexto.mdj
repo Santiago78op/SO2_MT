@@ -40,8 +40,8 @@
 									"left": 586,
 									"top": 546,
 									"width": 164,
-									"height": 117,
-									"text": "                                                   sistema integral de gestión para el ciclo de vida del medicamento de alto costo, desde la adquisición hasta la administración al paciente y el seguimiento farmacoterapéutico. FarmaHosp",
+									"height": 65,
+									"text": "                                                                                                   Sistema Integral de Gestión de MAC FarmaHosp",
 									"wordWrap": true
 								}
 							],
@@ -75,7 +75,7 @@
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 170,
-									"top": 346,
+									"top": 338,
 									"width": 100,
 									"height": 13,
 									"text": "Médico tratante",
@@ -85,7 +85,7 @@
 							"font": "Arial;13;0",
 							"parentStyle": false,
 							"left": 160,
-							"top": 336,
+							"top": 328,
 							"width": 120,
 							"height": 56,
 							"nameLabel": {
@@ -113,17 +113,17 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 432,
-									"top": 343,
-									"width": 117.04443359375,
+									"left": 336,
+									"top": 367,
+									"width": 217.51513671875,
 									"height": 13,
-									"alpha": -0.016947531242361258,
-									"distance": 118.01694793545543,
+									"alpha": -0.01351269192623672,
+									"distance": 148.0135128966271,
 									"hostEdge": {
 										"$ref": "AAAAAAGgJNSagwMeGKY="
 									},
 									"edgePosition": 1,
-									"text": "Prescripción médica"
+									"text": "Alertas de interacción y disponibilidad"
 								}
 							],
 							"font": "Arial;13;0",
@@ -134,7 +134,7 @@
 							"tail": {
 								"$ref": "AAAAAAGgJM396gJ0SOI="
 							},
-							"points": "608:536;608:352;280:352",
+							"points": "592:536;592:376;280:376",
 							"nameLabel": {
 								"$ref": "AAAAAAGgJNSagwMf1Vo="
 							}
@@ -160,17 +160,17 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 376,
-									"top": 375,
-									"width": 217.51513671875,
+									"left": 366,
+									"top": 326,
+									"width": 140,
 									"height": 13,
-									"alpha": -1.5893127752198526,
-									"distance": 108.01851693112621,
+									"alpha": -1.5882364698843519,
+									"distance": 172.02616080119907,
 									"hostEdge": {
 										"$ref": "AAAAAAGgJNTwXgMzua0="
 									},
 									"edgePosition": 1,
-									"text": "Alertas de interacción y disponibilidad"
+									"text": "Prescripción médica"
 								}
 							],
 							"font": "Arial;13;0",
@@ -181,7 +181,7 @@
 							"tail": {
 								"$ref": "AAAAAAGgJNEGUQKj1Iw="
 							},
-							"points": "280:384;592:384;592:536",
+							"points": "280:336;608:336;608:536",
 							"nameLabel": {
 								"$ref": "AAAAAAGgJNTwXgM0IgQ="
 							}
@@ -1365,11 +1365,11 @@
 									"font": "Arial;13;0",
 									"parentStyle": false,
 									"left": 672,
-									"top": 224,
+									"top": 240,
 									"width": 115.60986328125,
 									"height": 13,
-									"alpha": 2.783658679098147,
-									"distance": 139.86421987055874,
+									"alpha": 2.738801573812,
+									"distance": 125.00399993600205,
 									"hostEdge": {
 										"$ref": "AAAAAAGgJPXtWwkhPBI="
 									},
@@ -1771,7 +1771,7 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 744,
+									"left": 718,
 									"top": 872,
 									"width": 180.6416015625,
 									"height": 13,
@@ -1792,7 +1792,7 @@
 							"tail": {
 								"$ref": "AAAAAAGgJM396gJ0SOI="
 							},
-							"points": "730:688;730:880;952:880",
+							"points": "704:688;704:880;952:880",
 							"nameLabel": {
 								"$ref": "AAAAAAGgJPyQ7wnURq8="
 							}
@@ -1819,7 +1819,7 @@
 					"_parent": {
 						"$ref": "AAAAAAGgJMtZkQJsWiY="
 					},
-					"name": "                                                   sistema integral de gestión para el ciclo de vida del medicamento de alto costo, desde la adquisición hasta la administración al paciente y el seguimiento farmacoterapéutico. FarmaHosp",
+					"name": "                                                                                                   Sistema Integral de Gestión de MAC FarmaHosp",
 					"ownedElements": [
 						{
 							"_type": "FCFlow",
@@ -1827,7 +1827,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGgJM396QJyUio="
 							},
-							"name": "Prescripción médica",
+							"name": "Alertas de interacción y disponibilidad",
 							"source": {
 								"$ref": "AAAAAAGgJM396QJyUio="
 							},
@@ -2019,7 +2019,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGgJNEGUQKhY8g="
 							},
-							"name": "Alertas de interacción y disponibilidad",
+							"name": "Prescripción médica",
 							"source": {
 								"$ref": "AAAAAAGgJNEGUQKhY8g="
 							},

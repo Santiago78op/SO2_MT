@@ -212,6 +212,66 @@ el producto, rectángulos para las entidades, una flecha por sentido, todas con 
 
 ### 2.2 Diagrama de CDU de alto nivel (core del negocio)
 
+**La única elipse:** *Gestión del Ciclo de Vida del Medicamento de Alto Costo (MAC)* — el negocio
+completo, con el nombre de la frontera declarada en §0. El core **no lista procesos**: es el negocio
+visto como una sola cosa; abrirlo en procesos es trabajo de la primera descomposición (§2.3).
+
+*Molde aplicado:* los cuatro casos resueltos en clase (Tienda Electrónica, Fábrica, Restaurante,
+Hospital) usan **una sola elipse con el nombre del todo** y los actores en círculo, con líneas **sin
+punta** y los estereotipos de negocio (barras diagonales). Ver
+[[Ejemplos resueltos de casos de negocio]] y [[Convenios del diagrama de CUN]].
+
+#### Quién es actor y quién no — la decisión, defendida
+
+Los actores salen de la frontera de §0 y de la tabla de stakeholders (§1.2, filas *fuera — actor*):
+
+| Actor del core | Por qué está fuera del campo de acción |
+|---|---|
+| **Paciente** | Recibe el resultado de valor del negocio; no ejecuta ninguna etapa |
+| **Proveedor de MAC** | Entrega los lotes desde afuera; con él arranca la trazabilidad |
+| **MSPAS** | Regulador externo; recibe los reportes de farmacovigilancia (su sistema nacional es su canal) |
+| **Contraloría General de Cuentas** | Auditor externo; exige el informe forense |
+| **Sistema legacy de admisiones** | Sistema externo al ciclo del MAC; provee la identidad del paciente |
+
+**Quién NO se dibuja, y por qué** (esto vale tantos puntos como el dibujo):
+
+| Excluido | Razón |
+|---|---|
+| Médico, farmacéutico, enfermero, director, jefe de farmacovigilancia | **Trabajadores del negocio**: ejecutan las 6 etapas desde adentro de la frontera (§0). Van en las realizaciones, no como actores |
+| Sensores IoT | Equipamiento **del proceso de almacenamiento**: herramienta interna del negocio, no un tercero que interactúe con él |
+| LDAP y pasarela SMS/WhatsApp | Infraestructura **del software**, no del negocio: aparecen en el contexto (plano del sistema), no acá |
+| Junta Directiva y consultora externa | Stakeholders que no interactúan con el negocio en operación |
+
+> [!note] El contraste con el diagrama de contexto (§2.1) es deliberado
+> En el contexto el enfermero y los sensores **sí** aparecen, porque el límite ahí es el *software*.
+> Acá el límite es el *negocio*, y quienes lo ejecutan por dentro desaparecen del dibujo. Son dos
+> planos distintos con dos fronteras distintas — [[estilo-diagramas]] §8.
+
+#### Diagrama
+
+```mermaid
+flowchart LR
+    PA["Paciente"] --- N(("Gestión del Ciclo de Vida del<br/>Medicamento de Alto Costo (MAC)"))
+    PR["Proveedor de MAC"] --- N
+    MS["MSPAS"] --- N
+    CG["Contraloría General<br/>de Cuentas"] --- N
+    LG["Sistema legacy<br/>de admisiones"] --- N
+```
+
+*(Versión con notación de clase — monigotes y elipse con las barras diagonales del estereotipo de
+negocio, líneas sin punta: `02-Diagramas/cdu-core-farmahosp.svg`, editable en
+`cdu-core-farmahosp.excalidraw`, verificación en `cdu-core-farmahosp-verificacion.png`.)*
+
+#### Checklist del core
+
+- [x] **Una** sola elipse, y nombra el negocio completo
+- [x] Estereotipos de negocio en todos los elementos (diagonales + «actor de negocio» / «caso de uso de negocio»)
+- [x] CUN al centro, actores en círculo
+- [x] Líneas **sin punta** (comunicación en los dos sentidos, como los 4 cores de la cátedra)
+- [x] Ningún trabajador dibujado como actor
+- [x] Ningún actor suelto sin línea
+- [x] Consistente con la frontera de §0 y con la tabla de stakeholders de §1.2
+
 ### 2.3 Primera descomposición
 
 ---

@@ -19,7 +19,7 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | Criterio | Sub-entregable | Pts | Paso | Estado |
 |---|---|---|---|---|
 | **1** Caso de negocio | Diagrama de contexto | 25 | 2 | ✅ **hecho** — 14 entidades, 25 streamlines |
-| | CDU de alto nivel (core) | | 3 | ☐ |
+| | CDU de alto nivel (core) | | 3 | ✅ **hecho** — 1 elipse + 5 actores |
 | | Primera descomposición | | 4 | ☐ |
 | **2** Stakeholders | Tabla + necesidad oculta + conflictos | 25 | 1 | ✅ **cerrado** — 13 stakeholders |
 | **3** Drivers | Drivers RF (CDU expandidos) | 30 | 5 | ☐ |
@@ -41,8 +41,8 @@ Entrega: [[Entrega - Caso 1 FarmaHosp]] · Plan: [[Plan - Caso 1 FarmaHosp]] · 
 | **0** | Definir la frontera del negocio | ✅ **hecho** — negocio = gestión del ciclo de vida del MAC; personal clínico = trabajadores; actores = paciente, proveedor, MSPAS, Contraloría, legacy admisiones, consultora |
 | **1** | Stakeholders: barrer → clasificar → necesidad oculta → conflictos | ✅ **hecho** — 13 stakeholders (8 del enunciado + 5), necesidad oculta y 6 conflictos |
 | **2** | Diagrama de contexto | ✅ **hecho** — dibujado en 3 capas: 14 entidades, 25 streamlines, cada una justificada |
-| **3** | CDU de alto nivel (core del negocio) | 🔄 siguiente |
-| **4** | Primera descomposición | ☐ |
+| **3** | CDU de alto nivel (core del negocio) | ✅ **hecho** — elipse única «Gestión del Ciclo de Vida del MAC», 5 actores, líneas sin punta, exclusiones defendidas |
+| **4** | Primera descomposición | 🔄 siguiente |
 | **5** | Drivers RF (CDU expandidos) | ☐ |
 | **6** | Drivers de atributos de calidad | ☐ |
 | **7** | Drivers de restricción | ☐ |
@@ -88,6 +88,7 @@ Se valida al final de cada paso: nada del enunciado puede quedar sin aparecer en
 | 2026-08-20 | Paso 0: frontera del negocio definida y redactada |
 | 2026-08-20 | Paso 1.1-1.3: barrido completo — de 8 del enunciado a 24 candidatos |
 | 2026-08-20 | Paso 2 **cerrado**: notación + 2 ejemplos en otro dominio + diagrama de FarmaHosp dibujado en 3 capas (14 entidades / 25 streamlines) |
+| 2026-08-21 | Paso 3 **cerrado** (resolver y explicar): core dibujado y verificado; §2.2 de la Entrega con las exclusiones defendidas. Revisión del contexto de Julián: 1 error (par del médico cruzado), óvalo con descripción en vez de nombre — pendiente su v2 |
 | 2026-08-21 | Paso 3 **en curso** (modo explicar): lección del core dictada. Corregida la guía §8 1.2 contra los 4 casos de la cátedra: el core es UNA elipse, no 1-5 casos |
 | 2026-08-21 | **Modo explicar**: Julián redibuja el diagrama de contexto con su propia mano como práctica para el examen. La versión de referencia queda en Entrega §2.1 — se compara DESPUÉS, no antes. Al terminar: revisión contra checklist y paso 3 |
 | 2026-08-20 | Paso 1 **cerrado**: lista final de 13 stakeholders (8 + 5 elegidos), clasificados, con necesidad oculta y tabla de 6 conflictos |
