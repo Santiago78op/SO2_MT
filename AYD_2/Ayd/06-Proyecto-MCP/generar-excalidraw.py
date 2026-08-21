@@ -12,7 +12,8 @@ trazo #1e1e1e, Helvetica, y los tamaños estándar por elemento.
 Uso:
     python generar-excalidraw.py <nombre-del-diagrama>
 
-Diagramas disponibles: cdu-hospital
+Diagramas disponibles: cdu-hospital, contexto-centro-salud,
+                      cdu-negocio-centro-salud
 """
 
 import json
@@ -104,8 +105,51 @@ def actor(x, y, nombre, tam=14):
     return partes
 
 
-def linea(x1, y1, x2, y2, punta=None, punteada=False, etiqueta=None):
-    """Asociación o relación. punta: None | 'arrow' | 'triangle_outline'."""
+def entidad(x, y, w, h, nombre, tam=14):
+    """Entidad o agente externo: rectangulo con el nombre centrado."""
+    r = _base("rectangle", x, y, w, h, roundness={"type": 3})
+    lineas = nombre.split("\n")
+    ty = y + h / 2 - (tam * 1.25 * len(lineas)) / 2
+    return [r, texto(nombre, x, int(ty), w, tam)]
+
+
+def actor_negocio(x, y, nombre, tam=14):
+    """Actor de NEGOCIO: monigote + barra diagonal + estereotipo textual.
+
+    La barra diagonal sobre el hombro es el icono UML de actor de negocio;
+    el estereotipo textual va arriba porque es el que siempre es valido.
+    """
+    cx = x + 50
+    partes = [texto("\u00abactor de negocio\u00bb", x - 30, y - 24, 160, 11)]
+    partes += actor(x, y, nombre, tam)
+    # barra diagonal del icono de actor de negocio: al costado del torso,
+    # NO sobre la cabeza (ahi se encimaria, y el paso 1 del checklist lo prohibe)
+    partes.append(_base("line", cx - 38, y + 66, 26, -22,
+                        points=[[0, 0], [26, -22]]))
+    return partes
+
+
+def elipse_negocio(x, y, w, h, etiqueta, tam=16):
+    """Caso de uso de NEGOCIO: elipse + diagonal + estereotipo sobre el nombre."""
+    e = _base("ellipse", x, y, w, h)
+    lineas = etiqueta.split("\n")
+    alto_total = 13 * 1.25 + tam * 1.25 * len(lineas)
+    ty = y + h / 2 - alto_total / 2
+    els = [e,
+           texto("\u00abcaso de uso de negocio\u00bb", x, int(ty), w, 12),
+           texto(etiqueta, x, int(ty + 17), w, tam)]
+    # diagonal del icono de negocio, en la esquina inferior izquierda
+    els.append(_base("line", x + w * 0.10, y + h * 0.80, 26, -20,
+                     points=[[0, 0], [26, -20]]))
+    return els
+
+
+def linea(x1, y1, x2, y2, punta=None, punteada=False, etiqueta=None, off=(0, 0)):
+    """Asociación o relación. punta: None | 'arrow' | 'triangle_outline'.
+
+    off desplaza la etiqueta respecto del punto medio, para separar las
+    etiquetas de dos flujos que corren casi paralelos.
+    """
     els = [_base("arrow", x1, y1, x2 - x1, y2 - y1,
                  points=[[0, 0], [x2 - x1, y2 - y1]],
                  lastCommittedPoint=None,
@@ -114,7 +158,7 @@ def linea(x1, y1, x2, y2, punta=None, punteada=False, etiqueta=None):
                  strokeStyle="dashed" if punteada else "solid",
                  elbowed=False)]
     if etiqueta:
-        mx, my = (x1 + x2) / 2, (y1 + y2) / 2
+        mx, my = (x1 + x2) / 2 + off[0], (y1 + y2) / 2 + off[1]
         els.append(texto(etiqueta, int(mx - 70), int(my - 22), 140, 12))
     return els
 
@@ -152,10 +196,18 @@ def emitir_svg(elementos, margen=40):
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{minx} {miny} {w} {h}" '
         f'width="{w}" height="{h}" font-family="Helvetica, Arial, sans-serif">',
-        '<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" '
+        # dos marcadores distintos: la generalizacion UML es un TRIANGULO HUECO,
+        # un flujo o dependencia es una flecha comun. Usar el mismo para ambos
+        # cambia la semantica del diagrama.
+        '<defs>'
+        '<marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" '
         'markerWidth="12" markerHeight="12" orient="auto">'
         f'<polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="{TRAZO}" '
-        'stroke-width="1"/></marker></defs>',
+        'stroke-width="1"/></marker>'
+        '<marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" '
+        'markerWidth="9" markerHeight="9" orient="auto">'
+        f'<polygon points="0,0 10,5 0,10" fill="{TRAZO}"/></marker>'
+        '</defs>',
         f'<rect x="{minx}" y="{miny}" width="{w}" height="{h}" fill="#ffffff"/>',
     ]
 
@@ -174,7 +226,9 @@ def emitir_svg(elementos, margen=40):
                 f'fill="{fill}" stroke="{TRAZO}" stroke-width="{gr}"/>')
         elif t in ("line", "arrow"):
             (dx1, dy1), (dx2, dy2) = e["points"][0], e["points"][-1]
-            punta = ' marker-end="url(#gen)"' if e.get("endArrowhead") else ""
+            ah = e.get("endArrowhead")
+            marca = {"triangle_outline": "gen", "arrow": "flecha"}.get(ah)
+            punta = f' marker-end="url(#{marca})"' if marca else ""
             dash = ' stroke-dasharray="8 6"' if e.get("strokeStyle") == "dashed" else ""
             out.append(
                 f'<line x1="{x + dx1}" y1="{y + dy1}" x2="{x + dx2}" y2="{y + dy2}" '
@@ -187,7 +241,9 @@ def emitir_svg(elementos, margen=40):
                                 .replace("<", "&lt;").replace(">", "&gt;"))
                 out.append(
                     f'<text x="{x + ew / 2}" y="{y + paso * (i + 1) - tam * 0.28}" '
-                    f'font-size="{tam}" fill="{TRAZO}" text-anchor="middle">{esc}</text>')
+                    f'font-size="{tam}" fill="{TRAZO}" text-anchor="middle" '
+                    f'paint-order="stroke" stroke="#ffffff" stroke-width="4" '
+                    f'stroke-linejoin="round">{esc}</text>')
 
     out.append("</svg>")
     return "\n".join(out)
@@ -236,7 +292,112 @@ def cdu_hospital():
     return els
 
 
-DIAGRAMAS = {"cdu-hospital": cdu_hospital}
+# --------------------------------------------------------------------------
+# BLOQUE 1.1 — Diagrama de contexto del NEGOCIO
+#   Caso: Centro de Salud Publico (Guatemala)
+#   Reglas (estilo-diagramas.md 8, BLOQUE 1.1):
+#     · el negocio como CAJA NEGRA unica al centro, sin interior
+#     · entidades de negocio a izquierda y derecha
+#     · sistemas externos arriba y abajo  ->  sus flechas no cruzan las de las
+#       personas
+#     · toda flecha con nombre, en sustantivo; ida y vuelta = dos flechas
+# --------------------------------------------------------------------------
+def contexto_centro_salud():
+    F = "arrow"          # todo streamline es direccional
+    els = []
+
+    # --- la caja negra: el negocio
+    els += elipse(430, 340, 380, 200, "Centro de Salud\nP\u00fablico")
+
+    # --- entidades de negocio: izquierda
+    els += entidad(40, 180, 220, 70, "Paciente")
+    els += entidad(40, 620, 220, 70, "Promotor de salud\ncomunitario")
+
+    # --- entidades de negocio: derecha
+    els += entidad(980, 160, 240, 70, "Direcci\u00f3n de \u00c1rea\nde Salud (MSPAS)")
+    els += entidad(980, 400, 240, 70, "Hospital nacional\nde referencia")
+    els += entidad(980, 640, 240, 70, "Almac\u00e9n de insumos\ny medicamentos")
+
+    # --- sistemas externos: arriba y abajo
+    els += entidad(510, 40, 220, 70, "RENAP")
+    els += entidad(510, 780, 220, 70, "SIGSA")
+
+    # --- streamlines desde y hacia el paciente
+    els += linea(262, 200, 452, 372, punta=F, etiqueta="Solicitud de cita",
+                 off=(-30, -28))
+    els += linea(444, 400, 262, 232, punta=F, etiqueta="Cita confirmada",
+                 off=(30, 50))
+
+    # --- promotor comunitario
+    els += linea(262, 668, 452, 508, punta=F, etiqueta="Censo comunitario",
+                 off=(-30, 46))
+    els += linea(446, 478, 262, 638, punta=F, etiqueta="Calendario de jornadas",
+                 off=(30, -26))
+
+    # --- Direccion de Area de Salud
+    els += linea(978, 180, 792, 368, punta=F, etiqueta="Norma de atenci\u00f3n")
+    els += linea(800, 396, 978, 212, punta=F, etiqueta="Reporte de morbilidad",
+                 off=(-30, 50))
+
+    # --- Hospital nacional de referencia
+    els += linea(808, 424, 978, 424, punta=F, etiqueta="Referencia de paciente", off=(0, -6))
+    els += linea(978, 452, 808, 452, punta=F, etiqueta="Contrarreferencia", off=(0, 30))
+
+    # --- Almacen de insumos
+    els += linea(796, 508, 978, 660, punta=F, etiqueta="Requisici\u00f3n de insumos")
+    els += linea(978, 692, 790, 528, punta=F, etiqueta="Despacho de insumos",
+                 off=(-30, 48))
+
+    # --- sistemas externos (arriba y abajo): las etiquetas se separan en X
+    #     porque las dos lineas corren casi verticales y a 80 px una de otra
+    els += linea(596, 112, 566, 348, punta=F, etiqueta="Validaci\u00f3n de CUI",
+                 off=(-118, 0))
+    els += linea(650, 344, 674, 112, punta=F, etiqueta="Consulta de identidad",
+                 off=(126, 0))
+    els += linea(620, 540, 620, 776, punta=F, etiqueta="Registro diario\nde consultas")
+
+    return els
+
+
+# --------------------------------------------------------------------------
+# BLOQUE 1.2 — CDU de alto nivel: el CORE del negocio
+#   Reglas (estilo-diagramas.md 8, BLOQUE 1.2):
+#     · estereotipos DE NEGOCIO en todos los elementos
+#     · solo casos primarios: los servicios esenciales que recibe el cliente
+#     · actor principal del lado de lectura (izquierda); secundarios del opuesto
+#     · casos ordenados por IMPORTANCIA, de arriba abajo
+#     · el recuadro del negocio contiene los casos; los actores quedan fuera
+# --------------------------------------------------------------------------
+def cdu_negocio_centro_salud():
+    els = []
+
+    # --- frontera del negocio
+    els += caja(420, 40, 460, 640, "Centro de Salud P\u00fablico",
+                fondo=FONDO_SISTEMA, grosor=2)
+
+    # --- casos de uso de negocio, ordenados por importancia
+    els += elipse_negocio(460, 120, 380, 100, "Atender consulta m\u00e9dica")
+    els += elipse_negocio(460, 300, 380, 100, "Aplicar esquema\nde vacunaci\u00f3n")
+    els += elipse_negocio(460, 500, 380, 100, "Referir paciente a\nhospital nacional")
+
+    # --- actor principal (izquierda) y secundario (derecha)
+    els += actor_negocio(60, 300, "Paciente")
+    els += actor_negocio(1000, 480, "Hospital nacional\nde referencia")
+
+    # --- asociaciones: SIN punta de flecha
+    els += linea(146, 320, 470, 182)
+    els += linea(146, 360, 462, 350)
+    els += linea(146, 396, 472, 528)
+    els += linea(996, 520, 838, 548)
+
+    return els
+
+
+DIAGRAMAS = {
+    "cdu-hospital": cdu_hospital,
+    "contexto-centro-salud": contexto_centro_salud,
+    "cdu-negocio-centro-salud": cdu_negocio_centro_salud,
+}
 
 
 def main():

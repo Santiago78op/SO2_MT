@@ -79,6 +79,30 @@ Lo indispensable de esa guía, para que no se pierda si no la abrís:
   contra las reglas. Un diagrama con el código perfecto puede verse mal. Nada se declara terminado
   sin haber visto la imagen.
 
+**Antes de dibujar cualquier artefacto del curso, decidí en qué plano estás** — es el error que más
+invalida entregables:
+
+| Plano | Modela | Estereotipos | Artefactos |
+|---|---|---|---|
+| **Negocio** | la organización | `«actor de negocio»`, `«caso de uso de negocio»`, `«trabajador del negocio»` | contexto, CDU de alto nivel (core), primera descomposición |
+| **Sistema** | el software | los del sistema, sin estereotipo de negocio | CDU expandidos (drivers RF) |
+
+Mezclar los estereotipos de los dos planos en un mismo diagrama **invalida el artefacto**. Y hay tres
+reglas de contenido que se verifican siempre, del §8 de la guía:
+
+- **Ningún caso de uso llamado crear / editar / eliminar / consultar.** Eso es descomposición
+  funcional y es un error, no una simplificación. La prueba: *¿el actor se iría satisfecho si solo
+  ocurriera esto?*
+- **Un atributo de calidad NO es un caso de uso.** Se documenta como escenario de **6 partes**
+  (fuente, estímulo, artefacto, entorno, respuesta, **medida**). Sin número en la medida, no es un
+  driver.
+- **Las restricciones no se priorizan**: todas son obligatorias. Los drivers de calidad sí, y con
+  **dos ejes** — importancia para el negocio (la asignan los stakeholders) y dificultad técnica (la
+  asigna el arquitecto).
+
+Las tres matrices de trazabilidad **no son diagramas**: son tablas, y viven en `07-Trazabilidad.md`.
+
+
 ## Notas de método
 
 - `_Protocolo de tutoría.md` — cómo se acompaña el estudio (leer primero).

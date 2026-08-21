@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 0 1180 720" width="1180" height="720" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="#1e1e1e" stroke-width="1"/></marker><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><polygon points="0,0 10,5 0,10" fill="#1e1e1e"/></marker></defs>
+<rect x="-10" y="0" width="1180" height="720" fill="#ffffff"/>
+<rect x="420" y="40" width="460" height="640" rx="12" fill="#f5f5f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="650.0" y="67.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Centro de Salud Público</text>
+<ellipse cx="650.0" cy="170.0" rx="190.0" ry="50.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="650.0" y="162.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="650.0" y="183.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Atender consulta médica</text>
+<line x1="498.0" y1="200.0" x2="524.0" y2="180.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="650.0" cy="350.0" rx="190.0" ry="50.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="650.0" y="332.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="650.0" y="353.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Aplicar esquema</text>
+<text x="650.0" y="373.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de vacunación</text>
+<line x1="498.0" y1="380.0" x2="524.0" y2="360.0" stroke="#1e1e1e" stroke-width="1"/>
+<ellipse cx="650.0" cy="550.0" rx="190.0" ry="50.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="650.0" y="532.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«caso de uso de negocio»</text>
+<text x="650.0" y="553.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Referir paciente a</text>
+<text x="650.0" y="573.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">hospital nacional</text>
+<line x1="498.0" y1="580.0" x2="524.0" y2="560.0" stroke="#1e1e1e" stroke-width="1"/>
+<text x="110.0" y="286.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="110.0" cy="314.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="328" x2="110" y2="364" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="86" y1="340" x2="134" y2="340" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="364" x2="90" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="110" y1="364" x2="130" y2="394" stroke="#1e1e1e" stroke-width="1"/>
+<text x="110.0" y="413.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Paciente</text>
+<line x1="72" y1="366" x2="98" y2="344" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1050.0" y="466.67" font-size="11" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«actor de negocio»</text>
+<ellipse cx="1050.0" cy="494.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="508" x2="1050" y2="544" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1026" y1="520" x2="1074" y2="520" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="544" x2="1030" y2="574" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="1050" y1="544" x2="1070" y2="574" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1050.0" y="593.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Hospital nacional</text>
+<text x="1050.0" y="611.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de referencia</text>
+<line x1="1012" y1="546" x2="1038" y2="524" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="146" y1="320" x2="470" y2="182" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="146" y1="360" x2="462" y2="350" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="146" y1="396" x2="472" y2="528" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="996" y1="520" x2="838" y2="548" stroke="#1e1e1e" stroke-width="1"/>
+</svg>

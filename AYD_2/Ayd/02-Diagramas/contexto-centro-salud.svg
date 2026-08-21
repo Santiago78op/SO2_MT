@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 890" width="1260" height="890" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="#1e1e1e" stroke-width="1"/></marker><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><polygon points="0,0 10,5 0,10" fill="#1e1e1e"/></marker></defs>
+<rect x="0" y="0" width="1260" height="890" fill="#ffffff"/>
+<ellipse cx="620.0" cy="440.0" rx="190.0" ry="100.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="620.0" y="435.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Centro de Salud</text>
+<text x="620.0" y="455.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Público</text>
+<rect x="40" y="180" width="220" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="150.0" y="219.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Paciente</text>
+<rect x="40" y="620" width="220" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="150.0" y="650.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Promotor de salud</text>
+<text x="150.0" y="668.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">comunitario</text>
+<rect x="980" y="160" width="240" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1100.0" y="190.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Dirección de Área</text>
+<text x="1100.0" y="208.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de Salud (MSPAS)</text>
+<rect x="980" y="400" width="240" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1100.0" y="430.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Hospital nacional</text>
+<text x="1100.0" y="448.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de referencia</text>
+<rect x="980" y="640" width="240" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1100.0" y="670.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Almacén de insumos</text>
+<text x="1100.0" y="688.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">y medicamentos</text>
+<rect x="510" y="40" width="220" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="620.0" y="79.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">RENAP</text>
+<rect x="510" y="780" width="220" height="70" rx="12" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="620.0" y="819.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">SIGSA</text>
+<line x1="262" y1="200" x2="452" y2="372" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="327.0" y="247.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Solicitud de cita</text>
+<line x1="444" y1="400" x2="262" y2="232" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="383.0" y="355.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Cita confirmada</text>
+<line x1="262" y1="668" x2="452" y2="508" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="327.0" y="623.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Censo comunitario</text>
+<line x1="446" y1="478" x2="262" y2="638" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="384.0" y="521.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Calendario de jornadas</text>
+<line x1="978" y1="180" x2="792" y2="368" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="885.0" y="263.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Norma de atención</text>
+<line x1="800" y1="396" x2="978" y2="212" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="859.0" y="343.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Reporte de morbilidad</text>
+<line x1="808" y1="424" x2="978" y2="424" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="893.0" y="407.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Referencia de paciente</text>
+<line x1="978" y1="452" x2="808" y2="452" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="893.0" y="471.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Contrarreferencia</text>
+<line x1="796" y1="508" x2="978" y2="660" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="887.0" y="573.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Requisición de insumos</text>
+<line x1="978" y1="692" x2="790" y2="528" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="854.0" y="647.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Despacho de insumos</text>
+<line x1="596" y1="112" x2="566" y2="348" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="463.0" y="219.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Validación de CUI</text>
+<line x1="650" y1="344" x2="674" y2="112" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="788.0" y="217.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Consulta de identidad</text>
+<line x1="620" y1="540" x2="620" y2="776" stroke="#1e1e1e" stroke-width="1" marker-end="url(#flecha)"/>
+<text x="620.0" y="647.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Registro diario</text>
+<text x="620.0" y="662.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">de consultas</text>
+</svg>
