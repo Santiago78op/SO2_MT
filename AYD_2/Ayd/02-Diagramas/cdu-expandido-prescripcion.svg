@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 0 1310 900" width="1310" height="900" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="gen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto"><polygon points="0,0 12,6 0,12" fill="#ffffff" stroke="#1e1e1e" stroke-width="1"/></marker><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><polygon points="0,0 10,5 0,10" fill="#1e1e1e"/></marker></defs>
+<rect x="10" y="0" width="1310" height="900" fill="#ffffff"/>
+<rect x="400" y="40" width="880" height="820" rx="12" fill="#f5f5f5" stroke="#1e1e1e" stroke-width="2"/>
+<text x="840.0" y="67.52" font-size="16" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">FarmaHosp — Prescripción</text>
+<ellipse cx="580.0" cy="225.0" rx="140.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="580.0" y="229.55" font-size="15" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Prescribir MAC</text>
+<ellipse cx="1085.0" cy="110.0" rx="165.0" ry="40.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1085.0" y="113.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Validar protocolo clínico</text>
+<ellipse cx="1085.0" cy="220.0" rx="165.0" ry="40.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1085.0" y="215.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Verificar interacciones</text>
+<text x="1085.0" y="231.86" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">medicamentosas</text>
+<ellipse cx="1085.0" cy="330.0" rx="165.0" ry="40.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1085.0" y="325.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Verificar contraindicaciones</text>
+<text x="1085.0" y="341.86" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">y alergias</text>
+<ellipse cx="1085.0" cy="440.0" rx="165.0" ry="40.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="1085.0" y="435.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Consultar inventario</text>
+<text x="1085.0" y="451.86" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">en tiempo real</text>
+<ellipse cx="595.0" cy="485.0" rx="155.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="595.0" y="480.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Solicitar compra urgente</text>
+<text x="595.0" y="496.86" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">o reemplazo terapéutico</text>
+<ellipse cx="605.0" cy="695.0" rx="165.0" ry="45.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<text x="605.0" y="690.61" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Acceder a diagnóstico sensible</text>
+<text x="605.0" y="706.86" font-size="13" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">con justificación auditada</text>
+<ellipse cx="190.0" cy="124.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="190" y1="138" x2="190" y2="174" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="166" y1="150" x2="214" y2="150" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="190" y1="174" x2="170" y2="204" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="190" y1="174" x2="210" y2="204" stroke="#1e1e1e" stroke-width="1"/>
+<text x="190.0" y="223.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Médico</text>
+<ellipse cx="300.0" cy="354.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="300" y1="368" x2="300" y2="404" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="276" y1="380" x2="324" y2="380" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="300" y1="404" x2="280" y2="434" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="300" y1="404" x2="320" y2="434" stroke="#1e1e1e" stroke-width="1"/>
+<text x="300.0" y="453.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Médico tratante</text>
+<ellipse cx="120.0" cy="554.0" rx="14.0" ry="14.0" fill="none" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="120" y1="568" x2="120" y2="604" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="96" y1="580" x2="144" y2="580" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="120" y1="604" x2="100" y2="634" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="120" y1="604" x2="140" y2="634" stroke="#1e1e1e" stroke-width="1"/>
+<text x="120.0" y="653.58" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">Médico de</text>
+<text x="120.0" y="671.08" font-size="14" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">urgencias</text>
+<line x1="296" y1="344" x2="208" y2="240" stroke="#1e1e1e" stroke-width="1" marker-end="url(#gen)"/>
+<line x1="124" y1="540" x2="176" y2="244" stroke="#1e1e1e" stroke-width="1" marker-end="url(#gen)"/>
+<line x1="244" y1="152" x2="442" y2="222" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="336" y1="382" x2="442" y2="478" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="156" y1="582" x2="442" y2="692" stroke="#1e1e1e" stroke-width="1"/>
+<line x1="716" y1="200" x2="918" y2="110" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 6" marker-end="url(#flecha)"/>
+<text x="847.0" y="126.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«include»</text>
+<line x1="720" y1="220" x2="918" y2="220" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 6" marker-end="url(#flecha)"/>
+<text x="839.0" y="195.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«include»</text>
+<line x1="716" y1="244" x2="918" y2="330" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 6" marker-end="url(#flecha)"/>
+<text x="863.0" y="284.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«include»</text>
+<line x1="704" y1="260" x2="918" y2="438" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 6" marker-end="url(#flecha)"/>
+<text x="877.0" y="374.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«include»</text>
+<line x1="590" y1="438" x2="578" y2="274" stroke="#1e1e1e" stroke-width="1" stroke-dasharray="8 6" marker-end="url(#flecha)"/>
+<text x="658.0" y="355.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">«extend»</text>
+<text x="658.0" y="370.64" font-size="12" fill="#1e1e1e" text-anchor="middle" paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">[sin stock]</text>
+</svg>

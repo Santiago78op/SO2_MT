@@ -482,12 +482,75 @@ def cdu_descomposicion_farmahosp():
     return els
 
 
+# --------------------------------------------------------------------------
+# PASO 5 del Caso 1 — CDU expandido del proceso Prescripcion (plano del SISTEMA)
+#
+# Cambia el plano: actores y elipses SIN estereotipo de negocio, y el recuadro
+# es el sistema. Molde de la catedra ("Procesamiento de Pedido" expandido):
+#   · include con flecha punteada BASE -> INCLUIDO
+#   · extend con flecha punteada EXTENSION -> BASE, con su condicion
+#   · generalizacion de actores: el padre con el CU compartido, cada hijo
+#     con el suyo (el patron del Hospital de la catedra)
+# --------------------------------------------------------------------------
+def cdu_expandido_prescripcion():
+    els = []
+
+    els += caja(400, 40, 880, 820, "FarmaHosp — Prescripción",
+                fondo=FONDO_SISTEMA, grosor=2)
+
+    # CU base
+    els += elipse(440, 180, 280, 90, "Prescribir MAC", tam=15)
+
+    # incluidos (columna derecha): los 4 que el enunciado exige al prescribir
+    els += elipse(920, 70, 330, 80, "Validar protocolo clínico", tam=13)
+    els += elipse(920, 180, 330, 80, "Verificar interacciones\nmedicamentosas", tam=13)
+    els += elipse(920, 290, 330, 80, "Verificar contraindicaciones\ny alergias", tam=13)
+    els += elipse(920, 400, 330, 80, "Consultar inventario\nen tiempo real", tam=13)
+
+    # extension: solo ocurre si no hay stock
+    els += elipse(440, 440, 310, 90, "Solicitar compra urgente\no reemplazo terapéutico", tam=13)
+
+    # CU propio del medico de urgencias (ABAC del acuerdo de calidad 4)
+    els += elipse(440, 650, 330, 90, "Acceder a diagnóstico sensible\ncon justificación auditada", tam=13)
+
+    # --- actores del SISTEMA (sin estereotipo de negocio), en escalera
+    els += actor(140, 110, "Médico")
+    els += actor(250, 340, "Médico tratante")
+    els += actor(70, 540, "Médico de\nurgencias")
+
+    # generalizacion: hijo -> padre, triangulo hueco, padre ARRIBA
+    els += linea(296, 344, 208, 240, punta="triangle_outline")
+    els += linea(124, 540, 176, 244, punta="triangle_outline")
+
+    # asociaciones (sin punta): padre con el CU compartido; cada hijo el suyo
+    els += linea(244, 152, 442, 222)
+    els += linea(336, 382, 442, 478)
+    els += linea(156, 582, 442, 692)
+
+    # include: BASE -> incluido, punteada
+    els += linea(716, 200, 918, 110, punta="arrow", punteada=True,
+                 etiqueta="«include»", off=(30, -18))
+    els += linea(720, 220, 918, 220, punta="arrow", punteada=True,
+                 etiqueta="«include»", off=(20, -14))
+    els += linea(716, 244, 918, 330, punta="arrow", punteada=True,
+                 etiqueta="«include»", off=(46, 8))
+    els += linea(704, 260, 918, 438, punta="arrow", punteada=True,
+                 etiqueta="«include»", off=(66, 36))
+
+    # extend: EXTENSION -> BASE, punteada, con la condicion
+    els += linea(590, 438, 578, 274, punta="arrow", punteada=True,
+                 etiqueta="«extend»\n[sin stock]", off=(74, 10))
+
+    return els
+
+
 DIAGRAMAS = {
     "cdu-hospital": cdu_hospital,
     "contexto-centro-salud": contexto_centro_salud,
     "cdu-negocio-centro-salud": cdu_negocio_centro_salud,
     "cdu-core-farmahosp": cdu_core_farmahosp,
     "cdu-descomposicion-farmahosp": cdu_descomposicion_farmahosp,
+    "cdu-expandido-prescripcion": cdu_expandido_prescripcion,
 }
 
 

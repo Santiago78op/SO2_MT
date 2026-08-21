@@ -358,6 +358,149 @@ editable en `.excalidraw`, verificación en `cdu-descomposicion-farmahosp-verifi
 
 ### 3.1 Drivers RF (CDU expandidos)
 
+**Acá cambia el plano: del negocio al SISTEMA.** Los estereotipos de negocio desaparecen, el
+recuadro ahora es el software, y el personal clínico —que en los diagramas del negocio era
+trabajador— **reaparece como actor**, porque frente al software está afuera. Cada proceso de la
+primera descomposición (§2.3) se expande en los casos de uso del sistema que lo realizan, y **cada
+caso de uso expandido es un driver RF**. Lo que este entregable demuestra es **completitud**: que
+ningún requisito funcional del enunciado quede sin caso de uso.
+
+> [!note] Convención de identificadores, declarada
+> El material de clase trae dos convenciones (`CU_0n` de la diapositiva; `CU-0nn`/`RFG-0nn` de la
+> NT1). Este documento usa **una sola en todo el trabajo**: prefijo + guion medio + dos dígitos
+> (`STK-nn`, `CDU-nn`, `RF-nn`, `AC-nn`, `RE-nn`), porque son los ids que anclan las matrices del
+> criterio 4 y no se renumeran nunca.
+
+#### La tabla de drivers RF — completitud contra el enunciado
+
+| ID | Driver RF (caso de uso del sistema) | Origen en el enunciado |
+|---|---|---|
+| **`CDU-01` Adquisición** | | |
+| `RF-01` | Gestionar órdenes de compra | etapa 1 |
+| `RF-02` | Registrar recepción de lotes (lote, vencimiento, factura) | etapa 1; los 3 errores de transcripción |
+| `RF-03` | Registrar control de calidad de recepción (temperatura, humedad) | etapa 1 |
+| `RF-04` | Tramitar compra urgente o reemplazo terapéutico | necesidad oculta del médico |
+| **`CDU-02` Almacenamiento** | | |
+| `RF-05` | Monitorear temperatura y humedad de cámaras (sensores cada 5 min) | etapa 2 |
+| `RF-06` | Registrar incidente de cadena de frío y bloquear lotes afectados | escenario 1 |
+| `RF-07` | Alertar al farmacéutico de guardia (SMS y correo) | escenario 1 |
+| `RF-08` | Sobrescribir la regla de descarte con justificación y firma del farmacéutico jefe, auditada | pregunta emergente del escenario 1 |
+| `RF-09` | Proyectar faltantes a 7 días según prescripciones programadas | necesidad oculta del farmacéutico |
+| **`CDU-03` Prescripción** | | |
+| `RF-10` | Prescribir MAC (dosis, vía, frecuencia) | etapa 3 |
+| `RF-11` | Validar contra protocolos clínicos «include» | etapa 3 |
+| `RF-12` | Verificar interacciones medicamentosas «include» | etapa 3 |
+| `RF-13` | Verificar contraindicaciones y alergias «include» | etapa 3 |
+| `RF-14` | Consultar inventario en tiempo real «include» | necesidad oculta del médico |
+| `RF-15` | Sugerir MAC según protocolo y patrón de prescripción del médico | necesidad oculta del médico |
+| `RF-16` | Acceder a diagnóstico sensible con justificación auditada (médico de urgencias) | acuerdo de calidad 4 |
+| **`CDU-04` Dispensación** | | |
+| `RF-17` | Dispensar MAC (verificar orden, disponibilidad y asignar lote) | etapa 4 |
+| `RF-18` | Generar etiqueta con código de barras/QR | etapa 4 |
+| `RF-19` | Dispensación inmediata de urgencia con registro de quién y por qué (opción A) | escenario 2 |
+| `RF-20` | Préstamo entre pacientes con notificación de reposición (opción B) | escenario 2 |
+| `RF-21` | Dispensación virtual con validación física en 12 h (opción C) | escenario 2 |
+| `RF-22` | Doble registro farmacéutico-enfermero con alerta si discrepancia > 5 min | regulación INCAP |
+| **`CDU-05` Administración** | | |
+| `RF-23` | Administrar MAC (escaneo de pulsera, medicamento y credencial biométrica) | etapa 5 |
+| `RF-24` | Validar paciente-medicamento con alerta de discrepancia | escenario 3 |
+| `RF-25` | Ingresar código manualmente como respaldo del escáner | entorno técnico (5 % de fallo) |
+| `RF-26` | Operar offline y reconciliar al reconectar sin duplicar | acuerdo de calidad 2 |
+| `RF-27` | Registrar reacción adversa inmediata con voz a texto | necesidad oculta del enfermero |
+| **`CDU-06` Seguimiento y farmacovigilancia** | | |
+| `RF-28` | Registrar seguimiento farmacoterapéutico y ajuste de dosis | etapa 6 |
+| `RF-29` | Generar y reenviar el reporte al sistema nacional (XML/DTD, ≤ 24 h, ventana 8-16 h) | etapa 6 + escenario 6 |
+| `RF-30` | Detectar patrones de efectos adversos por lote y generar alerta temprana | necesidad oculta del jefe de farmacovigilancia |
+| `RF-31` | Notificar la próxima dosis al paciente (SMS/WhatsApp) | necesidad oculta del paciente |
+| `RF-32` | Verificar trazabilidad del medicamento por QR (paciente) | necesidad oculta del paciente |
+| **`CDU-07` Control y auditoría** | | |
+| `RF-33` | Generar informe forense de lote en < 10 min sobre registros inmutables | escenario 4 |
+| `RF-34` | Presentar tablero de costo por paciente, por servicio y % de desperdicio | necesidad oculta del director |
+| `RF-35` | Auditar autorizaciones de compra y bajas de inventario | necesidad oculta del director |
+| `RF-36` | Responder solicitudes de información pública con datos anonimizados | Ley de Acceso a la Información |
+| `RF-37` | Exportar datos en HL7 FHIR y exponer API para el sistema nacional | necesidad del MSPAS |
+
+**37 drivers RF**, cada uno trazable a su proceso (`CDU-nn`) y a su origen en el enunciado. Esa
+doble columna **es** la prueba de completitud que pide el criterio.
+
+#### Expandido de `CDU-03` Prescripción — el diagrama profundo
+
+El más rico del caso: junta las **dos justificaciones de `include`**, un `extend` condicionado y la
+**generalización de actores** del molde del Hospital de la cátedra.
+
+```mermaid
+flowchart LR
+    MT["Médico tratante"] -->|"hereda"| M["Médico"]
+    MU["Médico de urgencias"] -->|"hereda"| M
+    M --- P(("Prescribir MAC"))
+    P -.->|"«include»"| V1(("Validar protocolo clínico"))
+    P -.->|"«include»"| V2(("Verificar interacciones"))
+    P -.->|"«include»"| V3(("Verificar contraindicaciones"))
+    P -.->|"«include»"| V4(("Consultar inventario<br/>en tiempo real"))
+    SC(("Solicitar compra urgente<br/>o reemplazo")) -.->|"«extend»<br/>[sin stock]"| P
+    MT --- SC
+    MU --- AD(("Acceder a diagnóstico sensible<br/>con justificación auditada"))
+```
+
+Las decisiones de relación, una por una:
+
+| Relación | Tipo | Justificación (el criterio, no la sintaxis) |
+|---|---|---|
+| Prescribir → Validar protocolo / interacciones / contraindicaciones | `include` por **particionamiento** | El enunciado exige las tres validaciones **siempre**: el base no funciona sin ellas. Partirlas hace legible el CU y son casos de apoyo sin actor (excepción de los convenios) |
+| Prescribir → Consultar inventario | `include` por **reutilización** | También lo necesita Dispensar (`RF-17`): comportamiento compartido entre dos CU |
+| Solicitar compra urgente → Prescribir | `extend` con condición `[sin stock]` | Prescribir **funciona perfectamente sin él**; solo se dispara en la excepción |
+| Médico tratante / de urgencias → Médico | **generalización** | El CU compartido (Prescribir) queda en el **padre**; cada hijo se queda con el suyo — el patrón exacto del Hospital de la cátedra |
+| Médico de urgencias — Acceder a diagnóstico | asociación propia del hijo | Solo urgencias tiene ese derecho (ABAC, acuerdo de calidad 4) |
+
+*(Lámina en notación de sistema: `02-Diagramas/cdu-expandido-prescripcion.svg`, editable en
+`.excalidraw`, verificación en `cdu-expandido-prescripcion-verificacion.png`.)*
+
+#### Expandidos de `CDU-04` y `CDU-05` — las relaciones
+
+```mermaid
+flowchart LR
+    FA["Farmacéutico"] --- D(("Dispensar MAC"))
+    D -.->|"«include»"| VI(("Consultar inventario<br/>en tiempo real"))
+    D -.->|"«include»"| GE(("Generar etiqueta QR"))
+    D -.->|"«include»"| DR(("Doble registro<br/>INCAP"))
+    UA(("Dispensación inmediata<br/>de urgencia — opción A")) -.->|"«extend»<br/>[farmacéutico no disponible]"| D
+    UB(("Préstamo entre pacientes<br/>opción B")) -.->|"«extend»<br/>[sin stock del paciente]"| D
+    UC(("Dispensación virtual<br/>opción C")) -.->|"«extend»<br/>[retiro diferido]"| D
+    EN["Enfermero"] --- UA
+```
+
+```mermaid
+flowchart LR
+    EN["Enfermero"] --- A(("Administrar MAC"))
+    A -.->|"«include»"| VP(("Validar<br/>paciente-medicamento"))
+    A -.->|"«include»"| DR2(("Doble registro<br/>INCAP"))
+    EM(("Ingresar código manual")) -.->|"«extend»<br/>[falla el escáner]"| A
+    OF(("Operar offline y<br/>reconciliar")) -.->|"«extend»<br/>[sin conexión]"| A
+    RA(("Registrar reacción adversa<br/>por voz")) -.->|"«extend»<br/>[hay reacción]"| A
+```
+
+Nota de reutilización entre procesos: *Consultar inventario* lo incluyen **Prescribir y Dispensar**;
+*Doble registro INCAP* lo incluyen **Dispensar y Administrar** (la regulación exige que ambos
+extremos coincidan). Esa es la inclusión por reutilización operando **entre** expandidos, no solo
+adentro de uno.
+
+Los expandidos de `CDU-01`, `CDU-02`, `CDU-06` y `CDU-07` siguen el mismo procedimiento; sus drivers
+están completos en la tabla y las relaciones son directas (sin `include`/`extend` que amerite
+diagrama propio, salvo `RF-08` que extiende a `RF-06` con condición `[decisión de sobrescribir]`).
+
+#### Checklist de los CDU expandidos
+
+- [x] Plano del **sistema**: sin estereotipos de negocio; el recuadro es el software
+- [x] El personal clínico reaparece como **actor** (y está dicho por qué)
+- [x] Cada `include` y cada `extend` tiene su **criterio escrito** (reutilización / particionamiento / condición)
+- [x] Dirección correcta: `include` base→incluido; `extend` extensión→base con su condición
+- [x] Los CU sin actor son incluidos de apoyo (excepción de los convenios)
+- [x] Generalización con el padre arriba y el CU compartido en el padre
+- [x] **37 drivers RF con ID**, cada uno trazable a su `CDU-nn` y a su origen en el enunciado
+- [x] Los 6 escenarios críticos del enunciado aparecen en algún RF
+
+---
+
 ### 3.2 Drivers de atributos de calidad
 
 ### 3.3 Drivers de restricción
