@@ -649,35 +649,47 @@ nunca *cómo funciona adentro*.
 
 #### 1.2 CDU de alto nivel — el core del negocio
 
-**Qué representa.** Los **servicios esenciales que el cliente recibe del negocio**. No es un
-inventario de lo que hace la organización: es la respuesta a *¿para qué existe este negocio?*.
+**Qué representa.** El negocio visto **como una sola cosa, todavía sin abrir**. Responde *¿cuál es
+el negocio?* — no *¿qué procesos tiene?*: eso es la primera descomposición.
+
+> [!important] Corregido el 2026-08-21 contra los cuatro casos resueltos en clase
+> Una versión anterior de esta sección decía *«de uno a cinco casos primarios»*. **Los cuatro
+> ejemplos de la cátedra dicen otra cosa, y la clase manda** (jerarquía de fuentes): el core es
+> **UNA sola elipse** que nombra el negocio completo — *Sistema de Ventas on line Tienda X*,
+> *Gestión de la Producción de Productos de Construcción*, *Automatización de Procesos del
+> Restaurante X*, *Sistema Hospitalario*. Cuatro de cuatro. Los «servicios primarios» aparecen
+> recién en la **primera descomposición**.
+>
+> Consecuencia sobre el diagrama de prueba: `cdu-negocio-centro-salud` (3 elipses) tiene la forma
+> de una **primera descomposición**, no de un core. Ver [[Ejemplos resueltos de casos de negocio]].
 
 | Aspecto | Regla |
 |---|---|
-| **Estereotipos** | `«actor de negocio»` y `«caso de uso de negocio»`, **obligatorios**. En UML se marcan con el texto entre comillas angulares y, opcionalmente, con el **icono de negocio**: el monigote con una **barra diagonal** y la elipse con una **diagonal** |
-| **Cuántos casos** | **Solo los primarios.** Como referencia práctica: de uno a cinco. Si aparecen quince, se está modelando funciones, no servicios |
-| **Disposición** | **Actores principales arriba** (o a la izquierda, en lectura horizontal); actores secundarios —reguladores, proveedores, otros negocios— del lado opuesto. Los casos **ordenados por importancia, de arriba abajo** |
-| **Frontera** | El recuadro del negocio contiene los casos de uso. Los actores quedan **fuera**: por definición, un actor de negocio está fuera del negocio |
-| **Trabajadores** | **No se dibujan acá.** Quien ejecuta el proceso desde adentro es `«trabajador del negocio»` y vive en las **realizaciones**, no en el diagrama de casos de uso |
-| **Nombre** | Verbo en infinitivo + objeto, escrito **desde el objetivo del actor**: *«Atender consulta médica»*, no *«Gestión de consultas»* |
+| **Cuántas elipses** | **UNA.** Si hay más, ya es la primera descomposición |
+| **Qué nombra** | El **negocio o sistema completo**, no un proceso ni una función |
+| **Estereotipos** | De negocio, obligatorios: monigote con **barra diagonal cruzando la cabeza**; elipse con **barra diagonal en el borde derecho**. Sin diagonal = caso de uso del sistema = error de plano |
+| **Disposición** | El CUN al **centro**, los actores **en círculo** alrededor |
+| **Flechas** | **Sin punta** = comunicación en los dos sentidos (así están los cuatro cores de la cátedra). Con punta: apunta al CUN si **inicia el actor**, apunta al actor si **inicia el negocio** |
+| **Actores** | Todos los del campo de acción — incluidas las **áreas internas de la organización** si el campo modelado es más chico que la empresa (en el Hospital de la cátedra, *Encamamiento* y *Farmacia* son actores) |
+| **Trabajadores** | **No se dibujan.** Los individuos que ejecutan por dentro van en las realizaciones |
+| **Conectividad** | Un CU sin actor es error (con 2 excepciones: CU hijo cuyo padre describe la comunicación, y CU de apoyo incluido). Un **actor sin CU es error sin excepción** |
 
 **Errores que lo invalidan**
 
-- Usar **estereotipos del sistema** en un diagrama de negocio. Es el error de plano.
-- Dibujar al **médico o al enfermero como actores** cuando trabajan dentro del negocio modelado.
-- Poner casos de uso **secundarios o de soporte** en el core.
-- Nombres sustantivados (*«Gestión de…»*, *«Administración de…»*): esconden el objetivo del actor.
-- Un caso de uso **sin ningún actor** en el core.
+- **Más de una elipse**: el core listando procesos ya es el diagrama 3.
+- Estereotipos **del sistema** en el plano del negocio.
+- Un **trabajador** dibujado como actor.
+- Un **actor sin línea** a la elipse (sin excepción posible).
+- La elipse nombrando un proceso o una función en vez del negocio completo.
 
-> [!tip] Mini-checklist del CDU de alto nivel
-> - [ ] Todos los elementos llevan estereotipo **de negocio**, ninguno del sistema
-> - [ ] Entre uno y cinco casos de uso, todos servicios esenciales
-> - [ ] Cada caso responde a *«¿qué recibe el cliente?»*, no a *«¿qué hace la organización?»*
-> - [ ] Actores principales arriba; secundarios del lado opuesto
-> - [ ] Casos ordenados por importancia de arriba abajo
-> - [ ] Ningún trabajador del negocio dibujado como actor
-> - [ ] Todos los nombres en verbo + objeto
-> - [ ] Consistente con la frontera declarada en el documento
+> [!tip] Mini-checklist del CDU de alto nivel (core)
+> - [ ] **Una** sola elipse, y nombra el negocio completo
+> - [ ] Todos los elementos con estereotipo **de negocio** (las diagonales)
+> - [ ] El CUN al centro, los actores en círculo
+> - [ ] Líneas sin punta, salvo que se quiera marcar quién inicia
+> - [ ] Ningún trabajador dibujado como actor
+> - [ ] Ningún actor suelto sin línea
+> - [ ] Los actores son consistentes con la frontera declarada y con el diagrama de contexto
 
 #### 1.3 Primera descomposición — los procesos de negocio
 

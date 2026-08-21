@@ -1,0 +1,2316 @@
+{
+	"_type": "Project",
+	"_id": "AAAAAAFF+h6SjaM2Hec=",
+	"name": "Practica 1",
+	"ownedElements": [
+		{
+			"_type": "FCFlowchart",
+			"_id": "AAAAAAGgJMtZkQJsWiY=",
+			"_parent": {
+				"$ref": "AAAAAAFF+h6SjaM2Hec="
+			},
+			"name": "Flowchart1",
+			"ownedElements": [
+				{
+					"_type": "FCFlowchartDiagram",
+					"_id": "AAAAAAGgJMtZkQJtgSQ=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "FlowchartDiagram1",
+					"ownedViews": [
+						{
+							"_type": "FCTerminatorView",
+							"_id": "AAAAAAGgJM396gJ0SOI=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJM396gJ106k=",
+									"_parent": {
+										"$ref": "AAAAAAGgJM396gJ0SOI="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 586,
+									"top": 546,
+									"width": 164,
+									"height": 117,
+									"text": "                                                   sistema integral de gestión para el ciclo de vida del medicamento de alto costo, desde la adquisición hasta la administración al paciente y el seguimiento farmacoterapéutico. FarmaHosp",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"showShadow": false,
+							"left": 576,
+							"top": 536,
+							"width": 184,
+							"height": 152,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJM396gJ106k="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJNEGUQKj1Iw=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNEGUQKhY8g="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJNEGUQKkn38=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNEGUQKj1Iw="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 170,
+									"top": 346,
+									"width": 100,
+									"height": 13,
+									"text": "Médico tratante",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 160,
+							"top": 336,
+							"width": 120,
+							"height": 56,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNEGUQKkn38="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNSagwMeGKY=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNSagwMcO6E="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNSagwMf1Vo=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNSagwMeGKY="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNSagwMcO6E="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 432,
+									"top": 343,
+									"width": 117.04443359375,
+									"height": 13,
+									"alpha": -0.016947531242361258,
+									"distance": 118.01694793545543,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNSagwMeGKY="
+									},
+									"edgePosition": 1,
+									"text": "Prescripción médica"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJNEGUQKj1Iw="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "608:536;608:352;280:352",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNSagwMf1Vo="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNTwXgMzua0=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNTwXQMxSco="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNTwXgM0IgQ=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNTwXgMzua0="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNTwXQMxSco="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 376,
+									"top": 375,
+									"width": 217.51513671875,
+									"height": 13,
+									"alpha": -1.5893127752198526,
+									"distance": 108.01851693112621,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNTwXgMzua0="
+									},
+									"edgePosition": 1,
+									"text": "Alertas de interacción y disponibilidad"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJNEGUQKj1Iw="
+							},
+							"points": "280:384;592:384;592:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNTwXgM0IgQ="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJNWdjANFy3I=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNWdiwNDVi0="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJNWdjANGewI=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNWdjANFy3I="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 122,
+									"top": 466,
+									"width": 92,
+									"height": 26,
+									"text": "Farmacéutico clínico",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 112,
+							"top": 456,
+							"width": 112,
+							"height": 64,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNWdjANGewI="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNXgBQNR+TU=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNXgBQNPR88="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNXgBQNSt8A=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNXgBQNR+TU="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNXgBQNPR88="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 272,
+									"top": 455,
+									"width": 174.154296875,
+									"height": 13,
+									"alpha": -1.8197592683014718,
+									"distance": 182.6307750626931,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNXgBQNR+TU="
+									},
+									"edgePosition": 1,
+									"text": "Confirmación de dispensación"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJNWdjANFy3I="
+							},
+							"points": "224:463;536:463;536:552;576:552",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNXgBQNSt8A="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNZ0xgNhq2I=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNZ0xgNfnu8="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNZ0xgNiQyw=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNZ0xgNhq2I="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNZ0xgNfnu8="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 255,
+									"top": 496,
+									"width": 216.7978515625,
+									"height": 13,
+									"alpha": -4.9644846668520115,
+									"distance": 136.3084736911099,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNZ0xgNhq2I="
+									},
+									"edgePosition": 1,
+									"text": "Orden de dispensación y etiqueta QR"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJNWdjANFy3I="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "576:568;496:568;496:504;224:504",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNZ0xgNiQyw="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJNnwCAOBcns=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNnwCAN/5ZI="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJNnwCAOCHk0=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNnwCAOBcns="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 130,
+									"top": 602,
+									"width": 84.68994140625,
+									"height": 26,
+									"text": "Enfermero de piso",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 120,
+							"top": 592,
+							"width": 104.68994140625,
+							"height": 56,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNnwCAOCHk0="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNpkYwONaTE=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNpkYwOLe7A="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNpkYwOOhGI=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNpkYwONaTE="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNpkYwOLe7A="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 336,
+									"top": 592,
+									"width": 153.9052734375,
+									"height": 13,
+									"alpha": 0.1651485422796013,
+									"distance": 12.165525060596439,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNpkYwONaTE="
+									},
+									"edgePosition": 1,
+									"text": "Registro de administración"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJNnwCAOBcns="
+							},
+							"points": "225:600;576:600",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNpkYwOOhGI="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNq0IgOZCFE=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNq0IgOXv2k="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNq0IgOa/rA=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNq0IgOZCFE="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNq0IgOXv2k="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 312,
+									"top": 632,
+									"width": 194.1494140625,
+									"height": 13,
+									"alpha": 3.3602613641698666,
+									"distance": 9.219544457292887,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNq0IgOZCFE="
+									},
+									"edgePosition": 1,
+									"text": "Validación paciente-medicamento"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJNnwCAOBcns="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "576:640;225:640",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNq0IgOa/rA="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJNtxSQOtjRA=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNtxSQOrsnk="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJNtxSQOuMK4=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNtxSQOtjRA="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 146,
+									"top": 714,
+									"width": 94.18994140625,
+									"height": 13,
+									"text": "Paciente",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 136,
+							"top": 704,
+							"width": 114.18994140625,
+							"height": 57,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNtxSQOuMK4="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNvWnAO3RB4=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNvWnAO1WXM="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNvWnAO4KKw=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNvWnAO3RB4="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNvWnAO1WXM="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 288,
+									"top": 720,
+									"width": 162.5888671875,
+									"height": 13,
+									"alpha": -4.707557907549649,
+									"distance": 207.0024154448445,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNvWnAO3RB4="
+									},
+									"edgePosition": 1,
+									"text": "Consulta de trazabilidad QR"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJNtxSQOtjRA="
+							},
+							"points": "250:725;576:725;576:688",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNvWnAO4KKw="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJNwX0APDsL4=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJNwX0APBB3o="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJNwX0APEtxw=",
+									"_parent": {
+										"$ref": "AAAAAAGgJNwX0APDsL4="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJNwX0APBB3o="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 416,
+									"top": 743,
+									"width": 176.30615234375,
+									"height": 13,
+									"alpha": -0.02083032220541492,
+									"distance": 96.02083107326243,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJNwX0APDsL4="
+									},
+									"edgePosition": 1,
+									"text": "Recordatorio de próxima dosis"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJNtxSQOtjRA="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "600:688;600:752;250:752",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJNwX0APEtxw="
+							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGgJN1kUgPUqt4=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"fillColor": "#FFFFFF",
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 200,
+							"top": 264,
+							"width": 128,
+							"height": 38,
+							"text": "Quién usa el sistema",
+							"horzAlign": 2
+						},
+						{
+							"_type": "FreelineEdgeView",
+							"_id": "AAAAAAGgJN2sRgPbnls=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"lineStyle": 1,
+							"points": "232:200;232:200"
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGgJN7R3wPyC0k=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 1064,
+							"top": 280,
+							"width": 100,
+							"height": 51,
+							"text": "quién decide, quién surte, quién audita",
+							"horzAlign": 2
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJN8WIwP7q2s=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJN8WIwP5vlA="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJN8WIwP8CMg=",
+									"_parent": {
+										"$ref": "AAAAAAGgJN8WIwP7q2s="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 1058,
+									"top": 370,
+									"width": 100,
+									"height": 26,
+									"text": "Director Administrativo",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 1048,
+							"top": 360,
+							"width": 120,
+							"height": 72,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJN8WIwP8CMg="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJN89MgQERFw=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJN89MgQCgdE="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJN89MgQFuLg=",
+									"_parent": {
+										"$ref": "AAAAAAGgJN89MgQERFw="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 1106,
+									"top": 490,
+									"width": 124,
+									"height": 26,
+									"text": "Jefe de Farmacovigilancia",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 1096,
+							"top": 480,
+							"width": 144,
+							"height": 64,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJN89MgQFuLg="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJN9fYgQNke0=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJN9fYgQLC2U="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJN9fYgQOacM=",
+									"_parent": {
+										"$ref": "AAAAAAGgJN9fYgQNke0="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 1114,
+									"top": 626,
+									"width": 92,
+									"height": 26,
+									"text": "Proveedor de MAC",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 1104,
+							"top": 616,
+							"width": 112,
+							"height": 56,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJN9fYgQOacM="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJN9//AQWYDs=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJN9//AQUjiQ="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJN9//AQXv2c=",
+									"_parent": {
+										"$ref": "AAAAAAGgJN9//AQWYDs="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 1090,
+									"top": 722,
+									"width": 100,
+									"height": 26,
+									"text": "Contraloría General",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 1080,
+							"top": 712,
+							"width": 120,
+							"height": 56,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJN9//AQXv2c="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJN/H0AQizyM=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJN/H0AQg06g="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJN/H0AQjROA=",
+									"_parent": {
+										"$ref": "AAAAAAGgJN/H0AQizyM="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJN/H0AQg06g="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 824,
+									"top": 416,
+									"width": 191.50244140625,
+									"height": 13,
+									"alpha": 1.9765815624542742,
+									"distance": 146.93195704134618,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJN/H0AQizyM="
+									},
+									"edgePosition": 1,
+									"text": "Autorización de orden de compra"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJN8WIwP7q2s="
+							},
+							"points": "1048:424;784:424;784:536;760:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJN/H0AQjROA="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOEZ4gQ85V4=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOEZ4QQ6Ebg="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOEZ4gQ9dxY=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOEZ4gQ85V4="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOEZ4QQ6Ebg="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 816,
+									"top": 390,
+									"width": 191.50244140625,
+									"height": 13,
+									"alpha": 0,
+									"distance": 167,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOEZ4gQ85V4="
+									},
+									"edgePosition": 1,
+									"text": "Tablero de costos y desperdicio"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJN8WIwP7q2s="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "744:536;744:396;1048:396",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOEZ4gQ9dxY="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOJDTwRP0bU=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOJDTwRNDIU="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOJDTwRQZQU=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOJDTwRP0bU="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOJDTwRNDIU="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 855,
+									"top": 487,
+									"width": 212.46240234375,
+									"height": 13,
+									"alpha": -1.2753552598357196,
+									"distance": 144.2497833620557,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOJDTwRP0bU="
+									},
+									"edgePosition": 1,
+									"text": "Alerta de patrón de efectos adversos"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJN89MgQERFw="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "760:576;824:576;824:496;1096:496",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOJDTwRQZQU="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOMSCARpo8U=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOMSCARnLCY="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOMSCARqMKI=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOMSCARpo8U="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOMSCARnLCY="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 904,
+									"top": 524,
+									"width": 138.7470703125,
+									"height": 13,
+									"alpha": 1.8490956881612584,
+									"distance": 138.32208789632983,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOMSCARpo8U="
+									},
+									"edgePosition": 1,
+									"text": "Dictamen de causalidad"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJN89MgQERFw="
+							},
+							"points": "1096:536;840:536;840:600;760:600",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOMSCARqMKI="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOfUiQTMb5E=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOfUiQTKSFE="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOfUiQTNr4A=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOfUiQTMb5E="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOfUiQTKSFE="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 861,
+									"top": 649,
+									"width": 155.35888671875,
+									"height": 13,
+									"alpha": 3.306741060734588,
+									"distance": 6.082762530298219,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOfUiQTMb5E="
+									},
+									"edgePosition": 1,
+									"text": "Lote, vencimiento y factura"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJN9fYgQNke0="
+							},
+							"lineStyle": 2,
+							"points": "1104:656;760:656",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOfUiQTNr4A="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOwT+QUbnxk=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOwT+QUZS6s="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOwT+QUcBwg=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOwT+QUbnxk="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOwT+QUZS6s="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 824,
+									"top": 720,
+									"width": 179.21337890625,
+									"height": 13,
+									"alpha": 0.019605329576138926,
+									"distance": 153.0294089382822,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOwT+QUbnxk="
+									},
+									"edgePosition": 1,
+									"text": "Informe forense de trazabilidad"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJN9//AQWYDs="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "760:688;760:729;1080:729",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOwT+QUcBwg="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJOxH8AUo1AU=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJOxH8AUmpPA="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJOxH8AUpwBU=",
+									"_parent": {
+										"$ref": "AAAAAAGgJOxH8AUo1AU="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJOxH8AUmpPA="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 831,
+									"top": 752,
+									"width": 164.05517578125,
+									"height": 13,
+									"alpha": -1.565178252435548,
+									"distance": 178.0028089666003,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJOxH8AUo1AU="
+									},
+									"edgePosition": 1,
+									"text": "Solicitud de auditoría de lote"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJN9//AQWYDs="
+							},
+							"points": "1080:760;736:760;736:688",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJOxH8AUpwBU="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPDdtQWN/B0=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPDdtQWLR3o="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPDdtQWOfmM=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPDdtQWN/B0="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPDdtQWLR3o="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 888,
+									"top": 616,
+									"width": 101.16259765625,
+									"height": 13,
+									"alpha": 0.32175005439739224,
+									"distance": 6.324555320336759,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPDdtQWN/B0="
+									},
+									"edgePosition": 1,
+									"text": "Orden de compra"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJN9fYgQNke0="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"lineStyle": 2,
+							"points": "760:624;1104:624",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPDdtQWOfmM="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPQ8ygjfsFo=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPQ8ygjdJYQ="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPQ8ygjge2A=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPQ8ygjfsFo="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 394,
+									"top": 186,
+									"width": 54.919921875,
+									"height": 26,
+									"text": "Sensores IoT",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 384,
+							"top": 176,
+							"width": 74.919921875,
+							"height": 46,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPQ8ygjge2A="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPRkvgjpGzk=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPRkvgjneng="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPRkvgjqvCs=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPRkvgjpGzk="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 634,
+									"top": 138,
+									"width": 65.75537109375,
+									"height": 26,
+									"text": "Legacy de admisiones",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 624,
+							"top": 128,
+							"width": 85.75537109375,
+							"height": 59,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPRkvgjqvCs="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPShbAjzdug=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPShbAjxNy0="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPShbAj0D2w=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPShbAjzdug="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 874,
+									"top": 170,
+									"width": 84,
+									"height": 26,
+									"text": "Directorio activo",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 864,
+							"top": 160,
+							"width": 104,
+							"height": 54,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPShbAj0D2w="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPTkRQj94sE=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPTkRQj7DiI="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPTkRQj+Z8Y=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPTkRQj94sE="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPTkRQj7DiI="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 432,
+									"top": 280,
+									"width": 209.56787109375,
+									"height": 13,
+									"alpha": 1.5707913267948967,
+									"distance": 2,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPTkRQj94sE="
+									},
+									"edgePosition": 1,
+									"text": "Lecturas de temperatura y humedad"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJPQ8ygjfsFo="
+							},
+							"points": "424:222;424:288;648:288;648:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPTkRQj+Z8Y="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPWujwkW9Rw=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPWujgkUzuY="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPWujwkXLVM=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPWujwkW9Rw="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPWujgkUzuY="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 544,
+									"top": 215,
+									"width": 122.1416015625,
+									"height": 13,
+									"alpha": -5.869643220484082,
+									"distance": 151.79591562357663,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPWujwkW9Rw="
+									},
+									"edgePosition": 1,
+									"text": "Consulta de paciente"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJPRkvgjpGzk="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"lineStyle": 2,
+							"points": "666:536;666:187",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPWujwkXLVM="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPXtWwkhPBI=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPXtWwkf7ig="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPXtWwkife0=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPXtWwkhPBI="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPXtWwkf7ig="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 672,
+									"top": 224,
+									"width": 115.60986328125,
+									"height": 13,
+									"alpha": 2.783658679098147,
+									"distance": 139.86421987055874,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPXtWwkhPBI="
+									},
+									"edgePosition": 1,
+									"text": "Datos demográficos"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJPRkvgjpGzk="
+							},
+							"lineStyle": 2,
+							"points": "680:187;680:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPXtWwkife0="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPgECAlULzE=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPgEBwlSpa8="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPgECAlVI+Y=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPgECAlULzE="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPgEBwlSpa8="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 724,
+									"top": 272,
+									"width": 147.4306640625,
+									"height": 13,
+									"alpha": 1.1071447178020906,
+									"distance": 2.23606797749979,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPgECAlULzE="
+									},
+									"edgePosition": 1,
+									"text": "Solicitud de autenticación"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJPShbAjzdug="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "704:536;704:280;888:280;888:214",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPgECAlVI+Y="
+							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGgJPiZ7glmtN0=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 448,
+							"top": 120,
+							"width": 100,
+							"height": 38,
+							"text": "dispositivos y sistemas",
+							"horzAlign": 2
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPj6gAlvsRo=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPj6gAlt13Y="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPj6gAlwPKg=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPj6gAlvsRo="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPj6gAlt13Y="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 768,
+									"top": 320,
+									"width": 134.41162109375,
+									"height": 13,
+									"alpha": 3.2741440985502797,
+									"distance": 15.132745950421556,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPj6gAlvsRo="
+									},
+									"edgePosition": 1,
+									"text": "Credenciales validadas"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJPShbAjzdug="
+							},
+							"points": "920:214;920:328;720:328;720:536",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPj6gAlwPKg="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPo5LQl+AQM=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPo5LQl8anw="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPo5LQl/gL0=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPo5LQl+AQM="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 370,
+									"top": 914,
+									"width": 100.4326171875,
+									"height": 26,
+									"text": "Sist. nacional de farmacovigilancia",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 360,
+							"top": 904,
+							"width": 120.4326171875,
+							"height": 72,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPo5LQl/gL0="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPpnLwmHJ00=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPpnLwmFOwM="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPpnLwmInaA=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPpnLwmHJ00="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 666,
+									"top": 962,
+									"width": 59.97265625,
+									"height": 39,
+									"text": "Pasarela SMS / WhatsApp",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 656,
+							"top": 952,
+							"width": 79.97265625,
+							"height": 59,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPpnLwmInaA="
+							}
+						},
+						{
+							"_type": "FCProcessView",
+							"_id": "AAAAAAGgJPqMkQmQb5Y=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPqMkQmOl/E="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAGgJPqMkQmR7pE=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPqMkQmQb5Y="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": true,
+									"left": 962,
+									"top": 866,
+									"width": 92,
+									"height": 26,
+									"text": "Operaciones de TI",
+									"wordWrap": true
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 952,
+							"top": 856,
+							"width": 112,
+							"height": 56,
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPqMkQmR7pE="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPtr4QmkYCQ=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPtr4QmiO8k="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPtr4QmlgxQ=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPtr4QmkYCQ="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPtr4QmiO8k="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 446,
+									"top": 800,
+									"width": 127.9052734375,
+									"height": 13,
+									"alpha": 1.1071447178020906,
+									"distance": 2.23606797749979,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPtr4QmkYCQ="
+									},
+									"edgePosition": 1,
+									"text": "Alerta de retiro de lote"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJPo5LQl+AQM="
+							},
+							"points": "384:904;384:808;632:808;632:688",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPtr4QmlgxQ="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPvBWAmzO4w=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPvBVwmxjSg="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPvBWAm0/aI=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPvBWAmzO4w="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPvBVwmxjSg="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 448,
+									"top": 848,
+									"width": 183.548828125,
+									"height": 13,
+									"alpha": 3.7295937186793724,
+									"distance": 3.605551275463989,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPvBWAmzO4w="
+									},
+									"edgePosition": 1,
+									"text": "Reporte de efecto adverso XML"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJPo5LQl+AQM="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "648:688;648:856;424:856;424:904",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPvBWAm0/aI="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPxmBQnIims=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPxmBQnG1Tw="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPxmBQnJ8Iw=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPxmBQnIims="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPxmBQnG1Tw="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 616,
+									"top": 911,
+									"width": 135.85888671875,
+									"height": 13,
+									"alpha": 0.09157987557251213,
+									"distance": 98.41239759298622,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPxmBQnIims="
+									},
+									"edgePosition": 1,
+									"text": "Mensaje de notificación"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJPpnLwmHJ00="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"lineStyle": 2,
+							"points": "674:688;674:952",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPxmBQnJ8Iw="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAGgJPyQ7wnToyk=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"model": {
+								"$ref": "AAAAAAGgJPyQ7wnRUkA="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAGgJPyQ7wnURq8=",
+									"_parent": {
+										"$ref": "AAAAAAGgJPyQ7wnToyk="
+									},
+									"model": {
+										"$ref": "AAAAAAGgJPyQ7wnRUkA="
+									},
+									"font": "Arial;13;0",
+									"parentStyle": false,
+									"left": 744,
+									"top": 872,
+									"width": 180.6416015625,
+									"height": 13,
+									"alpha": 0.01922839725127855,
+									"distance": 104.01922899156675,
+									"hostEdge": {
+										"$ref": "AAAAAAGgJPyQ7wnToyk="
+									},
+									"edgePosition": 1,
+									"text": "Métricas y alertas de operación"
+								}
+							],
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"head": {
+								"$ref": "AAAAAAGgJPqMkQmQb5Y="
+							},
+							"tail": {
+								"$ref": "AAAAAAGgJM396gJ0SOI="
+							},
+							"points": "730:688;730:880;952:880",
+							"nameLabel": {
+								"$ref": "AAAAAAGgJPyQ7wnURq8="
+							}
+						},
+						{
+							"_type": "UMLTextView",
+							"_id": "AAAAAAGgJP2UNgntY14=",
+							"_parent": {
+								"$ref": "AAAAAAGgJMtZkQJtgSQ="
+							},
+							"font": "Arial;13;0",
+							"parentStyle": false,
+							"left": 504,
+							"top": 992,
+							"width": 100,
+							"height": 38,
+							"text": "dispositivos y sistemas"
+						}
+					]
+				},
+				{
+					"_type": "FCTerminator",
+					"_id": "AAAAAAGgJM396QJyUio=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "                                                   sistema integral de gestión para el ciclo de vida del medicamento de alto costo, desde la adquisición hasta la administración al paciente y el seguimiento farmacoterapéutico. FarmaHosp",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNSagwMcO6E=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Prescripción médica",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJNEGUQKhY8g="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNZ0xgNfnu8=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Orden de dispensación y etiqueta QR",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJNWdiwNDVi0="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNq0IgOXv2k=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Validación paciente-medicamento",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJNnwCAN/5ZI="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNwX0APBB3o=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Recordatorio de próxima dosis",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJNtxSQOrsnk="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOEZ4QQ6Ebg=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Tablero de costos y desperdicio",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJN8WIwP5vlA="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOJDTwRNDIU=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Alerta de patrón de efectos adversos",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJN89MgQCgdE="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOwT+QUZS6s=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Informe forense de trazabilidad",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJN9//AQUjiQ="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPDdtQWLR3o=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Orden de compra",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJN9fYgQLC2U="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPWujgkUzuY=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Consulta de paciente",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJPRkvgjneng="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPgEBwlSpa8=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Solicitud de autenticación",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJPShbAjxNy0="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPvBVwmxjSg=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Reporte de efecto adverso XML",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJPo5LQl8anw="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPxmBQnG1Tw=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Mensaje de notificación",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJPpnLwmFOwM="
+							}
+						},
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPyQ7wnRUkA=",
+							"_parent": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"name": "Métricas y alertas de operación",
+							"source": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJPqMkQmOl/E="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJNEGUQKhY8g=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Médico tratante",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNTwXQMxSco=",
+							"_parent": {
+								"$ref": "AAAAAAGgJNEGUQKhY8g="
+							},
+							"name": "Alertas de interacción y disponibilidad",
+							"source": {
+								"$ref": "AAAAAAGgJNEGUQKhY8g="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJNWdiwNDVi0=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Farmacéutico clínico",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNXgBQNPR88=",
+							"_parent": {
+								"$ref": "AAAAAAGgJNWdiwNDVi0="
+							},
+							"name": "Confirmación de dispensación",
+							"source": {
+								"$ref": "AAAAAAGgJNWdiwNDVi0="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJNnwCAN/5ZI=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Enfermero de piso",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNpkYwOLe7A=",
+							"_parent": {
+								"$ref": "AAAAAAGgJNnwCAN/5ZI="
+							},
+							"name": "Registro de administración",
+							"source": {
+								"$ref": "AAAAAAGgJNnwCAN/5ZI="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJNtxSQOrsnk=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Paciente",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJNvWnAO1WXM=",
+							"_parent": {
+								"$ref": "AAAAAAGgJNtxSQOrsnk="
+							},
+							"name": "Consulta de trazabilidad QR",
+							"source": {
+								"$ref": "AAAAAAGgJNtxSQOrsnk="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJN8WIwP5vlA=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Director Administrativo",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJN/H0AQg06g=",
+							"_parent": {
+								"$ref": "AAAAAAGgJN8WIwP5vlA="
+							},
+							"name": "Autorización de orden de compra",
+							"source": {
+								"$ref": "AAAAAAGgJN8WIwP5vlA="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJN89MgQCgdE=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Jefe de Farmacovigilancia",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOMSCARnLCY=",
+							"_parent": {
+								"$ref": "AAAAAAGgJN89MgQCgdE="
+							},
+							"name": "Dictamen de causalidad",
+							"source": {
+								"$ref": "AAAAAAGgJN89MgQCgdE="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJN9fYgQLC2U=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Proveedor de MAC",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOfUiQTKSFE=",
+							"_parent": {
+								"$ref": "AAAAAAGgJN9fYgQLC2U="
+							},
+							"name": "Lote, vencimiento y factura",
+							"source": {
+								"$ref": "AAAAAAGgJN9fYgQLC2U="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJN9//AQUjiQ=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Contraloría General",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJOxH8AUmpPA=",
+							"_parent": {
+								"$ref": "AAAAAAGgJN9//AQUjiQ="
+							},
+							"name": "Solicitud de auditoría de lote",
+							"source": {
+								"$ref": "AAAAAAGgJN9//AQUjiQ="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPQ8ygjdJYQ=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Sensores IoT",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPTkRQj7DiI=",
+							"_parent": {
+								"$ref": "AAAAAAGgJPQ8ygjdJYQ="
+							},
+							"name": "Lecturas de temperatura y humedad",
+							"source": {
+								"$ref": "AAAAAAGgJPQ8ygjdJYQ="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPRkvgjneng=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Legacy de admisiones",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPXtWwkf7ig=",
+							"_parent": {
+								"$ref": "AAAAAAGgJPRkvgjneng="
+							},
+							"name": "Datos demográficos",
+							"source": {
+								"$ref": "AAAAAAGgJPRkvgjneng="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPShbAjxNy0=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Directorio activo",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPj6gAlt13Y=",
+							"_parent": {
+								"$ref": "AAAAAAGgJPShbAjxNy0="
+							},
+							"name": "Credenciales validadas",
+							"source": {
+								"$ref": "AAAAAAGgJPShbAjxNy0="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPo5LQl8anw=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Sist. nacional de farmacovigilancia",
+					"ownedElements": [
+						{
+							"_type": "FCFlow",
+							"_id": "AAAAAAGgJPtr4QmiO8k=",
+							"_parent": {
+								"$ref": "AAAAAAGgJPo5LQl8anw="
+							},
+							"name": "Alerta de retiro de lote",
+							"source": {
+								"$ref": "AAAAAAGgJPo5LQl8anw="
+							},
+							"target": {
+								"$ref": "AAAAAAGgJM396QJyUio="
+							}
+						}
+					]
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPpnLwmFOwM=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Pasarela SMS / WhatsApp"
+				},
+				{
+					"_type": "FCProcess",
+					"_id": "AAAAAAGgJPqMkQmOl/E=",
+					"_parent": {
+						"$ref": "AAAAAAGgJMtZkQJsWiY="
+					},
+					"name": "Operaciones de TI"
+				}
+			]
+		}
+	],
+	"documentVersion": 1
+}

@@ -88,5 +88,6 @@ Se valida al final de cada paso: nada del enunciado puede quedar sin aparecer en
 | 2026-08-20 | Paso 0: frontera del negocio definida y redactada |
 | 2026-08-20 | Paso 1.1-1.3: barrido completo — de 8 del enunciado a 24 candidatos |
 | 2026-08-20 | Paso 2 **cerrado**: notación + 2 ejemplos en otro dominio + diagrama de FarmaHosp dibujado en 3 capas (14 entidades / 25 streamlines) |
+| 2026-08-21 | Paso 3 **en curso** (modo explicar): lección del core dictada. Corregida la guía §8 1.2 contra los 4 casos de la cátedra: el core es UNA elipse, no 1-5 casos |
 | 2026-08-21 | **Modo explicar**: Julián redibuja el diagrama de contexto con su propia mano como práctica para el examen. La versión de referencia queda en Entrega §2.1 — se compara DESPUÉS, no antes. Al terminar: revisión contra checklist y paso 3 |
 | 2026-08-20 | Paso 1 **cerrado**: lista final de 13 stakeholders (8 + 5 elegidos), clasificados, con necesidad oculta y tabla de 6 conflictos |
