@@ -126,6 +126,9 @@ python sincronizar.py            # revisa e informa: faltantes, sobrantes, disti
 python sincronizar.py --aplicar  # copia del vault hacia la boveda
 ```
 
+(En esta máquina Windows es `python`; en el Mac, `python3`. El instalador del repo del tutor corre
+esta misma validación en su sección 8.)
+
 Informa también el estado git de los dos repos. Sale con código 1 si hay desfases. Las **únicas**
 excepciones legítimas son `.claude/` y `CLAUDE.md`, que son de cada lado.
 
@@ -137,7 +140,7 @@ excepciones legítimas son `.claude/` y `CLAUDE.md`, que son de cada lado.
 | `06-Proyecto-MCP/generar-excalidraw.py` | de coordenadas explícitas emite el `.excalidraw` editable **y** el `.svg` vectorial sin marca de agua |
 | `06-Proyecto-MCP/generar-mdj.py` | escribe el proyecto nativo `.mdj` de StarUML con el layout ya resuelto |
 
-Los tres se corren con `python <script>` y no necesitan dependencias.
+Los tres se corren con `python <script>` (`python3` en el Mac) y solo usan la biblioteca estándar.
 
 ## Notas de método
 
