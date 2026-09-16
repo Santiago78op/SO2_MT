@@ -11,7 +11,9 @@ cssclasses: []
 >
 > Estudiante: **Santiago Barrera — carné 201905884**. Repositorio: `Redes1_2S_2026_201905884`.
 >
-> **20 notas.** Esta carpeta (`Proyecto 1/wiki/`) está **versionada**: viaja con el `git clone`, así que el cerebro es el mismo en todas las máquinas. También está registrada como cerebro diamon `redes` en `C:\mcp\brains.json` de la PC principal.
+> **22 notas.** Esta carpeta (`Proyecto 1/wiki/`) está **versionada**: viaja con el `git clone`, así que el cerebro es el mismo en todas las máquinas. También está registrada como cerebro diamon `redes` en `C:\mcp\brains.json` — **con la ruta de donde esté clonado el repo en esa máquina**; si no coincide, el cerebro no carga y no aparece en `brain_list`.
+>
+> **Estado al 2026-09-16.** El Manual Técnico está **redactado completo** (29 secciones, ~2 400 líneas) y las **14 figuras propias** hechas. Falta el `.pkt`, las 5 capturas y las 14 evidencias, que se generarán **en otra PC por MCP** — ver [[HANDOFF-PACKETTRACER]]. La calificación es el **18–19/09**: guion en [[PREPARACION-AUXILIAR]].
 
 ---
 
@@ -20,6 +22,8 @@ cssclasses: []
 ### 00 · Cómo trabajamos
 - [[AVANCE]] — **empezá por acá**: en qué lección vamos, decisiones tomadas con su justificación, dudas abiertas, cuántas figuras y evidencias faltan
 - [[PROTOCOLO-CATEDRA]] — el método de clase guiada (teoría → preguntas → práctica y figuras → registro) y la secuencia de las **9 lecciones** (antes 11 pasos; reagrupadas el 14/09)
+- [[HANDOFF-PACKETTRACER]] — **runbook para la otra PC**: construir el `.pkt`, aplicar los 11 scripts, las 5 capturas y las 14 evidencias, y qué volcar al Manual. La especificación legible por máquina está en `configs/topologia.yaml`
+- [[PREPARACION-AUXILIAR]] — **qué va a pedir el auxiliar** el 18–19/09: los 5 «mata-nota» de §8.1, verificación de parámetros por carné, 42 preguntas probables con respuesta (11 marcadas como trampa), tareas en vivo con sus comandos y la parte física
 - [[CONTEXTO-CLAUDE]] — el resumen que Claude Code carga solo al abrir la carpeta
 - [[analisis-enunciado]] — análisis completo y autocontenido del PDF oficial, sección por sección
 

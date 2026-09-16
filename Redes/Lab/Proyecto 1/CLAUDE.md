@@ -12,13 +12,44 @@ Lo primero, en este orden:
    figuras → registro). Se invoca con el comando **`/paso`**.
 3. El contexto completo del proyecto, importado abajo.
 
-Dos cosas que conviene saber antes de tocar nada:
+## Estado al 2026-09-16: el documento está escrito, falta el simulador
 
-- El **Manual Técnico es `README.md`** de esta carpeta (el enunciado §4.5 fija esa ruta). Su
-  plantilla ya trae el índice de figuras, el mapa de lecciones y los `![]()` de las 19 figuras en su
-  lugar; cada uno con un comentario `<!-- EXCALIDRAW Fn: … -->` que dice qué dibujar.
-- Las figuras propias se hacen en **Excalidraw** y viven en `diagrama/` (índice, flujo de exportación
-  y tabla de estilo en `diagrama/README.md`); las capturas del simulador, en `capturas/`
-  (`capturas/EVIDENCIAS.md`).
+| Qué | Estado |
+|---|---|
+| **Manual Técnico** (`README.md`, 29 secciones, ~2 400 líneas) | ✅ **redactado completo** — Marco Teórico §1–§9 y Marco Práctico §10–§29 |
+| **14 figuras propias** (`diagrama/*.svg`) | ✅ hechas y verificadas en navegador |
+| **Diseño de red** con sus justificaciones | ✅ cerrado — 22 decisiones registradas en `AVANCE.md` |
+| **11 scripts de configuración** (`configs/scripts/`) | ✅ listos para pegar en la CLI |
+| **`Proyecto1_201905884.pkt`** | ⬜ **no existe todavía** |
+| **5 capturas** (F12, F14–F17) y **14 evidencias** (E1–E14) | ⬜ pendientes: salen del `.pkt` |
+| **§25 parte física** | ⛔ bloqueada: sin fecha de laboratorio ni pareja |
+
+**Lo que falta es tiempo de simulador, no redacción.** Se hará **en otra máquina, por MCP de Packet
+Tracer**. El guion de esa sesión está en **`wiki/HANDOFF-PACKETTRACER.md`** y la especificación
+legible por máquina —dispositivos, 15 enlaces con medio y distancia, VLANs, resultado esperado— en
+**`configs/topologia.yaml`**.
+
+## Reglas que no se negocian
+
+- **Los valores por carné se verifican antes de teclear.** Un ID de VLAN mal puesto penaliza del
+  **−50 % al −100 %**. Están en `wiki/CONTEXTO-CLAUDE.md` y en §10 del Manual.
+- **Lo medido y lo previsto no se mezclan.** Cada sección del Manual que depende del simulador lo
+  declara en su propio encabezado. Si el simulador contradice al documento, **gana el simulador**:
+  se corrige el documento y se anota qué cambió.
+- **Los commits y pushes los hace el usuario.** Claude no commitea.
+- **Toda decisión de diseño se anota con su justificación en el momento**, en `wiki/AVANCE.md`. La
+  rúbrica califica la justificación, no sólo el resultado.
+
+## Dónde está cada cosa
+
+- El **Manual Técnico es `README.md`** de esta carpeta (el enunciado §4.5 fija esa ruta).
+- Las **figuras propias** son SVG escritos a mano en `diagrama/` (índice, paleta fija de VLANs y
+  tabla de estilo en `diagrama/README.md`). **No son archivos de Excalidraw**: no traen escena
+  embebida y no se reabren ahí.
+- Las **capturas del simulador** van en `capturas/`, indexadas en `capturas/EVIDENCIAS.md`, que
+  además dice **qué línea exacta demuestra el punto** en cada evidencia.
+- La **preparación para la calificación** del 18–19/09 está en `wiki/PREPARACION-AUXILIAR.md`:
+  los 5 «mata-nota» de §8.1, 42 preguntas probables con respuesta y las tareas en vivo con sus
+  comandos.
 
 @wiki/CONTEXTO-CLAUDE.md

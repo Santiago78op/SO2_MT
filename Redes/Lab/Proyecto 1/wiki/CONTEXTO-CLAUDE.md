@@ -32,23 +32,29 @@ Duda abierta: la tabla del enunciado escribe `Gerencia` pero el ejemplo dice "ex
 5. **Transversal:** justificar el medio (cobre/fibra) de cada enlace por distancia, ancho de banda y buenas prácticas; etiquetar los medios en el `.pkt`.
 6. **Parte física (lab, por pareja):** 2 switches reales, uno VTP Server y otro Client, trunk entre ellos, puertos access a PCs, VLANs propagadas.
 
-## Figuras y evidencias del Manual (nombradas al 2026-09-14)
+## Figuras y evidencias del Manual (estado al 2026-09-16)
 
 El Manual usa **dos series numeradas**, ya referenciadas en su lugar dentro de `README.md` (índice completo al inicio del archivo):
 
-| Serie | Qué es | Cuántas | Dónde vive |
-|---|---|---|---|
-| **F1–F11** | Diagramas de **Excalidraw** del Marco Teórico (red plana, dominios, access/trunk, trama 802.1Q, modos VTP, bucle, Root Bridge, EtherChannel, medios, ataques de Capa 2) | 11 | `diagrama/NN-nombre.svg` |
-| **F12, F14–F17** | Vistas de la topología en Packet Tracer (completa + 4 áreas) | 5 | `capturas/topologia/`, `capturas/areas/` |
-| **F13, F18, F19** | Diagramas de Excalidraw del Marco Práctico (topología lógica, dominios de broadcast del campus, árbol STP) — se dibujan **después** de configurar | 3 | `diagrama/` |
-| **E1–E14** | Salidas de `show`, pings y pruebas de falla | 14 | `capturas/evidencias/` |
-| **L1–L4** | Laboratorio: switches reales | 4 | `capturas/laboratorio/` |
+| Serie | Qué es | Cuántas | Estado | Dónde vive |
+|---|---|---|---|---|
+| **F1–F11** | Marco Teórico: red plana, dominios, access/trunk, trama 802.1Q, modos VTP, bucle, Root Bridge, EtherChannel, medios, ataques de Capa 2 | 11 | ✅ **hechas** | `diagrama/NN-nombre.svg` |
+| **F13, F18, F19** | Marco Práctico: topología lógica, dominios de broadcast del campus, árbol STP | 3 | ✅ **hechas** | `diagrama/` |
+| **F12, F14–F17** | Vistas de la topología en Packet Tracer (completa + 4 áreas) | 5 | ⬜ **pendientes** | `capturas/topologia/`, `capturas/areas/` |
+| **E1–E14** | Salidas de `show`, pings y pruebas de falla | 14 | ⬜ **pendientes** | `capturas/evidencias/` |
+| **L1–L4** | Laboratorio: switches reales | 4 | ⛔ bloqueadas | `capturas/laboratorio/` |
 
-Cada `![]()` del Manual trae un comentario `<!-- EXCALIDRAW Fn: … -->` que especifica qué dibujar, así
-que la figura no se diseña desde cero. `diagrama/README.md` tiene el flujo de exportación (SVG con
-*embed scene*), la convención de nombres y la tabla de estilo: **fibra naranja, cobre azul, puerto
-bloqueado punteado rojo con candado, un color fijo por VLAN, rojo = problema, verde = correcto**.
-12 figuras son esenciales; F10 y F11 están marcadas como opcionales.
+**Las 14 figuras propias son SVG escritos a mano, no archivos de Excalidraw.** Se ven e imprimen
+igual y el Manual las referencia sin cambios, pero **no traen escena embebida**: para editarlas hay
+que tocar el SVG o redibujarlas desde cero. Está declarado en `diagrama/README.md`, que también
+tiene la **paleta fija de VLANs** (14 violeta · 24 turquesa · 34 ámbar · 44 grafito · 54 rosa) y la
+tabla de estilo: **fibra naranja, cobre azul, puerto bloqueado punteado rojo con candado, rojo =
+problema, verde = correcto**. Regla que evita el choque de paletas: los colores de **medio** se usan
+sólo como **línea**; los de **VLAN**, sólo como **relleno**.
+
+Se rompió una regla a conciencia: **F13, F18 y F19 se dibujaron antes de configurar** (la regla dice
+después, porque describen la red real). Se hizo así porque el diseño está cerrado y el `.pkt` no.
+**Deben contrastarse** contra F12 y las evidencias E3/E4; si difieren, manda el simulador.
 
 ## Entregables del README.md
 Capturas (topología completa + cada área) · tabla de dominios de colisión (por switch = puertos activos; el compartido del hub) · tabla de dominios de broadcast (uno por VLAN) · lista de comandos por dispositivo · tabla de VLANs · tabla de puertos por switch · captura + justificación del VTP Server · captura + justificación del Root Bridge por VLAN · captura + justificación de cada EtherChannel · evidencia de `show spanning-tree`, `show etherchannel summary`, `show interfaces trunk` · justificación de medios · presupuesto (switches, módulos de fibra, UTP, fibra) · impacto y contención del segmento Legacy. Opcional: capturas de BPDU y PDU VTP en Modo Simulación.
@@ -56,10 +62,30 @@ Capturas (topología completa + cada área) · tabla de dominios de colisión (p
 ## Requisitos para optar a nota
 Carpeta exactamente **"Proyecto 1"** en el mismo repo de la práctica · entrega por UEDI/Classroom · Manual en Markdown · esquema de VLANs por carné · **originalidad** (topología idéntica a otro = copia).
 
-## Decisiones de diseño (estado al 2026-09-14)
-- Cerradas sobre el **documento** (no sobre la red): el Manual se entrega como `Proyecto 1/README.md` y no como un archivo aparte (el enunciado §4.5 fija esa ruta); las figuras del Marco Teórico se dibujan en **Excalidraw** y se exportan a SVG; las tres figuras que describen la red real (F13, F18, F19) se dibujan **después** de configurar, para que no contradigan las evidencias.
-- Cerradas sobre la red: ninguna todavía, solo los parámetros por carné.
-- Propuestas por justificar: EtherChannel para servidores e I+D; anillo de 3 switches en I+D; triángulo distribuidor–Ala A–Ala B; Áreas Comunes en VTP Transparent; Root Bridge = Core para VLANs 14/34/44/54 y por decidir para la 24; fibra entre edificios, UTP dentro.
+## Decisiones de diseño (estado al 2026-09-16)
+
+**El diseño de red está cerrado.** Las 22 decisiones con su justificación completa están en
+`wiki/AVANCE.md`; acá sólo las que hacen falta para no re-discutirlas:
+
+| Tema | Decisión |
+|---|---|
+| **Jerarquía** | Core (SW-CORE) → distribución (SW-DIST-ID, SW-DIST-CORP) → acceso (7 switches). **SW-PLANTA cuelga del Core sin distribuidor**: un nivel intermedio no aportaría nada y sí un punto de falla |
+| **Redundancia** | Dos tipos, y no son lo mismo: **EtherChannel LACP** donde hace falta capacidad (Po1 a servidores, Po2 a I+D) y **STP/PVST+** donde hace falta camino alterno (anillo de I+D, triángulo del Corporativo) |
+| **Anillo de I+D** | 3 switches en anillo cerrado **+ dos uplinks** (desde ID-1 e ID-3). Con un solo uplink, la caída de ese switch aislaría a los otros dos |
+| **Cierre del anillo** | SW-ID-1 ↔ SW-ID-3 en **FastEthernet 100 Mbps**: costo STP 19 frente a 4, así el bloqueo es **predecible** y no depende de las MAC |
+| **Root Bridge** | **En el distribuidor de cada edificio, no en el Core** (VLANs 14, 24, 54). Sustituye a la propuesta inicial: el puerto bloqueado cae así sobre el **enlace de respaldo** y no sobre un uplink de uso diario. VLANs 34 y 44 en SW-CORE (no hay ciclo) |
+| **Determinismo de STP** | Prioridades secundarias **28672** en SW-ALA-A y SW-ID-1 para fijar el desempate por Bridge ID |
+| **Medios** | Fibra **OM4** en Po2 (180 m) · **OM3** al Corporativo (120 m) · **OM3 a la Planta pese a medir 90 m**, decidido por **EMI industrial y no por distancia** · UTP Cat 6 en todo lo intraedificio y en Po1 |
+| **Áreas Comunes** | VLAN 54 + **VTP Transparent** + trunk restringido a `allowed vlan 1,54,94`: tres medidas para tres cosas distintas |
+| **Trunks** | Los 13 con **nativa 94** y lista `allowed` explícita. La VLAN 1 se conserva en las listas (lleva CDP/DTP/VTP) pero **sin ningún puerto de acceso** |
+| **LACP** | `mode active` en **ambos** extremos, nunca `on`: `on` ante un error de cableado produce un bucle |
+| **Legacy** | Hub en **un solo** puerto access, VLAN 34, `storm-control broadcast level 20` y `port-security maximum 5` en modo **`restrict`** (no `shutdown`: evita paradas de producción) |
+| **Puertos libres** | `shutdown` + VLAN muerta **999**. No es requisito del enunciado: se declara como buena práctica añadida |
+| **Presupuesto** | Cantidades completas, **sin precios**: no se cotizó nada y poner cifras sin origen sería presentar una suposición como dato |
+
+**Riesgo técnico abierto (probarlo ANTES de cablear):** no está verificado que el chasis modular de
+Packet Tracer acepte `channel-group … mode active` sobre módulos de **fibra**. Si no lo soporta,
+**Po2 no se forma**. Plan B en `wiki/HANDOFF-PACKETTRACER.md`, fase 1.
 
 ## Modo de trabajo: clase guiada en 9 lecciones
 
@@ -86,9 +112,13 @@ retomar el proyecto en cualquier máquina: leer `AVANCE.md` y escribir `/paso`.
   - En la Práctica 1 esto se materializó en dos documentos: `../Practica1/ManualTecnico.md` (23 secciones) e `../Practica1/InformeDesarrollo.md` (proceso, criterios, retos, conclusiones). Reutilizar su encabezado institucional, índice numerado, tablas y sección de referencias.
 - Todo comando ejecutado se copia al README de inmediato, por dispositivo.
 - Toda decisión de diseño se anota con su justificación en el momento (la rúbrica califica la justificación).
-- Conocimiento ampliado (conceptos con citas oficiales, comandos con los valores ya sustituidos, ambigüedades del enunciado, calendario): **esta misma carpeta `wiki/`**, que es una bóveda Obsidian de 20 notas versionada en el repo y registrada como cerebro diamon `redes` en el `brains.json` de la PC principal. Índice: `wiki/00 - 🌐 Cerebro Redes (MOC).md`.
+- Conocimiento ampliado (conceptos con citas oficiales, comandos con los valores ya sustituidos, ambigüedades del enunciado, calendario): **esta misma carpeta `wiki/`**, bóveda Obsidian de **22 notas** versionada en el repo. Índice: `wiki/00 - 🌐 Cerebro Redes (MOC).md`.
+- **Tres notas operativas que conviene abrir antes de trabajar:**
+  - `wiki/AVANCE.md` — estado, 22 decisiones con su porqué, dudas abiertas, bitácora.
+  - `wiki/HANDOFF-PACKETTRACER.md` — runbook de la sesión de Packet Tracer (otra PC, por MCP): construir, configurar, 5 capturas, 14 evidencias, qué volcar al Manual.
+  - `wiki/PREPARACION-AUXILIAR.md` — guion de la calificación del 18–19/09: los 5 «mata-nota» de §8.1, 42 preguntas probables con respuesta, tareas en vivo con sus comandos.
 
-## Estructura de la carpeta (creada el 2026-09-07, actualizada el 2026-09-14)
+## Estructura de la carpeta (creada el 2026-09-07, actualizada el 2026-09-16)
 ```
 Proyecto 1/
 ├── CLAUDE.md                    ← importa wiki/CONTEXTO-CLAUDE.md (versionado: viaja al clonar)
@@ -98,13 +128,19 @@ Proyecto 1/
 ├── capturas/
 │   ├── EVIDENCIAS.md            ← índice de las series F / E / L, convención NN-<dispositivo>-<comando>.png
 │   ├── topologia/  areas/  evidencias/  laboratorio/
-├── configs/                     ← running-config por switch (<hostname>.txt); README con cabecera obligatoria
+├── configs/
+│   ├── topologia.yaml           ← ESPECIFICACIÓN legible por máquina (dispositivos, 15 enlaces, VLANs,
+│   │                              equipos finales, resultado esperado y riesgos abiertos)
+│   ├── scripts/<hostname>.txt   ← los 11 scripts de configuración, listos para pegar en la CLI
+│   └── <hostname>.txt           ← running-config real (pendiente); README con cabecera obligatoria
 ├── diagrama/                    ← 14 figuras propias de Excalidraw en SVG (README con índice,
 │                                  flujo de exportación y tabla de estilo)
 ├── doc/                         ← enunciado PDF/MD (ignorados en git)
 ├── wiki/                        ← cerebro del proyecto (versionado, viaja con el push)
 │   ├── AVANCE.md                ← estado del progreso: LEER PRIMERO
 │   ├── PROTOCOLO-CATEDRA.md     ← método y secuencia de las 9 lecciones
+│   ├── HANDOFF-PACKETTRACER.md  ← runbook de la sesión de Packet Tracer (otra PC, por MCP):
+│   │                              construir, configurar, 5 capturas, 14 evidencias, qué volcar al Manual
 └── cerebro/                     ← notas personales locales, si hacen falta (no versionado)
 
 .claude/commands/paso.md         ← (raíz del repo) el slash command /paso, versionado
@@ -129,3 +165,10 @@ redacción.
 
 Opcional, si esa máquina tiene diamon: agregar en `brains.json`, mundo `personal`,
 `"redes": "<ruta-del-repo>/Proyecto 1/wiki"` y reiniciar la sesión.
+
+> [!warning] La ruta del cerebro depende de dónde se clonó el repo
+> El 16/09 se encontró que `brains.json` apuntaba a
+> `C:/Users/72358/Desktop/Redes1_2S_2026_201905884/Proyecto 1/wiki`, una **ruta que no existía** en
+> esa máquina, donde el repo está clonado en `C:/Users/72358/Desktop/SO2/Redes/Lab/`. El cerebro
+> `redes` no cargaba y no aparecía en `brain_list`. Se corrigió. **Si `brain_search` no encuentra
+> nada del proyecto, lo primero que hay que revisar es esa ruta.**

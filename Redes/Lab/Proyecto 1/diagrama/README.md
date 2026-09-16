@@ -60,7 +60,61 @@ con la captura de la topología, la F18 con la tabla de §16, y la F19 con lo qu
 | Enlace bloqueado por STP | Línea punteada roja con candado |
 | Problema / ataque | Rojo |
 | Solución / estado correcto | Verde |
-| VLANs | Un color fijo por VLAN, el mismo en todas las figuras |
+| VLANs | Un color fijo por VLAN, el mismo en todas las figuras (tabla abajo) |
 | Tipografía | La de mano alzada de Excalidraw, tamaño M; rótulos en español |
+
+**Regla que evita el choque de paletas:** los colores de **medio** (naranja fibra, azul cobre) se usan
+sólo como **línea**; los de **VLAN**, sólo como **relleno** de nodos y nubes. Así el azul del cobre y
+el de una VLAN nunca se confunden aunque aparezcan en la misma figura.
+
+### Paleta fija de VLANs (fijada en la lección 1, 2026-09-16)
+
+| VLAN | Nombre | Color | Hex |
+| --- | --- | --- | --- |
+| 14 | GERENCIA | violeta | `#7048e8` |
+| 24 | INVESTIGACION | turquesa | `#0c8599` |
+| 34 | PRODUCCION | ámbar | `#f08c00` |
+| 44 | SERVIDORES | grafito | `#343a40` |
+| 54 | VISITANTES | rosa | `#d6336c` |
+| 94 | nativa (control) | gris punteado | `#adb5bd` |
+
+Ninguno es rojo ni verde puros, que están reservados para *problema* y *estado correcto*.
+
+## Estado de los archivos
+
+**Las 14 figuras propias están hechas** (2026-09-16). Las 5 capturas de Packet Tracer (F12, F14–F17)
+siguen pendientes porque el `.pkt` no está armado.
+
+| Archivo | Fig. | Origen | Lección |
+| --- | --- | --- | --- |
+| `01-red-plana-problema.svg` | F1 | SVG escrito a mano | 1 |
+| `02-dominios-colision.svg` | F2 | SVG escrito a mano | 1 |
+| `03-dominios-broadcast.svg` | F3 | SVG escrito a mano | 1 |
+| `04-access-vs-trunk.svg` | F4 | SVG escrito a mano | 3 |
+| `05-trama-8021q.svg` | F5 | SVG escrito a mano | 3 |
+| `06-vtp-modos.svg` | F6 | SVG escrito a mano | 4 |
+| `07-bucle-capa2.svg` | F7 | SVG escrito a mano | 5 |
+| `08-eleccion-root-bridge.svg` | F8 | SVG escrito a mano | 5 |
+| `09-etherchannel-lacp.svg` | F9 | SVG escrito a mano | 5 |
+| `10-medios-transmision.svg` | F10 | SVG escrito a mano | 1 |
+| `11-seguridad-capa2.svg` | F11 | SVG escrito a mano | 6 |
+| `12-topologia-logica.svg` | F13 | SVG escrito a mano | 2 |
+| `13-dominios-broadcast-campus.svg` | F18 | SVG escrito a mano | 3 |
+| `14-arbol-stp.svg` | F19 | SVG escrito a mano | 5 |
+
+> **Límite honesto 1 — no son archivos de Excalidraw.** Las 14 se escribieron directamente como SVG.
+> Se ven y se imprimen igual, y el manual las referencia sin cambios, pero **no** traen escena
+> embebida: para editarlas hay que tocar el SVG a mano o redibujarlas en Excalidraw desde cero. No
+> hay nada en `src/`.
+
+> **Límite honesto 2 — la tipografía puede cambiar de máquina.** Se declara `Segoe Print` con reserva
+> a `Comic Sans MS` y `cursive`. En un equipo sin ninguna de las dos, el texto cae a la cursiva por
+> defecto del sistema y el trazo deja de parecer de mano alzada. El contenido no se pierde, el estilo
+> sí.
+
+> **Límite honesto 3 — F13, F18 y F19 se dibujaron ANTES de configurar**, al revés de lo que manda la
+> regla de esta carpeta. Se hizo así porque el diseño ya está cerrado y el `.pkt` no. **Deben
+> contrastarse** contra la captura F12 y las evidencias E3 y E4 en cuanto existan; si difieren, manda
+> el simulador y hay que corregir las figuras.
 
 <!-- Al agregar una figura: crear el archivo con la convención, agregar su fila acá y referenciarla en el manual con su número de Figura. -->
